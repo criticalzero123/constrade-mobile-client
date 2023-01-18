@@ -6,16 +6,20 @@ export default function NavigationButton({ to, children, type, value }) {
   const navigation = useNavigation();
 
   const onValidate = () => {
+    // Using Email
     if (type === "email") {
       if (value === "jdcaramonte159@gmail.com") {
         ToastAndroid.show("success", ToastAndroid.SHORT);
-        navigation.navigate(to);
+
         return;
       } else {
         ToastAndroid.show("failed", ToastAndroid.SHORT);
       }
+
+      navigation.navigate(to, { value });
     }
 
+    // Using Number
     if (type === "number") {
       ToastAndroid.show("number", ToastAndroid.SHORT);
     }

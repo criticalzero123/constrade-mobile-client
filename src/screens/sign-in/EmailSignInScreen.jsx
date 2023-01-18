@@ -26,7 +26,7 @@ export default function EmailSignInScreen() {
 
       <EmailTextInput email={email} setEmail={setEmail} />
       <View className="my-3"></View>
-      <NavigationButton to="EmailCodeOtp" type="email" value={email}>
+      <NavigationButton to="SignInEmailOtp" type="email" value={email}>
         <Text className="text-center font-semibold text-white text-base ">
           Continue
         </Text>
