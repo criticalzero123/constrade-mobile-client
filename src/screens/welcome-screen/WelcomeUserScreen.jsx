@@ -10,10 +10,12 @@ import {
 import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 
-export default function WelcomeUserScreen() {
+export default function WelcomeUserScreen({ route }) {
   const [counter, setCounter] = useState(0);
 
   const navigation = useNavigation();
+
+  const { from } = route.params;
 
   useEffect(() => {
     // Temporary timer for logging in
@@ -32,11 +34,15 @@ export default function WelcomeUserScreen() {
       <View className="w-24 h-24 bg-gray-500 rounded-full"></View>
       <View className="my-3"></View>
       <Text className="font-semibold text-xl">
-        Glad to have you back, name!
+        {from === "signin"
+          ? "Glad to have you back, name!"
+          : "Nice to meet you, name!"}
       </Text>
       <View className="my-1"></View>
       <Text className="text-center text-gray-400">
-        Hang on tight, we are logging you in. This will just take a few seconds.
+        {from === "signin"
+          ? "Hang on tight, we are logging you in. This will just take a few seconds."
+          : "Your account has been successfully create! Please wait while we get things ready for you."}
       </Text>
 
       <View className="flex-row absolute bottom-2 items-center">

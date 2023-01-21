@@ -23,7 +23,7 @@ export default function OnboardingItems({ item }) {
         <Text style={styles.title}>{item.title}</Text>
         <Text style={styles.description}>{item.description}</Text>
         <View style={{ marginVertical: 20 }}></View>
-        <SignUpButton />
+        <SignUpButton onPress={() => navigation.navigate("SignUp")} />
         <SignInButton onPress={() => navigation.navigate("SignIn")} />
       </View>
     </View>

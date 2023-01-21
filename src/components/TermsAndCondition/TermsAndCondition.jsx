@@ -3,7 +3,7 @@ import React from "react";
 
 export default function TermsAndCondition() {
   return (
-    <Text className="text-center px-10 absolute bottom-0 text-gray-400 self-center">
+    <Text className="text-center px-10 absolute bottom-1 text-gray-400 self-center">
       By continuing you agree to Constrade's{" "}
       <Pressable>
         <Text className="text-black">Terms & Conditions</Text>

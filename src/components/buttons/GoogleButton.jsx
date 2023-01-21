@@ -22,10 +22,24 @@ export default function GoogleButton({ text, type }) {
 
   return (
     <Pressable onPress={onPressGoogle}>
-      <View className="bg-[#CC481F] rounded py-4 flex-row min-w-full justify-center items-center">
-        <AntDesign name="google" size={24} color="white" />
+      <View
+        className={` rounded py-4 flex-row min-w-full justify-center items-center ${
+          type === "signin" ? "bg-[#CC481F] " : "border border-[#CC481F]"
+        }`}
+      >
+        <AntDesign
+          name="google"
+          size={24}
+          color={`${type === "signin" ? "white" : "#CC481F"}`}
+        />
         <View className="mx-1"></View>
-        <Text className="text-white text-base font-semibold">{text}</Text>
+        <Text
+          className={`${
+            type === "signin" ? "text-white" : "text-[#CC481F]"
+          } text-base font-semibold`}
+        >
+          {text}
+        </Text>
       </View>
     </Pressable>
   );

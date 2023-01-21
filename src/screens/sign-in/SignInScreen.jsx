@@ -36,6 +36,7 @@ export default function SignInScreen() {
         <LoginMethodButton
           Icon={<Feather name="phone" size={24} color="#CC481F" />}
           text="Phone"
+          onPress={() => navigation.navigate("SignInPhone")}
         />
 
         <LoginMethodButton
@@ -51,7 +52,7 @@ export default function SignInScreen() {
         />
       </View>
 
-      <Pressable className="mt-7">
+      <Pressable className="mt-7" onPress={() => navigation.navigate("SignUp")}>
         <Text className="text-[#CC481F]">I don't have an account</Text>
       </Pressable>
 

@@ -9,15 +9,18 @@ import React from "react";
 
 import logo from "../../../assets/icon-nobg.png";
 
-export default function Header({ headerText, bodyText }) {
+export default function Header({ headerText, bodyText, showLogo = true }) {
   const { width } = useWindowDimensions();
   return (
     <>
-      <Image
-        source={logo}
-        style={{ width: width / 6, resizeMode: "contain" }}
-        className="self-center"
-      />
+      {showLogo && (
+        <Image
+          source={logo}
+          style={{ width: width / 6, resizeMode: "contain" }}
+          className="self-center"
+        />
+      )}
+
       <Text className="text-[#011B33] text-3xl font-semibold mb-2 text-center">
         {headerText}
       </Text>

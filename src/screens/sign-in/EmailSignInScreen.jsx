@@ -3,34 +3,34 @@ import {
   Text,
   SafeAreaView,
   View,
-  StatusBar,
   Platform,
-  Pressable,
-  TextInput,
+  StatusBar,
 } from "react-native";
 import React, { useState } from "react";
+import Header from "../../components/sign-in/SignInHeader";
 
-import TermsAndCondition from "../../components/TermsAndCondition/TermsAndCondition";
-import SignInHeader from "../../components/sign-in/SignInHeader";
 import EmailTextInput from "../../components/CustomTextInput/EmailTextInput";
+import PasswordTextInput from "../../components/CustomTextInput/PasswordTextInput";
+import TermsAndCondition from "../../components/TermsAndCondition/TermsAndCondition";
 import NavigationButton from "../../components/buttons/NavigationButton";
-
 export default function EmailSignInScreen() {
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   return (
     <SafeAreaView style={styles.container}>
-      <SignInHeader
+      <Header
         headerText="Sign in using email"
-        bodyText="Proceed using your email address. We will use this for OTP verification"
+        bodyText="Proceed using your email address."
       />
 
       <EmailTextInput email={email} setEmail={setEmail} />
-      <View className="my-3"></View>
-      <NavigationButton to="SignInEmailOtp" type="email" value={email}>
-        <Text className="text-center font-semibold text-white text-base ">
-          Continue
-        </Text>
-      </NavigationButton>
+      <View className="my-2"></View>
+      <PasswordTextInput password={password} setPassword={setPassword} />
+      <View className="my-1"></View>
+      <Text className="text-[#CC481F]">Forgot Password?</Text>
+      <View className="my-4"></View>
+      <NavigationButton type="signin" value={email} to="WelcomeUser" />
 
       <TermsAndCondition />
     </SafeAreaView>

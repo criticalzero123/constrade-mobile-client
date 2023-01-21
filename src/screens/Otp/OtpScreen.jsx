@@ -13,9 +13,9 @@ import {
 import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 
-export default function EmailOtpScreen({ route }) {
+export default function OtpScreen({ route }) {
   const navigation = useNavigation();
-  const { value } = route.params;
+  const { value, type } = route.params;
 
   const [otp, setOtp] = useState("");
   const [counter, setCounter] = useState(60);
@@ -38,7 +38,13 @@ export default function EmailOtpScreen({ route }) {
       setValidating(!validating);
 
       if (newText === "123456") {
-        navigation.navigate("WelcomeUser");
+        if (type === "signin") {
+          navigation.navigate("WelcomeUser", {
+            from: "signin",
+          });
+        } else {
+          navigation.navigate("SignUpName");
+        }
       } else {
         ToastAndroid.show("Wrong OTP, Please Try again!", ToastAndroid.SHORT);
         setValidating(false);
@@ -52,10 +58,10 @@ export default function EmailOtpScreen({ route }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text className="text-3xl font-semibold">Enter the code</Text>
-      <Text className="text-gray-400">
+      <Text className="text-3xl font-semibold text-center">Enter the code</Text>
+      <Text className="text-gray-400 ">
         Please enter the OTP code sent to{" "}
-        <Text className="text-black">{value}.</Text>
+        <Text className="text-black font-semibold text-base">{value}.</Text>
       </Text>
 
       <View className="my-5"></View>
