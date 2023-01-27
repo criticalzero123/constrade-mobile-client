@@ -25,6 +25,9 @@ export default function SignUpPassword({ route }) {
 
   const dispatch = useDispatch();
 
+  {
+    /* TODO: like +639999999999 or 09999999999 to => 639999999999 when saving in the database */
+  }
   const onSubmit = () => {
     const user = {
       User_type: "semi-verified",

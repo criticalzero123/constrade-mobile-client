@@ -2,10 +2,14 @@ import { applyMiddleware, combineReducers, createStore } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
 
-import { emailAndPasswordRegisterReducer } from "./reducers/authReducer";
+import {
+  emailAndPasswordRegisterReducer,
+  checkEmailReducer,
+} from "./reducers/authReducer";
 
 const finalReducer = combineReducers({
   emailAndPasswordRegisterReducer,
+  checkEmailReducer,
 });
 
 const composeEnhancers = composeWithDevTools({

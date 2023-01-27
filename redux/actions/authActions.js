@@ -18,3 +18,21 @@ export const emailAndPasswordRegister = (data) => (dispatch) => {
       });
     });
 };
+
+export const checkEmail = (email) => (dispatch) => {
+  dispatch({ type: "CHECK_USER_EMAIL_REQUEST" });
+  axios
+    .get(`${API_URL_LOCAL}/api/users/check/email/${email}`)
+    .then((res) => {
+      dispatch({
+        type: "CHECK_USER_EMAIL_SUCCESS",
+        payload: res.data.responseData,
+      });
+    })
+    .catch((err) => {
+      dispatch({
+        type: "CHECK_USER_EMAIL_FAILED",
+        error: err,
+      });
+    });
+};

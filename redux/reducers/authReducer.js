@@ -23,3 +23,29 @@ export const emailAndPasswordRegisterReducer = (state = {}, action) => {
       return { ...state };
   }
 };
+
+export const checkEmailReducer = (state = {}, action) => {
+  switch (action.type) {
+    case "CHECK_USER_EMAIL_REQUEST":
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case "CHECK_USER_EMAIL_SUCCESS":
+      return {
+        loading: false,
+        success: true,
+        exist: action.payload,
+      };
+
+    case "CHECK_USER_EMAIL_FAILED":
+      return {
+        loading: false,
+        error: true,
+      };
+
+    default:
+      return { ...state };
+  }
+};

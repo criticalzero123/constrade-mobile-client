@@ -1,21 +1,36 @@
-import { StyleSheet, Text, Pressable } from "react-native";
+import { StyleSheet, Text, Pressable, ActivityIndicator } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
+import { useDispatch } from "react-redux";
+import { checkEmail } from "../../../redux/actions/authActions";
 
-export default function NavigationButton({ to, type, value }) {
+export default function NavigationButton({
+  to,
+  type,
+  value,
+  checkValue,
+  loading,
+}) {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   const onValidate = () => {
-    navigation.navigate(to, { value, type });
+    if (type === "signup" && checkValue) {
+      dispatch(checkEmail(value));
+    } else navigation.navigate(to, { value, type });
   };
 
   return (
     <Pressable
       onPress={onValidate}
-      className="w-full bg-[#CC481F] py-4 rounded"
+      className={`w-full ${
+        loading ? "bg-[#ee8768]" : " bg-[#CC481F] "
+      } py-4 rounded flex-row justify-center `}
+      disabled={loading ? true : false}
     >
-      <Text className="text-center font-semibold text-white text-base ">
-        {type === "signin" ? "Continue" : "Get OTP"}
+      <Text className=" font-semibold text-white text-base ">
+        {loading && <ActivityIndicator size="small" color="white" />}{" "}
+        {type === "signin" ? " Continue" : " Get OTP"}
       </Text>
     </Pressable>
   );
