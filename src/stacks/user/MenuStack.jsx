@@ -1,21 +1,77 @@
-import { StyleSheet } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 const Tab = createBottomTabNavigator();
 
 import React from "react";
 import Home from "../../screens/home/Home";
-
+import UserStack from "./UserStack";
+import CommunityStack from "../community/CommunityStack";
+import MessagesStack from "../messages/MessagesStack";
+import AddProduct from "../../screens/Products/AddProduct/AddProduct";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
+import { FontAwesome5 } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 export default function MenuStack() {
   return (
     <Tab.Navigator
       initialRouteName="Home"
       screenOptions={{
-        headerShown: false,
+        tabBarActiveTintColor: "#CC481F",
       }}
     >
-      <Tab.Screen component={Home} name="Home" />
+      <Tab.Screen
+        component={Home}
+        name="Home"
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="home" size={28} color={color} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        component={CommunityStack}
+        name="Community"
+        options={{
+          tabBarBadge: 3,
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons
+              name="account-group-outline"
+              size={25}
+              color={color}
+            />
+          ),
+        }}
+      />
+      <Tab.Screen
+        component={AddProduct}
+        name="AddProduct"
+        options={{
+          tabBarLabel: "",
+          tabBarLabelStyle: { display: "none" },
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="add-circle-sharp" size={50} color={color} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        component={MessagesStack}
+        name="Message"
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <AntDesign name="message1" size={22} color={color} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        component={UserStack}
+        name="User"
+        options={{
+          tabBarLabel: "Me",
+          tabBarIcon: ({ color, size }) => (
+            <FontAwesome5 name="user" size={22} color={color} />
+          ),
+        }}
+      />
     </Tab.Navigator>
   );
 }
-
-const styles = StyleSheet.create({});
