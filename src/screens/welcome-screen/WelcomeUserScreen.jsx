@@ -19,7 +19,7 @@ export default function WelcomeUserScreen({ route }) {
 
   useEffect(() => {
     // TODO:Temporary timer for logging in
-    if (counter > 5) navigation.navigate("User");
+    if (counter > 5) navigation.navigate("Menu");
 
     const timer = setTimeout(() => setCounter(counter + 1), 1000);
 
