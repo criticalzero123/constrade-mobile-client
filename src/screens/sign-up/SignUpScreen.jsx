@@ -10,7 +10,6 @@ import {
 import React, { useState } from "react";
 import Header from "../../components/sign-in/SignInHeader";
 import CustomTextInput from "../../components/CustomTextInput/CustomTextInput";
-import Checkbox from "expo-checkbox";
 import NavigationButton from "../../components/buttons/NavigationButton";
 import LineTextCenter from "../../components/line-text-center/LineTextCenter";
 import GoogleButton from "../../components/buttons/GoogleButton";
@@ -22,7 +21,6 @@ export default function SignUpScreen() {
   const navigation = useNavigation();
 
   const [value, setValue] = useState("");
-  const [isChecked, setIsChecked] = useState(false);
 
   return (
     <KeyboardAvoidingView
@@ -41,14 +39,7 @@ export default function SignUpScreen() {
         label="Email or phone number"
         placeholder="Enter your mobile or email"
       />
-      <View className="flex-row mt-3 items-center">
-        <Checkbox
-          value={isChecked}
-          onValueChange={setIsChecked}
-          color={isChecked ? "#CC481F" : undefined}
-        />
-        <Text className="mx-1">Remember me</Text>
-      </View>
+
       <View className="my-4"></View>
       <NavigationButton type="signup" to="Otp" value={value} />
 

@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, Pressable } from "react-native";
 import React, { useState } from "react";
 
 import { TextInput, ProgressBar } from "react-native-paper";
@@ -8,9 +8,12 @@ import passwordValidator, {
   passwordMeterColor,
   passwordMeterWord,
 } from "../../../service/passwordValidator";
-import SimpleButton from "../buttons/SimpleButton";
 
-export default function PasswordValidatedInput({ password, setPassword }) {
+export default function PasswordValidatedInput({
+  password,
+  setPassword,
+  onSubmit,
+}) {
   const valid = passwordValidator.validate(password) ? true : false;
   const [visible, setVisible] = useState(false);
 
@@ -57,9 +60,18 @@ export default function PasswordValidatedInput({ password, setPassword }) {
         </View>
       )}
       <View className="my-6"></View>
-      <SimpleButton to="WelcomeUser" from="signup" disabled={meterValue !== 1}>
-        Create account
-      </SimpleButton>
+
+      <Pressable
+        onPress={onSubmit}
+        className={`${
+          meterValue !== 1 ? "bg-[#cc471f57] " : "bg-[#CC481F] "
+        }w-full py-4 rounded`}
+        disabled={meterValue !== 1}
+      >
+        <Text className="text-center font-semibold text-white text-base ">
+          Create account
+        </Text>
+      </Pressable>
     </View>
   );
 }

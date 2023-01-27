@@ -15,11 +15,10 @@ export default function WelcomeUserScreen({ route }) {
 
   const navigation = useNavigation();
 
-  const { from } = route.params;
+  const { from, name } = route.params;
 
   useEffect(() => {
-    // Temporary timer for logging in
-
+    // TODO:Temporary timer for logging in
     if (counter > 5) navigation.navigate("User");
 
     const timer = setTimeout(() => setCounter(counter + 1), 1000);
@@ -34,9 +33,8 @@ export default function WelcomeUserScreen({ route }) {
       <View className="w-24 h-24 bg-gray-500 rounded-full"></View>
       <View className="my-3"></View>
       <Text className="font-semibold text-xl">
-        {from === "signin"
-          ? "Glad to have you back, name!"
-          : "Nice to meet you, name!"}
+        {from === "signin" ? "Glad to have you back, " : "Nice to meet you, "}
+        <Text className="capitalize">{name && name}!</Text>
       </Text>
       <View className="my-1"></View>
       <Text className="text-center text-gray-400">

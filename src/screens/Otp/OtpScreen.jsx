@@ -21,17 +21,18 @@ export default function OtpScreen({ route }) {
   const [counter, setCounter] = useState(60);
   const [validating, setValidating] = useState(false);
 
-  useEffect(() => {
-    const count =
-      counter > 0 &&
-      setInterval(() => {
-        setCounter((oldCount) => oldCount - 1);
-      }, 1000);
+  // TODO: UNCOMMENT THIS FOR THE ACTUAL OTP
+  // useEffect(() => {
+  //   const count =
+  //     counter > 0 &&
+  //     setInterval(() => {
+  //       setCounter((oldCount) => oldCount - 1);
+  //     }, 1000);
 
-    return () => {
-      clearInterval(count);
-    };
-  }, [counter]);
+  //   return () => {
+  //     clearInterval(count);
+  //   };
+  // }, [counter]);
 
   const otpValidation = (newText) => {
     if (newText.length === 6) {
@@ -43,7 +44,7 @@ export default function OtpScreen({ route }) {
             from: "signin",
           });
         } else {
-          navigation.navigate("SignUpName");
+          navigation.navigate("SignUpName", { emailOrPhone: value });
         }
       } else {
         ToastAndroid.show("Wrong OTP, Please Try again!", ToastAndroid.SHORT);

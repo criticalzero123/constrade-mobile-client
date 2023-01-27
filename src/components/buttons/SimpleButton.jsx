@@ -2,11 +2,11 @@ import { Pressable, StyleSheet, Text } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
 
-export default function SimpleButton({ to, children, disabled, from }) {
+export default function SimpleButton({ to, children, disabled, from, value }) {
   const navigation = useNavigation();
   return (
     <Pressable
-      onPress={() => navigation.navigate(to, { from })}
+      onPress={() => navigation.navigate(to, { from, value })}
       className={`${
         disabled ? "bg-[#cc471f57] " : "bg-[#CC481F] "
       }w-full py-4 rounded`}

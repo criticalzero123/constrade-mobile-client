@@ -2,7 +2,6 @@ import {
   Platform,
   StatusBar,
   StyleSheet,
-  Text,
   View,
   SafeAreaView,
 } from "react-native";
@@ -11,8 +10,12 @@ import Header from "../../components/sign-in/SignInHeader";
 import CustomTextInput from "../../components/CustomTextInput/CustomTextInput";
 import SimpleButton from "../../components/buttons/SimpleButton";
 
-export default function SignUpName() {
-  const [name, setName] = useState("");
+export default function SignUpName({ route }) {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+
+  const { emailOrPhone } = route.params;
+
   return (
     <SafeAreaView style={styles.container}>
       <View className="my-10"></View>
@@ -22,13 +25,26 @@ export default function SignUpName() {
         headerText="Welcome to Constrade!"
       />
       <CustomTextInput
-        label="Your name is"
-        placeholder="Full name"
-        setValue={setName}
-        value={name}
+        label="First name"
+        placeholder="First name"
+        setValue={setFirstName}
+        value={firstName}
+        name={true}
+      />
+      <View className="my-2"></View>
+      <CustomTextInput
+        label="Last name"
+        placeholder="Last name"
+        setValue={setLastName}
+        value={lastName}
+        name={true}
       />
       <View className="my-5"></View>
-      <SimpleButton disabled={name.length === 0} to="SignUpPassword">
+      <SimpleButton
+        disabled={firstName.length === 0 || lastName.length === 0}
+        to="SignUpPassword"
+        value={{ firstName, lastName, emailOrPhone }}
+      >
         Next
       </SimpleButton>
     </SafeAreaView>
