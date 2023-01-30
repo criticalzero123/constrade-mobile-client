@@ -2,11 +2,11 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 const Tab = createBottomTabNavigator();
 
 import React from "react";
-import Home from "../../screens/home/Home";
+import HomeStack from "../home/HomeStack";
 import UserStack from "./UserStack";
 import CommunityStack from "../community/CommunityStack";
 import MessagesStack from "../messages/MessagesStack";
-import AddProduct from "../../screens/Products/AddProduct/AddProduct";
+import ProductAddStack from "../product/product-add/ProductAddStack";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
@@ -14,13 +14,14 @@ import { Ionicons } from "@expo/vector-icons";
 export default function MenuStack() {
   return (
     <Tab.Navigator
-      initialRouteName="Home"
+      initialRouteName="AddProduct"
       screenOptions={{
         tabBarActiveTintColor: "#CC481F",
+        headerShown: false,
       }}
     >
       <Tab.Screen
-        component={Home}
+        component={HomeStack}
         name="Home"
         options={{
           tabBarIcon: ({ color, size }) => (
@@ -43,7 +44,7 @@ export default function MenuStack() {
         }}
       />
       <Tab.Screen
-        component={AddProduct}
+        component={ProductAddStack}
         name="AddProduct"
         options={{
           tabBarLabel: "",
