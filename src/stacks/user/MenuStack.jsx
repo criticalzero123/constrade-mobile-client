@@ -18,6 +18,7 @@ export default function MenuStack() {
       screenOptions={{
         tabBarActiveTintColor: "#CC481F",
         headerShown: false,
+        tabBarHideOnKeyboard: true,
       }}
     >
       <Tab.Screen

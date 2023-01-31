@@ -10,7 +10,7 @@ export default function CustomTextInput({
 }) {
   return (
     <View>
-      <Text className="text-left mb-1">{label}</Text>
+      <Text className="text-left mb-1 text-base">{label}</Text>
       <TextInput
         onChangeText={setValue}
         value={value}

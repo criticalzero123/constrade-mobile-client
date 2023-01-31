@@ -21,7 +21,7 @@ export default function AddProductOptions() {
   return (
     <SafeAreaView
       style={styles.container}
-      className="items-center px-4 justify-between"
+      className="items-center px-4 justify-between h-full"
     >
       <View className="items-center mt-16">
         <Image source={console_images} />
