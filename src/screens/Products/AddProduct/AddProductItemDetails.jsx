@@ -21,6 +21,8 @@ import CustomTextInput from "../../../components/CustomTextInput/CustomTextInput
 import TextAreaInput from "../../../components/CustomTextInput/TextAreaInput";
 import { RadioButton } from "react-native-paper";
 import Checkbox from "expo-checkbox";
+import { useDispatch } from "react-redux";
+import { addProduct } from "../../../../redux/actions/productActions";
 
 export default function AddProductItemDetails() {
   const [imageList, setImageList] = useState([]);
@@ -37,6 +39,7 @@ export default function AddProductItemDetails() {
   const [itemInput, setItemInput] = useState("");
 
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -72,6 +75,27 @@ export default function AddProductItemDetails() {
     const newItem = itemList.filter((_item) => _item !== item);
 
     setItemList(newItem);
+  };
+
+  const addItem = () => {
+    const product = {
+      PosterUserId: 6,
+      Title: title,
+      Description: description,
+      Condition: condition,
+      PreferTrade: tradeMethod,
+      DeliveryMethod: "Delivery",
+      ProductStatus: "unsold",
+      Location: "Urgello",
+      GameGenre: "Action",
+      Platform: category,
+      ThumbnailUrl: "",
+      Cash: cash,
+      Item: itemList.toString(),
+      DateCreated: new Date(),
+      CountFavorite: 0,
+    };
+    dispatch(addProduct(product));
   };
 
   const ViewItemList = () => {
@@ -141,7 +165,7 @@ export default function AddProductItemDetails() {
           placeholder={"0.00"}
           value={price}
           setValue={setPrice}
-          label="Price"
+          label="Price(generated from our system)"
         />
 
         <CustomTextInput
@@ -288,7 +312,10 @@ export default function AddProductItemDetails() {
         </View>
 
         <View className="my-10"></View>
-        <Pressable className="w-full bg-[#CC481F] p-4 items-center rounded-lg mb-4">
+        <Pressable
+          className="w-full bg-[#CC481F] p-4 items-center rounded-lg mb-4"
+          onPress={addItem}
+        >
           <Text className="text-white font-semibold">Delivery Method</Text>
         </Pressable>
       </ScrollView>

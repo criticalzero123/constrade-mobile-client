@@ -7,9 +7,12 @@ import {
   checkEmailReducer,
 } from "./reducers/authReducer";
 
+import { addProductReducer } from "./reducers/productReducer";
+
 const finalReducer = combineReducers({
   emailAndPasswordRegisterReducer,
   checkEmailReducer,
+  addProductReducer,
 });
 
 const composeEnhancers = composeWithDevTools({
