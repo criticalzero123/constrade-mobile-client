@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "956743431177",
+    "project_id": "freelean-71beb",
+    "storage_bucket": "freelean-71beb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:956743431177:android:c404916825cb782c54b4d8",
+        "android_client_info": {
+          "package_name": "com.example.oauthlaw"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "956743431177-6gb13c9g12a1cht9k0toekp846e2s3pf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyChwYUq_f9waW2A4SFQvmr_Y94q3intaR8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "956743431177-6gb13c9g12a1cht9k0toekp846e2s3pf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

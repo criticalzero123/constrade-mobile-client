@@ -16,9 +16,12 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
+      "googleServicesFile": "./GoogleService-Info.plist",
+      "useFrameworks": "static",
       "supportsTablet": true
     },
     "android": {
+      "googleServicesFile": "./google-services.json",
       "windowSoftInputMode": "adjustPan",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
@@ -33,7 +36,10 @@
         "expo-image-picker",
         {
           "photosPermission": "The app accesses your photos to let you share them with your friends."
-        }
+        },
+        "@react-native-firebase/app",
+        "@react-native-firebase/perf",
+        "@react-native-firebase/crashlytics"
       ]
     ]
   }
