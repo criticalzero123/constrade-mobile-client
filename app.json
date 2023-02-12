@@ -14,7 +14,9 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "googleServicesFile": "./GoogleService-Info.plist",
       "useFrameworks": "static",
@@ -26,7 +28,11 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FF4308"
-      }
+      },
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ],
+      "package": "com.constrade.mobile"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -36,11 +42,15 @@
         "expo-image-picker",
         {
           "photosPermission": "The app accesses your photos to let you share them with your friends."
-        },
-        "@react-native-firebase/app",
-        "@react-native-firebase/perf",
-        "@react-native-firebase/crashlytics"
-      ]
-    ]
+        }
+      ],
+      "@react-native-firebase/app",
+      "@react-native-google-signin/google-signin"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "f0331308-8cb0-42c9-99a4-f63a4b1f59b3"
+      }
+    }
   }
 }
