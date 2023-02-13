@@ -76,7 +76,7 @@ export const googleAuthLoginReducer = (state = {}, action) => {
   }
 };
 
-export const emailAndPasswordAuthLogin = (state = {}, action) => {
+export const emailAndPasswordAuthLoginReducer = (state = {}, action) => {
   switch (action.type) {
     case "USER_LOGIN_EMAIL_AND_PASSWORD_REQUEST":
       return {
@@ -134,6 +134,13 @@ export const userInfoReducer = (state = {}, action) => {
       return {
         ...state,
         user: action.payload,
+      };
+
+    case "USER_SIGN_OUT":
+      return {
+        ...state,
+        success: true,
+        user: null,
       };
 
     default:

@@ -58,7 +58,6 @@ export default function SignUpPassword({ route }) {
     if (success) {
       navigation.navigate("WelcomeUser", { from: "signup", user: user });
     } else {
-      console.log(error);
       navigation.navigate("SignUp");
     }
   }, [getState]);

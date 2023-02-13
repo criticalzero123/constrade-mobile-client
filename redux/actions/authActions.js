@@ -53,11 +53,11 @@ export const checkEmail = (email) => (dispatch) => {
     });
 };
 
-export const googleAuthLogin = (userEmail) => (dispatch) => {
+export const googleAuthLogin = (email) => (dispatch) => {
   dispatch({ type: "USER_LOGIN_GOOGLE_REQUEST" });
 
   axios
-    .get(`${API_URL}/api/users/login/google/${userEmail}`)
+    .put(`${API_URL}/api/users/login/google`, { email })
     .then((res) => {
       dispatch({
         type: "USER_LOGIN_GOOGLE_SUCCESS",
@@ -73,7 +73,7 @@ export const emailAndPasswordAuthLogin = (userInfo) => (dispatch) => {
   dispatch({ type: "USER_LOGIN_EMAIL_AND_PASSWORD_REQUEST" });
 
   axios
-    .put(`${API_URL}/api/users/login/${userInfo}`)
+    .put(`${API_URL}/api/users/login`, userInfo)
     .then((res) => {
       dispatch({
         type: "USER_LOGIN_EMAIL_AND_PASSWORD_SUCCESS",
@@ -87,4 +87,8 @@ export const emailAndPasswordAuthLogin = (userInfo) => (dispatch) => {
 
 export const getUserInfo = (user) => (dispatch) => {
   dispatch({ type: "USER_INFO", payload: user });
+};
+
+export const signOutUser = () => (dispatch) => {
+  dispatch({ type: "USER_SIGN_OUT" });
 };

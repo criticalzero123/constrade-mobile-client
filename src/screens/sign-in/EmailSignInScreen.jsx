@@ -13,9 +13,37 @@ import EmailTextInput from "../../components/CustomTextInput/EmailTextInput";
 import PasswordTextInput from "../../components/CustomTextInput/PasswordTextInput";
 import TermsAndCondition from "../../components/TermsAndCondition/TermsAndCondition";
 import SignInAndSignUpButton from "../../components/buttons/SignInAndSignUpButton";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useNavigation } from "@react-navigation/native";
 export default function EmailSignInScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const { loading, user, error } = useSelector(
+    (state) => state.emailAndPasswordAuthLoginReducer
+  );
+
+  const navigation = useNavigation();
+
+  const onValidate = () => {
+    return email.trim() !== "" && password.trim() !== ""
+      ? { email, password }
+      : null;
+  };
+
+  useEffect(() => {
+    if (user === undefined) return;
+    if (user === null) alert("User Not Found!");
+
+    if (user !== null) {
+      navigation.navigate("WelcomeUser", { user: user, from: "signin" });
+      return;
+    }
+    if (error) {
+      console.log(error);
+    }
+  }, [user]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -30,8 +58,12 @@ export default function EmailSignInScreen() {
       <View className="my-1"></View>
       <Text className="text-[#CC481F]">Forgot Password?</Text>
       <View className="my-4"></View>
-      <SignInAndSignUpButton type="signin" value={email} to="WelcomeUser" />
-
+      <SignInAndSignUpButton
+        type="signin"
+        loginType="email"
+        value={onValidate()}
+        loading={loading}
+      />
       <TermsAndCondition />
     </SafeAreaView>
   );

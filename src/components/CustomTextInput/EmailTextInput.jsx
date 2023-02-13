@@ -11,6 +11,7 @@ export default function EmailTextInput({ setEmail, email }) {
         placeholder="e.g. johndoe@email.com"
         keyboardType="email-address"
         className="border py-2 px-3 rounded border-gray-400"
+        autoCapitalize="none"
       />
     </View>
   );

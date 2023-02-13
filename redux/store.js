@@ -8,7 +8,7 @@ import {
   googleAuthLoginReducer,
   googleAuthRegisterReducer,
   userInfoReducer,
-  emailAndPasswordAuthLogin,
+  emailAndPasswordAuthLoginReducer,
 } from "./reducers/authReducer";
 
 import { addProductReducer } from "./reducers/productReducer";
@@ -20,7 +20,7 @@ const finalReducer = combineReducers({
   googleAuthLoginReducer,
   googleAuthRegisterReducer,
   userInfoReducer,
-  emailAndPasswordAuthLogin,
+  emailAndPasswordAuthLoginReducer,
 });
 
 const composeEnhancers = composeWithDevTools({
