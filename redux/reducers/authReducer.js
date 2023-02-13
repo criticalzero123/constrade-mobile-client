@@ -136,13 +136,6 @@ export const userInfoReducer = (state = {}, action) => {
         user: action.payload,
       };
 
-    case "USER_SIGN_OUT":
-      return {
-        ...state,
-        success: true,
-        user: null,
-      };
-
     default:
       return { ...state };
   }

@@ -2,14 +2,7 @@ import { Text, Pressable, View, ToastAndroid } from "react-native";
 import React, { useEffect } from "react";
 import { AntDesign } from "@expo/vector-icons";
 
-import { getFirstName, getLastName } from "../../../service/userNameService";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  googleAuthLogin,
-  googleAuthRegister,
-} from "../../../redux/actions/authActions";
 import { useNavigation } from "@react-navigation/native";
-import { useMemo } from "react";
 import { useGoogleAuth } from "../../hooks/useGoogleAuth";
 import { useUserInfo } from "../../hooks/useUserInfo";
 import { useGoogleAuthSignUp } from "../../hooks/useGoogleAuthSignUp";
@@ -34,14 +27,6 @@ export default function GoogleButton({ text, type }) {
   const navigation = useNavigation();
 
   useEffect(() => {
-    if (
-      userInfo === undefined ||
-      Object.keys(checkEmailReducer).length === 0 ||
-      checkEmailReducer.loading ||
-      authRegister.loading
-    )
-      return;
-
     if (authRegister.success) {
       navigation.navigate("WelcomeUser", {
         from: "signup",
@@ -57,7 +42,7 @@ export default function GoogleButton({ text, type }) {
       });
       return;
     }
-  }, [checkEmailReducer, authRegister, userInfo, authLogin]);
+  }, [authRegister, authLogin]);
 
   return (
     <Pressable onPress={() => promptAsync()} disabled={!request}>

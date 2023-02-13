@@ -23,12 +23,20 @@ const finalReducer = combineReducers({
   emailAndPasswordAuthLoginReducer,
 });
 
+const rootReducer = (state, action) => {
+  if (action.type === "USER_SIGN_OUT") {
+    return finalReducer({}, action);
+  }
+
+  return finalReducer(state, action);
+};
+
 const composeEnhancers = composeWithDevTools({
   // specify here name, actionsBlacklist, actionCreators and other options
 });
 
 const store = createStore(
-  finalReducer,
+  rootReducer,
   composeEnhancers(
     applyMiddleware(thunk)
     //   other store enhancers

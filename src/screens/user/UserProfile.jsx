@@ -19,7 +19,6 @@ export default function UserProfile() {
   const navigation = useNavigation();
 
   const onSignOut = () => {
-    console.log("jd");
     const auth = getAuth();
     signOut(auth)
       .then(() => {
