@@ -22,35 +22,35 @@ export default function OtpScreen({ route }) {
   const [validating, setValidating] = useState(false);
 
   // TODO: UNCOMMENT THIS FOR THE ACTUAL OTP
-  // useEffect(() => {
-  //   const count =
-  //     counter > 0 &&
-  //     setInterval(() => {
-  //       setCounter((oldCount) => oldCount - 1);
-  //     }, 1000);
+  useEffect(() => {
+    const count =
+      counter > 0 &&
+      setInterval(() => {
+        setCounter((oldCount) => oldCount - 1);
+      }, 1000);
 
-  //   return () => {
-  //     clearInterval(count);
-  //   };
-  // }, [counter]);
+    return () => {
+      clearInterval(count);
+    };
+  }, [counter]);
 
   const otpValidation = (newText) => {
     if (newText.length === 6) {
       setValidating(!validating);
 
-      if (newText === "123456") {
-        if (type === "signin") {
-          navigation.navigate("WelcomeUser", {
-            from: "signin",
-          });
-        } else {
-          navigation.navigate("SignUpName", { emailOrPhone: value });
-        }
-      } else {
+      if (newText !== "123456") {
         ToastAndroid.show("Wrong OTP, Please Try again!", ToastAndroid.SHORT);
         setValidating(false);
         setOtp("");
         return;
+      }
+
+      if (type === "signin") {
+        navigation.navigate("WelcomeUser", {
+          from: "signin",
+        });
+      } else {
+        navigation.navigate("SignUpName", { emailOrPhone: value });
       }
     }
 

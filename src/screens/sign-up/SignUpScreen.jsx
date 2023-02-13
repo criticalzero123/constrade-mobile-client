@@ -9,8 +9,6 @@ import {
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import Header from "../../components/sign-in/SignInHeader";
-import CustomTextInput from "../../components/CustomTextInput/CustomTextInput";
-import NavigationButton from "../../components/buttons/NavigationButton";
 import LineTextCenter from "../../components/line-text-center/LineTextCenter";
 import GoogleButton from "../../components/buttons/GoogleButton";
 import { useNavigation } from "@react-navigation/native";
@@ -18,23 +16,21 @@ import { useNavigation } from "@react-navigation/native";
 import TermsAndCondition from "../../components/TermsAndCondition/TermsAndCondition";
 import { useSelector } from "react-redux";
 import { Portal, Dialog, Provider, Button } from "react-native-paper";
+import EmailOrPhone from "../../components/sign-in/EmailOrPhone";
 
 export default function SignUpScreen() {
   const navigation = useNavigation();
 
-  const [value, setValue] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
 
   const getChecker = useSelector((state) => state.checkEmailReducer);
-  const { error, loading, success, exist } = getChecker;
+  const { loading, success, exist } = getChecker;
 
   useEffect(() => {
     if (loading) return;
 
     if (success && exist) {
       setModalVisible(true);
-    } else if (success && !exist) {
-      navigation.navigate("Otp", { value, type: "signup" });
     }
   }, [getChecker]);
 
@@ -51,23 +47,7 @@ export default function SignUpScreen() {
             bodyText="Proceed using your email or phone number. We will use this for OTP Verification."
           />
 
-          {/* TODO: only email got a checker make also for the phone in the future and make it uniform */}
-          <CustomTextInput
-            value={value}
-            setValue={setValue}
-            label="Email or phone number (Email pa ang pwede)"
-            placeholder="Enter your mobile or email"
-          />
-
-          <View className="my-4"></View>
-          <NavigationButton
-            type="signup"
-            to="Otp"
-            value={value}
-            checkValue={true}
-            loading={loading}
-            exist={exist}
-          />
+          <EmailOrPhone />
 
           <LineTextCenter text="or" />
 

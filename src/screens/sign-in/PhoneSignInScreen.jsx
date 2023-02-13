@@ -13,7 +13,7 @@ import React, { useState } from "react";
 import TermsAndCondition from "../../components/TermsAndCondition/TermsAndCondition";
 import SignInHeader from "../../components/sign-in/SignInHeader";
 import PhoneTextInput from "../../components/CustomTextInput/PhoneTextInput";
-import NavigationButton from "../../components/buttons/NavigationButton";
+import SignInAndSignUpButton from "../../components/buttons/SignInAndSignUpButton";
 
 export default function PhoneSignInScreen() {
   const [phone, setPhone] = useState("");
@@ -26,7 +26,7 @@ export default function PhoneSignInScreen() {
 
       <PhoneTextInput phone={phone} setPhone={setPhone} />
       <View className="my-3"></View>
-      <NavigationButton to="Otp" type="signin" value={phone} />
+      <SignInAndSignUpButton to="Otp" type="signin" value={phone} />
 
       <TermsAndCondition />
     </SafeAreaView>

@@ -1,11 +1,11 @@
 import axios from "axios";
-import { API_URL_LOCAL } from "@env";
+import { API_URL } from "@env";
 
 export const addProduct = (product) => (dispatch) => {
   dispatch({ type: "PRODUCT_ADD_REQUEST" });
 
   axios
-    .post(`${API_URL_LOCAL}/api/products`, product)
+    .post(`${API_URL}/api/products`, product)
     .then((res) => {
       dispatch({
         type: "PRODUCT_ADD_SUCCESS",

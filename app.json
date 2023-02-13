@@ -6,6 +6,7 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
+    "scheme": "mycoolredirect",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -14,24 +15,19 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
-      "googleServicesFile": "./GoogleService-Info.plist",
       "useFrameworks": "static",
+      "bundleIdentifier": "com.constrade.mobile",
       "supportsTablet": true
     },
     "android": {
-      "googleServicesFile": "./google-services.json",
       "windowSoftInputMode": "adjustPan",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FF4308"
       },
-      "permissions": [
-        "android.permission.RECORD_AUDIO"
-      ],
+      "permissions": ["android.permission.RECORD_AUDIO"],
       "package": "com.constrade.mobile"
     },
     "web": {
@@ -43,9 +39,7 @@
         {
           "photosPermission": "The app accesses your photos to let you share them with your friends."
         }
-      ],
-      "@react-native-firebase/app",
-      "@react-native-google-signin/google-signin"
+      ]
     ],
     "extra": {
       "eas": {

@@ -4,11 +4,11 @@ import { useNavigation } from "@react-navigation/native";
 import { useDispatch } from "react-redux";
 import { checkEmail } from "../../../redux/actions/authActions";
 
-export default function NavigationButton({
+export default function SignInAndSignUpButton({
   to,
   type,
   value,
-  checkValue,
+  checkValue = false,
   loading,
 }) {
   const navigation = useNavigation();

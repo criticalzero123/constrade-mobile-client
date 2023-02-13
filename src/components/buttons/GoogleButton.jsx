@@ -1,65 +1,91 @@
 import { Text, Pressable, View, ToastAndroid } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import { AntDesign } from "@expo/vector-icons";
+
+import * as WebBrowser from "expo-web-browser";
+import { ResponseType } from "expo-auth-session";
+import * as Google from "expo-auth-session/providers/google";
+
+import { WEB_CLIENT_ID } from "@env";
+
 import {
-  GoogleSignin,
-  statusCodes,
-} from "@react-native-google-signin/google-signin";
-import auth from "@react-native-firebase/auth";
-import { useEffect } from "react";
+  getAuth,
+  GoogleAuthProvider,
+  signInWithCredential,
+} from "firebase/auth";
+import { useState } from "react";
+import { getFirstName, getLastName } from "../../../service/userNameService";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  checkEmail,
+  googleAuthRegister,
+} from "../../../redux/actions/authActions";
+import { useNavigation } from "@react-navigation/native";
+
+WebBrowser.maybeCompleteAuthSession();
 
 export default function GoogleButton({ text, type }) {
+  const [request, response, promptAsync] = Google.useIdTokenAuthRequest({
+    clientId: WEB_CLIENT_ID,
+  });
+
+  const [userInfo, setUserInfo] = useState();
+  const dispatch = useDispatch();
+  const checkEmailReducer = useSelector((state) => state.checkEmailReducer);
+  const { exist } = checkEmailReducer;
+
+  const authRegister = useSelector((state) => state.googleAuthRegisterReducer);
+  const { success, user } = authRegister;
+
+  const navigation = useNavigation();
+
   useEffect(() => {
-    GoogleSignin.configure({
-      scopes: ["email"],
-      webClientId:
-        "956743431177-6gb13c9g12a1cht9k0toekp846e2s3pf.apps.googleusercontent.com",
-      iosClientId:
-        "956743431177-tf047dfcan75fofbntae7qt76t7grm2g.apps.googleusercontent.com",
-      offlineAccess: true,
-      forceCodeForRefreshToken: true, // [Android] related to `serverAuthCode`, read the docs link below *.
-    });
-  }, []);
+    if (
+      userInfo === undefined ||
+      Object.keys(checkEmailReducer).length === 0 ||
+      checkEmailReducer.loading ||
+      authRegister.loading ||
+      exist
+    )
+      return;
 
-  const onPressGoogle = async () => {
-    try {
-      await GoogleSignin.hasPlayServices({
-        showPlayServicesUpdateDialog: true,
-      });
-
-      const { accessToken, idToken } = await GoogleSignin.signIn();
-      const credential = auth.GoogleAuthProvider.credential(
-        idToken,
-        accessToken
-      );
-      await auth().signInWithCredential(credential);
-
-      if (type === "signin") {
-        ToastAndroid.show("signin", ToastAndroid.SHORT);
-      } else {
-        ToastAndroid.show("signup", ToastAndroid.SHORT);
-      }
-    } catch (e) {
-      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-        // user cancelled the login flow
-        console.error("Cancel", ToastAndroid.SHORT);
-      } else if (error.code === statusCodes.IN_PROGRESS) {
-        ToastAndroid.show("Signin in progress", ToastAndroid.SHORT);
-        // operation (f.e. sign in) is in progress already
-      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-        ToastAndroid.show("PLAY_SERVICES_NOT_AVAILABLE", ToastAndroid.SHORT);
-        // play services not available or outdated
-      } else {
-        // some other error happened
-        ToastAndroid.show("Something went wrong", ToastAndroid.SHORT);
-      }
+    if (success) {
+      navigation.navigate("WelcomeUser", { from: "signup", user: user });
+      return;
     }
 
-    await console.log(GoogleSignin.getCurrentUser());
+    if (type === "signup") {
+      const data = {
+        user_type: userInfo.emailVerified ? "semi-verified" : "non-verified",
+        authprovider_type: "google",
+        email: userInfo.email,
+        password: "",
+        imageUrl: userInfo.photoURL,
+        firstname: getFirstName(userInfo.displayName),
+        lastname: getLastName(userInfo.displayName),
+      };
+      dispatch(googleAuthRegister(data));
+    }
+  }, [dispatch, checkEmailReducer, authRegister, userInfo]);
+
+  useEffect(() => {
+    if (response?.type === "success") {
+      const { id_token } = response.params;
+      const auth = getAuth();
+      const credential = GoogleAuthProvider.credential(id_token);
+      signInWithCredential(auth, credential).then((res) => {
+        setUserInfo(res.user);
+        dispatch(checkEmail(res.user.email));
+      });
+    }
+  }, [response]);
+
+  const onPressGoogle = () => {
+    promptAsync();
   };
 
   return (
-    <Pressable onPress={onPressGoogle}>
+    <Pressable onPress={onPressGoogle} disabled={!request}>
       <View
         className={` rounded py-4 flex-row min-w-full justify-center items-center ${
           type === "signin" ? "bg-[#CC481F] " : "border border-[#CC481F]"

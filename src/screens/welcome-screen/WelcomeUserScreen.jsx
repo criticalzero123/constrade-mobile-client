@@ -6,35 +6,47 @@ import {
   StatusBar,
   Platform,
   ActivityIndicator,
+  Image,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
+import { useDispatch } from "react-redux";
+import { getUserInfo } from "../../../redux/actions/authActions";
+import { useMemo } from "react";
 
 export default function WelcomeUserScreen({ route }) {
-  const [counter, setCounter] = useState(0);
-
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+  const { from, user } = route.params;
 
-  const { from, name } = route.params;
+  const saveUserReducer = useMemo(() => {
+    dispatch(getUserInfo(user));
+  }, [user, dispatch]);
 
   useEffect(() => {
     // TODO:Temporary timer for logging in
-    if (counter > 5) navigation.navigate("Menu");
-
-    const timer = setTimeout(() => setCounter(counter + 1), 1000);
-
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [counter]);
+    setTimeout(() => {
+      saveUserReducer;
+      navigation.navigate("Menu");
+    }, 5000);
+  }, []);
 
   return (
     <SafeAreaView style={styles.container}>
-      <View className="w-24 h-24 bg-gray-500 rounded-full"></View>
+      {user.imageUrl ? (
+        <Image
+          source={{ uri: user.imageUrl }}
+          className="w-24 h-24 rounded-full"
+        />
+      ) : (
+        <View className="w-24 h-24 bg-gray-500 rounded-full"></View>
+      )}
       <View className="my-3"></View>
       <Text className="font-semibold text-xl">
         {from === "signin" ? "Glad to have you back, " : "Nice to meet you, "}
-        <Text className="capitalize">{name && name}!</Text>
+        <Text className="capitalize">
+          {user && user.firstName + " " + user.lastName}!
+        </Text>
       </Text>
       <View className="my-1"></View>
       <Text className="text-center text-gray-400">

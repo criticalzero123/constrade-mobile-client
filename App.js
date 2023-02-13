@@ -9,6 +9,9 @@ import SignUpStack from "./src/stacks/sign-up/SignUpStack";
 import OtpScreen from "./src/screens/Otp/OtpScreen";
 import { Provider } from "react-redux";
 import store from "./redux/store";
+
+import "./firebase/firebase-config";
+
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -20,7 +23,7 @@ export default function App() {
             headerShown: false,
           }}
           // initialRouteName="Onboarding"
-          initialRouteName="Menu"
+          initialRouteName="SignIn"
         >
           {/* Stacks */}
           <Stack.Screen name="SignIn" component={SignInStack} />

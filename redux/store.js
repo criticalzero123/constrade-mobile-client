@@ -5,6 +5,10 @@ import thunk from "redux-thunk";
 import {
   emailAndPasswordRegisterReducer,
   checkEmailReducer,
+  googleAuthLoginReducer,
+  googleAuthRegisterReducer,
+  userInfoReducer,
+  emailAndPasswordAuthLogin,
 } from "./reducers/authReducer";
 
 import { addProductReducer } from "./reducers/productReducer";
@@ -13,6 +17,10 @@ const finalReducer = combineReducers({
   emailAndPasswordRegisterReducer,
   checkEmailReducer,
   addProductReducer,
+  googleAuthLoginReducer,
+  googleAuthRegisterReducer,
+  userInfoReducer,
+  emailAndPasswordAuthLogin,
 });
 
 const composeEnhancers = composeWithDevTools({

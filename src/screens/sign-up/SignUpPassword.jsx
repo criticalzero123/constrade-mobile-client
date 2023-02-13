@@ -12,6 +12,8 @@ import { emailAndPasswordRegister } from "../../../redux/actions/authActions";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+
 export default function SignUpPassword({ route }) {
   const [password, setPassword] = useState("");
   const navigation = useNavigation();
@@ -29,31 +31,35 @@ export default function SignUpPassword({ route }) {
     /* TODO: like +639999999999 or 09999999999 to => 639999999999 when saving in the database */
   }
   const onSubmit = () => {
-    const user = {
-      User_type: "semi-verified",
-      Person: {
-        FirstName: value.firstName,
-        LastName: value.lastName,
-      },
-      AuthProvider_type: "none",
-      Subscription_type: "free",
-      User_status: "active",
-      Email: value.emailOrPhone,
-      Password: password,
-      ImageUrl: "",
-      CountPost: 0,
-      DateCreated: new Date(),
-      LastActiveAt: new Date(),
+    const userInfo = {
+      user_type: "semi-verified",
+      authprovider_type: "none",
+      email: value.emailOrPhone,
+      password: password,
+      imageUrl: "",
+      firstname: value.firstName,
+      lastname: value.lastName,
     };
 
-    dispatch(emailAndPasswordRegister(user));
+    const auth = getAuth();
+    createUserWithEmailAndPassword(auth, userInfo.email, userInfo.password)
+      .then((userCredentials) => {
+        dispatch(emailAndPasswordRegister(userInfo));
+      })
+      .catch((err) => {
+        const errorCode = err.code;
+        const errorMessage = err.message;
+
+        console.log(errorCode, errorMessage);
+      });
   };
 
   useEffect(() => {
     if (success) {
-      navigation.navigate("WelcomeUser", {
-        name: value.firstName + " " + value.lastName,
-      });
+      navigation.navigate("WelcomeUser", { from: "signup", user: user });
+    } else {
+      console.log(error);
+      navigation.navigate("SignUp");
     }
   }, [getState]);
 

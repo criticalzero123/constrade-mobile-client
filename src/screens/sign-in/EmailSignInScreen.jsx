@@ -12,7 +12,7 @@ import Header from "../../components/sign-in/SignInHeader";
 import EmailTextInput from "../../components/CustomTextInput/EmailTextInput";
 import PasswordTextInput from "../../components/CustomTextInput/PasswordTextInput";
 import TermsAndCondition from "../../components/TermsAndCondition/TermsAndCondition";
-import NavigationButton from "../../components/buttons/NavigationButton";
+import SignInAndSignUpButton from "../../components/buttons/SignInAndSignUpButton";
 export default function EmailSignInScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -30,7 +30,7 @@ export default function EmailSignInScreen() {
       <View className="my-1"></View>
       <Text className="text-[#CC481F]">Forgot Password?</Text>
       <View className="my-4"></View>
-      <NavigationButton type="signin" value={email} to="WelcomeUser" />
+      <SignInAndSignUpButton type="signin" value={email} to="WelcomeUser" />
 
       <TermsAndCondition />
     </SafeAreaView>
