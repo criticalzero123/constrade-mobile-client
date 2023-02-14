@@ -12,7 +12,7 @@ import React from "react";
 import { signOut, getAuth } from "firebase/auth";
 import { useDispatch } from "react-redux";
 import { signOutUser } from "../../../redux/actions/authActions";
-import { useNavigation } from "@react-navigation/native";
+import { StackActions, useNavigation } from "@react-navigation/native";
 
 export default function UserProfile() {
   const dispatch = useDispatch();
@@ -23,7 +23,7 @@ export default function UserProfile() {
     signOut(auth)
       .then(() => {
         dispatch(signOutUser());
-        navigation.navigate("SignIn");
+        navigation.dispatch(StackActions.replace("SignIn"));
       })
       .catch((err) => {
         console.log(err);

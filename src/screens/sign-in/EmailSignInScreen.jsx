@@ -15,7 +15,7 @@ import TermsAndCondition from "../../components/TermsAndCondition/TermsAndCondit
 import SignInAndSignUpButton from "../../components/buttons/SignInAndSignUpButton";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
-import { useNavigation } from "@react-navigation/native";
+import { StackActions, useNavigation } from "@react-navigation/native";
 export default function EmailSignInScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -34,15 +34,15 @@ export default function EmailSignInScreen() {
 
   useEffect(() => {
     if (user === undefined) return;
-    if (user === null) alert("User Not Found!");
-
-    if (user !== null) {
-      navigation.navigate("WelcomeUser", { user: user, from: "signin" });
+    if (user === null) {
+      alert("User Not Found!");
       return;
     }
-    if (error) {
-      console.log(error);
-    }
+    if (error) console.log(error);
+
+    navigation.dispatch(
+      StackActions.replace("WelcomeUser", { user: user, from: "signin" })
+    );
   }, [user]);
 
   return (

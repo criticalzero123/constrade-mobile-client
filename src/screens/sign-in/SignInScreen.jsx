@@ -37,7 +37,10 @@ export default function SignInScreen() {
         <LoginMethodButton
           Icon={<Feather name="phone" size={24} color="#CC481F" />}
           text="Phone"
-          onPress={() => navigation.navigate("SignInPhone")}
+          onPress={() =>
+            // navigation.navigate("SignInPhone")
+            alert("coming soon")
+          }
         />
 
         <LoginMethodButton

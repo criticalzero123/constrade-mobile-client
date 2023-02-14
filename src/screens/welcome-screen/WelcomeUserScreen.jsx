@@ -21,8 +21,6 @@ export default function WelcomeUserScreen({ route }) {
 
   const userReducer = useSelector((state) => state.userInfoReducer);
 
-  console.log(userReducer);
-
   useEffect(() => {
     // TODO:Temporary timer for logging in
     setTimeout(() => {
