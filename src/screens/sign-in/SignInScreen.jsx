@@ -21,6 +21,7 @@ import { useNavigation } from "@react-navigation/native";
 
 export default function SignInScreen() {
   const navigation = useNavigation();
+
   return (
     <SafeAreaView style={styles.container}>
       <SignInHeader
@@ -28,7 +29,7 @@ export default function SignInScreen() {
         bodyText="You can login into your account by using any of the following."
       />
 
-      <GoogleButton text="Sign in using Google" type="signin" />
+      <GoogleButton text="Sign in using Google" type={"signin"} />
 
       <LineTextCenter text="or continue using" />
 

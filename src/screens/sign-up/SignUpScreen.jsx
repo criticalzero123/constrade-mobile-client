@@ -34,6 +34,8 @@ export default function SignUpScreen() {
     }
   }, [getChecker]);
 
+  console.log("from signup");
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}

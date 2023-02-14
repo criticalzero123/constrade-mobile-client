@@ -1,14 +1,15 @@
-import { useMemo } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { googleAuthRegister } from "../../redux/actions/authActions";
 import { getFirstName, getLastName } from "../../service/userNameService";
 
-export const useGoogleAuthSignUp = (userInfo, exist, type) => {
+export const useGoogleAuthSignUp = (userInfo, type) => {
   const dispatch = useDispatch();
 
   const authRegister = useSelector((state) => state.googleAuthRegisterReducer);
+  const { exist } = useSelector((state) => state.checkEmailReducer);
 
-  useMemo(() => {
+  useEffect(() => {
     if (
       userInfo === undefined ||
       exist === undefined ||

@@ -140,3 +140,14 @@ export const userInfoReducer = (state = {}, action) => {
       return { ...state };
   }
 };
+
+export const loginMethodReducer = (state = {}, action) => {
+  if (action.type === "LOGIN_METHOD") {
+    return {
+      ...state,
+      request: action.payload,
+    };
+  }
+
+  return { ...state };
+};

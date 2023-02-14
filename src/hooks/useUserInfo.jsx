@@ -4,9 +4,11 @@ import {
   signInWithCredential,
 } from "firebase/auth";
 import { useState, useEffect } from "react";
+import { useCheckEmail } from "./useCheckEmail";
 
-export const useUserInfo = (response, checkEmail) => {
+export const useUserInfo = (response) => {
   const [userInfo, setUserInfo] = useState();
+  const [checkUserEmail] = useCheckEmail();
 
   useEffect(() => {
     if (response?.type === "success") {
@@ -15,7 +17,7 @@ export const useUserInfo = (response, checkEmail) => {
       const credential = GoogleAuthProvider.credential(id_token);
       signInWithCredential(auth, credential).then((res) => {
         setUserInfo(res.user);
-        checkEmail(res.user.email);
+        checkUserEmail(res.user.email);
       });
     }
   }, [response]);

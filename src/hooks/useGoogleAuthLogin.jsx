@@ -1,14 +1,15 @@
 import { useDispatch, useSelector } from "react-redux";
 import { googleAuthLogin } from "../../redux/actions/authActions";
-import { useMemo } from "react";
+import { useEffect } from "react";
 
-export const useGoogleAuthLogin = (email, exist, type) => {
+export const useGoogleAuthLogin = (email, type) => {
   const dispatch = useDispatch();
-  const authLogin = useSelector((state) => state.googleAuthLoginReducer);
 
-  useMemo(() => {
-    if (exist === undefined || type !== "signin" || authLogin === undefined)
-      return;
+  const authLogin = useSelector((state) => state.googleAuthLoginReducer);
+  const { exist } = useSelector((state) => state.checkEmailReducer);
+
+  useEffect(() => {
+    if (exist === undefined || type !== "signin") return;
     if (!exist) {
       alert("User Not Found");
       return;

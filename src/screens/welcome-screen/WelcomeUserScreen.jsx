@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import React, { useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getUserInfo } from "../../../redux/actions/authActions";
 import { useMemo } from "react";
 
@@ -19,17 +19,22 @@ export default function WelcomeUserScreen({ route }) {
   const dispatch = useDispatch();
   const { from, user } = route.params;
 
-  const saveUserReducer = useMemo(() => {
-    dispatch(getUserInfo(user));
-  }, [user, dispatch]);
+  const userReducer = useSelector((state) => state.userInfoReducer);
+
+  console.log(userReducer);
 
   useEffect(() => {
     // TODO:Temporary timer for logging in
     setTimeout(() => {
-      saveUserReducer;
-      navigation.navigate("Menu");
+      dispatch(getUserInfo(user));
     }, 5000);
-  }, []);
+  }, [dispatch, user]);
+
+  useEffect(() => {
+    if (userReducer && userReducer.user !== undefined) {
+      navigation.navigate("Menu");
+    }
+  }, [userReducer]);
 
   return (
     <SafeAreaView style={styles.container}>

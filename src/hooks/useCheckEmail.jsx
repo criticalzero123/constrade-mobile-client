@@ -4,11 +4,10 @@ import { checkEmail } from "../../redux/actions/authActions";
 
 export const useCheckEmail = () => {
   const dispatch = useDispatch();
-  const checkEmailReducer = useSelector((state) => state.checkEmailReducer);
 
   const checkUserEmail = (email) => {
     dispatch(checkEmail(email));
   };
 
-  return [checkEmailReducer, checkUserEmail];
+  return [checkUserEmail];
 };

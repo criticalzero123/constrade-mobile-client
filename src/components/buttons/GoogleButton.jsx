@@ -1,48 +1,30 @@
-import { Text, Pressable, View, ToastAndroid } from "react-native";
+import { Text, Pressable, View } from "react-native";
 import React, { useEffect } from "react";
 import { AntDesign } from "@expo/vector-icons";
 
 import { useNavigation } from "@react-navigation/native";
 import { useGoogleAuth } from "../../hooks/useGoogleAuth";
 import { useUserInfo } from "../../hooks/useUserInfo";
-import { useGoogleAuthSignUp } from "../../hooks/useGoogleAuthSignUp";
-import { useCheckEmail } from "../../hooks/useCheckEmail";
-import { useGoogleAuthLogin } from "../../hooks/useGoogleAuthLogin";
+import { useGoogleAuthAction } from "../../hooks/useGoogleAuthAction";
+import { useDispatch } from "react-redux";
 
 export default function GoogleButton({ text, type }) {
-  const [request, response, promptAsync] = useGoogleAuth();
-  const [checkEmailReducer, checkUserEmail] = useCheckEmail();
-  const { userInfo } = useUserInfo(response, checkUserEmail);
-  const { authRegister } = useGoogleAuthSignUp(
-    userInfo,
-    checkEmailReducer.exist,
-    type
-  );
-  const { authLogin } = useGoogleAuthLogin(
-    userInfo && userInfo.email,
-    checkEmailReducer.exist,
-    type
-  );
-
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+  const [request, response, promptAsync] = useGoogleAuth();
+  const { userInfo } = useUserInfo(response);
+  const { user, from, success } = useGoogleAuthAction(userInfo);
 
   useEffect(() => {
-    if (authRegister.success) {
+    if (user !== undefined) {
       navigation.navigate("WelcomeUser", {
-        from: "signup",
-        user: authRegister.user,
+        from: from,
+        user: user,
       });
-      return;
     }
 
-    if (authLogin.success) {
-      navigation.navigate("WelcomeUser", {
-        user: authLogin.user,
-        from: "signin",
-      });
-      return;
-    }
-  }, [authRegister, authLogin]);
+    if (!success) dispatch({ type: "LOGIN_METHOD", payload: type });
+  }, [user]);
 
   return (
     <Pressable onPress={() => promptAsync()} disabled={!request}>
