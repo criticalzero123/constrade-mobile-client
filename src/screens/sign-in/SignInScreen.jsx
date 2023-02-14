@@ -17,7 +17,7 @@ import SignInHeader from "../../components/sign-in/SignInHeader";
 
 import { Feather } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
+import { StackActions, useNavigation } from "@react-navigation/native";
 
 export default function SignInScreen() {
   const navigation = useNavigation();
@@ -53,7 +53,10 @@ export default function SignInScreen() {
         />
       </View>
 
-      <Pressable className="mt-7" onPress={() => navigation.navigate("SignUp")}>
+      <Pressable
+        className="mt-7"
+        onPress={() => navigation.dispatch(StackActions.replace("SignUp"))}
+      >
         <Text className="text-[#CC481F]">I don't have an account</Text>
       </Pressable>
 

@@ -1,32 +1,29 @@
 import { useState } from "react";
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
 import { useGoogleAuthLogin } from "./useGoogleAuthLogin";
 import { useGoogleAuthSignUp } from "./useGoogleAuthSignUp";
 
-export const useGoogleAuthAction = (userInfo) => {
+export const useGoogleAuthAction = (userInfo, type) => {
   const [result, setResult] = useState({
     user: undefined,
     from: undefined,
     success: false,
   });
 
-  const { request } = useSelector((state) => state.loginMethodReducer);
-
-  const { authRegister } = useGoogleAuthSignUp(userInfo, request);
-  const { authLogin } = useGoogleAuthLogin(userInfo, request);
+  const { authRegister } = useGoogleAuthSignUp(userInfo, type);
+  const { authLogin } = useGoogleAuthLogin(userInfo && userInfo.email, type);
 
   useEffect(() => {
     if (authRegister.success)
       setResult({
         user: authRegister.user,
-        from: request,
+        from: type,
         success: authRegister.success,
       });
     else if (authLogin.success)
       setResult({
         user: authLogin.user,
-        from: request,
+        from: type,
         success: authLogin.success,
       });
   }, [authRegister, authLogin]);

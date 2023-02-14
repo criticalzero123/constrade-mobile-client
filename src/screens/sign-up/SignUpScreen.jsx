@@ -11,7 +11,7 @@ import React, { useEffect, useState } from "react";
 import Header from "../../components/sign-in/SignInHeader";
 import LineTextCenter from "../../components/line-text-center/LineTextCenter";
 import GoogleButton from "../../components/buttons/GoogleButton";
-import { useNavigation } from "@react-navigation/native";
+import { StackActions, useNavigation } from "@react-navigation/native";
 
 import TermsAndCondition from "../../components/TermsAndCondition/TermsAndCondition";
 import { useSelector } from "react-redux";
@@ -33,8 +33,6 @@ export default function SignUpScreen() {
       setModalVisible(true);
     }
   }, [getChecker]);
-
-  console.log("from signup");
 
   return (
     <KeyboardAvoidingView
@@ -59,7 +57,11 @@ export default function SignUpScreen() {
 
           <View className="flex-row items-center justify-center">
             <Text>Already have an account? </Text>
-            <Pressable onPress={() => navigation.navigate("SignIn")}>
+            <Pressable
+              onPress={() =>
+                navigation.dispatch(StackActions.replace("SignIn"))
+              }
+            >
               <Text className="text-[#CC481F] font-semibold text-base">
                 Sign in
               </Text>

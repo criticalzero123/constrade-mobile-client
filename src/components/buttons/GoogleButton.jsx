@@ -6,14 +6,12 @@ import { useNavigation } from "@react-navigation/native";
 import { useGoogleAuth } from "../../hooks/useGoogleAuth";
 import { useUserInfo } from "../../hooks/useUserInfo";
 import { useGoogleAuthAction } from "../../hooks/useGoogleAuthAction";
-import { useDispatch } from "react-redux";
 
 export default function GoogleButton({ text, type }) {
   const navigation = useNavigation();
-  const dispatch = useDispatch();
   const [request, response, promptAsync] = useGoogleAuth();
   const { userInfo } = useUserInfo(response);
-  const { user, from, success } = useGoogleAuthAction(userInfo);
+  const { user, from } = useGoogleAuthAction(userInfo, type);
 
   useEffect(() => {
     if (user !== undefined) {
@@ -22,8 +20,6 @@ export default function GoogleButton({ text, type }) {
         user: user,
       });
     }
-
-    if (!success) dispatch({ type: "LOGIN_METHOD", payload: type });
   }, [user]);
 
   return (
