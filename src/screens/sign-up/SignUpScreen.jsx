@@ -17,6 +17,7 @@ import TermsAndCondition from "../../components/TermsAndCondition/TermsAndCondit
 import { useSelector } from "react-redux";
 import { Portal, Dialog, Provider, Button } from "react-native-paper";
 import EmailOrPhone from "../../components/sign-in/EmailOrPhone";
+import KeyboardHideView from "../../components/CustomViews/KeyboardHideView";
 
 export default function SignUpScreen() {
   const navigation = useNavigation();
@@ -35,11 +36,7 @@ export default function SignUpScreen() {
   }, [getChecker]);
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      enabled={false}
-      style={styles.container}
-    >
+    <KeyboardHideView>
       <Provider>
         <View style={{ paddingHorizontal: 25, flex: 1 }}>
           <Header
@@ -88,13 +85,8 @@ export default function SignUpScreen() {
           </Portal>
         </View>
       </Provider>
-    </KeyboardAvoidingView>
+    </KeyboardHideView>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
-  },
-});
+const styles = StyleSheet.create({});

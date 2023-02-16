@@ -3,6 +3,7 @@ import React from "react";
 
 import AddProductOptions from "../../../screens/Products/AddProduct/AddProductOptions";
 import AddProductItemDetails from "../../../screens/Products/AddProduct/AddProductItemDetails";
+import AddProductDeliveryDetails from "../../../screens/Products/AddProduct/AddProductDeliveryDetails";
 
 const Stack = createNativeStackNavigator();
 
@@ -16,6 +17,10 @@ export default function ProductAddStack() {
       <Stack.Screen
         component={AddProductItemDetails}
         name="AddProductItemDetails"
+      />
+      <Stack.Screen
+        component={AddProductDeliveryDetails}
+        name="AddProductDeliveryDetails"
       />
     </Stack.Navigator>
   );

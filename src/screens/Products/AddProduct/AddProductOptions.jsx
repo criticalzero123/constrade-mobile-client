@@ -12,8 +12,8 @@ import {
 import React from "react";
 
 import console_images from "../../../../assets/Product/ProductAdd/console_images.png";
-import ButtonOptionActive from "../../../components/Products/ButtonOptionActive";
-import ButtonOption from "../../../components/Products/ButtonOption";
+import ButtonOptionActive from "../../../components/Products/AddProduct/ButtonOptionActive";
+import ButtonOption from "../../../components/Products/AddProduct/ButtonOption";
 import { useNavigation } from "@react-navigation/native";
 
 export default function AddProductOptions() {

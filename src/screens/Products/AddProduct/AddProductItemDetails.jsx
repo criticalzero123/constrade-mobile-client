@@ -12,7 +12,6 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import { Entypo } from "@expo/vector-icons";
-import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
 import { Picker } from "@react-native-picker/picker";
@@ -21,16 +20,18 @@ import CustomTextInput from "../../../components/CustomTextInput/CustomTextInput
 import TextAreaInput from "../../../components/CustomTextInput/TextAreaInput";
 import { RadioButton } from "react-native-paper";
 import Checkbox from "expo-checkbox";
-import { useDispatch } from "react-redux";
-import { addProduct } from "../../../../redux/actions/productActions";
+import Header from "../../../components/Products/AddProduct/Header";
+import ViewItemList from "../../../components/Products/AddProduct/ViewItemList";
+import { deleteItem } from "../../../../service/addProductService";
+import ViewImageList from "../../../components/Products/AddProduct/ViewImageList";
 
 export default function AddProductItemDetails() {
   const [imageList, setImageList] = useState([]);
-  const [category, setCategory] = useState("");
   const [price, setPrice] = useState(0);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [condition, setCondition] = useState("");
+  const [category, setCategory] = useState("console");
+  const [condition, setCondition] = useState("new");
   const [tradeMethod, setTradeMethod] = useState("");
   const [hasReceipts, setHasReceipts] = useState(false);
   const [hasWarranty, setHasWarranty] = useState(false);
@@ -39,28 +40,23 @@ export default function AddProductItemDetails() {
   const [itemInput, setItemInput] = useState("");
 
   const navigation = useNavigation();
-  const dispatch = useDispatch();
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
-      //   allowsEditing: true,
-      //   aspect: [4, 3],
-      //   quality: 1,
       allowsMultipleSelection: true,
-      selectionLimit: 5,
+      selectionLimit: 5, // only works in ios
     });
 
     if (result.canceled) return;
     if (result.assets.length > 5) {
-      ToastAndroid.show("Select atleast 5 images only", ToastAndroid.SHORT);
-      return;
+      ToastAndroid.show("Select less than 5 images only", ToastAndroid.SHORT);
+    } else {
+      setImageList(result.assets);
     }
-
-    setImageList(result.assets);
   };
 
   const addItemList = () => {
-    if (itemInput === "") return;
+    if (itemInput.trim() === "") return;
     if (tradeMethod === "swap" && itemList.length >= 1) {
       ToastAndroid.show("Swap only allow 1 item to swap", ToastAndroid.SHORT);
       setItemInput("");
@@ -71,69 +67,33 @@ export default function AddProductItemDetails() {
     setItemInput("");
   };
 
-  const deleteItem = (item) => {
-    const newItem = itemList.filter((_item) => _item !== item);
-
-    setItemList(newItem);
-  };
-
-  const addItem = () => {
-    const product = {
-      PosterUserId: 6,
-      Title: title,
-      Description: description,
-      Condition: condition,
-      PreferTrade: tradeMethod,
-      DeliveryMethod: "Delivery",
-      ProductStatus: "unsold",
-      Location: "Urgello",
-      GameGenre: "Action",
-      Platform: category,
-      ThumbnailUrl: "",
-      Cash: cash,
-      Item: itemList.toString(),
-      DateCreated: new Date(),
-      CountFavorite: 0,
+  const onPressTrigger = () => {
+    const productInfo = {
+      posterUserId: 630,
+      title: title,
+      description: description,
+      condition: condition,
+      preferTrade: tradeMethod,
+      gameGenre: "Action",
+      platform: category,
+      cash: cash,
+      item: itemList.toString(),
+      productStatus: "unsold",
     };
-    dispatch(addProduct(product));
-  };
 
-  const ViewItemList = () => {
-    return (
-      <View className="flex-row">
-        {itemList.length !== 0 &&
-          itemList.map((item, index) => (
-            <View
-              className="flex-row p-2 border mr-2 rounded items-center"
-              key={index}
-            >
-              <Text>{item}</Text>
-              <Pressable
-                onPress={() => deleteItem(item)}
-                className="px-2 py-1 bg-gray-400 ml-2 rounded-full"
-              >
-                <Text className="">X</Text>
-              </Pressable>
-            </View>
-          ))}
-      </View>
-    );
+    // console.log(imageList);
+    navigation.navigate("AddProductDeliveryDetails", {
+      productInfo,
+      imageList,
+    });
   };
-
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       enabled={true}
       style={styles.container}
     >
-      <View className="flex-row items-center mt-2">
-        <Pressable onPress={() => navigation.goBack()}>
-          <Ionicons name="arrow-back" size={26} color="black" />
-        </Pressable>
-        <Text className="ml-3 text-base font-semibold">Item Details</Text>
-      </View>
-
-      <View className="my-2"></View>
+      <Header onPress={() => navigation.goBack()} title="Item Details" />
 
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* For the image picker */}
@@ -148,6 +108,7 @@ export default function AddProductItemDetails() {
           <Text className="text-gray-500">You may select up to 5 photos.</Text>
         </Pressable>
         {/*  */}
+        <ViewImageList imageList={imageList} />
 
         <Text className="text-base mt-5">Category</Text>
         <Picker
@@ -258,7 +219,7 @@ export default function AddProductItemDetails() {
                   onSubmitEditing={addItemList}
                 />
 
-                <ViewItemList />
+                <ViewItemList itemList={itemList} setItemList={setItemList} />
               </View>
             )}
           </View>
@@ -284,7 +245,7 @@ export default function AddProductItemDetails() {
                 onChangeText={setItemInput}
                 onSubmitEditing={addItemList}
               />
-              <ViewItemList />
+              <ViewItemList itemList={itemList} setItemList={setItemList} />
             </View>
           )}
         </RadioButton.Group>
@@ -314,7 +275,7 @@ export default function AddProductItemDetails() {
         <View className="my-10"></View>
         <Pressable
           className="w-full bg-[#CC481F] p-4 items-center rounded-lg mb-4"
-          onPress={addItem}
+          onPress={onPressTrigger}
         >
           <Text className="text-white font-semibold">Delivery Method</Text>
         </Pressable>

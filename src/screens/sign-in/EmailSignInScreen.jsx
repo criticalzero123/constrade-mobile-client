@@ -16,6 +16,7 @@ import SignInAndSignUpButton from "../../components/buttons/SignInAndSignUpButto
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import { StackActions, useNavigation } from "@react-navigation/native";
+import KeyboardHideView from "../../components/CustomViews/KeyboardHideView";
 export default function EmailSignInScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -46,7 +47,7 @@ export default function EmailSignInScreen() {
   }, [user]);
 
   return (
-    <SafeAreaView style={styles.container}>
+    <KeyboardHideView>
       <Header
         headerText="Sign in using email"
         bodyText="Proceed using your email address."
@@ -65,14 +66,8 @@ export default function EmailSignInScreen() {
         loading={loading}
       />
       <TermsAndCondition />
-    </SafeAreaView>
+    </KeyboardHideView>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingHorizontal: 25,
-    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
-  },
-});
+const styles = StyleSheet.create({});

@@ -23,7 +23,8 @@ export default function App() {
             headerShown: false,
           }}
           // initialRouteName="Onboarding"
-          initialRouteName="SignIn"
+          // initialRouteName="SignIn"
+          initialRouteName="Menu"
         >
           {/* Stacks */}
           <Stack.Screen name="SignIn" component={SignInStack} />

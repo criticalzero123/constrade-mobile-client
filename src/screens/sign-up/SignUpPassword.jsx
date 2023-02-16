@@ -33,7 +33,7 @@ export default function SignUpPassword({ route }) {
   const onSubmit = () => {
     const userInfo = {
       user_type: "semi-verified",
-      authprovider_type: "none",
+      authprovider_type: "email",
       email: value.emailOrPhone,
       password: password,
       imageUrl: "",
