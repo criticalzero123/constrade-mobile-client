@@ -13,7 +13,6 @@ import {
 import React, { useState } from "react";
 import { Entypo } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import * as ImagePicker from "expo-image-picker";
 import { Picker } from "@react-native-picker/picker";
 import NumberTextInput from "../../../components/CustomTextInput/NumberTextInput";
 import CustomTextInput from "../../../components/CustomTextInput/CustomTextInput";
@@ -22,8 +21,8 @@ import { RadioButton } from "react-native-paper";
 import Checkbox from "expo-checkbox";
 import Header from "../../../components/Products/AddProduct/Header";
 import ViewItemList from "../../../components/Products/AddProduct/ViewItemList";
-import { deleteItem } from "../../../../service/addProductService";
-import ViewImageList from "../../../components/Products/AddProduct/ViewImageList";
+import ImagePicker from "../../../components/Products/AddProduct/ImagePicker";
+import KeyboardHideView from "../../../components/CustomViews/KeyboardHideView";
 
 export default function AddProductItemDetails() {
   const [imageList, setImageList] = useState([]);
@@ -40,20 +39,6 @@ export default function AddProductItemDetails() {
   const [itemInput, setItemInput] = useState("");
 
   const navigation = useNavigation();
-
-  const pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      allowsMultipleSelection: true,
-      selectionLimit: 5, // only works in ios
-    });
-
-    if (result.canceled) return;
-    if (result.assets.length > 5) {
-      ToastAndroid.show("Select less than 5 images only", ToastAndroid.SHORT);
-    } else {
-      setImageList(result.assets);
-    }
-  };
 
   const addItemList = () => {
     if (itemInput.trim() === "") return;
@@ -79,36 +64,22 @@ export default function AddProductItemDetails() {
       cash: cash,
       item: itemList.toString(),
       productStatus: "unsold",
+      hasReceipts: hasReceipts,
+      hasWarranty: hasWarranty,
     };
 
-    // console.log(imageList);
     navigation.navigate("AddProductDeliveryDetails", {
       productInfo,
       imageList,
     });
   };
+
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      enabled={true}
-      style={styles.container}
-    >
+    <KeyboardHideView>
       <Header onPress={() => navigation.goBack()} title="Item Details" />
 
       <ScrollView showsVerticalScrollIndicator={false}>
-        {/* For the image picker */}
-        <Pressable
-          onPress={pickImage}
-          className="border-2 border-dashed items-center border-gray-300 p-5"
-        >
-          <Entypo name="images" size={30} color="gray" />
-          <Text className="mt-3 mb-1 text-base font-semibold">
-            Upload Photo
-          </Text>
-          <Text className="text-gray-500">You may select up to 5 photos.</Text>
-        </Pressable>
-        {/*  */}
-        <ViewImageList imageList={imageList} />
+        <ImagePicker imageList={imageList} setImageList={setImageList} />
 
         <Text className="text-base mt-5">Category</Text>
         <Picker
@@ -280,7 +251,7 @@ export default function AddProductItemDetails() {
           <Text className="text-white font-semibold">Delivery Method</Text>
         </Pressable>
       </ScrollView>
-    </KeyboardAvoidingView>
+    </KeyboardHideView>
   );
 }
 

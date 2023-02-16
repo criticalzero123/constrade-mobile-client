@@ -17,6 +17,7 @@ import { MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useDispatch } from "react-redux";
 import { addProduct } from "../../../../redux/actions/productActions";
 import { saveImages } from "../../../../firebase/firebaseStorageBucket";
+import KeyboardHideView from "../../../components/CustomViews/KeyboardHideView";
 
 export default function AddProductDeliveryDetails({ route }) {
   const [location, setLocation] = useState("");
@@ -42,11 +43,7 @@ export default function AddProductDeliveryDetails({ route }) {
   };
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      enabled={false}
-      style={styles.container}
-    >
+    <KeyboardHideView>
       <View>
         <Header onPress={() => navigation.goBack()} title="Delivery Method" />
 
@@ -104,7 +101,7 @@ export default function AddProductDeliveryDetails({ route }) {
           List my item
         </Text>
       </Pressable>
-    </KeyboardAvoidingView>
+    </KeyboardHideView>
   );
 }
 
