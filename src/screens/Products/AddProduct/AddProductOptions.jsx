@@ -15,8 +15,11 @@ import console_images from "../../../../assets/Product/ProductAdd/console_images
 import ButtonOptionActive from "../../../components/Products/AddProduct/ButtonOptionActive";
 import ButtonOption from "../../../components/Products/AddProduct/ButtonOption";
 import { useNavigation } from "@react-navigation/native";
+import { optionItem } from "../../../../service/addProductService";
+import { useState } from "react";
 
 export default function AddProductOptions() {
+  const [active, setActive] = useState(0);
   const navigation = useNavigation();
   return (
     <SafeAreaView
@@ -35,40 +38,27 @@ export default function AddProductOptions() {
       </View>
 
       <View className="w-full">
-        <ButtonOptionActive
-          onPress={() => ToastAndroid.show("Pressed", ToastAndroid.SHORT)}
-        >
-          <Text className="mb-2 font-bold text-white text-base">Games</Text>
-          <Text className="text-gray-100">Physical game copy</Text>
-        </ButtonOptionActive>
+        {optionItem.map((item, index) =>
+          active === item.id ? (
+            <ButtonOptionActive
+              onPress={() => ToastAndroid.show("Pressed", ToastAndroid.SHORT)}
+              data={item}
+              key={item.id}
+            />
+          ) : (
+            <ButtonOption
+              onPress={() =>
+                item.active
+                  ? setActive(index)
+                  : ToastAndroid.show("coming soon", ToastAndroid.SHORT)
+              }
+              data={item}
+              key={item.id}
+            />
+          )
+        )}
 
         <View className="my-1"></View>
-
-        <ButtonOption
-          onPress={() => ToastAndroid.show("Coming soon", ToastAndroid.SHORT)}
-        >
-          <Text className="mb-2 font-bold text-base">
-            Accessories
-            <Text className="text-xs text-gray-400"> (coming soon)</Text>
-          </Text>
-          <Text className="text-gray-500">
-            Game controllers, skins, and others
-          </Text>
-        </ButtonOption>
-
-        <View className="my-1"></View>
-
-        <ButtonOption
-          onPress={() => ToastAndroid.show("Coming soon", ToastAndroid.SHORT)}
-        >
-          <Text className="mb-2 font-bold text-base">
-            Console
-            <Text className="text-xs text-gray-400"> (coming soon)</Text>
-          </Text>
-          <Text className="text-gray-500">
-            XBOX, Nintendo, and Playstation consoles
-          </Text>
-        </ButtonOption>
       </View>
 
       <Pressable

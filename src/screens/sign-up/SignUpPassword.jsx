@@ -12,11 +12,12 @@ import { emailAndPasswordRegister } from "../../../redux/actions/authActions";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { createWithEmailAndPassword } from "../../../firebase/firebaseAuth";
 
 export default function SignUpPassword({ route }) {
   const [password, setPassword] = useState("");
   const navigation = useNavigation();
+  const dispatch = useDispatch();
   const { value } = route.params;
 
   const getState = useSelector(
@@ -25,12 +26,10 @@ export default function SignUpPassword({ route }) {
 
   const { error, loading, success, user } = getState;
 
-  const dispatch = useDispatch();
-
   {
-    /* TODO: like +639999999999 or 09999999999 to => 639999999999 when saving in the database */
+    /* TODO: like +639999999999 or 09999999999 t o => 639999999999 when saving in the database */
   }
-  const onSubmit = () => {
+  const onSubmit = async () => {
     const userInfo = {
       user_type: "semi-verified",
       authprovider_type: "email",
@@ -41,16 +40,12 @@ export default function SignUpPassword({ route }) {
       lastname: value.lastName,
     };
 
-    const auth = getAuth();
-    createUserWithEmailAndPassword(auth, userInfo.email, userInfo.password)
-      .then((userCredentials) => {
-        dispatch(emailAndPasswordRegister(userInfo));
+    createWithEmailAndPassword(userInfo)
+      .then((user) => {
+        dispatch(emailAndPasswordRegister(user));
       })
-      .catch((err) => {
-        const errorCode = err.code;
-        const errorMessage = err.message;
-
-        console.log(errorCode, errorMessage);
+      .catch((code, message) => {
+        console.log(code, message);
       });
   };
 
