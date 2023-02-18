@@ -1,5 +1,4 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-const Tab = createBottomTabNavigator();
 
 import React from "react";
 import HomeStack from "../home/HomeStack";
@@ -11,10 +10,13 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
+
+const Tab = createBottomTabNavigator();
 export default function MenuStack() {
   return (
     <Tab.Navigator
-      initialRouteName="AddProduct"
+      // initialRouteName="AddProduct"
+      initialRouteName="Home"
       screenOptions={{
         tabBarActiveTintColor: "#CC481F",
         headerShown: false,
@@ -72,6 +74,11 @@ export default function MenuStack() {
           tabBarIcon: ({ color, size }) => (
             <FontAwesome5 name="user" size={22} color={color} />
           ),
+          tabBarStyle: {
+            backgroundColor: "#242120",
+            borderTopColor: "#FFFFFF",
+            display: "none",
+          },
         }}
       />
     </Tab.Navigator>

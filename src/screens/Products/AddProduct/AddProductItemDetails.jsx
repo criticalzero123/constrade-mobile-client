@@ -23,8 +23,11 @@ import Header from "../../../components/Products/AddProduct/Header";
 import ViewItemList from "../../../components/Products/AddProduct/ViewItemList";
 import ImagePicker from "../../../components/Products/AddProduct/ImagePicker";
 import KeyboardHideView from "../../../components/CustomViews/KeyboardHideView";
+import { useHideBottomTab } from "../../../hooks/useHideBottomTab";
 
 export default function AddProductItemDetails() {
+  useHideBottomTab();
+
   const [imageList, setImageList] = useState([]);
   const [price, setPrice] = useState(0);
   const [title, setTitle] = useState("");

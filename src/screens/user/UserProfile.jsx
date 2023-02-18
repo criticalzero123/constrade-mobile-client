@@ -1,49 +1,55 @@
-import {
-  Platform,
-  Pressable,
-  SafeAreaView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import React from "react";
 
-import { signOut, getAuth } from "firebase/auth";
-import { useDispatch } from "react-redux";
-import { signOutUser } from "../../../redux/actions/authActions";
+import { useSignOutUser } from "../../hooks/useSignOutUser";
+import ContainerSafeView from "../../components/CustomViews/ContainerSafeView";
+
+import { AntDesign } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
+
+import UserInfo from "../../components/User/UserInfo";
+import ItemsAndTransactionsBar from "../../components/User/ItemsAndTransactionsBar";
+import AccountBar from "../../components/User/AccountBar";
+import { StatusBar } from "expo-status-bar";
+import PrivacyAndHelp from "../../components/User/PrivacyAndHelp";
 import { StackActions, useNavigation } from "@react-navigation/native";
 
 export default function UserProfile() {
-  const dispatch = useDispatch();
+  const [onSignOut] = useSignOutUser();
   const navigation = useNavigation();
-
-  const onSignOut = () => {
-    const auth = getAuth();
-    signOut(auth)
-      .then(() => {
-        dispatch(signOutUser());
-        navigation.dispatch(StackActions.replace("SignIn"));
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
+  console.log(navigation);
   return (
-    <SafeAreaView style={styles.container}>
-      <Text>UserProfile</Text>
-      <Pressable onPress={onSignOut}>
-        <Text>Signout</Text>
-      </Pressable>
-    </SafeAreaView>
+    <ContainerSafeView styleName="h-screen bg-[#242120]">
+      {/* <StatusBar style="light" /> */}
+
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View className="flex-row justify-between mt-3">
+          <View className="flex-row">
+            <Pressable onPress={() => navigation.goBack()}>
+              <Ionicons name="arrow-back" size={24} color="white" />
+            </Pressable>
+            <Text className="ml-2 text-lg font-semibold text-white">
+              My Profile
+            </Text>
+          </View>
+          <AntDesign name="sharealt" size={21} color="white" />
+        </View>
+
+        <UserInfo />
+        <ItemsAndTransactionsBar />
+        <AccountBar />
+        <PrivacyAndHelp />
+        <Pressable
+          onPress={onSignOut}
+          className="justify-center w-full mb-5 mt-5 bg-[#F76363] rounded-lg p-4 flex-row items-center"
+        >
+          <MaterialCommunityIcons name="logout" size={24} color="white" />
+          <Text className="font-semibold ml-1 text-white">Logout account</Text>
+        </Pressable>
+      </ScrollView>
+    </ContainerSafeView>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    alignItems: "center",
-    justifyContent: "center",
-    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
-  },
-});
+const styles = StyleSheet.create({});

@@ -43,6 +43,7 @@ export default function AddProductDeliveryDetails({ route }) {
   useEffect(() => {
     if (loading === undefined) return;
     if (!loading) setSending(!sending);
+    if (error !== undefined) console.log(error);
   }, [loading]);
 
   return (
