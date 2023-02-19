@@ -8,7 +8,7 @@ import NavItem from "./NavItem";
 
 export default function AccountBar() {
   return (
-    <View className="mt-3">
+    <View className="mt-4">
       <Text className="text-[#FCFBFA] opacity-75 mb-3">Account</Text>
       <NavItem
         iconNav={

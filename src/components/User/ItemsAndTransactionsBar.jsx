@@ -7,7 +7,7 @@ import { AntDesign } from "@expo/vector-icons";
 
 export default function ItemsAndTransactionsBar() {
   return (
-    <View className="mt-5">
+    <View className="mt-6">
       <Text className="text-[#FCFBFA] opacity-75 mb-3">
         Items and Transactions
       </Text>

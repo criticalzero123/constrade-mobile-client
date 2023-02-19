@@ -7,7 +7,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 export default function PrivacyAndHelp() {
   return (
-    <View className="mt-3">
+    <View className="mt-4">
       <Text className="text-[#FCFBFA] opacity-75 mb-3">Privacy & Help</Text>
       <NavItem
         iconNav={
