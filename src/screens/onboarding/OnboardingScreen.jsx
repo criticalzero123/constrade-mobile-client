@@ -26,7 +26,7 @@ export default function Onboarding() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={{ marginVertical: 20 }}></View>
-      <Paginator data={slides} scrollX={scrollX} />
+      <Paginator data={slides} scrollX={scrollX} size="large" />
       <FlatList
         data={slides}
         renderItem={({ item }) => <OnboardingItems item={item} />}

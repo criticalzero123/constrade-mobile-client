@@ -36,7 +36,7 @@ export default function MenuStack() {
         component={CommunityStack}
         name="Community"
         options={{
-          tabBarBadge: 3,
+          // tabBarBadge: 3,
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons
               name="account-group-outline"

@@ -18,7 +18,7 @@ import { StackActions, useNavigation } from "@react-navigation/native";
 export default function UserProfile() {
   const [onSignOut] = useSignOutUser();
   const navigation = useNavigation();
-  console.log(navigation);
+
   return (
     <ContainerSafeView styleName="h-screen bg-[#242120]">
       {/* <StatusBar style="light" /> */}
@@ -40,6 +40,7 @@ export default function UserProfile() {
         <ItemsAndTransactionsBar />
         <AccountBar />
         <PrivacyAndHelp />
+
         <Pressable
           onPress={onSignOut}
           className="justify-center w-full mb-5 mt-5 bg-[#F76363] rounded-lg p-4 flex-row items-center"
