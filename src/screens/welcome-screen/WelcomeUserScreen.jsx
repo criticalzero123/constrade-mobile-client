@@ -12,7 +12,6 @@ import React, { useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserInfo } from "../../../redux/actions/authActions";
-import { useMemo } from "react";
 
 export default function WelcomeUserScreen({ route }) {
   const navigation = useNavigation();

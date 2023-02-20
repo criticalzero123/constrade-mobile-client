@@ -128,6 +128,57 @@ export const googleAuthRegisterReducer = (state = {}, action) => {
   }
 };
 
+export const requestOtpEmailReducer = (state = {}, action) => {
+  switch (action.type) {
+    case "USER_REQUEST_OTP_EMAIL_REQUEST":
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case "USER_REQUEST_OTP_EMAIL_SUCCESS":
+      return {
+        loading: false,
+        success: action.payload,
+      };
+
+    case "USER_REQUEST_OTP_EMAIL_FAILED":
+      return {
+        loading: false,
+        error: action.error,
+      };
+
+    default:
+      return { ...state };
+  }
+};
+
+export const verifyOtpReducer = (state = {}, action) => {
+  switch (action.type) {
+    case "USER_VERIFY_OTP_REQUEST":
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case "USER_VERIFY_OTP_SUCCESS":
+      return {
+        loading: false,
+        success: true,
+        message: action.payload,
+      };
+
+    case "USER_VERIFY_OTP_FAILED":
+      return {
+        loading: false,
+        error: action.error,
+      };
+
+    default:
+      return { ...state };
+  }
+};
+
 export const userInfoReducer = (state = {}, action) => {
   switch (action.type) {
     case "USER_INFO":

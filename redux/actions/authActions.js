@@ -85,6 +85,38 @@ export const emailAndPasswordAuthLogin = (userInfo) => (dispatch) => {
     });
 };
 
+export const requestOtpEmail = (email) => (dispatch) => {
+  dispatch({ type: "USER_REQUEST_OTP_EMAIL_REQUEST" });
+
+  axios
+    .post(`${API_URL}/api/otp/email`, { sendto: email })
+    .then((res) => {
+      dispatch({
+        type: "USER_REQUEST_OTP_EMAIL_SUCCESS",
+        payload: res.data.responseData,
+      });
+    })
+    .catch((err) => {
+      dispatch({ type: "USER_REQUEST_OTP_EMAIL_FAILED", error: err });
+    });
+};
+
+export const verifyOtp = (user, code) => (dispatch) => {
+  dispatch({ type: "USER_VERIFY_OTP_REQUEST" });
+
+  axios
+    .get(`${API_URL}/api/otp/verify?user=${user}&code=${code}`)
+    .then((res) => {
+      dispatch({
+        type: "USER_VERIFY_OTP_SUCCESS",
+        payload: res.data.responseData,
+      });
+    })
+    .catch((err) => {
+      dispatch({ type: "USER_VERIFY_OTP_FAILED", error: err });
+    });
+};
+
 export const getUserInfo = (user) => (dispatch) => {
   dispatch({ type: "USER_INFO", payload: user });
 };

@@ -12,16 +12,20 @@ import {
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
+import { useDispatch, useSelector } from "react-redux";
+import { verifyOtp } from "../../../redux/actions/authActions";
 
 export default function OtpScreen({ route }) {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+
   const { value, type } = route.params;
+  const { loading, message } = useSelector((state) => state.verifyOtpReducer);
 
   const [otp, setOtp] = useState("");
   const [counter, setCounter] = useState(60);
   const [validating, setValidating] = useState(false);
 
-  // TODO: UNCOMMENT THIS FOR THE ACTUAL OTP
   useEffect(() => {
     const count =
       counter > 0 &&
@@ -34,24 +38,33 @@ export default function OtpScreen({ route }) {
     };
   }, [counter]);
 
-  const otpValidation = (newText) => {
-    if (newText.length === 6) {
-      setValidating(!validating);
+  useEffect(() => {
+    if (loading) return;
 
-      if (newText !== "123456") {
+    switch (message) {
+      case "WrongCode":
         ToastAndroid.show("Wrong OTP, Please Try again!", ToastAndroid.SHORT);
         setValidating(false);
         setOtp("");
-        return;
-      }
+        break;
 
-      if (type === "signin") {
-        navigation.navigate("WelcomeUser", {
-          from: "signin",
-        });
-      } else {
-        navigation.navigate("SignUpName", { emailOrPhone: value });
-      }
+      case "Success":
+        if (type === "signin") {
+          navigation.navigate("WelcomeUser", {
+            user: value,
+            from: "signin",
+          });
+        } else {
+          navigation.navigate("SignUpName", { emailOrPhone: value });
+        }
+        break;
+    }
+  }, [loading, message]);
+
+  const otpValidation = (newText) => {
+    if (newText.length === 6) {
+      setValidating(!validating);
+      dispatch(verifyOtp(value, newText));
     }
 
     setOtp(newText);

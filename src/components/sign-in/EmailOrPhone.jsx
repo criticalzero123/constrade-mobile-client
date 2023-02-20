@@ -3,23 +3,29 @@ import React, { useState, useEffect } from "react";
 
 import SignInAndSignUpButton from "../buttons/SignInAndSignUpButton";
 import CustomTextInput from "../CustomTextInput/CustomTextInput";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
+import { requestOtpEmail } from "../../../redux/actions/authActions";
 
 export default function EmailOrPhone() {
   const [value, setValue] = useState("");
-  const { success, exist, loading } = useSelector(
-    (state) => state.checkEmailReducer
-  );
+  const checkEmailR = useSelector((state) => state.checkEmailReducer);
+  const otpRequest = useSelector((state) => state.requestOtpEmailReducer);
 
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log(success, exist, value);
-    if (success && !exist && value !== "") {
-      navigation.navigate("Otp", { value, type: "signup" });
+    if (otpRequest.loading || checkEmailR.loading || value === "") return;
+
+    if (checkEmailR.success && !checkEmailR.exist && !otpRequest.success) {
+      dispatch(requestOtpEmail(value));
+      return;
     }
-  }, [success, exist]);
+
+    if (otpRequest.success)
+      navigation.navigate("Otp", { value, type: "signup" });
+  }, [otpRequest, checkEmailR]);
 
   return (
     <>
@@ -37,7 +43,7 @@ export default function EmailOrPhone() {
         to="Otp"
         value={value}
         checkValue={true}
-        loading={loading}
+        loading={otpRequest.loading}
       />
     </>
   );

@@ -9,6 +9,8 @@ import {
   googleAuthRegisterReducer,
   userInfoReducer,
   emailAndPasswordAuthLoginReducer,
+  requestOtpEmailReducer,
+  verifyOtpReducer,
 } from "./reducers/authReducer";
 
 import { addProductReducer } from "./reducers/productReducer";
@@ -21,6 +23,8 @@ const finalReducer = combineReducers({
   googleAuthRegisterReducer,
   userInfoReducer,
   emailAndPasswordAuthLoginReducer,
+  requestOtpEmailReducer,
+  verifyOtpReducer,
 });
 
 const rootReducer = (state, action) => {

@@ -22,8 +22,8 @@ export default function App() {
           screenOptions={{
             headerShown: false,
           }}
-          initialRouteName="Onboarding"
-          // initialRouteName="SignIn"
+          // initialRouteName="Onboarding"
+          initialRouteName="SignIn"
           // initialRouteName="Menu"
         >
           {/* Stacks */}
