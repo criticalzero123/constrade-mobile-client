@@ -27,7 +27,7 @@ export default function UserProfile() {
       <StatusBar style="light" />
 
       <ScrollView showsVerticalScrollIndicator={false}>
-        <UserInfo />
+        <UserInfo headerName="My Profile" />
         <View
           style={{
             paddingHorizontal: 20,

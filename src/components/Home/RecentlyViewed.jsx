@@ -1,7 +1,7 @@
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { tempDataItem } from "../../../service/discoverService";
-import ItemCard from "./ItemCard";
+import ItemCard from "../Products/ItemCard";
 
 export default function RecentlyViewed() {
   return (

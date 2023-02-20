@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
-import ItemCard from "./ItemCard";
+import ItemCard from "../Products/ItemCard";
 import { tempDataItem } from "../../../service/discoverService";
 
 export default function JustForYou() {

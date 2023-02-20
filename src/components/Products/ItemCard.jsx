@@ -9,7 +9,7 @@ import React from "react";
 import { AntDesign } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 
-export default function ItemCard({ data, index }) {
+export default function ItemCard({ data, index, showLike = true }) {
   const imageConsole = {
     uri: "https://images.saymedia-content.com/.image/t_share/MTc0MzY1MzUwMzM3NDU1NzUw/most-annoying-monsters-breath-of-the-wild.png",
   };
@@ -52,7 +52,7 @@ export default function ItemCard({ data, index }) {
             {data.title}
           </Text>
 
-          <AntDesign name="hearto" size={18} color="gray" />
+          {showLike && <AntDesign name="hearto" size={18} color="gray" />}
         </View>
         <View className="flex-row items-center gap-1 mt-1">
           <Image

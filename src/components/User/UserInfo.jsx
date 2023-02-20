@@ -17,7 +17,7 @@ import { Ionicons } from "@expo/vector-icons";
 import backImage from "../../../assets/Discover/orange-scenery.jpg";
 import { useNavigation } from "@react-navigation/native";
 
-export default function UserInfo() {
+export default function UserInfo({ headerName, shareable = true }) {
   const image =
     "https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80";
 
@@ -49,10 +49,10 @@ export default function UserInfo() {
               <Ionicons name="arrow-back" size={24} color="white" />
             </Pressable>
             <Text className="ml-2 text-lg font-semibold text-white">
-              My Profile
+              {headerName}
             </Text>
           </View>
-          <AntDesign name="sharealt" size={21} color="white" />
+          {shareable && <AntDesign name="sharealt" size={21} color="white" />}
         </View>
         <View className="items-center">
           <View className=" items-center">
@@ -68,9 +68,11 @@ export default function UserInfo() {
           </View>
 
           <Text className="text-white capitalize font-semibold text-lg mt-4">
-            Mike Andrew Fernandez
+            John Does
           </Text>
-          <Text className="text-gray-300 mt-1 mb-8">Argao, Cebu</Text>
+          <Text className="text-gray-300 mt-1 mb-8">
+            Somewhere in the middle, Dishwalla
+          </Text>
 
           <View className="w-full flex-row justify-between p-5 rounded-md bg-[#508CC7]">
             <View className="items-center">

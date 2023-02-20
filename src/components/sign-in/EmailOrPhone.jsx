@@ -15,6 +15,7 @@ export default function EmailOrPhone() {
   const navigation = useNavigation();
 
   useEffect(() => {
+    console.log(success, exist, value);
     if (success && !exist && value !== "") {
       navigation.navigate("Otp", { value, type: "signup" });
     }
