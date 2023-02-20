@@ -17,7 +17,8 @@ export default function MenuStack() {
     <Tab.Navigator
       // initialRouteName="AddProduct"
       // initialRouteName="Home"
-      initialRouteName="User"
+      // initialRouteName="User"
+      initialRouteName="Message"
       screenOptions={{
         tabBarActiveTintColor: "#CC481F",
         headerShown: false,
@@ -54,7 +55,7 @@ export default function MenuStack() {
           tabBarLabel: "",
           tabBarLabelStyle: { display: "none" },
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="add-circle-sharp" size={50} color={color} />
+            <Ionicons name="add-circle-sharp" size={50} color="#CC481F" />
           ),
         }}
       />
@@ -63,7 +64,7 @@ export default function MenuStack() {
         name="Message"
         options={{
           tabBarIcon: ({ color, size }) => (
-            <AntDesign name="message1" size={22} color={color} />
+            <Ionicons name="chatbubble-ellipses" size={24} color={color} />
           ),
         }}
       />

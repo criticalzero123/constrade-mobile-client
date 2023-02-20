@@ -1,16 +1,19 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
 
-import Messages from "../../screens/messages/Messages";
+import MessagesHome from "../../screens/messages/MessagesAll";
+import PersonalMessage from "../../screens/messages/PersonalMessage";
+import MessageTopTab from "./MessageTopTab";
 const Stack = createNativeStackNavigator();
 
 export default function MessagesStack() {
   return (
     <Stack.Navigator
-      initialRouteName="MessageList"
+      initialRouteName="MessageHome"
       screenOptions={{ headerShown: false }}
     >
-      <Stack.Screen component={Messages} name="MessageList" />
+      <Stack.Screen component={MessageTopTab} name="MessageHome" />
+      <Stack.Screen component={PersonalMessage} name="PersonalMessage" />
     </Stack.Navigator>
   );
 }

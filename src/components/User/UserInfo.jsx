@@ -71,7 +71,7 @@ export default function UserInfo({ headerName, shareable = true }) {
             John Does
           </Text>
           <Text className="text-gray-300 mt-1 mb-8">
-            Somewhere in the middle, Dishwalla
+            Somewhere in the middle, Cebu
           </Text>
 
           <View className="w-full flex-row justify-between p-5 rounded-md bg-[#508CC7]">

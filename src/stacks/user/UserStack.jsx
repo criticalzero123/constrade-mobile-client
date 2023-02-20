@@ -1,10 +1,10 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
 import MyListing from "../../screens/User/MyListing";
-import OtherUserProfile from "../../screens/user/OtherUserProfile";
+import OtherUserProfile from "../../screens/User/OtherUserProfile";
 import ReviewsAndFeedbacks from "../../screens/User/ReviewsAndFeedbacks";
 
-import UserProfile from "../../screens/user/UserProfile";
+import UserProfile from "../../screens/User/UserProfile";
 import WishList from "../../screens/User/WishList";
 
 const Stack = createNativeStackNavigator();
@@ -12,7 +12,7 @@ const Stack = createNativeStackNavigator();
 export default function UserStack() {
   return (
     <Stack.Navigator
-      initialRouteName="Reviews"
+      initialRouteName="UserProfile"
       screenOptions={{
         headerShown: false,
       }}

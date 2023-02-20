@@ -22,9 +22,9 @@ export default function App() {
           screenOptions={{
             headerShown: false,
           }}
-          // initialRouteName="Onboarding"
+          initialRouteName="Onboarding"
           // initialRouteName="SignIn"
-          initialRouteName="Menu"
+          // initialRouteName="Menu"
         >
           {/* Stacks */}
           <Stack.Screen name="SignIn" component={SignInStack} />
