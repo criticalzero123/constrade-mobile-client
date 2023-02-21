@@ -1,11 +1,11 @@
 import {
-  StyleSheet,
   Text,
   View,
   Image,
   Pressable,
   Platform,
   StatusBar,
+  ActivityIndicator,
 } from "react-native";
 import React from "react";
 
@@ -16,12 +16,17 @@ import { Ionicons } from "@expo/vector-icons";
 
 import backImage from "../../../assets/Discover/orange-scenery.jpg";
 import { useNavigation } from "@react-navigation/native";
+import useUserFollowAndFollowers from "../../hooks/useUserFollowAndFollowers";
+import useUserReview from "../../hooks/useUserReview";
 
-export default function UserInfo({ headerName, shareable = true }) {
+export default function UserInfo({ headerName, shareable = true, data }) {
   const image =
     "https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80";
 
   const navigation = useNavigation();
+
+  const [follow, loading] = useUserFollowAndFollowers(data && data.userId);
+  const [review] = useUserReview(data && data.userId);
 
   return (
     <View>
@@ -58,17 +63,17 @@ export default function UserInfo({ headerName, shareable = true }) {
           <View className=" items-center">
             <View className="p-1 border-2 border-[#FF6838] rounded-full items-center ">
               <Image
-                source={{ uri: image }}
+                source={{ uri: data.imageUrl !== "" ? data.imageUrl : image }}
                 className="w-24 h-24 rounded-full"
               />
             </View>
-            <Text className="text-white font-semibold px-4 py-1 rounded-2xl bg-[#FF6838] absolute bottom-0">
-              VERIFIED
+            <Text className="text-white font-semibold px-4 py-1 rounded-2xl bg-[#FF6838] absolute bottom-0 uppercase">
+              {data.user_type}
             </Text>
           </View>
 
-          <Text className="text-white capitalize font-semibold text-lg mt-4">
-            John Does
+          <Text className="text-white font-semibold text-lg mt-4 capitalize">
+            {data.firstName} {data.lastName}
           </Text>
           <Text className="text-gray-300 mt-1 mb-8">
             Somewhere in the middle, Cebu
@@ -76,20 +81,34 @@ export default function UserInfo({ headerName, shareable = true }) {
 
           <View className="w-full flex-row justify-between p-5 rounded-md bg-[#508CC7]">
             <View className="items-center">
-              <Text className="font-bold text-xl text-white">1.6k</Text>
+              <Text className="font-bold text-xl text-white">
+                {loading ? (
+                  <ActivityIndicator size="small" />
+                ) : (
+                  follow && follow.followers.length
+                )}
+              </Text>
               <Text className="mt-3 opacity-75 text-white">Followers</Text>
             </View>
             <View className="border-l border-[#F7FAFC26]"></View>
             <View className="items-center">
               <View className="flex-row items-center">
                 <FontAwesome name="star" size={20} color="white" />
-                <Text className="font-bold text-xl text-white ml-2">4.5</Text>
+                <Text className="font-bold text-xl text-white ml-2">
+                  {review ? review.length : <ActivityIndicator size="small" />}
+                </Text>
               </View>
               <Text className="mt-3 opacity-75 text-white">Ratings</Text>
             </View>
             <View className="border-l border-[#F7FAFC26]"></View>
             <View className="items-center">
-              <Text className="font-bold text-xl text-white">80</Text>
+              <Text className="font-bold text-xl text-white">
+                {loading ? (
+                  <ActivityIndicator size="small" />
+                ) : (
+                  follow && follow.follows.length
+                )}
+              </Text>
               <Text className="mt-3 opacity-75 text-white">Following</Text>
             </View>
           </View>
@@ -98,5 +117,3 @@ export default function UserInfo({ headerName, shareable = true }) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({});

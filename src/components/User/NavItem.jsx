@@ -7,9 +7,10 @@ export default function NavItem({
   title,
   description,
   arrowVisible = true,
+  onPress,
 }) {
   return (
-    <Pressable onPress={() => alert(title)}>
+    <Pressable onPress={onPress}>
       <View className="flex-row justify-between items-center mb-5">
         <View className="flex-row items-center">
           {iconNav}

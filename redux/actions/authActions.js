@@ -71,7 +71,6 @@ export const googleAuthLogin = (email) => (dispatch) => {
 
 export const emailAndPasswordAuthLogin = (userInfo) => (dispatch) => {
   dispatch({ type: "USER_LOGIN_EMAIL_AND_PASSWORD_REQUEST" });
-
   axios
     .put(`${API_URL}/api/users/login`, userInfo)
     .then((res) => {

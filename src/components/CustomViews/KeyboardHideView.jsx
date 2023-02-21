@@ -6,11 +6,11 @@ import {
 } from "react-native";
 import React from "react";
 
-export default function KeyboardHideView({ children }) {
+export default function KeyboardHideView({ children, enabled = false }) {
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
-      enabled={false}
+      enabled={enabled}
       style={styles.container}
     >
       {children}

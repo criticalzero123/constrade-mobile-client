@@ -18,23 +18,26 @@ import ItemsAndTransactionsBar from "../../components/User/ItemsAndTransactionsB
 import AccountBar from "../../components/User/AccountBar";
 import { StatusBar } from "expo-status-bar";
 import PrivacyAndHelp from "../../components/User/PrivacyAndHelp";
+import { useSelector } from "react-redux";
 
 export default function UserProfile() {
   const [onSignOut] = useSignOutUser();
+
+  const { user } = useSelector((state) => state.userInfoReducer);
 
   return (
     <SafeAreaView className=" bg-[#242120]">
       <StatusBar style="light" />
 
       <ScrollView showsVerticalScrollIndicator={false}>
-        <UserInfo headerName="My Profile" />
+        <UserInfo headerName="My Profile" data={user} />
         <View
           style={{
             paddingHorizontal: 20,
           }}
         >
           <ItemsAndTransactionsBar />
-          <AccountBar />
+          <AccountBar user={user} />
           <PrivacyAndHelp />
 
           <Pressable

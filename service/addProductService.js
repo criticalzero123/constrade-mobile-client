@@ -48,7 +48,7 @@ export const isLessThanTheMB = (fileSize, smallerThanSizeMB) => {
   return isOk;
 };
 
-export const pickImage = async (setImageList, imageList) => {
+export const pickProductImage = async (setImageList, imageList) => {
   let result = await ExpoImagePicker.launchImageLibraryAsync({
     allowsMultipleSelection: true,
     selectionLimit: 5, // only works in ios
@@ -63,9 +63,9 @@ export const pickImage = async (setImageList, imageList) => {
     for await (const image of result.assets) {
       const { uri } = image;
       const fileInfo = await getFileInfo(uri);
-      const isLt15MB = isLessThanTheMB(fileInfo.size, 4);
+      const isLt4MB = isLessThanTheMB(fileInfo.size, 4);
 
-      if (!isLt15MB) {
+      if (!isLt4MB) {
         flag = true;
       }
     }

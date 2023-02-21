@@ -13,6 +13,9 @@ import {
   verifyOtpReducer,
 } from "./reducers/authReducer";
 
+import { updatePersonInfoReducer } from "./reducers/userReducer";
+import { getFollowAndFollowersUserReducer } from "./reducers/followReducer";
+import { getReviewsUserReducer } from "./reducers/reviewReducer";
 import { addProductReducer } from "./reducers/productReducer";
 
 const finalReducer = combineReducers({
@@ -25,6 +28,9 @@ const finalReducer = combineReducers({
   emailAndPasswordAuthLoginReducer,
   requestOtpEmailReducer,
   verifyOtpReducer,
+  getFollowAndFollowersUserReducer,
+  getReviewsUserReducer,
+  updatePersonInfoReducer,
 });
 
 const rootReducer = (state, action) => {

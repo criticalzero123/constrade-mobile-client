@@ -4,8 +4,10 @@ import NavItem from "./NavItem";
 
 import { Feather } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
 export default function ItemsAndTransactionsBar() {
+  const navigation = useNavigation();
   return (
     <View className="mt-6">
       <Text className="text-[#FCFBFA] opacity-75 mb-3">
@@ -22,6 +24,7 @@ export default function ItemsAndTransactionsBar() {
         }
         title="My listings"
         description="Manage your listed items"
+        onPress={() => navigation.navigate("MyListing")}
       />
 
       <NavItem
@@ -33,6 +36,7 @@ export default function ItemsAndTransactionsBar() {
             style={{ opacity: 0.75 }}
           />
         }
+        onPress={() => navigation.navigate("WishList")}
         title="Wishlist"
       />
 
@@ -46,6 +50,7 @@ export default function ItemsAndTransactionsBar() {
           />
         }
         title="Reviews & Feedbacks"
+        onPress={() => navigation.navigate("Reviews")}
         description="What other traders say about you"
       />
     </View>

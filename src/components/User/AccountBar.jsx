@@ -5,8 +5,10 @@ import { Feather } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 
 import NavItem from "./NavItem";
+import { useNavigation } from "@react-navigation/native";
 
-export default function AccountBar() {
+export default function AccountBar({ user }) {
+  const navigation = useNavigation();
   return (
     <View className="mt-4">
       <Text className="text-[#FCFBFA] opacity-75 mb-3">Account</Text>
@@ -21,6 +23,7 @@ export default function AccountBar() {
         }
         title="Profile"
         description="Manage your profile"
+        onPress={() => navigation.navigate("UserProfileEdit", { user })}
       />
 
       <NavItem

@@ -21,7 +21,7 @@ import { RadioButton } from "react-native-paper";
 import Checkbox from "expo-checkbox";
 import Header from "../../../components/Products/AddProduct/Header";
 import ViewItemList from "../../../components/Products/AddProduct/ViewItemList";
-import ImagePicker from "../../../components/Products/AddProduct/ImagePicker";
+import ImagePickerProduct from "../../../components/Products/AddProduct/ImagePickerProduct";
 import KeyboardHideView from "../../../components/CustomViews/KeyboardHideView";
 import { useHideBottomTab } from "../../../hooks/useHideBottomTab";
 
@@ -82,7 +82,7 @@ export default function AddProductItemDetails() {
       <Header onPress={() => navigation.goBack()} title="Item Details" />
 
       <ScrollView showsVerticalScrollIndicator={false}>
-        <ImagePicker imageList={imageList} setImageList={setImageList} />
+        <ImagePickerProduct imageList={imageList} setImageList={setImageList} />
 
         <Text className="text-base mt-5">Category</Text>
         <Picker
