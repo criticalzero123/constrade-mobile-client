@@ -16,7 +16,7 @@ export const getReviewsUserReducer = (state = {}, action) => {
     case "GET_USER_REVIEWS_FAILED":
       return {
         loading: false,
-        error: true,
+        error: action.error,
       };
 
     default:

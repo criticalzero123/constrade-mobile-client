@@ -1,5 +1,3 @@
-import { CommonActions } from "@react-navigation/native";
-
 export const emailAndPasswordRegisterReducer = (state = {}, action) => {
   switch (action.type) {
     case "EMAIL_PASSWORD_REGISTER_AUTH_REQUEST":

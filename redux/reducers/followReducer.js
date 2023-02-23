@@ -16,7 +16,7 @@ export const getFollowAndFollowersUserReducer = (state = {}, action) => {
     case "GET_USER_FOLLOW_FOLLOWERS_FAILED":
       return {
         loading: false,
-        error: true,
+        error: action.error,
       };
 
     default:

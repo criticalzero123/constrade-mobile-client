@@ -1,17 +1,15 @@
-import axios from "axios";
-import { API_URL } from "@env";
+import api from "../../service/api";
 
-export const getReviewsUser = (userId) => (dispatch) => {
+export const getReviewsUser = (userId) => async (dispatch) => {
   dispatch({ type: "GET_USER_REVIEWS_REQUEST" });
-  axios
-    .get(`${API_URL}/api/users/${userId}/review`)
-    .then((res) => {
-      dispatch({
-        type: "GET_USER_REVIEWS_SUCCESS",
-        payload: res.data.responseData,
-      });
-    })
-    .catch((err) => {
-      dispatch({ type: "GET_USER_REVIEWS_FAILED", error: err });
+
+  try {
+    const res = await api.setAuthHeaders().get(`/api/review/${userId}`);
+    dispatch({
+      type: "GET_USER_REVIEWS_SUCCESS",
+      payload: res.data.responseData,
     });
+  } catch (err) {
+    dispatch({ type: "GET_USER_REVIEWS_FAILED", error: err });
+  }
 };

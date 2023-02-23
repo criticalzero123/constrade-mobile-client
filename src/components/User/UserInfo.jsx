@@ -25,8 +25,10 @@ export default function UserInfo({ headerName, shareable = true, data }) {
 
   const navigation = useNavigation();
 
-  const [follow, loading] = useUserFollowAndFollowers(data && data.user.userId);
-  const [review] = useUserReview(data && data.user.userId);
+  const [follow, loading] = useUserFollowAndFollowers(
+    data.user && data.user.userId
+  );
+  const [review] = useUserReview(data.user && data.user.userId);
 
   return (
     <View>

@@ -1,20 +1,18 @@
-import axios from "axios";
-import { API_URL } from "@env";
+import api from "../../service/api";
 
-export const getFollowAndFollowersUser = (userId) => (dispatch) => {
+export const getFollowAndFollowersUser = (userId) => async (dispatch) => {
   dispatch({ type: "GET_USER_FOLLOW_FOLLOWERS_REQUEST" });
-  axios
-    .get(`${API_URL}/api/users/${userId}/follow`)
-    .then((res) => {
-      dispatch({
-        type: "GET_USER_FOLLOW_FOLLOWERS_SUCCESS",
-        payload: res.data.responseData,
-      });
-    })
-    .catch((err) => {
-      dispatch({
-        type: "GET_USER_FOLLOW_FOLLOWERS_FAILED",
-        error: err,
-      });
+  try {
+    const res = await api.setAuthHeaders().get(`/api/follow/${userId}`);
+
+    dispatch({
+      type: "GET_USER_FOLLOW_FOLLOWERS_SUCCESS",
+      payload: res.data.responseData,
     });
+  } catch (err) {
+    dispatch({
+      type: "GET_USER_FOLLOW_FOLLOWERS_FAILED",
+      error: err,
+    });
+  }
 };
