@@ -33,9 +33,9 @@ export default function WelcomeUserScreen({ route }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      {user.imageUrl ? (
+      {user.user.imageUrl ? (
         <Image
-          source={{ uri: user.imageUrl }}
+          source={{ uri: user.user.imageUrl }}
           className="w-24 h-24 rounded-full"
         />
       ) : (

@@ -75,7 +75,7 @@ export default function PasswordValidatedInput({
         }w-full py-4 rounded flex-row items-center justify-center`}
         disabled={meterValue !== 1 || loading}
       >
-        {!loading && <ActivityIndicator size="small" />}
+        {loading && <ActivityIndicator size="small" />}
         <Text className="text-center font-semibold text-white text-base ml-2">
           Create account
         </Text>

@@ -22,7 +22,7 @@ import CustomButton from "../../components/buttons/CustomButton";
 import { useDispatch, useSelector } from "react-redux";
 import { updatePersonInfo } from "../../../redux/actions/userActions";
 import { useEffect } from "react";
-import { getUserInfo } from "../../../redux/actions/authActions";
+import { getUserInfo } from "../../../redux/actions/userActions";
 import { saveImageProfile } from "../../../firebase/firebaseStorageBucket";
 import { StackActions, useNavigation } from "@react-navigation/native";
 
@@ -30,52 +30,57 @@ export default function UserProfileEdit({ route }) {
   const image =
     "https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80";
 
-  const { user } = route.params;
+  const { data } = route.params;
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [birthdate, setBirthdate] = useState(user.birthdate);
-  const [gender, setGender] = useState(user.gender);
+  const [birthdate, setBirthdate] = useState(
+    data.person.birthdate !== null ? data.person.birthdate : null
+  );
+  const [gender, setGender] = useState(data.person.gender);
   const [disable, setDisable] = useState(false);
   const [imagePhoto, setImagePhoto] = useState(
-    user.imageUrl === "" ? image : user.imageUrl
+    data.user.imageUrl === "" ? image : data.user.imageUrl
   );
 
   const { height, width } = useWindowDimensions();
   const dispatch = useDispatch();
 
-  const { success, data, loading } = useSelector(
-    (state) => state.updatePersonInfoReducer
-  );
+  const updated = useSelector((state) => state.updatePersonInfoReducer);
+  const { success, loading } = updated;
 
   const navigation = useNavigation();
 
   useEffect(() => {
     if (loading) return;
 
-    if (success && data) {
-      dispatch(getUserInfo(data));
+    if (success && updated.data) {
+      dispatch(getUserInfo(updated.data));
       dispatch({ type: "UPDATE_USER_INFO_LEAVE" });
       setDisable(false);
       navigation.dispatch(StackActions.replace("UserProfile"));
     }
-  }, [success, loading, data]);
+  }, [success, loading, updated.data]);
 
   const onPressAction = async () => {
     setDisable(true);
-    let imageUrlPhoto = user.imageUrl;
-    if (imagePhoto !== user.imageUrl)
-      imageUrlPhoto = await saveImageProfile(imagePhoto, user.userId);
+    let imageUrlPhoto = data.user.imageUrl;
+    if (imagePhoto !== data.user.imageUrl)
+      imageUrlPhoto = await saveImageProfile(imagePhoto, data.user.userId);
 
-    const userInfo = {
-      ...user,
-      firstName: firstName === "" ? user.firstName : firstName,
-      lastName: lastName === "" ? user.lastName : lastName,
-      birthdate: new Date(birthdate),
-      gender: gender,
+    const user = {
+      ...data.user,
       imageUrl: imageUrlPhoto,
     };
-    dispatch(updatePersonInfo(userInfo));
+    const person = {
+      ...data.person,
+      firstName: firstName === "" ? data.person.firstName : firstName,
+      lastName: lastName === "" ? data.person.lastName : lastName,
+      birthdate: birthdate !== null ? Date(birthdate) : null,
+      gender: gender,
+    };
+
+    dispatch(updatePersonInfo({ user, person }));
   };
 
   return (
@@ -108,14 +113,14 @@ export default function UserProfileEdit({ route }) {
             label="First name"
             value={firstName}
             setValue={setFirstName}
-            textPlaceholder={user.firstName}
+            textPlaceholder={data.person.firstName}
           />
 
           <EditTextInput
             label="Last name"
             value={lastName}
             setValue={setLastName}
-            textPlaceholder={user.lastName}
+            textPlaceholder={data.person.lastName}
           />
 
           <EditDatePicker value={birthdate} setValue={setBirthdate} />

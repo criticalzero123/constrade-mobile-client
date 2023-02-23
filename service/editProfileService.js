@@ -1,8 +1,8 @@
-import * as ExpoImagePicker from "expo-image-picker";
+import * as ImagePicker from "expo-image-picker";
 import { getFileInfo, isLessThanTheMB } from "./addProductService";
 
 export const pickPhotoImage = async (setImagePhoto) => {
-  let result = await ExpoImagePicker.launchImageLibraryAsync({
+  let result = await ImagePicker.launchImageLibraryAsync({
     allowsMultipleSelection: false,
     selectionLimit: 1, // only works in ios
   });
@@ -17,5 +17,6 @@ export const pickPhotoImage = async (setImagePhoto) => {
     alert(`Image size must be smaller than 4mb!`);
     return;
   }
+
   setImagePhoto(uri);
 };

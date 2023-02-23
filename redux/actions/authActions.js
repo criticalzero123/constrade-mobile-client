@@ -1,4 +1,4 @@
-import api from "../../service/api";
+import { api } from "../../service/api";
 
 export const emailAndPasswordRegister = (userInfo) => (dispatch) => {
   dispatch({ type: "EMAIL_PASSWORD_REGISTER_AUTH_REQUEST" });

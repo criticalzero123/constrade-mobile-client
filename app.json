@@ -17,12 +17,10 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "useFrameworks": "static",
       "bundleIdentifier": "com.constrade.mobile",
       "supportsTablet": true
     },
     "android": {
-      "windowSoftInputMode": "adjustPan",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FF4308"

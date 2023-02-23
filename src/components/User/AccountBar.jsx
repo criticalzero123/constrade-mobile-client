@@ -7,7 +7,7 @@ import { Ionicons } from "@expo/vector-icons";
 import NavItem from "./NavItem";
 import { useNavigation } from "@react-navigation/native";
 
-export default function AccountBar({ user }) {
+export default function AccountBar({ data }) {
   const navigation = useNavigation();
   return (
     <View className="mt-4">
@@ -23,7 +23,7 @@ export default function AccountBar({ user }) {
         }
         title="Profile"
         description="Manage your profile"
-        onPress={() => navigation.navigate("UserProfileEdit", { user })}
+        onPress={() => navigation.navigate("UserProfileEdit", { data: data })}
       />
 
       <NavItem

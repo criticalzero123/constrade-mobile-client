@@ -25,8 +25,8 @@ export default function UserInfo({ headerName, shareable = true, data }) {
 
   const navigation = useNavigation();
 
-  const [follow, loading] = useUserFollowAndFollowers(data && data.userId);
-  const [review] = useUserReview(data && data.userId);
+  const [follow, loading] = useUserFollowAndFollowers(data && data.user.userId);
+  const [review] = useUserReview(data && data.user.userId);
 
   return (
     <View>
@@ -63,17 +63,19 @@ export default function UserInfo({ headerName, shareable = true, data }) {
           <View className=" items-center">
             <View className="p-1 border-2 border-[#FF6838] rounded-full items-center ">
               <Image
-                source={{ uri: data.imageUrl !== "" ? data.imageUrl : image }}
+                source={{
+                  uri: data.user.imageUrl !== "" ? data.user.imageUrl : image,
+                }}
                 className="w-24 h-24 rounded-full"
               />
             </View>
             <Text className="text-white font-semibold px-4 py-1 rounded-2xl bg-[#FF6838] absolute bottom-0 uppercase">
-              {data.user_type}
+              {data.user.userType}
             </Text>
           </View>
 
           <Text className="text-white font-semibold text-lg mt-4 capitalize">
-            {data.firstName} {data.lastName}
+            {data.person.firstName} {data.person.lastName}
           </Text>
           <Text className="text-gray-300 mt-1 mb-8">
             Somewhere in the middle, Cebu

@@ -37,7 +37,7 @@ export default function UserProfile() {
           }}
         >
           <ItemsAndTransactionsBar />
-          <AccountBar user={user} />
+          <AccountBar data={user} />
           <PrivacyAndHelp />
 
           <Pressable

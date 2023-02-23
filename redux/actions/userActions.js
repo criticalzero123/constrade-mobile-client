@@ -1,11 +1,11 @@
-import axios from "axios";
-import { API_URL } from "@env";
+import createAuthApiInstance from "../../service/api";
 
-export const updatePersonInfo = (personInfo) => (dispatch) => {
+export const updatePersonInfo = (personInfo) => async (dispatch) => {
+  const api = await createAuthApiInstance();
+
   dispatch({ type: "UPDATE_USER_INFO_REQUEST" });
-
-  axios
-    .put(`${API_URL}/api/users/person`, personInfo)
+  api
+    .put(`api/users/person`, personInfo)
     .then((res) => {
       dispatch({
         type: "UPDATE_USER_INFO_SUCCESS",
