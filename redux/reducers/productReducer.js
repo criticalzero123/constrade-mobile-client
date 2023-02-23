@@ -14,7 +14,7 @@ export const addProductReducer = (state = {}, action) => {
     case "PRODUCT_ADD_FAILED":
       return {
         loading: false,
-        error: true,
+        error: action.error,
       };
 
     default:

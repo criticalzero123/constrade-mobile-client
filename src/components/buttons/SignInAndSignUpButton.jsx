@@ -34,11 +34,11 @@ export default function SignInAndSignUpButton({
       onPress={onValidate}
       className={`w-full ${
         loading ? "bg-[#ee8768]" : " bg-[#CC481F] "
-      } py-4 rounded flex-row justify-center `}
+      } py-4 rounded flex-row justify-center items-center`}
       disabled={loading ? true : false}
     >
-      <Text className=" font-semibold text-white text-base ">
-        {loading && <ActivityIndicator size="small" color="white" />}{" "}
+      {loading && <ActivityIndicator size="small" color="white" />}
+      <Text className=" font-semibold text-white text-base ml-1">
         {type === "signin" ? " Continue" : " Get OTP"}
       </Text>
     </Pressable>

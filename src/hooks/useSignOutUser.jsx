@@ -2,6 +2,7 @@ import { StackActions, useNavigation } from "@react-navigation/native";
 import { getAuth, signOut } from "firebase/auth";
 import { useDispatch } from "react-redux";
 import { signOutUser } from "../../redux/actions/authActions";
+import { clearAllAsyncStorage } from "../../service/savingStorageService";
 
 export const useSignOutUser = () => {
   const dispatch = useDispatch();
@@ -11,8 +12,9 @@ export const useSignOutUser = () => {
     const auth = getAuth();
     signOut(auth)
       .then(() => {
+        clearAllAsyncStorage();
         dispatch(signOutUser());
-        navigation.dispatch(StackActions.replace("SignIn"));
+        navigation.reset({ index: 0, routes: [{ name: "AuthStack" }] });
       })
       .catch((err) => {
         console.log(err);

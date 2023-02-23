@@ -7,7 +7,6 @@ import CommunityStack from "../community/CommunityStack";
 import MessagesStack from "../messages/MessagesStack";
 import ProductAddStack from "../product/product-add/ProductAddStack";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { AntDesign } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 

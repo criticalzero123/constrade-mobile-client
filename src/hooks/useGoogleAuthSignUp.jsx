@@ -18,16 +18,22 @@ export const useGoogleAuthSignUp = (userInfo, type) => {
     )
       return;
 
-    const data = {
-      user_type: userInfo.emailVerified ? "semi-verified" : "non-verified",
-      authprovider_type: "google",
+    const user = {
+      userType: userInfo.emailVerified ? "semi-verified" : "non-verified",
+      authproviderType: "google",
       email: userInfo.email,
       password: "",
       imageUrl: userInfo.photoURL,
+      firebaseId: userInfo.uid,
+      userStatus: "active",
+    };
+
+    const person = {
       firstname: getFirstName(userInfo.displayName),
       lastname: getLastName(userInfo.displayName),
     };
-    dispatch(googleAuthRegister(data));
+
+    dispatch(googleAuthRegister({ user, person }));
   }, [dispatch, exist, userInfo, type]);
 
   return { authRegister };

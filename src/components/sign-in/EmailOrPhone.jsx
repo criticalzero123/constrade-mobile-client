@@ -16,7 +16,13 @@ export default function EmailOrPhone() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (otpRequest.loading || checkEmailR.loading || value === "") return;
+    if (
+      otpRequest.loading ||
+      checkEmailR.loading ||
+      value === "" ||
+      otpRequest.error
+    )
+      return;
 
     if (checkEmailR.success && !checkEmailR.exist && !otpRequest.success) {
       dispatch(requestOtpEmail(value));

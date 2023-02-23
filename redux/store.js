@@ -7,13 +7,15 @@ import {
   checkEmailReducer,
   googleAuthLoginReducer,
   googleAuthRegisterReducer,
-  userInfoReducer,
   emailAndPasswordAuthLoginReducer,
   requestOtpEmailReducer,
   verifyOtpReducer,
 } from "./reducers/authReducer";
 
-import { updatePersonInfoReducer } from "./reducers/userReducer";
+import {
+  updatePersonInfoReducer,
+  userInfoReducer,
+} from "./reducers/userReducer";
 import { getFollowAndFollowersUserReducer } from "./reducers/followReducer";
 import { getReviewsUserReducer } from "./reducers/reviewReducer";
 import { addProductReducer } from "./reducers/productReducer";

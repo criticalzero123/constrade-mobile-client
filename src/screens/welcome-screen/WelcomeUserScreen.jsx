@@ -9,29 +9,27 @@ import {
   Image,
 } from "react-native";
 import React, { useEffect } from "react";
-import { useNavigation } from "@react-navigation/native";
-import { useDispatch, useSelector } from "react-redux";
-import { getUserInfo } from "../../../redux/actions/authActions";
+import { useDispatch } from "react-redux";
+import { getUserInfo } from "../../../redux/actions/userActions";
+import { storeApiKeyAndToken } from "../../../service/savingStorageService";
+import { cleanAllAuth } from "../../../redux/actions/authActions";
 
 export default function WelcomeUserScreen({ route }) {
-  const navigation = useNavigation();
   const dispatch = useDispatch();
-  const { from, user } = route.params;
-
-  const userReducer = useSelector((state) => state.userInfoReducer);
+  const { from, user, token, apiKey } = route.params;
 
   useEffect(() => {
     // TODO:Temporary timer for logging in
+    const saveStorage = async () => {
+      await storeApiKeyAndToken(apiKey, token);
+    };
+    saveStorage();
+
     setTimeout(() => {
       dispatch(getUserInfo(user));
+      dispatch(cleanAllAuth());
     }, 5000);
   }, [dispatch, user]);
-
-  useEffect(() => {
-    if (userReducer && userReducer.user !== undefined) {
-      navigation.navigate("Menu");
-    }
-  }, [userReducer]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -47,7 +45,7 @@ export default function WelcomeUserScreen({ route }) {
       <Text className="font-semibold text-xl">
         {from === "signin" ? "Glad to have you back, " : "Nice to meet you, "}
         <Text className="capitalize">
-          {user && user.firstName + " " + user.lastName}!
+          {user && user.person.firstName + " " + user.person.lastName}!
         </Text>
       </Text>
       <View className="my-1"></View>

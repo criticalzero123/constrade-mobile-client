@@ -4,43 +4,47 @@ import {
   StyleSheet,
   View,
   SafeAreaView,
+  Text,
+  Pressable,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import Header from "../../components/sign-in/SignInHeader";
 import PasswordValidatedInput from "../../components/CustomTextInput/PasswordValidatedInput";
 import { emailAndPasswordRegister } from "../../../redux/actions/authActions";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigation } from "@react-navigation/native";
+import { StackActions, useNavigation } from "@react-navigation/native";
 
 import { createWithEmailAndPassword } from "../../../firebase/firebaseAuth";
 
 export default function SignUpPassword({ route }) {
+  const [onLoading, setOnLoading] = useState(false);
   const [password, setPassword] = useState("");
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const { value } = route.params;
 
-  const getState = useSelector(
+  const { loading, success, user, token, apiKey } = useSelector(
     (state) => state.emailAndPasswordRegisterReducer
   );
-
-  const { error, loading, success, user } = getState;
 
   {
     /* TODO: like +639999999999 or 09999999999 t o => 639999999999 when saving in the database */
   }
-  const onSubmit = async () => {
-    const userInfo = {
-      user_type: "semi-verified",
-      authprovider_type: "email",
+  const onSubmit = () => {
+    setOnLoading(true);
+    const user = {
+      userType: "semi-verified",
+      authProviderType: "email",
+      userStatus: "active",
       email: value.emailOrPhone,
       password: password,
       imageUrl: "",
+    };
+    const person = {
       firstname: value.firstName,
       lastname: value.lastName,
     };
-
-    createWithEmailAndPassword(userInfo)
+    createWithEmailAndPassword(user, person)
       .then((user) => {
         dispatch(emailAndPasswordRegister(user));
       })
@@ -50,16 +54,33 @@ export default function SignUpPassword({ route }) {
   };
 
   useEffect(() => {
+    if (loading || loading === undefined || success === undefined) return;
+    setOnLoading(false);
     if (success) {
-      navigation.navigate("WelcomeUser", { from: "signup", user: user });
+      navigation.dispatch(
+        StackActions.replace("WelcomeUser", {
+          from: "signup",
+          user: user,
+          apiKey: apiKey,
+          token: token,
+        })
+      );
     } else {
-      navigation.navigate("SignUp");
+      navigation.dispatch(StackActions.replace("SignUp"));
     }
-  }, [getState]);
+  }, [success, loading]);
 
   return (
     <SafeAreaView style={styles.container}>
-      <View className="my-16"></View>
+      <View className="my-16">
+        <Pressable
+          onPress={() =>
+            navigation.dispatch(StackActions.replace("SignUpOptions"))
+          }
+        >
+          <Text>X</Text>
+        </Pressable>
+      </View>
       <Header
         showLogo={false}
         headerText="Secure your account"
@@ -67,6 +88,7 @@ export default function SignUpPassword({ route }) {
       />
       <PasswordValidatedInput
         password={password}
+        loading={onLoading}
         setPassword={setPassword}
         onSubmit={onSubmit}
       />

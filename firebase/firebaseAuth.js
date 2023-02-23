@@ -2,15 +2,14 @@ import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
 const auth = getAuth();
 
-export const createWithEmailAndPassword = (userInfo) => {
+export const createWithEmailAndPassword = (userInfo, person) => {
   return createUserWithEmailAndPassword(auth, userInfo.email, userInfo.password)
     .then((userCredentials) => {
       const user = {
         ...userInfo,
         firebaseId: userCredentials.user.uid,
       };
-
-      return Promise.resolve(user);
+      return Promise.resolve({ user, person });
     })
     .catch((err) => {
       const errorCode = err.code;

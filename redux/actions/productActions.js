@@ -1,14 +1,24 @@
-import axios from "axios";
-import { API_URL } from "@env";
+import api from "../../service/api";
 
-export const addProduct = (productDetails, imageList) => (dispatch) => {
+const config = (token) => {
+  return {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+  };
+};
+
+export const addProduct = (productDetails, imageList, token) => (dispatch) => {
   dispatch({ type: "PRODUCT_ADD_REQUEST" });
 
-  axios
-    .post(`${API_URL}/api/products`, {
-      product: productDetails,
-      imageUrlList: imageList,
-    })
+  const data = {
+    product: productDetails,
+    imageUrlList: imageList,
+  };
+
+  api
+    .post(`/api/products`, data, config(token))
     .then((res) => {
       dispatch({
         type: "PRODUCT_ADD_SUCCESS",

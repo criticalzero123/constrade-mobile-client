@@ -1,12 +1,14 @@
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import { Platform, Text, StatusBar, View } from "react-native";
+import { Platform, Text, StatusBar, View, Pressable } from "react-native";
 import MessagesAll from "../../screens/messages/MessagesAll";
 import MessagesUnread from "../../screens/messages/MessagesUnread";
 import { Ionicons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
 const Tab = createMaterialTopTabNavigator();
 
 export default function MessageTopTab() {
+  const navigation = useNavigation();
   return (
     <>
       <View
@@ -18,7 +20,9 @@ export default function MessageTopTab() {
       >
         <View className="flex-row justify-between items-center mt-2">
           <Text className="text-lg font-bold">Messages</Text>
-          <Ionicons name="notifications-outline" size={22} color="black" />
+          <Pressable onPress={() => navigation.navigate("Notification")}>
+            <Ionicons name="notifications-outline" size={22} color="black" />
+          </Pressable>
         </View>
       </View>
 
@@ -44,12 +48,20 @@ export default function MessageTopTab() {
         <Tab.Screen
           name="MessageAll"
           component={MessagesAll}
-          options={{ tabBarLabel: "All" }}
+          options={{
+            tabBarLabel: "All",
+            tabBarLabelStyle: {
+              textTransform: "capitalize",
+            },
+          }}
         />
         <Tab.Screen
           name="MessageUnread"
           component={MessagesUnread}
-          options={{ tabBarLabel: "Unread" }}
+          options={{
+            tabBarLabel: "Unread",
+            tabBarLabelStyle: { textTransform: "capitalize" },
+          }}
         />
       </Tab.Navigator>
     </>

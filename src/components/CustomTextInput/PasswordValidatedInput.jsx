@@ -1,4 +1,10 @@
-import { StyleSheet, Text, View, Pressable } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Pressable,
+  ActivityIndicator,
+} from "react-native";
 import React, { useState } from "react";
 
 import { TextInput, ProgressBar } from "react-native-paper";
@@ -13,6 +19,7 @@ export default function PasswordValidatedInput({
   password,
   setPassword,
   onSubmit,
+  loading,
 }) {
   const valid = passwordValidator.validate(password) ? true : false;
   const [visible, setVisible] = useState(false);
@@ -65,10 +72,11 @@ export default function PasswordValidatedInput({
         onPress={onSubmit}
         className={`${
           meterValue !== 1 ? "bg-[#cc471f57] " : "bg-[#CC481F] "
-        }w-full py-4 rounded`}
-        disabled={meterValue !== 1}
+        }w-full py-4 rounded flex-row items-center justify-center`}
+        disabled={meterValue !== 1 || loading}
       >
-        <Text className="text-center font-semibold text-white text-base ">
+        {!loading && <ActivityIndicator size="small" />}
+        <Text className="text-center font-semibold text-white text-base ml-2">
           Create account
         </Text>
       </Pressable>

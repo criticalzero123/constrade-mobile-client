@@ -29,7 +29,6 @@ export default function SignUpScreen() {
 
   useEffect(() => {
     if (loading) return;
-
     if (success && exist) {
       setModalVisible(true);
     }

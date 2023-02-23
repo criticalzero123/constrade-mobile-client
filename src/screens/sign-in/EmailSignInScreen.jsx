@@ -21,7 +21,7 @@ export default function EmailSignInScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { loading, user, error } = useSelector(
+  const { loading, user, token, apiKey, error } = useSelector(
     (state) => state.emailAndPasswordAuthLoginReducer
   );
 
@@ -39,10 +39,17 @@ export default function EmailSignInScreen() {
       alert("User Not Found!");
       return;
     }
-    if (error) console.log(error);
-
+    if (error) {
+      console.log(error);
+      return;
+    }
     navigation.dispatch(
-      StackActions.replace("WelcomeUser", { user: user, from: "signin" })
+      StackActions.replace("WelcomeUser", {
+        token: token,
+        user: user,
+        apiKey: apiKey,
+        from: "signin",
+      })
     );
   }, [user]);
 

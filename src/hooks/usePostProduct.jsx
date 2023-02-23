@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { addProduct } from "../../redux/actions/productActions";
-import { saveImages } from "../../firebase/firebaseStorageBucket";
+import { saveImagesProduct } from "../../firebase/firebaseStorageBucket";
 
 export const usePostProduct = () => {
   const { error, product, loading } = useSelector(
@@ -10,7 +10,10 @@ export const usePostProduct = () => {
   const dispatch = useDispatch();
 
   const onListItem = async (imageList, productInfo) => {
-    const imageUrlListBucket = await saveImages(imageList, productInfo.title);
+    const imageUrlListBucket = await saveImagesProduct(
+      imageList,
+      productInfo.title
+    );
 
     const productDetails = {
       ...productInfo,

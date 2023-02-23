@@ -25,6 +25,7 @@ export default function OtpScreen({ route }) {
   const [otp, setOtp] = useState("");
   const [counter, setCounter] = useState(60);
   const [validating, setValidating] = useState(false);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     const count =
@@ -46,6 +47,7 @@ export default function OtpScreen({ route }) {
         ToastAndroid.show("Wrong OTP, Please Try again!", ToastAndroid.SHORT);
         setValidating(false);
         setOtp("");
+        setError(true);
         break;
 
       case "Success":
@@ -62,6 +64,7 @@ export default function OtpScreen({ route }) {
   }, [loading, message]);
 
   const otpValidation = (newText) => {
+    setError(false);
     if (newText.length === 6) {
       setValidating(!validating);
       dispatch(verifyOtp(value, newText));
@@ -85,16 +88,28 @@ export default function OtpScreen({ route }) {
         onChangeText={otpValidation}
         value={otp}
         keyboardType="number-pad"
-        className="border py-4 text-2xl px-5 w-64 rounded text-center tracking-widest border-gray-300"
+        className={`border py-4 text-2xl px-5 w-64 rounded text-center tracking-widest ${
+          error
+            ? "border-[#CC481F] text-[#CC481F] bg-[#ecb09ea4]"
+            : "border-gray-300 text-black bg-white"
+        }`}
       />
 
       <View className="my-3"></View>
 
       {validating && (
-        <View className="flex-row items-center">
+        <View className="flex-row items-center justify-center">
           <ActivityIndicator size="small" color="#CC481F" />
           <View className="mx-1"></View>
           <Text className="text-[#CC481F]">Checking OTP. Please Wait</Text>
+        </View>
+      )}
+      {error && (
+        <View className="flex-row items-center">
+          <View className="mx-1"></View>
+          <Text className="text-[#CC481F]">
+            You have entered an incorrect code.
+          </Text>
         </View>
       )}
 

@@ -4,21 +4,32 @@ import {
   StyleSheet,
   View,
   SafeAreaView,
+  Pressable,
+  Text,
 } from "react-native";
 import React, { useState } from "react";
 import Header from "../../components/sign-in/SignInHeader";
 import CustomTextInput from "../../components/CustomTextInput/CustomTextInput";
 import SimpleButton from "../../components/buttons/SimpleButton";
+import { StackActions, useNavigation } from "@react-navigation/native";
 
 export default function SignUpName({ route }) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-
+  const navigation = useNavigation();
   const { emailOrPhone } = route.params;
 
   return (
     <SafeAreaView style={styles.container}>
-      <View className="my-10"></View>
+      <View className="my-10">
+        <Pressable
+          onPress={() =>
+            navigation.dispatch(StackActions.replace("SignUpOptions"))
+          }
+        >
+          <Text>X</Text>
+        </Pressable>
+      </View>
       <Header
         showLogo={false}
         bodyText="But first, tell us a little bit about yourself."
