@@ -16,7 +16,7 @@ export default function GoogleButton({ text, type }) {
   useEffect(() => {
     if (user !== undefined && user !== null) {
       navigation.navigate("WelcomeUser", {
-        from: from,
+        from: type,
         user: user,
         token: token,
         apiKey: apiKey,

@@ -2,27 +2,48 @@ import axios from "axios";
 import { API_URL } from "@env";
 import { getApiKey, getToken } from "./savingStorageService";
 
-//this is for the authorized  actions
-const createAuthApiInstance = async () => {
-  const apiKey = await getApiKey();
-  const token = await getToken();
-
+const createApi = () => {
   const api = axios.create({
     baseURL: API_URL,
     timeout: 5000,
-    headers: {
-      ApiKey: apiKey,
-      Authorization: `Bearer ${token}`,
-    },
   });
 
-  return api;
+  //Authorized  actions
+  const setAuthHeaders = async () => {
+    const apiKey = await getApiKey();
+    const token = await getToken();
+    api.defaults.headers.common["ApiKey"] = apiKey;
+    api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+  };
+
+  return {
+    setAuthHeaders: () => {
+      return {
+        get: async (url, config) => {
+          await setAuthHeaders();
+          return api.get(url, config);
+        },
+        post: async (url, data, config) => {
+          await setAuthHeaders();
+          return api.post(url, data, config);
+        },
+        put: async (url, data, config) => {
+          await setAuthHeaders();
+          return api.put(url, data, config);
+        },
+        delete: async (url, config) => {
+          await setAuthHeaders();
+          return api.delete(url, config);
+        },
+      };
+    },
+    get: api.get,
+    post: api.post,
+    put: api.put,
+    delete: api.delete,
+  };
 };
 
-//This is for not authorized or in signing in or loggingin
-export const api = axios.create({
-  baseURL: API_URL,
-  timeout: 5000,
-});
+const api = createApi();
 
-export default createAuthApiInstance;
+export default api;

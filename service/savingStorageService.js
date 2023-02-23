@@ -14,7 +14,7 @@ export const storeApiKeyAndToken = async (apiKey, token) => {
 export const getApiKey = async () => {
   try {
     const value = await AsyncStorage.getItem("apiKey");
-    if (value !== null) return String(value);
+    if (value !== null) return value;
 
     return null;
   } catch (e) {
@@ -26,7 +26,7 @@ export const getApiKey = async () => {
 export const getToken = async () => {
   try {
     const value = await AsyncStorage.getItem("token");
-    if (value !== null) return String(value);
+    if (value !== null) return value;
 
     return null;
   } catch (e) {
