@@ -15,8 +15,14 @@ import {
 import {
   updatePersonInfoReducer,
   userInfoReducer,
+  getAllUsersReducer,
+  getUserByIdReducer,
 } from "./reducers/userReducer";
-import { getFollowAndFollowersUserReducer } from "./reducers/followReducer";
+import {
+  getFollowAndFollowersUserReducer,
+  followUserReducer,
+  isFollowUserReducer,
+} from "./reducers/followReducer";
 import { getReviewsUserReducer } from "./reducers/reviewReducer";
 import { addProductReducer } from "./reducers/productReducer";
 
@@ -33,6 +39,10 @@ const finalReducer = combineReducers({
   getFollowAndFollowersUserReducer,
   getReviewsUserReducer,
   updatePersonInfoReducer,
+  getAllUsersReducer,
+  getUserByIdReducer,
+  followUserReducer,
+  isFollowUserReducer,
 });
 
 const rootReducer = (state, action) => {

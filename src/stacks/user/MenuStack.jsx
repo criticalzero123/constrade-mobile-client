@@ -15,8 +15,8 @@ export default function MenuStack() {
   return (
     <Tab.Navigator
       // initialRouteName="AddProduct"
-      // initialRouteName="Home"
-      initialRouteName="User"
+      initialRouteName="Home"
+      // initialRouteName="User"
       // initialRouteName="Message"
       screenOptions={{
         tabBarActiveTintColor: "#CC481F",

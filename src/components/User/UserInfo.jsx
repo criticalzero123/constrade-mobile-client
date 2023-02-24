@@ -18,6 +18,7 @@ import backImage from "../../../assets/Discover/orange-scenery.jpg";
 import { useNavigation } from "@react-navigation/native";
 import useUserFollowAndFollowers from "../../hooks/useUserFollowAndFollowers";
 import useUserReview from "../../hooks/useUserReview";
+import { useState } from "react";
 
 export default function UserInfo({ headerName, shareable = true, data }) {
   const image =
@@ -25,10 +26,8 @@ export default function UserInfo({ headerName, shareable = true, data }) {
 
   const navigation = useNavigation();
 
-  const [follow, loading] = useUserFollowAndFollowers(
-    data.user && data.user.userId
-  );
-  const [review] = useUserReview(data.user && data.user.userId);
+  const [follow, loading] = useUserFollowAndFollowers(data && data.user.userId);
+  const [review] = useUserReview(data && data.user.userId);
 
   return (
     <View>
@@ -55,7 +54,7 @@ export default function UserInfo({ headerName, shareable = true, data }) {
             <Pressable onPress={() => navigation.goBack()}>
               <Ionicons name="arrow-back" size={24} color="white" />
             </Pressable>
-            <Text className="ml-2 text-lg font-semibold text-white">
+            <Text className="ml-2 text-lg font-semibold text-white capitalize">
               {headerName}
             </Text>
           </View>

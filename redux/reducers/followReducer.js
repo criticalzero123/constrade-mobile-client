@@ -23,3 +23,55 @@ export const getFollowAndFollowersUserReducer = (state = {}, action) => {
       return { ...state };
   }
 };
+
+export const followUserReducer = (state = {}, action) => {
+  switch (action.type) {
+    case "FOLLOW_USER_REQUEST":
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case "FOLLOW_USER_SUCCESS":
+      return {
+        loading: false,
+        success: true,
+        data: action.payload,
+      };
+
+    case "FOLLOW_USER_FAILED":
+      return {
+        loading: false,
+        error: action.error,
+      };
+
+    default:
+      return { ...state };
+  }
+};
+
+export const isFollowUserReducer = (state = {}, action) => {
+  switch (action.type) {
+    case "IS_FOLLOW_USER_REQUEST":
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case "IS_FOLLOW_USER_SUCCESS":
+      return {
+        loading: false,
+        success: true,
+        data: action.payload,
+      };
+
+    case "IS_FOLLOW_USER_FAILED":
+      return {
+        loading: false,
+        error: action.error,
+      };
+
+    default:
+      return { ...state };
+  }
+};
