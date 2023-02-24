@@ -18,7 +18,6 @@ import backImage from "../../../assets/Discover/orange-scenery.jpg";
 import { useNavigation } from "@react-navigation/native";
 import useUserFollowAndFollowers from "../../hooks/useUserFollowAndFollowers";
 import useUserReview from "../../hooks/useUserReview";
-import { useState } from "react";
 
 export default function UserInfo({ headerName, shareable = true, data }) {
   const image =

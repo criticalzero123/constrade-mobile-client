@@ -20,20 +20,8 @@ import SuggestedCommunities from "../../components/Home/SuggestedCommunities";
 import MightLikeThese from "../../components/Home/MightLikeThese";
 import RecentlyViewed from "../../components/Home/RecentlyViewed";
 import EndMessage from "../../components/EndMessage/EndMessage";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getAllUsers } from "../../../redux/actions/userActions";
-import { useNavigation } from "@react-navigation/native";
 
 export default function Discover() {
-  //TODO: this is a temporary for getting all users
-  const dispatch = useDispatch();
-  const navigation = useNavigation();
-  const selector = useSelector((state) => state.getAllUsersReducer);
-  useEffect(() => {
-    dispatch(getAllUsers());
-  }, []);
-
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="light" />
@@ -49,20 +37,7 @@ export default function Discover() {
           </View>
 
           <FeaturesList />
-          {selector.users &&
-            selector.users.map((user) => (
-              <Pressable
-                key={user.userId}
-                className="p-5"
-                onPress={() =>
-                  navigation.navigate("OtherUserProfileHome", {
-                    userId: user.userId,
-                  })
-                }
-              >
-                <Text>{user.email}</Text>
-              </Pressable>
-            ))}
+
           <View className="my-2" />
           <FlatListCategories />
 

@@ -8,6 +8,7 @@ import useGetUserById from "../../hooks/useGetUserById";
 import useGetCurrentUser from "../../hooks/useGetCurrentUser";
 
 export default function OtherUserProfile({ route }) {
+  // This is for the userId of other user
   const { userId } = route.params;
 
   const [data] = useGetUserById(userId);
