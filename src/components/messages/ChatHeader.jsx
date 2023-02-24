@@ -19,12 +19,12 @@ export default function ChatHeader({ data }) {
           <Ionicons name="arrow-back-sharp" size={24} color="black" />
         </Pressable>
         <Image
-          source={{ uri: image }}
+          source={{ uri: data.imageUrl === "" ? image : data.imageUrl }}
           className="h-7 w-7 rounded-full ml-4"
           style={{ resizeMode: "contain" }}
         />
         <View className="ml-2">
-          <Text className="font-semibold">Mike Andrew Fernandez</Text>
+          <Text className="font-semibold">{data.email}</Text>
           <Text className={`${isTyping ? "text-gray-500" : "text-[#CC481F]"}`}>
             {isTyping ? "typing..." : "active now"}
           </Text>
