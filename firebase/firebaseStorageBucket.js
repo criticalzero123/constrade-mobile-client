@@ -1,5 +1,6 @@
 import { storage } from "./firebase-config";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import "react-native-get-random-values";
 import { v4 } from "uuid";
 
 export const saveImagesProduct = async (imageList, title) => {

@@ -6,7 +6,12 @@ export default function useUserAuthenticated() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const { user } = useSelector((state) => state.userInfoReducer);
   useEffect(() => {
-    if (user !== null && user) setIsAuthenticated(true);
+    if (user !== null && user) {
+      setIsAuthenticated(true);
+      return;
+    }
+
+    setIsAuthenticated(false);
   }, [user]);
 
   return [isAuthenticated];

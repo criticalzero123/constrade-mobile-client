@@ -118,6 +118,7 @@ export const verifyOtp = (user, code) => (dispatch) => {
 
 export const signOutUser = () => (dispatch) => {
   dispatch({ type: "SIGN_OUT" });
+  dispatch({ type: "USER_INFO_CLEAR" });
 };
 
 export const cleanAllAuth = () => (dispatch) => {

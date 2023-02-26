@@ -23,7 +23,7 @@ export default function OtherUserProfile({ route }) {
         {data !== undefined && (
           <UserInfo
             headerName={`${firstWordName}'s profile`}
-            shareable={false}
+            myProfile={false}
             data={data}
           />
         )}

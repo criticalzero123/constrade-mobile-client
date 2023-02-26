@@ -93,6 +93,9 @@ export const userInfoReducer = (state = {}, action) => {
         user: action.payload,
       };
 
+    case "USER_INFO_CLEAR":
+      return {};
+
     default:
       return { ...state };
   }

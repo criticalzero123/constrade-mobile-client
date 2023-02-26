@@ -1,4 +1,8 @@
-import { StackActions, useNavigation } from "@react-navigation/native";
+import {
+  CommonActions,
+  StackActions,
+  useNavigation,
+} from "@react-navigation/native";
 import { getAuth, signOut } from "firebase/auth";
 import { useDispatch } from "react-redux";
 import { signOutUser } from "../../redux/actions/authActions";
@@ -14,7 +18,6 @@ export const useSignOutUser = () => {
       .then(() => {
         clearAllAsyncStorage();
         dispatch(signOutUser());
-        navigation.reset({ index: 0, routes: [{ name: "AuthStack" }] });
       })
       .catch((err) => {
         console.log(err);
