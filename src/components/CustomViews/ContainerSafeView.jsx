@@ -5,7 +5,7 @@ import React from "react";
 export default function ContainerSafeView({
   children,
   styleName,
-  colorStatusBar,
+  colorStatusBar = "dark",
 }) {
   return (
     <SafeAreaView style={styles.container} className={styleName}>

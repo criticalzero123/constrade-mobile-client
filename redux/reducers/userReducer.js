@@ -49,7 +49,6 @@ export const getAllUsersReducer = (state = {}, action) => {
       };
 
     case "GET_ALL_USERS_LEAVE":
-      ``;
       return {};
 
     default:

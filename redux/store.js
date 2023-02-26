@@ -18,13 +18,20 @@ import {
   getAllUsersReducer,
   getUserByIdReducer,
 } from "./reducers/userReducer";
+
 import {
   getFollowAndFollowersUserReducer,
   followUserReducer,
   isFollowUserReducer,
 } from "./reducers/followReducer";
+
 import { getReviewsUserReducer } from "./reducers/reviewReducer";
+
 import { addProductReducer } from "./reducers/productReducer";
+import {
+  getMessagesByUserIdsReducer,
+  getChatByUserIdReducer,
+} from "./reducers/userMessageReducer";
 
 const finalReducer = combineReducers({
   emailAndPasswordRegisterReducer,
@@ -43,6 +50,8 @@ const finalReducer = combineReducers({
   getUserByIdReducer,
   followUserReducer,
   isFollowUserReducer,
+  getMessagesByUserIdsReducer,
+  getChatByUserIdReducer,
 });
 
 const rootReducer = (state, action) => {

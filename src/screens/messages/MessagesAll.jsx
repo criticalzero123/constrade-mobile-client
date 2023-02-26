@@ -1,39 +1,27 @@
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import React from "react";
 
-import MessageEmpty from "../../components/messages/MessageEmpty";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getAllUsers } from "../../../redux/actions/userActions";
-import { useNavigation } from "@react-navigation/native";
+import useGetChatList from "../../hooks/Message/useGetChatList";
+import { ActivityIndicator } from "react-native-paper";
+import ChatInfoItem from "../../components/messages/ChatInfoItem";
 
 export default function MessagesAll() {
-  const { users } = useSelector((state) => state.getAllUsersReducer);
-  const navigation = useNavigation();
-
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getAllUsers());
-  }, [dispatch]);
+  const [chats] = useGetChatList();
 
   return (
-    <View
-      className="mt-4 flex-row justify-between items-center"
-      style={{ paddingHorizontal: 20 }}
-    >
-      {users &&
-        users.map((user) => (
-          <Pressable
-            onPress={() => navigation.navigate("PersonalMessage", { user })}
-          >
-            <Text>{user.email}</Text>
-          </Pressable>
-        ))}
-
-      {/* <MessageEmpty
-        title="Its quiet here"
-        description="Negotiations goes here and messages from someone who wants to buy from you."
-      /> */}
+    <View className="mt-4" style={{ paddingHorizontal: 20 }}>
+      {chats === undefined ? (
+        <View className=" flex-row justify-center items-center h-full">
+          <ActivityIndicator size="large" />
+        </View>
+      ) : chats.length === 0 ? (
+        <MessageEmpty
+          title="Its quiet here"
+          description="Negotiations goes here and messages from someone who wants to buy from you."
+        />
+      ) : (
+        chats.map((chat) => <ChatInfoItem info={chat} key={chat.userChatId} />)
+      )}
     </View>
   );
 }

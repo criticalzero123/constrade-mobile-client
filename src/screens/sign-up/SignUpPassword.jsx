@@ -22,6 +22,8 @@ export default function SignUpPassword({ route }) {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const { value } = route.params;
+  const image =
+    "https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80";
 
   const { loading, success, user, token, apiKey } = useSelector(
     (state) => state.emailAndPasswordRegisterReducer
@@ -38,7 +40,7 @@ export default function SignUpPassword({ route }) {
       userStatus: "active",
       email: value.emailOrPhone,
       password: password,
-      imageUrl: "",
+      imageUrl: image,
     };
     const person = {
       firstname: value.firstName,

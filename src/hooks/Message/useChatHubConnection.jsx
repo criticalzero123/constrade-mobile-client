@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { API_URL } from "@env";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export default function useChatHubConnection() {
+export default function useMessageHubConnection() {
   const [connection, setConnection] = useState(null);
   const [message, setMessage] = useState();
 
@@ -40,29 +40,30 @@ export default function useChatHubConnection() {
         .then(() => {
           console.log("SignalR connection established.");
 
+          // Chat Receiver
           connection.on("ReceiveMessage", (message) => {
             setMessage(message);
-            // console.log(message)
           });
         })
         .catch((err) => {
           console.log(`SignalR connection error: ${err}`);
         });
     }
+
+    return () => {
+      if (connection) {
+        connection.stop();
+        console.log("SignalR connection closed.");
+      }
+    };
   }, [connection]);
 
-  //id for the creating chat and email for the uniqueness of the auth
-  const sendMessage = async (senderId, receiverId, receiverEmail, message) => {
+  //id for the creating chat or email for the uniqueness of the auth
+  const sendMessage = async (senderId, receiverId, message) => {
     if (connection) {
-      await connection.invoke(
-        "SendMessage",
-        senderId,
-        receiverId,
-        receiverEmail,
-        message
-      );
+      await connection.invoke("SendMessage", senderId, receiverId, message);
     }
   };
 
-  return [sendMessage, message];
+  return { sendMessage, message };
 }

@@ -20,9 +20,6 @@ import useUserFollowAndFollowers from "../../hooks/useUserFollowAndFollowers";
 import useUserReview from "../../hooks/useUserReview";
 
 export default function UserInfo({ headerName, shareable = true, data }) {
-  const image =
-    "https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80";
-
   const navigation = useNavigation();
 
   const [follow, loading] = useUserFollowAndFollowers(data && data.user.userId);
@@ -64,7 +61,7 @@ export default function UserInfo({ headerName, shareable = true, data }) {
             <View className="p-1 border-2 border-[#FF6838] rounded-full items-center ">
               <Image
                 source={{
-                  uri: data.user.imageUrl !== "" ? data.user.imageUrl : image,
+                  uri: data.user.imageUrl,
                 }}
                 className="w-24 h-24 rounded-full"
               />

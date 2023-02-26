@@ -8,20 +8,23 @@ import {
 import React from "react";
 import { useState } from "react";
 import { Feather } from "@expo/vector-icons";
-import useGetCurrentUser from "../../hooks/useGetCurrentUser";
 
-export default function UserChatInput({ receiver, sendMessage }) {
+export default function UserChatInput({ receiver, sendMessage, user }) {
   const [value, setValue] = useState("");
-  const { width } = useWindowDimensions();
-  const { user } = useGetCurrentUser();
+  const { width, height } = useWindowDimensions();
 
   const onPress = () => {
-    sendMessage(user.userId, receiver.userId, receiver.email, value);
+    if (value.toString().trim() === "") return;
+
+    sendMessage(user.userId, receiver.userId, value);
     setValue("");
   };
 
   return (
-    <View className="absolute bottom-0 flex-row items-center">
+    <View
+      className=" flex-row items-center justify-center bg-white"
+      style={{ width: width, height: height * 0.08 }}
+    >
       <TextInput
         value={value}
         onChangeText={setValue}
