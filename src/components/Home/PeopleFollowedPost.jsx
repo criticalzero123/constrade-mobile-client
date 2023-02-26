@@ -18,7 +18,14 @@ export default function PeopleFollowedPost() {
       <FlatList
         data={tempDataItem}
         keyExtractor={(item) => item.id}
-        renderItem={({ item, index }) => <ItemCard data={item} index={index} />}
+        renderItem={({ item, index }) => (
+          <ItemCard
+            data={item}
+            index={index}
+            user={item.user}
+            person={item.person}
+          />
+        )}
         horizontal
         showsHorizontalScrollIndicator={false}
       />

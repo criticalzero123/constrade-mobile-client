@@ -19,7 +19,7 @@ export default function AddProductDeliveryDetails({ route }) {
   const [location, setLocation] = useState("");
   const [method, setMethod] = useState("");
   const [sending, setSending] = useState(false);
-  const [onListItem, product, loading, error] = usePostProduct();
+  const [onListItem, data, loading, error] = usePostProduct();
 
   const { productInfo, imageList } = route.params;
   const navigation = useNavigation();
@@ -74,6 +74,11 @@ export default function AddProductDeliveryDetails({ route }) {
             placeholder="Please input the location"
             label="Location"
           />
+          {data === "NoPostCount" ? (
+            <Text>Count Post is not enough</Text>
+          ) : (
+            data !== undefined && <Text>Product is posted</Text>
+          )}
           <Pressable
             className={`w-full ${
               sending ? "bg-[#e48568] " : "bg-[#CC481F] "
@@ -86,8 +91,6 @@ export default function AddProductDeliveryDetails({ route }) {
             </Text>
           </Pressable>
         </View>
-
-        {product && <Text>Product is posted</Text>}
 
         <Portal>
           <Modal

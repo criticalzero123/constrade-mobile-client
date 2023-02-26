@@ -18,7 +18,14 @@ export default function MightLikeThese() {
       </View>
       <FlatList
         data={tempDataItem}
-        renderItem={({ item, index }) => <ItemCard data={item} index={index} />}
+        renderItem={({ item, index }) => (
+          <ItemCard
+            data={item}
+            index={index}
+            user={item.user}
+            person={item.person}
+          />
+        )}
         keyExtractor={(item) => item.id}
         ItemSeparatorComponent={() => <View className="mx-1" />}
         horizontal

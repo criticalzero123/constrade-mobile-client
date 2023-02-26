@@ -12,7 +12,12 @@ export default function JustForYou() {
       </View>
       <View className="w-full flex-row flex-wrap justify-center ml-2">
         {tempDataItem.map((data) => (
-          <ItemCard data={data} key={data.id} />
+          <ItemCard
+            data={data}
+            key={data.id}
+            user={data.user}
+            person={data.person}
+          />
         ))}
       </View>
       <Text className="text-[#CC481F] font-semibold text-base text-center">

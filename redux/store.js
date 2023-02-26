@@ -27,7 +27,10 @@ import {
 
 import { getReviewsUserReducer } from "./reducers/reviewReducer";
 
-import { addProductReducer } from "./reducers/productReducer";
+import {
+  addProductReducer,
+  getProductByUserReducer,
+} from "./reducers/productReducer";
 import {
   getMessagesByUserIdsReducer,
   getChatByUserIdReducer,
@@ -52,6 +55,7 @@ const finalReducer = combineReducers({
   isFollowUserReducer,
   getMessagesByUserIdsReducer,
   getChatByUserIdReducer,
+  getProductByUserReducer,
 });
 
 const rootReducer = (state, action) => {

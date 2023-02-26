@@ -3,7 +3,7 @@ import { addProduct } from "../../redux/actions/productActions";
 import { saveImagesProduct } from "../../firebase/firebaseStorageBucket";
 
 export const usePostProduct = () => {
-  const { error, product, loading } = useSelector(
+  const { error, data, loading } = useSelector(
     (state) => state.addProductReducer
   );
 
@@ -23,5 +23,5 @@ export const usePostProduct = () => {
     dispatch(addProduct(productDetails, imageUrlListBucket));
   };
 
-  return [onListItem, product, loading, error];
+  return [onListItem, data, loading, error];
 };
