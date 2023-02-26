@@ -24,9 +24,11 @@ import ViewItemList from "../../../components/Products/AddProduct/ViewItemList";
 import ImagePickerProduct from "../../../components/Products/AddProduct/ImagePickerProduct";
 import KeyboardHideView from "../../../components/CustomViews/KeyboardHideView";
 import { useHideBottomTab } from "../../../hooks/useHideBottomTab";
+import useGetCurrentUser from "../../../hooks/useGetCurrentUser";
 
 export default function AddProductItemDetails() {
   useHideBottomTab();
+  const { user } = useGetCurrentUser();
 
   const [imageList, setImageList] = useState([]);
   const [price, setPrice] = useState(0);
@@ -56,8 +58,43 @@ export default function AddProductItemDetails() {
   };
 
   const onPressTrigger = () => {
+    if (imageList.length === 0) {
+      alert("please put an image.");
+      return;
+    }
+
+    if (title.trim() === "") {
+      alert("Please put an title");
+      return;
+    }
+
+    if (description.trim() === "") {
+      alert("Please put an description");
+      return;
+    }
+
+    if (tradeMethod.trim() === "") {
+      alert("Please select a Trade Method");
+      return;
+    }
+
+    if (tradeMethod === "cash" && cash == 0) {
+      alert("Please put an amount");
+      return;
+    }
+
+    if (tradeMethod === "trade-in" && (cash == 0 || itemList.length === 0)) {
+      alert("Please put an amount or items");
+      return;
+    }
+
+    if (tradeMethod === "trade" && itemList.length === 0) {
+      alert("Please put an item");
+      return;
+    }
+
     const productInfo = {
-      posterUserId: 630,
+      posterUserId: user.userId,
       title: title,
       description: description,
       condition: condition,
@@ -85,23 +122,27 @@ export default function AddProductItemDetails() {
         <ImagePickerProduct imageList={imageList} setImageList={setImageList} />
 
         <Text className="text-base mt-5">Category</Text>
-        <Picker
-          selectedValue={category}
-          onValueChange={(item) => setCategory(item)}
-          className="border"
-        >
-          <Picker.Item label="Console" value="console" />
-          <Picker.Item label="XBOX" value="xbox" />
-          <Picker.Item label="XBOX 360" value="xbox360" />
-          <Picker.Item label="PS4" value="ps4" />
-        </Picker>
+        <View className="border border-gray-400 rounded-lg mt-2">
+          <Picker
+            selectedValue={category}
+            onValueChange={(item) => setCategory(item)}
+            style={{ color: "gray" }}
+          >
+            <Picker.Item label="Console" value="console" />
+            <Picker.Item label="XBOX" value="xbox" />
+            <Picker.Item label="XBOX 360" value="xbox360" />
+            <Picker.Item label="PS4" value="ps4" />
+          </Picker>
+        </View>
 
+        <View className="my-3" />
         <NumberTextInput
           placeholder={"0.00"}
           value={price}
           setValue={setPrice}
           label="Price(generated from our system)"
         />
+        <View className="my-3" />
 
         <CustomTextInput
           placeholder={"Give your listing a name"}
@@ -109,6 +150,7 @@ export default function AddProductItemDetails() {
           setValue={setTitle}
           label="Title"
         />
+        <View className="my-3" />
 
         <TextAreaInput
           value={description}
@@ -116,17 +158,21 @@ export default function AddProductItemDetails() {
           placeholder="State item inclusions or defects, if any."
           label="Description"
         />
+        <View className="my-3" />
 
-        <Text className="text-base mt-5">Condition</Text>
-        <Picker
-          selectedValue={condition}
-          onValueChange={(item) => setCondition(item)}
-          className="border"
-        >
-          <Picker.Item label="Brand New" value="new" />
-          <Picker.Item label="Used - Fine" value="used-fine" />
-          <Picker.Item label="Used - Defects" value="used-defect" />
-        </Picker>
+        <Text className="text-base mb-2">Condition</Text>
+        <View className="border border-gray-300 rounded-lg">
+          <Picker
+            selectedValue={condition}
+            onValueChange={(item) => setCondition(item)}
+            style={{ color: "gray" }}
+          >
+            <Picker.Item label="Brand New" value="new" />
+            <Picker.Item label="Used - Fine" value="used-fine" />
+            <Picker.Item label="Used - Defects" value="used-defect" />
+          </Picker>
+        </View>
+        <View className="my-3" />
 
         <Text className="text-base font-semibold mb-3">Trade Method</Text>
         <RadioButton.Group
@@ -138,31 +184,31 @@ export default function AddProductItemDetails() {
           }}
           value={tradeMethod}
         >
-          <View className="flex-row items-center justify-between mb-5">
-            <View className="flex-row">
-              <Entypo name="list" size={23} color="gray" />
-              <View className="ml-2">
-                <Text className="font-semibold mb-1">Cash only</Text>
-                <Text className="text-gray-400">
-                  I want to sell this item for cash only.
-                </Text>
+          <View className="mb-4">
+            <View className="flex-row items-center justify-between">
+              <View className="flex-row">
+                <Entypo name="list" size={23} color="gray" />
+                <View className="ml-2">
+                  <Text className="font-semibold mb-1">Cash only</Text>
+                  <Text className="text-gray-400">
+                    I want to sell this item for cash only.
+                  </Text>
+                </View>
               </View>
+              <RadioButton value="cash" />
             </View>
-            <RadioButton value="cash" />
-          </View>
-          {tradeMethod === "cash" && (
-            <View>
+            {tradeMethod === "cash" && (
               <TextInput
                 keyboardType="numeric"
                 placeholder="Cash"
-                className="p-2 border border-gray-300 rounded-lg"
+                className="py-2 px-4 border border-gray-300 rounded-lg mt-2 mb-4"
                 value={cash}
                 onChangeText={setCash}
               />
-            </View>
-          )}
-          <View>
-            <View className="flex-row items-center justify-between mb-5">
+            )}
+          </View>
+          <View className="mb-4">
+            <View className="flex-row items-center justify-between mb-2">
               <View className="flex-row">
                 <Entypo name="list" size={23} color="gray" />
                 <View className="ml-2">
@@ -179,14 +225,14 @@ export default function AddProductItemDetails() {
                 <TextInput
                   keyboardType="numeric"
                   placeholder="Cash"
-                  className="p-2 border border-gray-300 rounded-lg"
+                  className="p-2 border border-gray-400 rounded-lg"
                   value={cash}
                   onChangeText={setCash}
                 />
-
+                <View className="my-1" />
                 <TextInput
                   placeholder="Item"
-                  className="p-2 border border-gray-300 rounded-lg"
+                  className="p-2 border border-gray-400 rounded-lg"
                   returnKeyType="done"
                   value={itemInput}
                   onChangeText={setItemInput}
@@ -197,34 +243,37 @@ export default function AddProductItemDetails() {
               </View>
             )}
           </View>
-          <View className="flex-row items-center justify-between">
-            <View className="flex-row">
-              <Entypo name="list" size={23} color="gray" />
-              <View className="ml-2">
-                <Text className="font-semibold mb-1">Swap</Text>
-                <Text className="text-gray-400">
-                  Swap my item with another item.
-                </Text>
+          <View>
+            <View className="flex-row items-center justify-between mb-2">
+              <View className="flex-row">
+                <Entypo name="list" size={23} color="gray" />
+                <View className="ml-2">
+                  <Text className="font-semibold mb-1">Swap</Text>
+                  <Text className="text-gray-400">
+                    Swap my item with another item.
+                  </Text>
+                </View>
               </View>
+              <RadioButton value="swap" />
             </View>
-            <RadioButton value="swap" />
+            {tradeMethod === "swap" && (
+              <View>
+                <TextInput
+                  placeholder="Item"
+                  className="p-2 border border-gray-400 rounded-lg"
+                  returnKeyType="done"
+                  value={itemInput}
+                  onChangeText={setItemInput}
+                  onSubmitEditing={addItemList}
+                />
+                <ViewItemList itemList={itemList} setItemList={setItemList} />
+              </View>
+            )}
           </View>
-          {tradeMethod === "swap" && (
-            <View>
-              <TextInput
-                placeholder="Item"
-                className="p-2 border border-gray-300 rounded-lg"
-                returnKeyType="done"
-                value={itemInput}
-                onChangeText={setItemInput}
-                onSubmitEditing={addItemList}
-              />
-              <ViewItemList itemList={itemList} setItemList={setItemList} />
-            </View>
-          )}
         </RadioButton.Group>
+        <View className="my-3" />
         <View>
-          <Text className="font-semibold mb-4 text-base">Optional details</Text>
+          <Text className="font-semibold mb-6 text-base">Optional details</Text>
           <View className="flex-row items-center justify-between">
             <View>
               <Text className="font-semibold mb-2">Include receipts</Text>

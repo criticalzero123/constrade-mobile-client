@@ -10,12 +10,12 @@ export default function CustomTextInput({
 }) {
   return (
     <View>
-      <Text className="text-left mb-1 text-base">{label}</Text>
+      <Text className="text-left mb-2 text-base">{label}</Text>
       <TextInput
         onChangeText={setValue}
         value={value}
         placeholder={placeholder}
-        className="border py-2 px-3 rounded border-gray-400"
+        className="border py-2 px-4 rounded border-gray-400"
         autoCapitalize={name ? "words" : "none"}
       />
     </View>

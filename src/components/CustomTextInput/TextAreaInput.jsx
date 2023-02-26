@@ -11,8 +11,8 @@ export default function TextAreaInput({ label, value, setValue, placeholder }) {
         placeholder={placeholder}
         multiline={true}
         numberOfLines={5}
-        style={{ height: 200, textAlignVertical: "top" }}
-        className="border border-gray-400 rounded p-3"
+        style={{ height: 100, textAlignVertical: "top" }}
+        className="border border-gray-400 rounded py-2 px-4"
       />
     </>
   );

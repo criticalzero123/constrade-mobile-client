@@ -14,8 +14,8 @@ const Tab = createBottomTabNavigator();
 export default function MenuStack() {
   return (
     <Tab.Navigator
-      // initialRouteName="AddProduct"
-      initialRouteName="Home"
+      initialRouteName="AddProduct"
+      // initialRouteName="Home"
       // initialRouteName="User"
       // initialRouteName="Message"
       screenOptions={{

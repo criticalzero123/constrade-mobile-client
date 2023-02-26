@@ -1,31 +1,19 @@
 import api from "../../service/api";
 
-const config = (token) => {
-  return {
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
-    },
-  };
-};
-
-export const addProduct = (productDetails, imageList, token) => (dispatch) => {
+export const addProduct = (productDetails, imageList) => async (dispatch) => {
   dispatch({ type: "PRODUCT_ADD_REQUEST" });
+  try {
+    const data = {
+      product: productDetails,
+      imageUrlList: imageList,
+    };
+    const res = await api.setAuthHeaders().post(`/api/products`, data);
 
-  const data = {
-    product: productDetails,
-    imageUrlList: imageList,
-  };
-
-  api
-    .post(`/api/products`, data, config(token))
-    .then((res) => {
-      dispatch({
-        type: "PRODUCT_ADD_SUCCESS",
-        payload: res.data.responseData,
-      });
-    })
-    .catch((err) => {
-      dispatch({ type: "PRODUCT_ADD_FAILED", error: err });
+    dispatch({
+      type: "PRODUCT_ADD_SUCCESS",
+      payload: res.data.responseData,
     });
+  } catch (error) {
+    dispatch({ type: "PRODUCT_ADD_FAILED", error: err });
+  }
 };

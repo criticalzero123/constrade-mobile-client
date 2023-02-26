@@ -9,13 +9,13 @@ export default function NumberTextInput({
 }) {
   return (
     <>
-      <Text className=" text-base mb-1">{label}</Text>
+      <Text className=" text-base mb-2">{label}</Text>
       <TextInput
         keyboardType="numeric"
         value={value}
         onChangeText={setValue}
         placeholder={placeholder}
-        className="border p-2 rounded border-gray-300"
+        className="border px-4 py-2 rounded border-gray-400"
       />
     </>
   );

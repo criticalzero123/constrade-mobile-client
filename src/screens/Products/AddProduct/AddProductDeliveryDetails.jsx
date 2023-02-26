@@ -1,9 +1,7 @@
 import {
-  Platform,
   StyleSheet,
   Text,
   View,
-  StatusBar,
   Pressable,
   ActivityIndicator,
 } from "react-native";
@@ -11,8 +9,7 @@ import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import Header from "../../../components/Products/AddProduct/Header";
 import CustomTextInput from "../../../components/CustomTextInput/CustomTextInput";
-import { Modal, Portal, Provider, RadioButton } from "react-native-paper";
-import { MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
+import { Modal, Portal, Provider } from "react-native-paper";
 import KeyboardHideView from "../../../components/CustomViews/KeyboardHideView";
 import { usePostProduct } from "../../../hooks/usePostProduct";
 import { useEffect } from "react";
@@ -28,6 +25,16 @@ export default function AddProductDeliveryDetails({ route }) {
   const navigation = useNavigation();
 
   const onSubmit = () => {
+    if (method.trim() === "") {
+      alert("Please select a delivery method details");
+      return;
+    }
+
+    if (location.trim() === "") {
+      alert("Please put a location details");
+      return;
+    }
+
     setSending(!sending);
 
     const productDetails = {
@@ -49,7 +56,7 @@ export default function AddProductDeliveryDetails({ route }) {
   return (
     <Provider>
       <KeyboardHideView>
-        <View>
+        <View className="h-full">
           <Header onPress={() => navigation.goBack()} title="Delivery Method" />
 
           <View className="my-2"></View>
@@ -67,18 +74,18 @@ export default function AddProductDeliveryDetails({ route }) {
             placeholder="Please input the location"
             label="Location"
           />
+          <Pressable
+            className={`w-full ${
+              sending ? "bg-[#e48568] " : "bg-[#CC481F] "
+            }  py-4 rounded mb-4 flex-row items-center justify-center bottom-0 absolute`}
+            onPress={onSubmit}
+            disabled={sending}
+          >
+            <Text className=" text-white font-semibold text-base">
+              {sending && <ActivityIndicator />}List my item
+            </Text>
+          </Pressable>
         </View>
-        <Pressable
-          className={`w-full ${
-            sending ? "bg-[#e48568] " : "bg-[#CC481F] "
-          }  py-4 rounded mb-4 flex-row items-center justify-center`}
-          onPress={onSubmit}
-          disabled={sending}
-        >
-          <Text className=" text-white font-semibold text-base">
-            {sending && <ActivityIndicator />}List my item
-          </Text>
-        </Pressable>
 
         {product && <Text>Product is posted</Text>}
 
