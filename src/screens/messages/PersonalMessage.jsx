@@ -26,6 +26,7 @@ export default function PersonalMessage({ route }) {
 
   const [index, setIndex] = useState(0);
   const [messageList, setMessageList] = useState([]);
+  const [firstFetch, setFirstFetch] = useState(true);
 
   const { height } = useWindowDimensions();
   const { user } = useGetCurrentUser();
@@ -46,9 +47,14 @@ export default function PersonalMessage({ route }) {
   useEffect(() => {
     if (messageData === undefined) return;
 
-    const reverseArray = [...messageData].reverse();
-    setMessageList([...messageList, ...reverseArray]);
-    onClickScrollDown();
+    if (firstFetch) {
+      const reverseArray = [...messageData].reverse();
+      setMessageList([...messageList, ...reverseArray]);
+      setFirstFetch(false);
+      onClickScrollDown();
+    } else {
+      setMessageList([...messageData, ...messageList]);
+    }
   }, [messageData]);
 
   // This if for listening the message from hub
@@ -81,7 +87,7 @@ export default function PersonalMessage({ route }) {
               showsVerticalScrollIndicator={false}
               className="mb-4"
               ref={scrollDown}
-              onContentSizeChange={onClickScrollDown}
+              onContentSizeChange={firstFetch ? onClickScrollDown : null}
             >
               <Pressable onPress={onPress}>
                 <Text>See more</Text>
