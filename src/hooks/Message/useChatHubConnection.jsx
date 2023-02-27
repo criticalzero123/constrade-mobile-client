@@ -13,7 +13,7 @@ export default function useMessageHubConnection() {
       const token = item[1][1];
 
       const newConnection = new HubConnectionBuilder()
-        .withUrl(`${API_URL}/userChatHub`, {
+        .withUrl(`${API_URL}/hubs/userChatHub`, {
           headers: {
             ApiKey: apiKey,
           },

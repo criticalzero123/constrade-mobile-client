@@ -9,7 +9,7 @@ export default function useGetChatList() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (user === undefined) return;
+    if (user === undefined || user === null) return;
 
     dispatch(getChatByUserId(user.userId));
   }, [dispatch, user]);

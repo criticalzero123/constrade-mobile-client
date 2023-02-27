@@ -71,41 +71,45 @@ export default function PersonalMessage({ route }) {
       enabled={true}
       style={styles.container}
     >
-      <View className="mt-2" />
-      <View style={{ height: height * 0.85, paddingHorizontal: 20 }}>
-        <ChatHeader data={otherUser} />
+      {user !== undefined && (
+        <>
+          <View className="mt-2" />
+          <View style={{ height: height * 0.85, paddingHorizontal: 20 }}>
+            <ChatHeader data={otherUser} />
 
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-          className="mb-4"
-          ref={scrollDown}
-          onContentSizeChange={onClickScrollDown}
-        >
-          <Pressable onPress={onPress}>
-            <Text>See more</Text>
-          </Pressable>
-          {messageList.length !== 0 &&
-            messageList.map((message, index) => {
-              return message.senderId === user.userId ? (
-                <MessageItem
-                  key={message.userMessageId}
-                  message={message.message}
-                />
-              ) : (
-                <OtherMessageItem
-                  image={otherUser.imageUrl}
-                  message={message.message}
-                  key={message.userMessageId}
-                />
-              );
-            })}
-        </ScrollView>
-      </View>
-      <UserChatInput
-        sendMessage={sendMessage}
-        receiver={otherUser}
-        user={user}
-      />
+            <ScrollView
+              showsVerticalScrollIndicator={false}
+              className="mb-4"
+              ref={scrollDown}
+              onContentSizeChange={onClickScrollDown}
+            >
+              <Pressable onPress={onPress}>
+                <Text>See more</Text>
+              </Pressable>
+              {messageList.length !== 0 &&
+                messageList.map((message, index) => {
+                  return message.senderId === user.userId ? (
+                    <MessageItem
+                      key={message.userMessageId}
+                      message={message.message}
+                    />
+                  ) : (
+                    <OtherMessageItem
+                      image={otherUser.imageUrl}
+                      message={message.message}
+                      key={message.userMessageId}
+                    />
+                  );
+                })}
+            </ScrollView>
+          </View>
+          <UserChatInput
+            sendMessage={sendMessage}
+            receiver={otherUser}
+            user={user}
+          />
+        </>
+      )}
     </KeyboardAvoidingView>
   );
 }

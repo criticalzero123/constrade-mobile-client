@@ -5,7 +5,7 @@ import useGetChatList from "../../hooks/Message/useGetChatList";
 import { ActivityIndicator } from "react-native-paper";
 import ChatInfoItem from "../../components/messages/ChatInfoItem";
 
-export default function MessagesAll() {
+export default function MessagesAll96() {
   const [chats] = useGetChatList();
 
   return (

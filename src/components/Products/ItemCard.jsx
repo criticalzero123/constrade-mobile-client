@@ -26,7 +26,6 @@ export default function ItemCard({
       className={`mb-4 mr-2  ${index === 0 && "ml-5"}`}
       style={{ width: width * 0.45, height: height * 0.25 }}
     >
-      {console.log(person)}
       <View className="h-3/4 relative overflow-hidden rounded-t-lg">
         <Image
           source={
