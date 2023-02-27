@@ -6,7 +6,7 @@ import {
   Text,
   View,
 } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 
 import { StatusBar } from "expo-status-bar";
 import DiscoverHeader from "../../components/Home/DiscoverHeader";
@@ -21,7 +21,20 @@ import MightLikeThese from "../../components/Home/MightLikeThese";
 import RecentlyViewed from "../../components/Home/RecentlyViewed";
 import EndMessage from "../../components/EndMessage/EndMessage";
 
+import { useDispatch, useSelector } from "react-redux";
+import { getAllUsers } from "../../../redux/actions/userActions";
+import { useNavigation } from "@react-navigation/native";
+import useGetCurrentUser from "../../hooks/useGetCurrentUser";
 export default function Discover() {
+  const { data } = useSelector((state) => state.getAllUsersReducer);
+  const { user } = useGetCurrentUser();
+
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    dispatch(getAllUsers());
+  }, []);
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="light" />
@@ -29,6 +42,33 @@ export default function Discover() {
         <DiscoverHeader />
         <View>
           {/* For search make an another component for this */}
+
+          {data &&
+            data.map((otherUser) =>
+              user.userId === otherUser.userId ? (
+                <Pressable
+                  onPress={() =>
+                    navigation.navigate("User", {
+                      screen: "UserProfile",
+                    })
+                  }
+                >
+                  <Text>{otherUser.email}</Text>
+                </Pressable>
+              ) : (
+                <Pressable
+                  onPress={() =>
+                    navigation.navigate("User", {
+                      screen: "OtherUserProfile",
+                      params: { userId: otherUser.userId },
+                    })
+                  }
+                >
+                  <Text>{otherUser.email}</Text>
+                </Pressable>
+              )
+            )}
+
           <View
             className="py-4 px-2 rounded-lg bg-gray-300 mt-4 mb-3"
             style={{ marginHorizontal: 20 }}

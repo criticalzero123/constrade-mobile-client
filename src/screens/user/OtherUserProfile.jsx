@@ -6,6 +6,7 @@ import OtherUserInfoNav from "../../components/User/OtherUserInfoNav";
 import OtherUserActions from "../../components/User/OtherUserActions";
 import useGetUserById from "../../hooks/useGetUserById";
 import useGetCurrentUser from "../../hooks/useGetCurrentUser";
+import { useEffect } from "react";
 
 export default function OtherUserProfile({ route }) {
   // This is for the userId of other user
@@ -29,7 +30,7 @@ export default function OtherUserProfile({ route }) {
         )}
         <View style={{ paddingHorizontal: 20 }}>
           <OtherUserActions
-            otherUserId={data && data.user.userId}
+            otherUser={data !== undefined && data.user}
             currentUserId={user && user.userId}
           />
           <OtherUserInfoNav />

@@ -15,7 +15,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 
 import backImage from "../../../assets/Discover/orange-scenery.jpg";
-import { StackActions, useNavigation } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import useUserFollowAndFollowers from "../../hooks/useUserFollowAndFollowers";
 import useUserReview from "../../hooks/useUserReview";
 
@@ -49,11 +49,7 @@ export default function UserInfo({ headerName, myProfile = true, data }) {
           <View className="flex-row justify-between mt-3 mb-4">
             <View className="flex-row">
               <Pressable
-                onPress={() =>
-                  myProfile
-                    ? navigation.navigate("Menu", { screen: "Home" })
-                    : navigation.goBack()
-                }
+                onPress={() => navigation.reset({ routes: [{ name: "Menu" }] })}
               >
                 <Ionicons name="arrow-back" size={24} color="white" />
               </Pressable>

@@ -37,8 +37,7 @@ export const getAllUsersReducer = (state = {}, action) => {
 
     case "GET_ALL_USERS_SUCCESS":
       return {
-        success: true,
-        users: action.payload,
+        data: action.payload,
         loading: false,
       };
 
