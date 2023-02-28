@@ -12,13 +12,13 @@ import Advertisement from "../Home/Advertisement";
 import upperImage from "../../../assets/Messages/upper_image.png";
 import { useNavigation } from "@react-navigation/native";
 
-export default function MessageEmpty({ title, description }) {
+export default function MessageEmpty({ title, description, ads = true }) {
   const { height } = useWindowDimensions();
   const navigation = useNavigation();
 
   return (
     <View className="w-full h-full">
-      <Advertisement noPadding={true} />
+      {ads && <Advertisement noPadding={true} />}
       <View
         className="items-center justify-center px-4"
         style={{ height: height / 2 }}
