@@ -19,6 +19,8 @@ import {
   getUserByIdReducer,
 } from "./reducers/userReducer";
 
+import { getWalletUserReducer } from "./reducers/walletReducer";
+
 import {
   getFollowAndFollowersUserReducer,
   followUserReducer,
@@ -56,6 +58,7 @@ const finalReducer = combineReducers({
   getMessagesByUserIdsReducer,
   getChatByUserIdReducer,
   getProductByUserReducer,
+  getWalletUserReducer,
 });
 
 const rootReducer = (state, action) => {

@@ -62,6 +62,7 @@ export default function MenuStack() {
         component={MessagesStack}
         name="Message"
         options={{
+          unmountOnBlur: true,
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="chatbubble-ellipses" size={24} color={color} />
           ),

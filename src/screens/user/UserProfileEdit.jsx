@@ -85,51 +85,53 @@ export default function UserProfileEdit({ route }) {
 
   return (
     <KeyboardHideView enabled={true}>
-      <HeaderArrow headerName="Profile settings" />
-      <View className="justify-between" style={{ height: height * 0.94 }}>
-        <View>
-          <View className="items-center mt-2 mb-4">
-            <Image
-              source={{ uri: imagePhoto }}
-              className="rounded-full"
-              style={{
-                resizeMode: "contain",
-                width: width * 0.3,
-                height: height * 0.15,
-              }}
+      <ScrollView>
+        <HeaderArrow headerName="Profile settings" />
+        <View className="justify-between" style={{ height: height * 0.94 }}>
+          <View>
+            <View className="items-center mt-2 mb-4">
+              <Image
+                source={{ uri: imagePhoto }}
+                className="rounded-full"
+                style={{
+                  resizeMode: "contain",
+                  width: width * 0.3,
+                  height: height * 0.15,
+                }}
+              />
+              <Pressable
+                className="flex-row items-center mt-4"
+                onPress={() => pickPhotoImage(setImagePhoto)}
+              >
+                <AntDesign name="edit" size={24} color="#CC481F" />
+                <Text className="text-[#CC481F] font-semibold ml-2">
+                  Change photo
+                </Text>
+              </Pressable>
+            </View>
+
+            <EditTextInput
+              label="First name"
+              value={firstName}
+              setValue={setFirstName}
+              textPlaceholder={data.person.firstName}
             />
-            <Pressable
-              className="flex-row items-center mt-4"
-              onPress={() => pickPhotoImage(setImagePhoto)}
-            >
-              <AntDesign name="edit" size={24} color="#CC481F" />
-              <Text className="text-[#CC481F] font-semibold ml-2">
-                Change photo
-              </Text>
-            </Pressable>
+
+            <EditTextInput
+              label="Last name"
+              value={lastName}
+              setValue={setLastName}
+              textPlaceholder={data.person.lastName}
+            />
+
+            <EditDatePicker value={birthdate} setValue={setBirthdate} />
+            <EditGender value={gender} setValue={setGender} />
           </View>
-
-          <EditTextInput
-            label="First name"
-            value={firstName}
-            setValue={setFirstName}
-            textPlaceholder={data.person.firstName}
-          />
-
-          <EditTextInput
-            label="Last name"
-            value={lastName}
-            setValue={setLastName}
-            textPlaceholder={data.person.lastName}
-          />
-
-          <EditDatePicker value={birthdate} setValue={setBirthdate} />
-          <EditGender value={gender} setValue={setGender} />
+          <CustomButton disabled={disable} onPress={onPressAction}>
+            {loading && <ActivityIndicator size="small" />} Save Changes
+          </CustomButton>
         </View>
-        <CustomButton disabled={disable} onPress={onPressAction}>
-          {loading && <ActivityIndicator size="small" />} Save Changes
-        </CustomButton>
-      </View>
+      </ScrollView>
     </KeyboardHideView>
   );
 }

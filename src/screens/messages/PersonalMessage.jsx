@@ -12,7 +12,7 @@ import {
 import React from "react";
 import ChatHeader from "../../components/messages/ChatHeader";
 import UserChatInput from "../../components/messages/UserChatInput";
-import useMessageHubConnection from "../../hooks/Message/useChatHubConnection";
+import useMessageHubConnection from "../../hooks/Message/useMessageHubConnection";
 import { useState } from "react";
 import { useEffect } from "react";
 import useFetchMessages from "../../hooks/Message/useFetchMessages";

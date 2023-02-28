@@ -17,7 +17,9 @@ export default function ChatInfoItem({ info }) {
     <Pressable
       className="flex-rowjustify-between"
       onPress={() =>
-        navigation.navigate("PersonalMessage", { user: info.user })
+        navigation.reset({
+          routes: [{ name: "PersonalMessage", params: { user: info.user } }],
+        })
       }
     >
       <View className="flex-row " style={{ width: width }}>

@@ -27,6 +27,20 @@ export default function AccountBar({ data }) {
       />
 
       <NavItem
+        style={{ opacity: 0.75 }}
+        iconNav={
+          <Ionicons
+            name="wallet-outline"
+            size={24}
+            color="white"
+            style={{ opacity: 0.75 }}
+          />
+        }
+        title="Wallet"
+        onPress={() => navigation.navigate("Wallet", { data: data })}
+      />
+
+      <NavItem
         iconNav={
           <Ionicons
             name="md-notifications-outline"

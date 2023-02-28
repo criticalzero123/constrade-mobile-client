@@ -6,6 +6,7 @@ import {
   View,
   KeyboardAvoidingView,
   Pressable,
+  ScrollView,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import Header from "../../components/sign-in/SignInHeader";
@@ -36,54 +37,56 @@ export default function SignUpScreen() {
 
   return (
     <KeyboardHideView>
-      <Provider>
-        <View style={{ paddingHorizontal: 25, flex: 1 }}>
-          <Header
-            headerText="Create your account"
-            bodyText="Proceed using your email or phone number. We will use this for OTP Verification."
-          />
+      <ScrollView>
+        <Provider>
+          <View style={{ paddingHorizontal: 25, flex: 1 }}>
+            <Header
+              headerText="Create your account"
+              bodyText="Proceed using your email or phone number. We will use this for OTP Verification."
+            />
 
-          <EmailOrPhone />
+            <EmailOrPhone />
 
-          <LineTextCenter text="or" />
+            <LineTextCenter text="or" />
 
-          <GoogleButton text="Sign up using Google" type="signup" />
+            <GoogleButton text="Sign up using Google" type="signup" />
 
-          <View className="my-5"></View>
+            <View className="my-5"></View>
 
-          <View className="flex-row items-center justify-center">
-            <Text>Already have an account? </Text>
-            <Pressable
-              onPress={() =>
-                navigation.dispatch(StackActions.replace("SignIn"))
-              }
-            >
-              <Text className="text-[#CC481F] font-semibold text-base">
-                Sign in
-              </Text>
-            </Pressable>
+            <View className="flex-row items-center justify-center">
+              <Text>Already have an account? </Text>
+              <Pressable
+                onPress={() =>
+                  navigation.dispatch(StackActions.replace("SignIn"))
+                }
+              >
+                <Text className="text-[#CC481F] font-semibold text-base">
+                  Sign in
+                </Text>
+              </Pressable>
+            </View>
+
+            <TermsAndCondition />
+
+            <Portal>
+              <Dialog
+                visible={modalVisible}
+                onDismiss={() => setModalVisible(!modalVisible)}
+              >
+                <Dialog.Title>Notice</Dialog.Title>
+                <Dialog.Content>
+                  <Text>Email already been used.</Text>
+                </Dialog.Content>
+                <Dialog.Actions>
+                  <Button onPress={() => setModalVisible(!modalVisible)}>
+                    Ok
+                  </Button>
+                </Dialog.Actions>
+              </Dialog>
+            </Portal>
           </View>
-
-          <TermsAndCondition />
-
-          <Portal>
-            <Dialog
-              visible={modalVisible}
-              onDismiss={() => setModalVisible(!modalVisible)}
-            >
-              <Dialog.Title>Notice</Dialog.Title>
-              <Dialog.Content>
-                <Text>Email already been used.</Text>
-              </Dialog.Content>
-              <Dialog.Actions>
-                <Button onPress={() => setModalVisible(!modalVisible)}>
-                  Ok
-                </Button>
-              </Dialog.Actions>
-            </Dialog>
-          </Portal>
-        </View>
-      </Provider>
+        </Provider>
+      </ScrollView>
     </KeyboardHideView>
   );
 }

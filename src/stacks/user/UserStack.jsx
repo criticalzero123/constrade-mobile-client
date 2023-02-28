@@ -7,6 +7,7 @@ import ReviewsAndFeedbacks from "../../screens/User/ReviewsAndFeedbacks";
 import UserProfile from "../../screens/User/UserProfile";
 import UserProfileEdit from "../../screens/User/UserProfileEdit";
 import WishList from "../../screens/User/WishList";
+import WalletScreen from "../../screens/Wallet/WalletScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -24,6 +25,7 @@ export default function UserStack() {
       <Stack.Screen component={WishList} name="WishList" />
       <Stack.Screen component={ReviewsAndFeedbacks} name="Reviews" />
       <Stack.Screen component={UserProfileEdit} name="UserProfileEdit" />
+      <Stack.Screen component={WalletScreen} name="Wallet" />
     </Stack.Navigator>
   );
 }

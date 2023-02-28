@@ -2,7 +2,7 @@ import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
-import { StackActions, useNavigation } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 
 import { Entypo } from "@expo/vector-icons";
 import { useDispatch } from "react-redux";
@@ -23,7 +23,7 @@ export default function ChatHeader({ data }) {
   }, []);
 
   const onBack = () => {
-    navigation.dispatch(StackActions.pop());
+    navigation.reset({ routes: [{ name: "MessageHome" }] });
   };
 
   return (
