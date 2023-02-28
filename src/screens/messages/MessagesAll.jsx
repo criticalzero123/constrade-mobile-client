@@ -4,6 +4,7 @@ import React, { useEffect } from "react";
 import useGetChatList from "../../hooks/Message/useGetChatList";
 import { ActivityIndicator } from "react-native-paper";
 import ChatInfoItem from "../../components/messages/ChatInfoItem";
+import MessageEmpty from "../../components/messages/MessageEmpty";
 
 export default function MessagesAll() {
   const [chats] = useGetChatList();

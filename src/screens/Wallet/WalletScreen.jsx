@@ -9,11 +9,12 @@ import useGetWalletUser from "../../hooks/Wallet/useGetWalletUser";
 import useGetAllTransactionsWallet from "../../hooks/Wallet/useGetAllTransactionsWallet";
 import MessageEmpty from "../../components/messages/MessageEmpty";
 import { useNavigation } from "@react-navigation/native";
+import RecentTransactionItem from "../../components/Wallet/RecentTransactionItem";
 
 export default function WalletScreen() {
   const { user } = useGetCurrentUser();
   const { data } = useGetWalletUser(user.userId);
-  const { transacs } = useGetAllTransactionsWallet(user.userId);
+  const { transacs } = useGetAllTransactionsWallet(data && data.walletId);
   const { width, height } = useWindowDimensions();
 
   const navigation = useNavigation();
@@ -33,15 +34,16 @@ export default function WalletScreen() {
         </Text>
       </View>
       <View className="flex-row justify-between mt-2">
-        {itemWallet.map((item) => (
-          <WalletItemAction
-            key={item.id}
-            data={item}
-            onPress={() =>
-              navigation.navigate(item.to, { currentWalletId: data.walletId })
-            }
-          />
-        ))}
+        {data &&
+          itemWallet.map((item) => (
+            <WalletItemAction
+              key={item.id}
+              data={item}
+              onPress={() =>
+                navigation.navigate(item.to, { currentWalletId: data.walletId })
+              }
+            />
+          ))}
       </View>
 
       <View className="mt-5">
@@ -55,21 +57,13 @@ export default function WalletScreen() {
           />
         ) : (
           <>
-            <View className="justify-between flex-row items-center">
-              <View>
-                <Text className="text-base mb-1">Send Payment</Text>
-                <Text className="text-md opacity-50">Today at 8:00AM</Text>
-              </View>
-              <Text className="text-red-500 font-semibold">- ₱ 240.00</Text>
-            </View>
-            <View className="my-2" />
-            <View className="justify-between flex-row items-center">
-              <View>
-                <Text className="text-base mb-1">Received Payment</Text>
-                <Text className="text-md opacity-50">Today at 8:00AM</Text>
-              </View>
-              <Text className="text-green-500 font-semibold">+ ₱ 1000.00</Text>
-            </View>
+            {transacs &&
+              transacs.map((_data) => (
+                <RecentTransactionItem
+                  data={_data}
+                  currentUserWalletId={data.walletId}
+                />
+              ))}
           </>
         )}
       </View>
