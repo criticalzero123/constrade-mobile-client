@@ -21,20 +21,15 @@ import MightLikeThese from "../../components/Home/MightLikeThese";
 import RecentlyViewed from "../../components/Home/RecentlyViewed";
 import EndMessage from "../../components/EndMessage/EndMessage";
 
-import { useDispatch, useSelector } from "react-redux";
-import { getAllUsers } from "../../../redux/actions/userActions";
 import { useNavigation } from "@react-navigation/native";
 import useGetCurrentUser from "../../hooks/useGetCurrentUser";
+import useGetAllUsers from "../../hooks/User/useGetAllUsers";
 export default function Discover() {
-  const { data } = useSelector((state) => state.getAllUsersReducer);
+  const [users] = useGetAllUsers();
   const { user } = useGetCurrentUser();
 
-  const dispatch = useDispatch();
   const navigation = useNavigation();
 
-  useEffect(() => {
-    dispatch(getAllUsers());
-  }, []);
   if (user) {
     return (
       <SafeAreaView style={styles.container}>
@@ -44,10 +39,11 @@ export default function Discover() {
           <View>
             {/* For search make an another component for this */}
 
-            {data &&
-              data.map((otherUser) =>
+            {users &&
+              users.map((otherUser) =>
                 user.userId === otherUser.userId ? (
                   <Pressable
+                    key={otherUser.userId}
                     onPress={() =>
                       navigation.navigate("User", {
                         screen: "UserProfile",
@@ -58,6 +54,7 @@ export default function Discover() {
                   </Pressable>
                 ) : (
                   <Pressable
+                    key={otherUser.userId}
                     onPress={() =>
                       navigation.navigate("User", {
                         screen: "OtherUserProfile",

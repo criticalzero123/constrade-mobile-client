@@ -8,12 +8,15 @@ import WalletItemAction from "../../components/Wallet/WalletItemAction";
 import useGetWalletUser from "../../hooks/Wallet/useGetWalletUser";
 import useGetAllTransactionsWallet from "../../hooks/Wallet/useGetAllTransactionsWallet";
 import MessageEmpty from "../../components/messages/MessageEmpty";
+import { useNavigation } from "@react-navigation/native";
 
 export default function WalletScreen() {
   const { user } = useGetCurrentUser();
   const { data } = useGetWalletUser(user.userId);
   const { transacs } = useGetAllTransactionsWallet(user.userId);
   const { width, height } = useWindowDimensions();
+
+  const navigation = useNavigation();
 
   return (
     <ContainerSafeView>
@@ -31,7 +34,13 @@ export default function WalletScreen() {
       </View>
       <View className="flex-row justify-between mt-2">
         {itemWallet.map((item) => (
-          <WalletItemAction key={item.id} data={item} />
+          <WalletItemAction
+            key={item.id}
+            data={item}
+            onPress={() =>
+              navigation.navigate(item.to, { currentWalletId: data.walletId })
+            }
+          />
         ))}
       </View>
 
