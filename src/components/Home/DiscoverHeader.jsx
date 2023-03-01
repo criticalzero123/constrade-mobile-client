@@ -1,12 +1,19 @@
-import { StyleSheet, Text, View, Image } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  useWindowDimensions,
+} from "react-native";
 import React from "react";
 
 import { Ionicons } from "@expo/vector-icons";
 import discoverImage from "../../../assets/Discover/orange-scenery.jpg";
 
 export default function DiscoverHeader() {
+  const { height, width } = useWindowDimensions();
   return (
-    <View className="h-28 relative">
+    <View className="relative" style={{ height: height * 0.15 }}>
       <Image
         source={discoverImage}
         style={{ height: undefined, width: undefined, flex: 1 }}
