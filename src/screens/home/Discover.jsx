@@ -23,18 +23,32 @@ import EndMessage from "../../components/EndMessage/EndMessage";
 
 import { useNavigation } from "@react-navigation/native";
 import useGetCurrentUser from "../../hooks/useGetCurrentUser";
-import useGetAllProducts from "../../hooks/Product/useGetAllProducts";
+import useGetAllUsers from "../../hooks/User/useGetAllUsers";
 export default function Discover() {
   const { user } = useGetCurrentUser();
-
+  const [data] = useGetAllUsers();
   const navigation = useNavigation();
 
+  console.log(data);
   if (user) {
     return (
       <SafeAreaView style={styles.container}>
         <StatusBar style="light" />
         <ScrollView showsVerticalScrollIndicator={false}>
           <DiscoverHeader />
+          {data &&
+            data.map((user) => (
+              <Pressable
+                onPress={() =>
+                  navigation.navigate("User", {
+                    screen: "OtherUserProfile",
+                    params: { userId: user.userId },
+                  })
+                }
+              >
+                <Text>{user.email}</Text>
+              </Pressable>
+            ))}
           <View>
             {/* For search make an another component for this */}
             <View

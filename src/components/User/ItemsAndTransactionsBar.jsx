@@ -6,7 +6,7 @@ import { Feather } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 
-export default function ItemsAndTransactionsBar() {
+export default function ItemsAndTransactionsBar({ data }) {
   const navigation = useNavigation();
   return (
     <View className="mt-6">
@@ -24,7 +24,12 @@ export default function ItemsAndTransactionsBar() {
         }
         title="My listings"
         description="Manage your listed items"
-        onPress={() => navigation.navigate("MyListing")}
+        onPress={() =>
+          navigation.navigate("MyListing", {
+            user: data.user,
+            person: data.person,
+          })
+        }
       />
 
       <NavItem

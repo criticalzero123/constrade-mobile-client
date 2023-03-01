@@ -9,10 +9,11 @@ import MessageEmpty from "../../components/messages/MessageEmpty";
 import ItemCard from "../../components/Products/ItemCard";
 import { ActivityIndicator } from "react-native-paper";
 
-export default function MyListing() {
-  const { user, person } = useGetCurrentUser();
+export default function ListingScreen({ route }) {
+  const { user, person } = route.params;
   const [data, loading, error] = useGetProductUser(user.userId);
 
+  console.log(route.params);
   return (
     <ContainerSafeView>
       {loading ? (

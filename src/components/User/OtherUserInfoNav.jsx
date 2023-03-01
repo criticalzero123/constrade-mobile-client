@@ -6,8 +6,11 @@ import { Feather } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { Octicons } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
-export default function OtherUserInfoNav() {
+export default function OtherUserInfoNav({ data }) {
+  const navigation = useNavigation();
+  console.log(data);
   return (
     <View className="">
       <Text className="text-[#FCFBFA] opacity-75 mt-6 mb-4">
@@ -24,6 +27,12 @@ export default function OtherUserInfoNav() {
             />
           }
           title="Item listing"
+          onPress={() =>
+            navigation.navigate("MyListing", {
+              user: data.user,
+              person: data.person,
+            })
+          }
         />
         <NavItem
           title={"Communities"}

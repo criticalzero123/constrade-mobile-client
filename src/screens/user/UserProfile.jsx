@@ -36,7 +36,7 @@ export default function UserProfile() {
             paddingHorizontal: 20,
           }}
         >
-          <ItemsAndTransactionsBar />
+          <ItemsAndTransactionsBar data={user} />
           <AccountBar data={user} />
           <PrivacyAndHelp />
 
