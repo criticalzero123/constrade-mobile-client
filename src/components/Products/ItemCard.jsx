@@ -1,5 +1,6 @@
 import {
   Image,
+  Pressable,
   StyleSheet,
   Text,
   useWindowDimensions,
@@ -8,6 +9,7 @@ import {
 import React from "react";
 import { AntDesign } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
+import { useNavigation } from "@react-navigation/native";
 
 export default function ItemCard({
   data,
@@ -21,10 +23,15 @@ export default function ItemCard({
   };
   const { height, width } = useWindowDimensions();
 
+  const navigation = useNavigation();
+
   return (
-    <View
+    <Pressable
       className={`mb-4 mr-2  ${index === 0 && "ml-5"}`}
       style={{ width: width * 0.45, height: height * 0.25 }}
+      onPress={() =>
+        navigation.navigate("ProductDetails", { productId: data.productId })
+      }
     >
       <View className="h-3/4 relative overflow-hidden rounded-t-lg">
         <Image
@@ -73,7 +80,7 @@ export default function ItemCard({
           </Text>
         </View>
       </View>
-    </View>
+    </Pressable>
   );
 }
 

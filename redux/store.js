@@ -37,6 +37,8 @@ import { getReviewsUserReducer } from "./reducers/reviewReducer";
 import {
   addProductReducer,
   getProductByUserReducer,
+  getAllProductsReducer,
+  getProductByIdReducer,
 } from "./reducers/productReducer";
 import {
   getMessagesByUserIdsReducer,
@@ -67,6 +69,8 @@ const finalReducer = combineReducers({
   getAllTransactionsWalletUserReducer,
   getAllWalletUserReducer,
   sendMoneyReducer,
+  getAllProductsReducer,
+  getProductByIdReducer,
 });
 
 const rootReducer = (state, action) => {

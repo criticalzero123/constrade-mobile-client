@@ -23,9 +23,8 @@ import EndMessage from "../../components/EndMessage/EndMessage";
 
 import { useNavigation } from "@react-navigation/native";
 import useGetCurrentUser from "../../hooks/useGetCurrentUser";
-import useGetAllUsers from "../../hooks/User/useGetAllUsers";
+import useGetAllProducts from "../../hooks/Product/useGetAllProducts";
 export default function Discover() {
-  const [users] = useGetAllUsers();
   const { user } = useGetCurrentUser();
 
   const navigation = useNavigation();
@@ -38,35 +37,6 @@ export default function Discover() {
           <DiscoverHeader />
           <View>
             {/* For search make an another component for this */}
-
-            {users &&
-              users.map((otherUser) =>
-                user.userId === otherUser.userId ? (
-                  <Pressable
-                    key={otherUser.userId}
-                    onPress={() =>
-                      navigation.navigate("User", {
-                        screen: "UserProfile",
-                      })
-                    }
-                  >
-                    <Text>{otherUser.email}</Text>
-                  </Pressable>
-                ) : (
-                  <Pressable
-                    key={otherUser.userId}
-                    onPress={() =>
-                      navigation.navigate("User", {
-                        screen: "OtherUserProfile",
-                        params: { userId: otherUser.userId },
-                      })
-                    }
-                  >
-                    <Text>{otherUser.email}</Text>
-                  </Pressable>
-                )
-              )}
-
             <View
               className="py-4 px-2 rounded-lg bg-gray-300 mt-4 mb-3"
               style={{ marginHorizontal: 20 }}

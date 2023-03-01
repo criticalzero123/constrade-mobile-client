@@ -14,7 +14,6 @@ import { useNavigation } from "@react-navigation/native";
 
 export default function MessageEmpty({ title, description, ads = true }) {
   const { height } = useWindowDimensions();
-  const navigation = useNavigation();
 
   return (
     <View className="w-full h-full">
@@ -28,12 +27,7 @@ export default function MessageEmpty({ title, description, ads = true }) {
           className="w-full h-20"
           style={{ resizeMode: "contain" }}
         />
-        <Text
-          className="mt-6 text-center text-xl font-bold"
-          onPress={() => navigation.navigate("PersonalMessage")}
-        >
-          {title}
-        </Text>
+        <Text className="mt-6 text-center text-xl font-bold">{title}</Text>
         <Text className="mt-2 text-center leading-5 text-gray-500">
           {description}
         </Text>
