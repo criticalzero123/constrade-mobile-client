@@ -15,5 +15,5 @@ export default function useFetchMessages(userId1, userId2, index) {
     dispatch(getMessagesByUserIds(userId1, userId2, indexNumber));
   };
 
-  return [(messageData = data), getMoreMessage];
+  return [data, getMoreMessage];
 }

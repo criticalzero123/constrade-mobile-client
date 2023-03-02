@@ -1,5 +1,5 @@
 import { StyleSheet, View } from "react-native";
-import React, { useEffect } from "react";
+import React from "react";
 
 import useGetChatList from "../../hooks/Message/useGetChatList";
 import { ActivityIndicator } from "react-native-paper";
@@ -21,7 +21,9 @@ export default function MessagesAll() {
           description="Negotiations goes here and messages from someone who wants to buy from you."
         />
       ) : (
-        chats.map((chat) => <ChatInfoItem info={chat} key={chat.userChatId} />)
+        chats.map((chat, index) => (
+          <ChatInfoItem info={chat} key={index} product={chat.product} />
+        ))
       )}
     </View>
   );

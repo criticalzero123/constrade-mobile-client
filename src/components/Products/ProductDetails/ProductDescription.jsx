@@ -11,9 +11,11 @@ import React from "react";
 import { AntDesign } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 export default function ProductDescription({ route }) {
   const { details } = route.params;
   const { width, height } = useWindowDimensions();
+  const navigation = useNavigation();
 
   return (
     <ScrollView className="mt-3" showsVerticalScrollIndicator={false}>
@@ -49,7 +51,18 @@ export default function ProductDescription({ route }) {
           <Ionicons name="md-share-outline" size={24} color="black" />
         </View>
       </View>
-      <Pressable className="mb-6">
+      <Pressable
+        className="mb-6"
+        onPress={() =>
+          navigation.navigate("Menu", {
+            screen: "Message",
+            params: {
+              screen: "ProductMessage",
+              params: { details: details },
+            },
+          })
+        }
+      >
         <Text>Make an Offer</Text>
       </Pressable>
 

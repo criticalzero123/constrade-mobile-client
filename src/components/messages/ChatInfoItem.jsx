@@ -10,15 +10,23 @@ import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { getTimeOnly } from "../../../service/dateService";
 
-export default function ChatInfoItem({ info }) {
+export default function ChatInfoItem({ info, product }) {
   const { width, height } = useWindowDimensions();
   const navigation = useNavigation();
+
+  const routeTo = product
+    ? {
+        name: "ProductMessage",
+        params: { details: { user: info.user, product: info.product } },
+      }
+    : { name: "PersonalMessage", params: { user: info.user } };
+
   return (
     <Pressable
-      className="flex-rowjustify-between"
+      className={`flex-row justify-between items-center my-2 `}
       onPress={() =>
         navigation.reset({
-          routes: [{ name: "PersonalMessage", params: { user: info.user } }],
+          routes: [routeTo],
         })
       }
     >
@@ -33,20 +41,34 @@ export default function ChatInfoItem({ info }) {
             <Text className="capitalize text-gray-500">
               {info.otherUserName}
             </Text>
+            {product && (
+              <Text className="font-semibold capitalize mb-1">
+                {product.title}
+              </Text>
+            )}
             <Text className="" numberOfLines={1}>
               {info.lastMessage}
             </Text>
           </View>
-          <Text
-            className="text-gray-500 text-center "
-            style={{ width: width * 0.2 }}
-          >
-            {getTimeOnly(info.lastMessageDate)}
-          </Text>
+          <View style={{ width: width * 0.2 }} className="items-center">
+            <Text className="text-gray-500 text-center ">
+              {getTimeOnly(info.lastMessageDate)}
+            </Text>
+            {product && (
+              <View className="items-center p-2">
+                <Image
+                  source={{ uri: product.thumbnailUrl }}
+                  style={{
+                    width: width * 0.05,
+                    height: height * 0.05,
+                    resizeMode: "contain",
+                  }}
+                />
+              </View>
+            )}
+          </View>
         </View>
       </View>
     </Pressable>
   );
 }
-
-const styles = StyleSheet.create({});

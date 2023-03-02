@@ -29,7 +29,6 @@ export default function Discover() {
   const [data] = useGetAllUsers();
   const navigation = useNavigation();
 
-  console.log(data);
   if (user) {
     return (
       <SafeAreaView style={styles.container}>
@@ -40,9 +39,12 @@ export default function Discover() {
             data.map((user) => (
               <Pressable
                 onPress={() =>
-                  navigation.navigate("User", {
-                    screen: "OtherUserProfile",
-                    params: { userId: user.userId },
+                  navigation.navigate("Menu", {
+                    screen: "User",
+                    params: {
+                      screen: "OtherUserProfile",
+                      params: { userId: user.userId },
+                    },
                   })
                 }
               >

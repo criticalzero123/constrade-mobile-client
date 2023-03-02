@@ -11,7 +11,7 @@ export default function HeaderArrow({ headerName }) {
         <Pressable onPress={() => navigation.goBack()}>
           <Ionicons name="arrow-back" size={24} color="black" />
         </Pressable>
-        <Text className="ml-4 text-lg font-semibold text-black">
+        <Text className="ml-4 text-lg font-semibold text-black capitalize">
           {headerName}
         </Text>
       </View>

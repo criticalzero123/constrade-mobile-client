@@ -32,6 +32,11 @@ import {
   isFollowUserReducer,
 } from "./reducers/followReducer";
 
+import {
+  getProductMessagesReducer,
+  getProductChatByUserIdReducer,
+} from "./reducers/productMessageReducer";
+
 import { getReviewsUserReducer } from "./reducers/reviewReducer";
 
 import {
@@ -71,6 +76,8 @@ const finalReducer = combineReducers({
   sendMoneyReducer,
   getAllProductsReducer,
   getProductByIdReducer,
+  getProductMessagesReducer,
+  getProductChatByUserIdReducer,
 });
 
 const rootReducer = (state, action) => {

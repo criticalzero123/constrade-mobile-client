@@ -1,49 +1,44 @@
 import {
   KeyboardAvoidingView,
   Platform,
-  Pressable,
-  ScrollView,
   StatusBar,
   StyleSheet,
   Text,
-  useWindowDimensions,
   View,
+  useWindowDimensions,
+  ScrollView,
+  Pressable,
 } from "react-native";
 import React from "react";
 import ChatHeader from "../../components/messages/ChatHeader";
-import UserChatInput from "../../components/messages/UserChatInput";
-import useMessageHubConnection from "../../hooks/Message/useMessageHubConnection";
+import useGetCurrentUser from "../../hooks/useGetCurrentUser";
+import ProductChatInput from "../../components/messages/ProductChatInput";
+import useProductMessageHub from "../../hooks/Message/ProductMessage/useProductMessageHub";
+import { useHideBottomTab } from "../../hooks/useHideBottomTab";
+import useFetchProductMessages from "../../hooks/Message/ProductMessage/useFetchProductMessages";
 import { useState } from "react";
 import { useEffect } from "react";
-import useFetchMessages from "../../hooks/Message/useFetchMessages";
-import useGetCurrentUser from "../../hooks/useGetCurrentUser";
-import OtherMessageItem from "../../components/messages/OtherMessageItem";
 import MessageItem from "../../components/messages/MessageItem";
-import { useRef } from "react";
-import { useHideBottomTab } from "../../hooks/useHideBottomTab";
+import OtherMessageItem from "../../components/messages/OtherMessageItem";
 
-export default function PersonalMessage({ route }) {
+export default function ProductMessage({ route }) {
   useHideBottomTab();
-  const otherUser = route.params.user;
+  const { details } = route.params;
 
-  const [index, setIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [messageList, setMessageList] = useState([]);
   const [firstFetch, setFirstFetch] = useState(true);
 
-  const { height } = useWindowDimensions();
-  const { user } = useGetCurrentUser();
-  const { sendMessage, message } = useMessageHubConnection();
-  const [messageData, getMoreMessage] = useFetchMessages(
-    otherUser.userId,
-    user.userId,
-    index
+  const { height, width } = useWindowDimensions();
+  const { user: currentUser } = useGetCurrentUser();
+  const [messageData, getMoreMessage] = useFetchProductMessages(
+    currentUser.userId,
+    details.user.userId,
+    details.product.productId,
+    currentIndex
   );
 
-  const scrollDown = useRef(null);
-
-  const onClickScrollDown = () => {
-    scrollDown.current.scrollToEnd({ animated: true });
-  };
+  const { sendMessage, message } = useProductMessageHub();
 
   //for fetching in database
   useEffect(() => {
@@ -53,7 +48,6 @@ export default function PersonalMessage({ route }) {
       const reverseArray = [...messageData].reverse();
       setMessageList([...messageList, ...reverseArray]);
       setFirstFetch(false);
-      onClickScrollDown();
     } else {
       setMessageList([...messageData, ...messageList]);
     }
@@ -62,16 +56,9 @@ export default function PersonalMessage({ route }) {
   // This if for listening the message from hub
   useEffect(() => {
     if (message === undefined) return;
-    setMessageList([...messageList, message]);
-    onClickScrollDown();
-  }, [message]);
 
-  const onPress = () => {
-    setIndex((prevIndex) => {
-      getMoreMessage(index + 1);
-      return prevIndex + 1;
-    });
-  };
+    setMessageList([...messageList, message]);
+  }, [message]);
 
   return (
     <KeyboardAvoidingView
@@ -82,15 +69,9 @@ export default function PersonalMessage({ route }) {
       {user !== undefined && (
         <>
           <View style={{ height: height * 0.9, paddingHorizontal: 20 }}>
-            <ChatHeader data={otherUser} />
-
-            <ScrollView
-              showsVerticalScrollIndicator={false}
-              className="mb-4"
-              ref={scrollDown}
-              onContentSizeChange={firstFetch ? onClickScrollDown : null}
-            >
-              <Pressable onPress={onPress} className="w-full">
+            <ChatHeader data={details.user} product={details.product} />
+            <ScrollView showsHorizontalScrollIndicator={false} className="mb-4">
+              <Pressable className="w-full">
                 <Text className="text-center">See more</Text>
               </Pressable>
               {messageList.length !== 0 &&
@@ -102,7 +83,7 @@ export default function PersonalMessage({ route }) {
                     />
                   ) : (
                     <OtherMessageItem
-                      image={otherUser.imageUrl}
+                      image={details.user.imageUrl}
                       message={message.message}
                       key={message.userMessageId}
                     />
@@ -110,10 +91,10 @@ export default function PersonalMessage({ route }) {
                 })}
             </ScrollView>
           </View>
-          <UserChatInput
+          <ProductChatInput
+            details={details}
+            currentUser={currentUser}
             sendMessage={sendMessage}
-            receiver={otherUser}
-            user={user}
           />
         </>
       )}

@@ -11,16 +11,22 @@ import { ActivityIndicator } from "react-native-paper";
 
 export default function ListingScreen({ route }) {
   const { user, person } = route.params;
+  const { user: currentUser } = useGetCurrentUser();
   const [data, loading, error] = useGetProductUser(user.userId);
 
-  console.log(route.params);
   return (
     <ContainerSafeView>
       {loading ? (
         <ActivityIndicator size="large" />
       ) : (
         <View>
-          <HeaderArrow headerName={"My Listings"} />
+          <HeaderArrow
+            headerName={
+              currentUser.userId === user.userId
+                ? "My Listings"
+                : person.firstName + " Listings"
+            }
+          />
           <Text>MyListing</Text>
           {data && data.length === 0 ? (
             <MessageEmpty

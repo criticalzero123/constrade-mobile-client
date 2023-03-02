@@ -1,30 +1,45 @@
 import {
   StyleSheet,
+  Text,
+  useWindowDimensions,
   View,
   TextInput,
-  useWindowDimensions,
   Pressable,
 } from "react-native";
 import React from "react";
-import { useState } from "react";
 import { Feather } from "@expo/vector-icons";
+import { useState } from "react";
+import { SimpleLineIcons } from "@expo/vector-icons";
 
-export default function UserChatInput({ receiver, sendMessage, user }) {
-  const [value, setValue] = useState("");
-  const { width, height } = useWindowDimensions();
+export default function ProductChatInput({
+  details,
+  currentUser,
+  sendMessage,
+}) {
+  const { height, width } = useWindowDimensions();
+  const [value, setValue] = useState();
 
   const onPress = () => {
-    if (value.toString().trim() === "") return;
+    if (value.trim() === "") return;
+    sendMessage(
+      currentUser.userId,
+      details.user.userId,
+      details.product.productId,
+      value
+    );
 
-    sendMessage(user.userId, receiver.userId, value);
     setValue("");
   };
-
   return (
     <View
       className=" flex-row items-center justify-center bg-white"
       style={{ width: width, height: height * 0.1 }}
     >
+      {details.product.posterUserId == currentUser.userId && (
+        <Pressable className="mr-2">
+          <SimpleLineIcons name="options-vertical" size={18} color="black" />
+        </Pressable>
+      )}
       <TextInput
         value={value}
         onChangeText={setValue}

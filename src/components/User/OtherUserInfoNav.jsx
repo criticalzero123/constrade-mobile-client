@@ -10,7 +10,7 @@ import { useNavigation } from "@react-navigation/native";
 
 export default function OtherUserInfoNav({ data }) {
   const navigation = useNavigation();
-  console.log(data);
+
   return (
     <View className="">
       <Text className="text-[#FCFBFA] opacity-75 mt-6 mb-4">
