@@ -10,6 +10,7 @@ import {
   emailAndPasswordAuthLoginReducer,
   requestOtpEmailReducer,
   verifyOtpReducer,
+  changePasswordEmailReducer,
 } from "./reducers/authReducer";
 
 import {
@@ -81,6 +82,7 @@ const finalReducer = combineReducers({
   getProductMessagesReducer,
   getProductChatByUserIdReducer,
   soldProductReducer,
+  changePasswordEmailReducer,
 });
 
 const rootReducer = (state, action) => {

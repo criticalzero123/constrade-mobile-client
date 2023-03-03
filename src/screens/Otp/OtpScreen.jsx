@@ -56,8 +56,10 @@ export default function OtpScreen({ route }) {
             user: value,
             from: "signin",
           });
-        } else {
+        } else if (type === "signup") {
           navigation.navigate("SignUpName", { emailOrPhone: value });
+        } else if (type === "forgetpassword") {
+          navigation.navigate("ForgetPasswordInput", { email: value });
         }
         break;
     }

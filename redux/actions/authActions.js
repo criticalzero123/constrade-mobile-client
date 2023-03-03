@@ -116,6 +116,22 @@ export const verifyOtp = (user, code) => (dispatch) => {
     });
 };
 
+export const changePasswordEmail = (info) => (dispatch) => {
+  dispatch({ type: "CHANGE_PASSWORD_EMAIL_REQUEST" });
+
+  api
+    .put(`/api/auth/change/password`, info)
+    .then((res) => {
+      dispatch({
+        type: "CHANGE_PASSWORD_EMAIL_SUCCESS",
+        payload: res.data.responseData,
+      });
+    })
+    .catch((err) => {
+      dispatch({ type: "CHANGE_PASSWORD_EMAIL_FAILED", error: err });
+    });
+};
+
 export const signOutUser = () => (dispatch) => {
   dispatch({ type: "SIGN_OUT" });
   dispatch({ type: "USER_INFO_CLEAR" });

@@ -5,6 +5,7 @@ import {
   View,
   Platform,
   StatusBar,
+  Pressable,
 } from "react-native";
 import React, { useState } from "react";
 import Header from "../../components/sign-in/SignInHeader";
@@ -64,7 +65,9 @@ export default function EmailSignInScreen() {
       <View className="my-2"></View>
       <PasswordTextInput password={password} setPassword={setPassword} />
       <View className="my-1"></View>
-      <Text className="text-[#CC481F]">Forgot Password?</Text>
+      <Pressable onPress={() => navigation.navigate("ForgetPasswordEmail")}>
+        <Text className="text-[#CC481F]">Forgot Password?</Text>
+      </Pressable>
       <View className="my-4"></View>
       <SignInAndSignUpButton
         type="signin"
