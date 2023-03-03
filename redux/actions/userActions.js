@@ -45,6 +45,21 @@ export const updatePersonInfo = (personInfo) => async (dispatch) => {
   }
 };
 
+export const userReport = (info) => async (dispatch) => {
+  dispatch({ type: "REPORT_USER_REQUEST" });
+
+  try {
+    const result = await api.setAuthHeaders().post(`api/userreport`, info);
+
+    dispatch({
+      type: "REPORT_USER_SUCCESS",
+      payload: result.data.responseData,
+    });
+  } catch (err) {
+    dispatch({ type: "REPORT_USER_FAILED", error: err });
+  }
+};
+
 export const getUserInfo = (user) => (dispatch) => {
   dispatch({ type: "USER_INFO", payload: user });
 };

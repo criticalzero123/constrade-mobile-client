@@ -7,9 +7,25 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import { Octicons } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import { useDispatch } from "react-redux";
+import { userReport } from "../../../redux/actions/userActions";
+import useGetCurrentUser from "../../hooks/useGetCurrentUser";
 
 export default function OtherUserInfoNav({ data }) {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+  const { user } = useGetCurrentUser();
+
+  const onPressReport = () => {
+    const info = {
+      reportBy: user.userId,
+      reported: data.user.userId,
+      description: "Something description",
+      dateSubmitted: new Date(),
+    };
+
+    dispatch(userReport(info));
+  };
 
   return (
     <View className="">
@@ -58,15 +74,18 @@ export default function OtherUserInfoNav({ data }) {
           }
         />
 
-        <Pressable className="flex-row items-center w-full">
+        <Pressable
+          className="flex-row items-center w-full"
+          onPress={onPressReport}
+        >
           <MaterialIcons
             name="report"
             size={24}
             color="#FF6838"
             style={{ opacity: 0.75 }}
           />
-          <Text className="ml-1 text-[#FF6838] font-semibold">
-            Report Mike Andrew
+          <Text className="ml-1 text-[#FF6838] font-semibold capitalize">
+            Report {data.person.firstName}
           </Text>
         </Pressable>
       </View>
