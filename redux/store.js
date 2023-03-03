@@ -50,6 +50,8 @@ import {
   getChatByUserIdReducer,
 } from "./reducers/userMessageReducer";
 
+import { soldProductReducer } from "./reducers/transactionReducer";
+
 const finalReducer = combineReducers({
   emailAndPasswordRegisterReducer,
   checkEmailReducer,
@@ -78,6 +80,7 @@ const finalReducer = combineReducers({
   getProductByIdReducer,
   getProductMessagesReducer,
   getProductChatByUserIdReducer,
+  soldProductReducer,
 });
 
 const rootReducer = (state, action) => {

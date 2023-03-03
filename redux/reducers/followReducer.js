@@ -52,24 +52,27 @@ export const followUserReducer = (state = {}, action) => {
 
 export const isFollowUserReducer = (state = {}, action) => {
   switch (action.type) {
-    case "IS_FOLLOW_USER_REQUEST":
+    case "GET_IS_FOLLOW_USER_REQUEST":
       return {
         ...state,
         loading: true,
       };
 
-    case "IS_FOLLOW_USER_SUCCESS":
+    case "GET_IS_FOLLOW_USER_SUCCESS":
       return {
         loading: false,
         success: true,
         data: action.payload,
       };
 
-    case "IS_FOLLOW_USER_FAILED":
+    case "GET_IS_FOLLOW_USER_FAILED":
       return {
         loading: false,
         error: action.error,
       };
+
+    case "GET_IS_FOLLOW_USER_LEAVE":
+      return {};
 
     default:
       return { ...state };

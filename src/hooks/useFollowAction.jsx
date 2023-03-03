@@ -12,13 +12,9 @@ export default function useFollowAction(otherUserId, currentUserId) {
   const { loading, success } = useSelector((state) => state.followUserReducer);
 
   useEffect(() => {
-    if (loading === undefined || loading) return;
-
-    if (success) {
-      dispatch(isFollowUser(otherUserId, currentUserId));
-      dispatch(getFollowAndFollowersUser(otherUserId));
-    }
-  }, [dispatch, otherUserId, currentUserId, loading]);
+    dispatch(isFollowUser(otherUserId, currentUserId));
+    dispatch(getFollowAndFollowersUser(otherUserId));
+  }, [otherUserId, currentUserId]);
 
   const followAction = () => {
     dispatch(followUser(otherUserId, currentUserId));

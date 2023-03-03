@@ -39,7 +39,8 @@ export const followUser = (otherUserId, currentUserId) => async (dispatch) => {
 
 export const isFollowUser =
   (otherUserId, currentUserId) => async (dispatch) => {
-    dispatch({ type: "IS_FOLLOW_USER_REQUEST" });
+    dispatch({ type: "GET_IS_FOLLOW_USER_REQUEST" });
+
     try {
       const res = await api
         .setAuthHeaders()
@@ -48,12 +49,12 @@ export const isFollowUser =
         );
 
       dispatch({
-        type: "IS_FOLLOW_USER_SUCCESS",
+        type: "GET_IS_FOLLOW_USER_SUCCESS",
         payload: res.data.responseData,
       });
     } catch (err) {
       dispatch({
-        type: "IS_FOLLOW_USER_FAILED",
+        type: "GET_IS_FOLLOW_USER_FAILED",
         error: err,
       });
     }
