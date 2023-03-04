@@ -41,7 +41,12 @@ export default function ItemsAndTransactionsBar({ data }) {
             style={{ opacity: 0.75 }}
           />
         }
-        onPress={() => navigation.navigate("WishList")}
+        onPress={() =>
+          navigation.navigate("WishList", {
+            user: data.user,
+            person: data.person,
+          })
+        }
         title="Wishlist"
       />
 

@@ -13,15 +13,27 @@ import { Entypo } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import useGetCurrentUser from "../../../hooks/useGetCurrentUser";
-import { useDispatch } from "react-redux";
 import useDeleteProduct from "../../../hooks/Product/useDeleteProduct";
+import useFavorite from "../../../hooks/Favorite/useFavorite";
 export default function ProductDescription({ route }) {
   const { details } = route.params;
 
   const [deleteProductById] = useDeleteProduct();
   const { user } = useGetCurrentUser();
+  const { addToFavorite } = useFavorite();
   const { width, height } = useWindowDimensions();
   const navigation = useNavigation();
+
+  const onPressFavorite = () => {
+    if (user.userId !== details.product.posterUserId) {
+      const info = {
+        productId: details.product.productId,
+        UserId: user.userId,
+        date: new Date(),
+      };
+      addToFavorite(info);
+    }
+  };
 
   return (
     <ScrollView className="mt-3" showsVerticalScrollIndicator={false}>
@@ -51,7 +63,9 @@ export default function ProductDescription({ route }) {
             <Text className="text-base mr-2">
               {details.product.countFavorite}
             </Text>
-            <AntDesign name="hearto" size={20} color="black" />
+            <Pressable onPress={onPressFavorite}>
+              <AntDesign name="hearto" size={20} color="black" />
+            </Pressable>
           </View>
           <View className="mx-2" />
           <Ionicons name="md-share-outline" size={24} color="black" />

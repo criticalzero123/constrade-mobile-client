@@ -46,6 +46,9 @@ import {
   getAllProductsReducer,
   getProductByIdReducer,
   deleteProductByIdReducer,
+  addFavoriteReducer,
+  deleteFavoriteReducer,
+  getFavoriteByUserIdReducer,
 } from "./reducers/productReducer";
 import {
   getMessagesByUserIdsReducer,
@@ -85,6 +88,9 @@ const finalReducer = combineReducers({
   soldProductReducer,
   changePasswordEmailReducer,
   deleteProductByIdReducer,
+  addFavoriteReducer,
+  deleteFavoriteReducer,
+  getFavoriteByUserIdReducer,
 });
 
 const rootReducer = (state, action) => {

@@ -76,3 +76,48 @@ export const deleteProductById = (productId) => async (dispatch) => {
     dispatch({ type: "DELETE_PRODUCT_BY_ID_FAILED", error: error });
   }
 };
+
+export const addFavorite = (info) => async (dispatch) => {
+  dispatch({ type: "ADD_FAVORITE_REQUEST" });
+
+  try {
+    const res = await api.post(`/api/products/favorite`, info);
+
+    dispatch({
+      type: "ADD_FAVORITE_SUCCESS",
+      payload: res.data.responseData,
+    });
+  } catch (error) {
+    dispatch({ type: "ADD_FAVORITE_FAILED", error: error });
+  }
+};
+
+export const deleteFavorite = (favoriteId) => async (dispatch) => {
+  dispatch({ type: "DELETE_FAVORITE_REQUEST" });
+
+  try {
+    const res = await api.delete(`/api/products/favorite/${favoriteId}`);
+
+    dispatch({
+      type: "DELETE_FAVORITE_SUCCESS",
+      payload: res.data.responseData,
+    });
+  } catch (error) {
+    dispatch({ type: "DELETE_FAVORITE_FAILED", error: error });
+  }
+};
+
+export const getFavoriteByUserId = (userId) => async (dispatch) => {
+  dispatch({ type: "GET_FAVORITE_REQUEST" });
+
+  try {
+    const res = await api.get(`/api/products/favorite/${userId}`);
+
+    dispatch({
+      type: "GET_FAVORITE_SUCCESS",
+      payload: res.data.responseData,
+    });
+  } catch (error) {
+    dispatch({ type: "GET_FAVORITE_FAILED", error: error });
+  }
+};

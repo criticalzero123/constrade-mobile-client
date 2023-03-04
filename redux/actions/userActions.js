@@ -49,7 +49,7 @@ export const userReport = (info) => async (dispatch) => {
   dispatch({ type: "REPORT_USER_REQUEST" });
 
   try {
-    const result = await api.setAuthHeaders().post(`api/userreport`, info);
+    const result = await api.setAuthHeaders().post(`api/users/report`, info);
 
     dispatch({
       type: "REPORT_USER_SUCCESS",

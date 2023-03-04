@@ -85,7 +85,7 @@ export default function OtherUserInfoNav({ data }) {
             style={{ opacity: 0.75 }}
           />
           <Text className="ml-1 text-[#FF6838] font-semibold capitalize">
-            Report {data.person.firstName}
+            Report {data && data.person.firstName}
           </Text>
         </Pressable>
       </View>
