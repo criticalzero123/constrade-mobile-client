@@ -15,10 +15,12 @@ import { useNavigation } from "@react-navigation/native";
 import useGetCurrentUser from "../../../hooks/useGetCurrentUser";
 import useDeleteProduct from "../../../hooks/Product/useDeleteProduct";
 import useFavorite from "../../../hooks/Favorite/useFavorite";
+import useProductReport from "../../../hooks/Product/useProductReport";
 export default function ProductDescription({ route }) {
   const { details } = route.params;
 
   const [deleteProductById] = useDeleteProduct();
+  const { productReport } = useProductReport();
   const { user } = useGetCurrentUser();
   const { addToFavorite } = useFavorite();
   const { width, height } = useWindowDimensions();
@@ -33,6 +35,17 @@ export default function ProductDescription({ route }) {
       };
       addToFavorite(info);
     }
+  };
+
+  const onPressReport = () => {
+    const info = {
+      reportedBy: user.userId,
+      productReported: details.product.productId,
+      title: "Something dummy coming from function",
+      description: "Something dummy coming from function",
+      dateSubmitted: new Date(),
+    };
+    productReport(info);
   };
 
   return (
@@ -144,14 +157,21 @@ export default function ProductDescription({ route }) {
       )}
 
       {user.userId === details.product.posterUserId &&
-        details.product.status !== "unsold" && (
-          <Pressable
-            className="w-full items-center p-4 bg-gray-500 my-4"
-            onPress={() => deleteProductById(details.product.productId)}
-          >
-            <Text className="text-white">Hello</Text>
-          </Pressable>
-        )}
+      details.product.status !== "unsold" ? (
+        <Pressable
+          className="w-full items-center p-4 bg-gray-500 my-4"
+          onPress={() => deleteProductById(details.product.productId)}
+        >
+          <Text className="text-white">DELETE</Text>
+        </Pressable>
+      ) : (
+        <Pressable
+          className="w-full items-center p-4 bg-gray-500 my-4"
+          onPress={onPressReport}
+        >
+          <Text>REPORT</Text>
+        </Pressable>
+      )}
     </ScrollView>
   );
 }

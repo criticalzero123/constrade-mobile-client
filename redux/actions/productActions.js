@@ -121,3 +121,18 @@ export const getFavoriteByUserId = (userId) => async (dispatch) => {
     dispatch({ type: "GET_FAVORITE_FAILED", error: error });
   }
 };
+
+export const reportProduct = (info) => async (dispatch) => {
+  dispatch({ type: "REPORT_PRODUCT_REQUEST" });
+
+  try {
+    const result = await api.setAuthHeaders().post(`api/products/report`, info);
+
+    dispatch({
+      type: "REPORT_PRODUCT_SUCCESS",
+      payload: result.data.responseData,
+    });
+  } catch (err) {
+    dispatch({ type: "REPORT_PRODUCT_FAILED", error: err });
+  }
+};

@@ -196,3 +196,32 @@ export const deleteProductByIdReducer = (state = {}, action) => {
       return { ...state };
   }
 };
+
+export const reportProductReducer = (state = {}, action) => {
+  switch (action.type) {
+    case "REPORT_PRODUCT_REQUEST":
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case "REPORT_PRODUCT_SUCCESS":
+      return {
+        success: true,
+        data: action.payload,
+        loading: false,
+      };
+
+    case "REPORT_PRODUCT_FAILED":
+      return {
+        error: action.error,
+        loading: false,
+      };
+
+    case "REPORT_PRODUCT_LEAVE":
+      return {};
+
+    default:
+      return state;
+  }
+};
