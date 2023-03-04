@@ -61,3 +61,18 @@ export const getProductById = (productId, userId) => async (dispatch) => {
     dispatch({ type: "GET_PRODUCT_BY_ID_FAILED", error: error });
   }
 };
+
+export const deleteProductById = (productId) => async (dispatch) => {
+  dispatch({ type: "DELETE_PRODUCT_BY_ID_REQUEST" });
+
+  try {
+    const res = await api.delete(`/api/products/${productId}`);
+
+    dispatch({
+      type: "DELETE_PRODUCT_BY_ID_SUCCESS",
+      payload: res.data.responseData,
+    });
+  } catch (error) {
+    dispatch({ type: "DELETE_PRODUCT_BY_ID_FAILED", error: error });
+  }
+};

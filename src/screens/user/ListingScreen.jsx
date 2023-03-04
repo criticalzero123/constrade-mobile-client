@@ -27,7 +27,6 @@ export default function ListingScreen({ route }) {
                 : person.firstName + " Listings"
             }
           />
-          <Text>MyListing</Text>
           {data && data.length === 0 ? (
             <MessageEmpty
               title="No item here."

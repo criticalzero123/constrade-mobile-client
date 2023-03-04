@@ -12,8 +12,14 @@ import { AntDesign } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import useGetCurrentUser from "../../../hooks/useGetCurrentUser";
+import { useDispatch } from "react-redux";
+import useDeleteProduct from "../../../hooks/Product/useDeleteProduct";
 export default function ProductDescription({ route }) {
   const { details } = route.params;
+
+  const [deleteProductById] = useDeleteProduct();
+  const { user } = useGetCurrentUser();
   const { width, height } = useWindowDimensions();
   const navigation = useNavigation();
 
@@ -122,6 +128,16 @@ export default function ProductDescription({ route }) {
           <Text className="ml-1 text-green-700">Warranty available</Text>
         </View>
       )}
+
+      {user.userId === details.product.posterUserId &&
+        details.product.status !== "unsold" && (
+          <Pressable
+            className="w-full items-center p-4 bg-gray-500 my-4"
+            onPress={() => deleteProductById(details.product.productId)}
+          >
+            <Text className="text-white">Hello</Text>
+          </Pressable>
+        )}
     </ScrollView>
   );
 }
