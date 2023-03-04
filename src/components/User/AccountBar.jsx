@@ -3,6 +3,7 @@ import React from "react";
 
 import { Feather } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
 
 import NavItem from "./NavItem";
 import { useNavigation } from "@react-navigation/native";
@@ -38,6 +39,19 @@ export default function AccountBar({ data }) {
         }
         title="Wallet"
         onPress={() => navigation.navigate("Wallet", { data: data })}
+      />
+
+      <NavItem
+        iconNav={
+          <MaterialIcons
+            name="verified-user"
+            size={24}
+            color="white"
+            style={{ opacity: 0.75 }}
+          />
+        }
+        title="Subscription"
+        onPress={() => navigation.navigate("Subscription")}
       />
 
       <NavItem

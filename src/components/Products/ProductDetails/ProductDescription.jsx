@@ -158,12 +158,21 @@ export default function ProductDescription({ route }) {
 
       {user.userId === details.product.posterUserId &&
       details.product.status !== "unsold" ? (
-        <Pressable
-          className="w-full items-center p-4 bg-gray-500 my-4"
-          onPress={() => deleteProductById(details.product.productId)}
-        >
-          <Text className="text-white">DELETE</Text>
-        </Pressable>
+        <>
+          <Pressable
+            className="w-full items-center p-4 bg-gray-500 my-4"
+            onPress={() => deleteProductById(details.product.productId)}
+          >
+            <Text className="text-white">DELETE</Text>
+          </Pressable>
+
+          <Pressable
+            className="w-full items-center p-4 bg-gray-500 my-4"
+            onPress={() => navigation.navigate("BoostProduct")}
+          >
+            <Text className="text-white">BOOST ITEM</Text>
+          </Pressable>
+        </>
       ) : (
         <Pressable
           className="w-full items-center p-4 bg-gray-500 my-4"

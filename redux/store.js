@@ -58,6 +58,11 @@ import {
 
 import { soldProductReducer } from "./reducers/transactionReducer";
 
+import {
+  subscribeUserReducer,
+  getSubscriptionHistoryReducer,
+} from "./reducers/subscriptionReducer";
+
 const finalReducer = combineReducers({
   emailAndPasswordRegisterReducer,
   checkEmailReducer,
@@ -93,6 +98,8 @@ const finalReducer = combineReducers({
   deleteFavoriteReducer,
   getFavoriteByUserIdReducer,
   reportProductReducer,
+  subscribeUserReducer,
+  getSubscriptionHistoryReducer,
 });
 
 const rootReducer = (state, action) => {
