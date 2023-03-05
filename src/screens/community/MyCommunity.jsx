@@ -5,10 +5,13 @@ import ContainerSafeView from "../../components/CustomViews/ContainerSafeView";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import CommunityCreated from "./CommunityCreated";
 import CommunityJoined from "./CommunityJoined";
+import { useHideBottomTab } from "../../hooks/useHideBottomTab";
 
 const Tab = createMaterialTopTabNavigator();
 
 export default function MyCommunity() {
+  useHideBottomTab();
+
   return (
     <ContainerSafeView>
       <HeaderArrow headerName="My communities" />

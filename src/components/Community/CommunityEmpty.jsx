@@ -9,9 +9,11 @@ import {
 import React from "react";
 
 import picture from "../../../assets/community/guys_playing.png";
+import { useNavigation } from "@react-navigation/native";
 
 export default function CommunityEmpty({ from }) {
   const { width, height } = useWindowDimensions();
+  const navigation = useNavigation();
   const createdText = {
     title: "This place is empty",
     description:
@@ -38,7 +40,10 @@ export default function CommunityEmpty({ from }) {
       </Text>
 
       {from === "created" && (
-        <Pressable className="px-10 py-4 bg-[#CC481F] rounded my-6">
+        <Pressable
+          className="px-10 py-4 bg-[#CC481F] rounded my-6"
+          onPress={() => navigation.navigate("AddCommunity")}
+        >
           <Text className="text-white font-semibold">Create my community</Text>
         </Pressable>
       )}
