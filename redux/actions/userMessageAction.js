@@ -33,3 +33,20 @@ export const getChatByUserId = (userId) => async (dispatch) => {
     dispatch({ type: "GET_CHAT_BY_USER_ID_FAILED", error: error });
   }
 };
+
+export const deleteMessageById = (id) => async (dispatch) => {
+  dispatch({ type: "DELETE_MESSAGE_BY_ID_REQUEST" });
+
+  try {
+    const res = await api
+      .setAuthHeaders()
+      .delete(`/api/userchat/messages/message/${id}`);
+
+    dispatch({
+      type: "DELETE_MESSAGE_BY_ID_SUCCESS",
+      payload: res.data.responseData,
+    });
+  } catch (error) {
+    dispatch({ type: "DELETE_MESSAGE_BY_ID_FAILED", error: error });
+  }
+};

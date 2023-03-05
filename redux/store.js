@@ -54,6 +54,7 @@ import {
 import {
   getMessagesByUserIdsReducer,
   getChatByUserIdReducer,
+  deleteMessageByIdReducer,
 } from "./reducers/userMessageReducer";
 
 import { soldProductReducer } from "./reducers/transactionReducer";
@@ -100,6 +101,7 @@ const finalReducer = combineReducers({
   reportProductReducer,
   subscribeUserReducer,
   getSubscriptionHistoryReducer,
+  deleteMessageByIdReducer,
 });
 
 const rootReducer = (state, action) => {

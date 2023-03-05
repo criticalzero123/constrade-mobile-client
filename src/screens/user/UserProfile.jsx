@@ -54,5 +54,3 @@ export default function UserProfile() {
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({});

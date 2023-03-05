@@ -15,7 +15,7 @@ import UserChatInput from "../../components/messages/UserChatInput";
 import useMessageHubConnection from "../../hooks/Message/useMessageHubConnection";
 import { useState } from "react";
 import { useEffect } from "react";
-import useFetchMessages from "../../hooks/Message/useFetchMessages";
+import usePersonalMessages from "../../hooks/Message/usePersonalMessages";
 import useGetCurrentUser from "../../hooks/useGetCurrentUser";
 import OtherMessageItem from "../../components/messages/OtherMessageItem";
 import MessageItem from "../../components/messages/MessageItem";
@@ -33,7 +33,7 @@ export default function PersonalMessage({ route }) {
   const { height } = useWindowDimensions();
   const { user } = useGetCurrentUser();
   const { sendMessage, message } = useMessageHubConnection();
-  const [messageData, getMoreMessage] = useFetchMessages(
+  const [messageData, getMoreMessage, deleteMessage] = usePersonalMessages(
     otherUser.userId,
     user.userId,
     index
@@ -98,7 +98,8 @@ export default function PersonalMessage({ route }) {
                   return message.senderId === user.userId ? (
                     <MessageItem
                       key={message.userMessageId}
-                      message={message.message}
+                      message={message}
+                      onDelete={deleteMessage}
                     />
                   ) : (
                     <OtherMessageItem

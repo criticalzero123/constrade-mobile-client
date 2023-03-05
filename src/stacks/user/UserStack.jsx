@@ -10,6 +10,7 @@ import UserProfileEdit from "../../screens/User/UserProfileEdit";
 import WishList from "../../screens/User/WishList";
 import SendWalletScreen from "../../screens/Wallet/SendWalletScreen";
 import WalletScreen from "../../screens/Wallet/WalletScreen";
+import HelpCenterStack from "../help-center/HelpCenterStack";
 
 const Stack = createNativeStackNavigator();
 
@@ -30,6 +31,7 @@ export default function UserStack() {
       <Stack.Screen component={SendWalletScreen} name="WalletTransfer" />
       <Stack.Screen component={OtherUserProfile} name="OtherUserProfile" />
       <Stack.Screen component={SubscriptionScreen} name="Subscription" />
+      <Stack.Screen component={HelpCenterStack} name="HelpCenter" />
     </Stack.Navigator>
   );
 }

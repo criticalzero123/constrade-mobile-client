@@ -15,7 +15,7 @@ import useGetCurrentUser from "../../hooks/useGetCurrentUser";
 import ProductChatInput from "../../components/messages/ProductChatInput";
 import useProductMessageHub from "../../hooks/Message/ProductMessage/useProductMessageHub";
 import { useHideBottomTab } from "../../hooks/useHideBottomTab";
-import useFetchProductMessages from "../../hooks/Message/ProductMessage/useFetchProductMessages";
+import useProductMessages from "../../hooks/Message/ProductMessage/useProductMessages";
 import { useState } from "react";
 import { useEffect } from "react";
 import MessageItem from "../../components/messages/MessageItem";
@@ -31,7 +31,7 @@ export default function ProductMessage({ route }) {
 
   const { height, width } = useWindowDimensions();
   const { user: currentUser } = useGetCurrentUser();
-  const [messageData, getMoreMessage] = useFetchProductMessages(
+  const [messageData, getMoreMessage] = useProductMessages(
     currentUser.userId,
     details.user.userId,
     details.product.productId,

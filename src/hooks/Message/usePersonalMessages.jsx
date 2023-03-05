@@ -1,8 +1,11 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getMessagesByUserIds } from "../../../redux/actions/userMessageAction";
+import {
+  deleteMessageById,
+  getMessagesByUserIds,
+} from "../../../redux/actions/userMessageAction";
 
-export default function useFetchMessages(userId1, userId2, index) {
+export default function usePersonalMessages(userId1, userId2, index) {
   const dispatch = useDispatch();
 
   const { data } = useSelector((state) => state.getMessagesByUserIdsReducer);
@@ -15,5 +18,9 @@ export default function useFetchMessages(userId1, userId2, index) {
     dispatch(getMessagesByUserIds(userId1, userId2, indexNumber));
   };
 
-  return [data, getMoreMessage];
+  const deleteMessage = (id) => {
+    dispatch(deleteMessageById(id));
+  };
+
+  return [data, getMoreMessage, deleteMessage];
 }

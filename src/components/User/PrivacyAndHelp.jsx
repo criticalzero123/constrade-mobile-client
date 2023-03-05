@@ -4,8 +4,10 @@ import NavItem from "./NavItem";
 
 import { SimpleLineIcons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
 export default function PrivacyAndHelp() {
+  const navigation = useNavigation();
   return (
     <View className="mt-4">
       <Text className="text-[#FCFBFA] opacity-75 mb-3">Privacy & Help</Text>
@@ -20,6 +22,7 @@ export default function PrivacyAndHelp() {
         }
         arrowVisible={false}
         title="Help center"
+        onPress={() => navigation.navigate("HelpCenter")}
       />
 
       <NavItem
