@@ -4,9 +4,15 @@ import ContainerSafeView from "../../components/CustomViews/ContainerSafeView";
 import NotificationItem from "../../components/Notification/NotificationItem";
 import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import useGetCurrentUser from "../../hooks/useGetCurrentUser";
+import useNotification from "../../hooks/notification/useNotification";
+import MessageEmpty from "../../components/messages/MessageEmpty";
 
 export default function Notification() {
   const navigation = useNavigation();
+  const { user } = useGetCurrentUser();
+  const [notifications] = useNotification(user.userId);
+
   return (
     <ContainerSafeView colorStatusBar="dark">
       <Pressable onPress={() => navigation.goBack()} className="mt-4">
@@ -14,10 +20,15 @@ export default function Notification() {
       </Pressable>
       <View className="justify-between items-center flex-row mt-10">
         <Text className="text-2xl font-semibold">Notifications</Text>
-        <Text className="text-[#CC481F] text-base">Mark all as read</Text>
+        {/* <Text className="text-[#CC481F] text-base">Mark all as read</Text> */}
       </View>
       <ScrollView showsVerticalScrollIndicator={false} className="mt-6">
-        <NotificationItem />
+        {notifications &&
+          (notifications.length === 0 ? (
+            <MessageEmpty title="No notifications" ads={false} />
+          ) : (
+            notifications.map((item) => <NotificationItem item={item} />)
+          ))}
       </ScrollView>
     </ContainerSafeView>
   );

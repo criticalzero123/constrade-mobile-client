@@ -7,16 +7,13 @@ import {
 } from "react-native";
 import React from "react";
 
-export default function NotificationItem() {
-  const image =
-    "https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80";
-
+export default function NotificationItem({ item }) {
   const { width, height } = useWindowDimensions();
 
   return (
     <View className="flex-row items-center">
       <Image
-        source={{ uri: image }}
+        source={{ uri: item.imageUrl }}
         style={{
           resizeMode: "contain",
           width: width * 0.1,
@@ -26,9 +23,12 @@ export default function NotificationItem() {
       />
       <View className="ml-4">
         <Text className="text-[#011B33] font-semibold text-base">
-          Mike started following you.
+          {item.notificationMessage}
         </Text>
-        <Text className="text-[#627282] mt-1">NotificationItem</Text>
+        <Text className="text-[#627282] mt-1">
+          {new Date(item.notificationDate).toLocaleDateString()}{" "}
+          {new Date(item.notificationDate).toLocaleTimeString()}
+        </Text>
       </View>
     </View>
   );

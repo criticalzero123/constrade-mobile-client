@@ -64,6 +64,8 @@ import {
   getSubscriptionHistoryReducer,
 } from "./reducers/subscriptionReducer";
 
+import { getNotificationUserReducer } from "./reducers/notificationReducer";
+
 const finalReducer = combineReducers({
   emailAndPasswordRegisterReducer,
   checkEmailReducer,
@@ -102,6 +104,7 @@ const finalReducer = combineReducers({
   subscribeUserReducer,
   getSubscriptionHistoryReducer,
   deleteMessageByIdReducer,
+  getNotificationUserReducer,
 });
 
 const rootReducer = (state, action) => {
