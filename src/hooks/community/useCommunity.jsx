@@ -3,7 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   cleanCommunity,
   createCommunity,
+  deleteCommunity,
   getMyCommunity,
+  reportCommunity,
 } from "../../../redux/actions/communityAction";
 
 export default function useCommunity(userId) {
@@ -32,9 +34,19 @@ export default function useCommunity(userId) {
     };
   }, []);
 
+  const deleteCommunityById = (id, userId) => {
+    dispatch(deleteCommunity(id, userId));
+    alert("deleted");
+  };
+
+  const reportCommunityUser = (info) => {
+    dispatch(reportCommunity(info));
+    alert("reported");
+  };
+
   const create = (info) => {
     dispatch(createCommunity(info));
   };
 
-  return { create, communityList };
+  return { create, communityList, deleteCommunityById, reportCommunityUser };
 }

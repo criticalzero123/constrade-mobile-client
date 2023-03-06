@@ -1,9 +1,10 @@
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import CommunityEmpty from "../../components/Community/CommunityEmpty";
 import useGetCurrentUser from "../../hooks/useGetCurrentUser";
 import useCommunity from "../../hooks/community/useCommunity";
 import { useNavigation } from "@react-navigation/native";
+import CommunityItem from "../../components/Community/CommunityItem";
 
 export default function CommunityCreated() {
   const { user } = useGetCurrentUser();
@@ -11,7 +12,16 @@ export default function CommunityCreated() {
 
   const navigation = useNavigation();
   return (
-    <View>
+    <ScrollView showsVerticalScrollIndicator={false}>
+      <View className="flex-row my-5">
+        <Text className=" font-semibold text-lg">CREATED COMMUNITIES </Text>
+        {communityList && communityList.length !== 0 && (
+          <Text className="ml-1 py-1 px-2 rounded-full bg-red-500 text-white">
+            {communityList.length}
+          </Text>
+        )}
+      </View>
+
       {communityList &&
         (communityList.length === 0 ? (
           <CommunityEmpty from="created" />
@@ -25,11 +35,11 @@ export default function CommunityCreated() {
                 })
               }
             >
-              <Text>{community.name}</Text>
+              <CommunityItem details={community} />
             </Pressable>
           ))
         ))}
-    </View>
+    </ScrollView>
   );
 }
 

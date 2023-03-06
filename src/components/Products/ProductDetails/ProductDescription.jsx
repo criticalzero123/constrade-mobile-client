@@ -16,6 +16,7 @@ import useGetCurrentUser from "../../../hooks/useGetCurrentUser";
 import useDeleteProduct from "../../../hooks/Product/useDeleteProduct";
 import useFavorite from "../../../hooks/Favorite/useFavorite";
 import useProductReport from "../../../hooks/Product/useProductReport";
+import { ReportEnum } from "../../../../service/enums";
 export default function ProductDescription({ route }) {
   const { details } = route.params;
 
@@ -40,8 +41,8 @@ export default function ProductDescription({ route }) {
   const onPressReport = () => {
     const info = {
       reportedBy: user.userId,
-      productReported: details.product.productId,
-      title: "Something dummy coming from function",
+      idReported: details.product.productId,
+      reportType: ReportEnum.Product,
       description: "Something dummy coming from function",
       dateSubmitted: new Date(),
     };

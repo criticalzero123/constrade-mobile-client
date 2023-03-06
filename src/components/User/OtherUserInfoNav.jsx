@@ -10,6 +10,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useDispatch } from "react-redux";
 import { userReport } from "../../../redux/actions/userActions";
 import useGetCurrentUser from "../../hooks/useGetCurrentUser";
+import { ReportEnum, ReportStatus } from "../../../service/enums";
 
 export default function OtherUserInfoNav({ data }) {
   const navigation = useNavigation();
@@ -18,8 +19,9 @@ export default function OtherUserInfoNav({ data }) {
 
   const onPressReport = () => {
     const info = {
-      reportBy: user.userId,
-      reported: data.user.userId,
+      reportedBy: user.userId,
+      idReported: data.user.userId,
+      reportType: ReportEnum.User,
       description: "Something description",
       dateSubmitted: new Date(),
     };
