@@ -165,3 +165,87 @@ export const getAllCommunityReducer = (state = {}, action) => {
       return { ...state };
   }
 };
+
+export const postCommunityReducer = (state = {}, action) => {
+  switch (action.type) {
+    case "POST_COMMUNITY_REQUEST":
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case "POST_COMMUNITY_SUCCESS":
+      return {
+        loading: false,
+        data: action.payload,
+      };
+
+    case "POST_COMMUNITY_FAILED":
+      return {
+        loading: false,
+        error: action.error,
+      };
+
+    case "POST_COMMUNITY_LEAVE":
+      return {};
+
+    default:
+      return { ...state };
+  }
+};
+
+export const getPostByCommunityIdReducer = (state = {}, action) => {
+  switch (action.type) {
+    case "GET_POST_BY_COMMUNITY_ID_REQUEST":
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case "GET_POST_BY_COMMUNITY_ID_SUCCESS":
+      return {
+        loading: false,
+        data: action.payload,
+      };
+
+    case "GET_POST_BY_COMMUNITY_ID_FAILED":
+      return {
+        loading: false,
+        error: action.error,
+      };
+
+    case "GET_POST_BY_COMMUNITY_ID_LEAVE":
+      return {};
+
+    default:
+      return { ...state };
+  }
+};
+
+export const deletePostInCommunityReducer = (state = {}, action) => {
+  switch (action.type) {
+    case "DELETE_POST_IN_COMMUNITY_REQUEST":
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case "DELETE_POST_IN_COMMUNITY_SUCCESS":
+      return {
+        loading: false,
+        data: action.payload,
+      };
+
+    case "DELETE_POST_IN_COMMUNITY_FAILED":
+      return {
+        loading: false,
+        error: action.error,
+      };
+
+    case "DELETE_POST_IN_COMMUNITY_LEAVE":
+      return {};
+
+    default:
+      return { ...state };
+  }
+};

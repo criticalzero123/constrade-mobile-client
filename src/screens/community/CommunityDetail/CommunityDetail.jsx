@@ -14,6 +14,7 @@ import {
 import React from "react";
 import { Entypo } from "@expo/vector-icons";
 
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import useGetCommunity from "../../../hooks/community/useGetCommunity";
 import HeaderArrow from "../../../components/HeaderArrow/HeaderArrow";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -24,8 +25,15 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { SimpleLineIcons } from "@expo/vector-icons";
 import useCommunity from "../../../hooks/community/useCommunity";
 import { ReportEnum } from "../../../../service/enums";
+import CommunityDiscussion from "../CommunityDiscussion/CommunityDiscussion";
+import CommunityMember from "../CommunityMember/CommunityMember";
+import { useHideBottomTab } from "../../../hooks/useHideBottomTab";
+
+const Tab = createMaterialTopTabNavigator();
 
 export default function CommunityDetail({ route }) {
+  useHideBottomTab();
+
   const { id } = route.params;
   const [data] = useGetCommunity(id);
   const { deleteCommunityById, reportCommunityUser, join } = useCommunity();
@@ -179,6 +187,48 @@ export default function CommunityDetail({ route }) {
               </View>
             </>
           )}
+          <Tab.Navigator
+            style={{ height: height }}
+            screenOptions={{
+              tabBarLabelStyle: { fontSize: 14, fontWeight: "700" },
+              tabBarStyle: {
+                backgroundColor: "rgba(0,0,0,0)",
+                borderBottomWidth: 1,
+                borderBottomColor: "rgba(0,0,0,0.1)",
+                shadowColor: "white",
+              },
+              tabBarInactiveTintColor: "rgba(0,0,0,0.3)",
+              tabBarActiveTintColor: "black",
+              tabBarIndicatorStyle: {
+                backgroundColor: "rgba(0,0,0,0.65)",
+                height: "4%",
+                width: "40%",
+                marginLeft: 20,
+              },
+            }}
+          >
+            <Tab.Screen
+              name="CommunityDiscussion"
+              component={CommunityDiscussion}
+              options={{
+                tabBarLabel: "Discussion",
+                tabBarLabelStyle: {
+                  textTransform: "capitalize",
+                },
+              }}
+              initialParams={{ id: id, memberInfo: currentMember }}
+            />
+            <Tab.Screen
+              name="CommunityMember"
+              component={CommunityMember}
+              options={{
+                tabBarLabel: "Members",
+                tabBarLabelStyle: {
+                  textTransform: "capitalize",
+                },
+              }}
+            />
+          </Tab.Navigator>
         </ScrollView>
       </SafeAreaView>
     );

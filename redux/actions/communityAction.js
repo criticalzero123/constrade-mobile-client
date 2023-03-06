@@ -104,6 +104,60 @@ export const joinCommunityById = (info) => async (dispatch) => {
   }
 };
 
+export const postCommunity = (communityId, info) => async (dispatch) => {
+  dispatch({ type: "POST_COMMUNITY_REQUEST" });
+
+  try {
+    const res = await api
+      .setAuthHeaders()
+      .post(`/api/community/${communityId}/post`, info);
+
+    dispatch({
+      type: "POST_COMMUNITY_SUCCESS",
+      payload: res.data.responseData,
+    });
+  } catch (error) {
+    dispatch({ type: "POST_COMMUNITY_FAILED", error: error });
+  }
+};
+
+export const getPostByCommunityId = (communityId) => async (dispatch) => {
+  dispatch({ type: "GET_POST_BY_COMMUNITY_ID_REQUEST" });
+
+  try {
+    const res = await api
+      .setAuthHeaders()
+      .get(`/api/community/${communityId}/post`);
+
+    dispatch({
+      type: "GET_POST_BY_COMMUNITY_ID_SUCCESS",
+      payload: res.data.responseData,
+    });
+  } catch (error) {
+    dispatch({ type: "GET_POST_BY_COMMUNITY_ID_FAILED", error: error });
+  }
+};
+
+export const deletePostInCommunity =
+  (communityId, postId, userId) => async (dispatch) => {
+    dispatch({ type: "DELETE_POST_IN_COMMUNITY_REQUEST" });
+
+    try {
+      const res = await api
+        .setAuthHeaders()
+        .delete(
+          `/api/community/${communityId}/post/${postId}?userId=${userId}`
+        );
+
+      dispatch({
+        type: "DELETE_POST_IN_COMMUNITY_SUCCESS",
+        payload: res.data.responseData,
+      });
+    } catch (error) {
+      dispatch({ type: "DELETE_POST_IN_COMMUNITY_FAILED", error: error });
+    }
+  };
+
 export const cleanCommunity = () => (dispatch) => {
   dispatch({ type: "CREATE_COMMUNITY_LEAVE" });
   dispatch({ type: "GET_MY_COMMUNITY_LEAVE" });
