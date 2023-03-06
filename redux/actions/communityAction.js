@@ -55,6 +55,7 @@ export const deleteCommunity = (id, userId) => async (dispatch) => {
       type: "DELETE_COMMUNITY_SUCCESS",
       payload: res.data.responseData,
     });
+    alert("deleted");
   } catch (error) {
     dispatch({ type: "DELETE_COMMUNITY_FAILED", error: error });
   }
@@ -69,8 +70,37 @@ export const reportCommunity = (info) => async (dispatch) => {
       type: "REPORT_COMMUNITY_SUCCESS",
       payload: res.data.responseData,
     });
+    alert("reported");
   } catch (error) {
     dispatch({ type: "REPORT_COMMUNITY_FAILED", error: error });
+  }
+};
+
+export const getAllCommunity = () => async (dispatch) => {
+  dispatch({ type: "GET_ALL_COMMUNITY_REQUEST" });
+
+  try {
+    const res = await api.setAuthHeaders().get("/api/community");
+    dispatch({
+      type: "GET_ALL_COMMUNITY_SUCCESS",
+      payload: res.data.responseData,
+    });
+  } catch (error) {
+    dispatch({ type: "GET_ALL_COMMUNITY_FAILED", error: error });
+  }
+};
+
+export const joinCommunityById = (info) => async (dispatch) => {
+  dispatch({ type: "JOIN_COMMUNITY_BY_ID_REQUEST" });
+
+  try {
+    const res = await api.setAuthHeaders().post("/api/community/join", info);
+    dispatch({
+      type: "JOIN_COMMUNITY_BY_ID_SUCCESS",
+      payload: res.data.responseData,
+    });
+  } catch (error) {
+    dispatch({ type: "JOIN_COMMUNITY_BY_ID_FAILED", error: error });
   }
 };
 
@@ -78,4 +108,5 @@ export const cleanCommunity = () => (dispatch) => {
   dispatch({ type: "CREATE_COMMUNITY_LEAVE" });
   dispatch({ type: "GET_MY_COMMUNITY_LEAVE" });
   dispatch({ type: "GET_COMMUNITY_BY_ID_LEAVE" });
+  dispatch({ type: "GET_ALL_COMMUNITY_LEAVE" });
 };

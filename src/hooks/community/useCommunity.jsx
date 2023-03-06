@@ -5,6 +5,7 @@ import {
   createCommunity,
   deleteCommunity,
   getMyCommunity,
+  joinCommunityById,
   reportCommunity,
 } from "../../../redux/actions/communityAction";
 
@@ -29,24 +30,32 @@ export default function useCommunity(userId) {
     if (userId === undefined) return;
     dispatch(getMyCommunity(userId));
 
-    return () => {
-      dispatch(cleanCommunity());
-    };
+    // return () => {
+    //   dispatch(cleanCommunity());
+    // };
   }, []);
 
   const deleteCommunityById = (id, userId) => {
     dispatch(deleteCommunity(id, userId));
-    alert("deleted");
   };
 
   const reportCommunityUser = (info) => {
     dispatch(reportCommunity(info));
-    alert("reported");
   };
 
   const create = (info) => {
     dispatch(createCommunity(info));
   };
 
-  return { create, communityList, deleteCommunityById, reportCommunityUser };
+  const join = (communityId, userId) => {
+    dispatch(joinCommunityById({ communityId, userId }));
+  };
+
+  return {
+    create,
+    communityList,
+    deleteCommunityById,
+    reportCommunityUser,
+    join,
+  };
 }

@@ -28,7 +28,7 @@ import { ReportEnum } from "../../../../service/enums";
 export default function CommunityDetail({ route }) {
   const { id } = route.params;
   const [data] = useGetCommunity(id);
-  const { deleteCommunityById, reportCommunityUser } = useCommunity();
+  const { deleteCommunityById, reportCommunityUser, join } = useCommunity();
   const { user } = useGetCurrentUser();
 
   const { width, height } = useWindowDimensions();
@@ -69,7 +69,7 @@ export default function CommunityDetail({ route }) {
             className="flex-row items-center justify-between"
           >
             <HeaderArrow headerName={"Community details"} />
-            {user.userId !== data.community.ownerUserId ? (
+            {user.userId === data.community.ownerUserId ? (
               <Pressable className="border p-1 rounded" onPress={onShowAction}>
                 <SimpleLineIcons name="options" size={12} color="black" />
               </Pressable>
@@ -150,7 +150,10 @@ export default function CommunityDetail({ route }) {
                   />
                 </View>
 
-                <Pressable className="w-full items-center p-4 bg-[#D14519] rounded-lg">
+                <Pressable
+                  className="w-full items-center p-4 bg-[#D14519] rounded-lg"
+                  onPress={() => join(id, user.userId)}
+                >
                   <Text className="text-white font-semibold">Join group</Text>
                 </Pressable>
                 <View className="border-b border-gray-300 mt-8 mb-4" />
