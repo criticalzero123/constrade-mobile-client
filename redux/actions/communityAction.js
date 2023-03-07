@@ -158,6 +158,65 @@ export const deletePostInCommunity =
     }
   };
 
+export const commentPost = (communityId, info) => async (dispatch) => {
+  dispatch({ type: "COMMENT_POST_REQUEST" });
+
+  console.log(info);
+
+  try {
+    const res = await api
+      .setAuthHeaders()
+      .post(
+        `/api/community/${communityId}/post/${info.communityPostId}/comment`,
+        info
+      );
+
+    dispatch({
+      type: "COMMENT_POST_SUCCESS",
+      payload: res.data.responseData,
+    });
+  } catch (error) {
+    dispatch({ type: "COMMENT_POST_FAILED", error: error });
+  }
+};
+
+export const getCommentPost = (communityId, postId) => async (dispatch) => {
+  dispatch({ type: "GET_COMMENT_POST_BY_ID_REQUEST" });
+
+  try {
+    const res = await api
+      .setAuthHeaders()
+      .get(`/api/community/${communityId}/post/${postId}/comment`);
+
+    dispatch({
+      type: "GET_COMMENT_POST_BY_ID_SUCCESS",
+      payload: res.data.responseData,
+    });
+  } catch (error) {
+    dispatch({ type: "GET_COMMENT_POST_BY_ID_FAILED", error: error });
+  }
+};
+
+export const deleteCommentPost =
+  (communityId, postId, commentId) => async (dispatch) => {
+    dispatch({ type: "DELETE_COMMENT_BY_ID_REQUEST" });
+
+    try {
+      const res = await api
+        .setAuthHeaders()
+        .delete(
+          `/api/community/${communityId}/post/${postId}/comment/${commentId}`
+        );
+
+      dispatch({
+        type: "DELETE_COMMENT_BY_ID_SUCCESS",
+        payload: res.data.responseData,
+      });
+    } catch (error) {
+      dispatch({ type: "DELETE_COMMENT_BY_ID_FAILED", error: error });
+    }
+  };
+
 export const cleanCommunity = () => (dispatch) => {
   dispatch({ type: "CREATE_COMMUNITY_LEAVE" });
   dispatch({ type: "GET_MY_COMMUNITY_LEAVE" });
