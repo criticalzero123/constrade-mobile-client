@@ -79,6 +79,7 @@ import {
   commentPostReducer,
   getCommentPostReducer,
   deleteCommentPostReducer,
+  likePostReducer,
 } from "./reducers/communityReducer";
 
 const finalReducer = combineReducers({
@@ -132,6 +133,7 @@ const finalReducer = combineReducers({
   commentPostReducer,
   getCommentPostReducer,
   deleteCommentPostReducer,
+  likePostReducer,
 });
 
 const rootReducer = (state, action) => {

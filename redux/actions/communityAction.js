@@ -138,6 +138,25 @@ export const getPostByCommunityId = (communityId) => async (dispatch) => {
   }
 };
 
+export const likePost = (communityId, postId, userId) => async (dispatch) => {
+  dispatch({ type: "LIKE_POST_REQUEST" });
+
+  try {
+    const res = await api
+      .setAuthHeaders()
+      .put(
+        `/api/community/${communityId}/post/${postId}/like?userId=${userId}`
+      );
+
+    dispatch({
+      type: "LIKE_POST_SUCCESS",
+      payload: res.data.responseData,
+    });
+  } catch (error) {
+    dispatch({ type: "LIKE_POST_FAILED", error: error });
+  }
+};
+
 export const deletePostInCommunity =
   (communityId, postId, userId) => async (dispatch) => {
     dispatch({ type: "DELETE_POST_IN_COMMUNITY_REQUEST" });

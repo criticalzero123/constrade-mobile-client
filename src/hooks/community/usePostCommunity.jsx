@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   deletePostInCommunity,
   getPostByCommunityId,
+  likePost,
   postCommunity,
 } from "../../../redux/actions/communityAction";
 
@@ -16,13 +17,17 @@ export default function usePostCommunity(id) {
     dispatch(getPostByCommunityId(id));
   }, []);
 
-  const post = (communityId, info) => {
-    dispatch(postCommunity(communityId, info));
+  const post = (info) => {
+    dispatch(postCommunity(id, info));
   };
 
-  const deletePost = (communityId, postId, userId) => {
-    dispatch(deletePostInCommunity(communityId, postId, userId));
+  const deletePost = (postId, userId) => {
+    dispatch(deletePostInCommunity(postId, userId));
   };
 
-  return { data, post, deletePost };
+  const like = (postId, userId) => {
+    dispatch(likePost(id, postId, userId));
+  };
+
+  return { data, post, deletePost, like };
 }

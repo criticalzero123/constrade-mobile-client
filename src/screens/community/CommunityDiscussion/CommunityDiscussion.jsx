@@ -14,7 +14,7 @@ import useCommentPost from "../../../hooks/community/useCommentPost";
 export default function CommunityDiscussion({ route }) {
   const { memberInfo, id } = route.params;
 
-  const { post, data, deletePost } = usePostCommunity(id);
+  const { post, data, deletePost, like } = usePostCommunity(id);
   const [_commentPost, getComments, deleteComment, comments] =
     useCommentPost(id);
 
@@ -31,7 +31,7 @@ export default function CommunityDiscussion({ route }) {
       createdDate: new Date(),
     };
 
-    post(info.communityId, info);
+    post(info);
   };
 
   const onPressComment = (postId) => {
@@ -119,7 +119,6 @@ export default function CommunityDiscussion({ route }) {
                     <Pressable
                       onPress={() =>
                         deletePost(
-                          post.communityPost.communityId,
                           post.communityPost.communityPostId,
                           memberInfo.userId
                         )
@@ -128,6 +127,16 @@ export default function CommunityDiscussion({ route }) {
                       <Text className="text-red-500 mt-2">Delete</Text>
                     </Pressable>
                   )}
+                  <Pressable
+                    onPress={() =>
+                      like(
+                        post.communityPost.communityPostId,
+                        memberInfo.userId
+                      )
+                    }
+                  >
+                    <Text className="mt-5">{post.communityPost.like} Like</Text>
+                  </Pressable>
                 </View>
               </View>
             ))}
