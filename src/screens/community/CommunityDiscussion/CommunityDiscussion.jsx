@@ -10,6 +10,8 @@ import React from "react";
 import { useState } from "react";
 import usePostCommunity from "../../../hooks/community/usePostCommunity";
 import useCommentPost from "../../../hooks/community/useCommentPost";
+import useReport from "../../../hooks/useReport";
+import { ReportEnum } from "../../../../service/enums";
 
 export default function CommunityDiscussion({ route }) {
   const { memberInfo, id } = route.params;
@@ -17,6 +19,7 @@ export default function CommunityDiscussion({ route }) {
   const { post, data, deletePost, like } = usePostCommunity(id);
   const [_commentPost, getComments, deleteComment, comments] =
     useCommentPost(id);
+  const { reportById } = useReport();
 
   const [postValue, setPostValue] = useState("");
   const [comment, setComment] = useState("");
@@ -84,16 +87,34 @@ export default function CommunityDiscussion({ route }) {
                           post.communityPost.communityPostId && (
                           <View className="flex-row items-center">
                             <Text className="mr-3"> {_c.comment}</Text>
-                            {_c.commentedByUser === memberInfo.userId && (
+                            {_c.commentedByUser === memberInfo.userId ? (
+                              <>
+                                <Pressable
+                                  onPress={() =>
+                                    deleteComment(
+                                      post.communityPost.communityPostId,
+                                      _c.communityPostCommentId
+                                    )
+                                  }
+                                >
+                                  <Text className="text-red-500">Delete</Text>
+                                </Pressable>
+
+                                <Pressable onPress={() => alert("edited")}>
+                                  <Text className="text-red-500">Edit</Text>
+                                </Pressable>
+                              </>
+                            ) : (
                               <Pressable
                                 onPress={() =>
-                                  deleteComment(
-                                    post.communityPost.communityPostId,
-                                    _c.communityPostCommentId
+                                  reportById(
+                                    memberInfo.userId,
+                                    _c.communityPostCommentId,
+                                    ReportEnum.CommunityPostComment
                                   )
                                 }
                               >
-                                <Text className="text-red-500">Delete</Text>
+                                <Text className="text-gray-500">Report</Text>
                               </Pressable>
                             )}
                           </View>
@@ -135,7 +156,25 @@ export default function CommunityDiscussion({ route }) {
                       )
                     }
                   >
-                    <Text className="mt-5">{post.communityPost.like} Like</Text>
+                    <View className="flex-row">
+                      <Text className="mt-5">
+                        {post.communityPost.like} Like
+                      </Text>
+                      {post.communityPost.posterUserId !==
+                        memberInfo.userId && (
+                        <Pressable
+                          onPress={() =>
+                            reportById(
+                              memberInfo.userId,
+                              post.communityPost.posterUserId,
+                              ReportEnum.CommunityPost
+                            )
+                          }
+                        >
+                          <Text className="mt-5 ml-5">Report</Text>
+                        </Pressable>
+                      )}
+                    </View>
                   </Pressable>
                 </View>
               </View>

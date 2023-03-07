@@ -49,7 +49,6 @@ import {
   addFavoriteReducer,
   deleteFavoriteReducer,
   getFavoriteByUserIdReducer,
-  reportProductReducer,
 } from "./reducers/productReducer";
 import {
   getMessagesByUserIdsReducer,
@@ -116,7 +115,6 @@ const finalReducer = combineReducers({
   addFavoriteReducer,
   deleteFavoriteReducer,
   getFavoriteByUserIdReducer,
-  reportProductReducer,
   subscribeUserReducer,
   getSubscriptionHistoryReducer,
   deleteMessageByIdReducer,

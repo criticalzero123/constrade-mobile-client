@@ -133,7 +133,7 @@ export const changePasswordEmail = (info) => (dispatch) => {
 };
 
 export const signOutUser = () => (dispatch) => {
-  dispatch({ type: "SIGN_OUT" });
+  dispatch({ type: "USER_SIGN_OUT" });
   dispatch({ type: "USER_INFO_CLEAR" });
 };
 
