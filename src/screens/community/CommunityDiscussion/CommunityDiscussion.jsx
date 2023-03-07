@@ -17,12 +17,16 @@ export default function CommunityDiscussion({ route }) {
   const { memberInfo, id } = route.params;
 
   const { post, data, deletePost, like } = usePostCommunity(id);
-  const [_commentPost, getComments, deleteComment, comments] =
+  const [_commentPost, getComments, deleteComment, updateComment, comments] =
     useCommentPost(id);
   const { reportById } = useReport();
 
   const [postValue, setPostValue] = useState("");
   const [comment, setComment] = useState("");
+  const [editModeInfo, setEditModeInfo] = useState({
+    active: false,
+    commentInfo: null,
+  });
 
   const onPost = () => {
     if (postValue.trim() === "") return;
@@ -38,15 +42,29 @@ export default function CommunityDiscussion({ route }) {
   };
 
   const onPressComment = (postId) => {
-    const info = {
-      communityPostId: postId,
-      commentedByUser: memberInfo.userId,
-      comment: comment,
-      dateCommented: new Date(),
-    };
-    _commentPost(info);
+    if (editModeInfo.active) {
+      const info = {
+        ...editModeInfo.commentInfo,
+        comment: comment,
+      };
+      updateComment(info);
+      setEditModeInfo({ active: false, commentInfo: null });
+    } else {
+      const info = {
+        communityPostId: postId,
+        commentedByUser: memberInfo.userId,
+        comment: comment,
+        dateCommented: new Date(),
+      };
+      _commentPost(info);
+    }
 
     setComment("");
+  };
+
+  const onPressEdit = (value, info) => {
+    setEditModeInfo({ active: true, commentInfo: info });
+    setComment(value);
   };
 
   return (
@@ -100,7 +118,10 @@ export default function CommunityDiscussion({ route }) {
                                   <Text className="text-red-500">Delete</Text>
                                 </Pressable>
 
-                                <Pressable onPress={() => alert("edited")}>
+                                <Pressable
+                                  onPress={() => onPressEdit(_c.comment, _c)}
+                                  className="ml-5"
+                                >
                                   <Text className="text-red-500">Edit</Text>
                                 </Pressable>
                               </>

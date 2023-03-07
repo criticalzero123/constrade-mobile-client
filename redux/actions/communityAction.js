@@ -180,8 +180,6 @@ export const deletePostInCommunity =
 export const commentPost = (communityId, info) => async (dispatch) => {
   dispatch({ type: "COMMENT_POST_REQUEST" });
 
-  console.log(info);
-
   try {
     const res = await api
       .setAuthHeaders()
@@ -196,6 +194,26 @@ export const commentPost = (communityId, info) => async (dispatch) => {
     });
   } catch (error) {
     dispatch({ type: "COMMENT_POST_FAILED", error: error });
+  }
+};
+
+export const editCommentPost = (communityId, info) => async (dispatch) => {
+  dispatch({ type: "EDIT_COMMENT_POST_REQUEST" });
+
+  try {
+    const res = await api
+      .setAuthHeaders()
+      .put(
+        `/api/community/${communityId}/post/${info.communityPostId}/comment`,
+        info
+      );
+
+    dispatch({
+      type: "EDIT_COMMENT_POST_SUCCESS",
+      payload: res.data.responseData,
+    });
+  } catch (error) {
+    dispatch({ type: "EDIT_COMMENT_POST_FAILED", error: error });
   }
 };
 
@@ -233,6 +251,41 @@ export const deleteCommentPost =
       });
     } catch (error) {
       dispatch({ type: "DELETE_COMMENT_BY_ID_FAILED", error: error });
+    }
+  };
+
+export const getCommunityMembers = (communityId) => async (dispatch) => {
+  dispatch({ type: "GET_COMMUNITY_MEMBERS_REQUEST" });
+
+  try {
+    const res = await api
+      .setAuthHeaders()
+      .get(`/api/community/${communityId}/members`);
+
+    dispatch({
+      type: "GET_COMMUNITY_MEMBERS_SUCCESS",
+      payload: res.data.responseData,
+    });
+  } catch (error) {
+    dispatch({ type: "GET_COMMUNITY_MEMBERS_FAILED", error: error });
+  }
+};
+
+export const removeCommunityMemberById =
+  (communityId, memberId) => async (dispatch) => {
+    dispatch({ type: "DELETE_COMMUNITY_MEMBER_BY_ID_REQUEST" });
+
+    try {
+      const res = await api
+        .setAuthHeaders()
+        .delete(`/api/community/${communityId}/members/${memberId}`);
+
+      dispatch({
+        type: "DELETE_COMMUNITY_MEMBER_BY_ID_SUCCESS",
+        payload: res.data.responseData,
+      });
+    } catch (error) {
+      dispatch({ type: "DELETE_COMMUNITY_MEMBER_BY_ID_FAILED", error: error });
     }
   };
 

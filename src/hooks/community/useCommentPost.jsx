@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   commentPost,
   deleteCommentPost,
+  editCommentPost,
   getCommentPost,
 } from "../../../redux/actions/communityAction";
 
@@ -22,5 +23,9 @@ export default function useCommentPost(communityId) {
     dispatch(deleteCommentPost(communityId, postId, commentId));
   };
 
-  return [commentPostCommunity, getComment, deleteComment, data];
+  const updateComment = (info) => {
+    dispatch(editCommentPost(communityId, info));
+  };
+
+  return [commentPostCommunity, getComment, deleteComment, updateComment, data];
 }

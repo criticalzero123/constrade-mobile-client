@@ -227,6 +227,7 @@ export default function CommunityDetail({ route }) {
                   textTransform: "capitalize",
                 },
               }}
+              initialParams={{ id: id, memberInfo: currentMember }}
             />
           </Tab.Navigator>
         </ScrollView>

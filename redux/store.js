@@ -79,6 +79,9 @@ import {
   getCommentPostReducer,
   deleteCommentPostReducer,
   likePostReducer,
+  editCommentPostReducer,
+  getCommunityMembersReducer,
+  deleteCommunityMemberByIdReducer,
 } from "./reducers/communityReducer";
 
 const finalReducer = combineReducers({
@@ -132,6 +135,9 @@ const finalReducer = combineReducers({
   getCommentPostReducer,
   deleteCommentPostReducer,
   likePostReducer,
+  editCommentPostReducer,
+  getCommunityMembersReducer,
+  deleteCommunityMemberByIdReducer,
 });
 
 const rootReducer = (state, action) => {

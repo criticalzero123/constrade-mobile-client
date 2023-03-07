@@ -6,6 +6,12 @@ export const ReportEnum = {
   CommunityPostComment: 4,
 };
 
+export const CommunityRole = {
+  Member: 0,
+  Admin: 1,
+  Owner: 2,
+};
+
 export const ReportStatus = {
   Active: 0,
   Done: 1,
