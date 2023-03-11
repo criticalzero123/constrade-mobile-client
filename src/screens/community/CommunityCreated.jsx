@@ -8,7 +8,7 @@ import CommunityItem from "../../components/Community/CommunityItem";
 
 export default function CommunityCreated() {
   const { user } = useGetCurrentUser();
-  const { communityList } = useCommunity(user.userId);
+  const { communityList } = useCommunity(user && user.userId);
 
   const navigation = useNavigation();
   return (

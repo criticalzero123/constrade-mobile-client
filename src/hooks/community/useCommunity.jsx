@@ -30,9 +30,9 @@ export default function useCommunity(userId) {
     if (userId === undefined) return;
     dispatch(getMyCommunity(userId));
 
-    // return () => {
-    //   dispatch(cleanCommunity());
-    // };
+    return () => {
+      dispatch(cleanCommunity());
+    };
   }, []);
 
   const deleteCommunityById = (id, userId) => {

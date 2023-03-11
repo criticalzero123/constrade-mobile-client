@@ -158,15 +158,13 @@ export const likePost = (communityId, postId, userId) => async (dispatch) => {
 };
 
 export const deletePostInCommunity =
-  (communityId, postId, userId) => async (dispatch) => {
+  (communityId, postId) => async (dispatch) => {
     dispatch({ type: "DELETE_POST_IN_COMMUNITY_REQUEST" });
 
     try {
       const res = await api
         .setAuthHeaders()
-        .delete(
-          `/api/community/${communityId}/post/${postId}?userId=${userId}`
-        );
+        .delete(`/api/community/${communityId}/post/${postId}`);
 
       dispatch({
         type: "DELETE_POST_IN_COMMUNITY_SUCCESS",
@@ -291,7 +289,7 @@ export const removeCommunityMemberById =
 
 export const cleanCommunity = () => (dispatch) => {
   dispatch({ type: "CREATE_COMMUNITY_LEAVE" });
-  dispatch({ type: "GET_MY_COMMUNITY_LEAVE" });
-  dispatch({ type: "GET_COMMUNITY_BY_ID_LEAVE" });
-  dispatch({ type: "GET_ALL_COMMUNITY_LEAVE" });
+  // dispatch({ type: "GET_MY_COMMUNITY_LEAVE" });
+  // dispatch({ type: "GET_COMMUNITY_BY_ID_LEAVE" });
+  // dispatch({ type: "GET_ALL_COMMUNITY_LEAVE" });
 };

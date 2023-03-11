@@ -11,7 +11,7 @@ import { useState } from "react";
 import usePostCommunity from "../../../hooks/community/usePostCommunity";
 import useCommentPost from "../../../hooks/community/useCommentPost";
 import useReport from "../../../hooks/useReport";
-import { ReportEnum } from "../../../../service/enums";
+import { CommunityRole, ReportEnum } from "../../../../service/enums";
 
 export default function CommunityDiscussion({ route }) {
   const { memberInfo, id } = route.params;
@@ -66,7 +66,6 @@ export default function CommunityDiscussion({ route }) {
     setEditModeInfo({ active: true, commentInfo: info });
     setComment(value);
   };
-
   return (
     <View style={{ paddingHorizontal: 20 }} className="mt-5">
       <ScrollView>
@@ -157,13 +156,11 @@ export default function CommunityDiscussion({ route }) {
                       <Text>Comment</Text>
                     </Pressable>
                   </View>
-                  {post.user.userId === memberInfo.userId && (
+                  {(post.user.userId === memberInfo.userId ||
+                    memberInfo.role === CommunityRole.Owner) && (
                     <Pressable
                       onPress={() =>
-                        deletePost(
-                          post.communityPost.communityPostId,
-                          memberInfo.userId
-                        )
+                        deletePost(post.communityPost.communityPostId)
                       }
                     >
                       <Text className="text-red-500 mt-2">Delete</Text>

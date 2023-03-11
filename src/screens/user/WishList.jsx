@@ -14,27 +14,28 @@ export default function WishList({ route }) {
     <ContainerSafeView>
       <HeaderArrow headerName={"Wishlist"} />
 
-      {data && data.length === 0 ? (
-        <MessageEmpty
-          title="Wishlist is empty"
-          description="Add to your favorite product to see here."
-          ads={true}
-        />
-      ) : (
-        data.map((item, index) => (
-          <View key={index}>
-            <ItemCard
-              data={item.product}
-              showLike={false}
-              person={person}
-              user={user}
-            />
-            <Pressable onPress={() => deleteFromFavorite(item.favoriteId)}>
-              <Text>delete</Text>
-            </Pressable>
-          </View>
-        ))
-      )}
+      {data &&
+        (data.length === 0 ? (
+          <MessageEmpty
+            title="Wishlist is empty"
+            description="Add to your favorite product to see here."
+            ads={true}
+          />
+        ) : (
+          data.map((item, index) => (
+            <View key={index}>
+              <ItemCard
+                data={item.product}
+                showLike={false}
+                person={person}
+                user={user}
+              />
+              <Pressable onPress={() => deleteFromFavorite(item.favoriteId)}>
+                <Text>delete</Text>
+              </Pressable>
+            </View>
+          ))
+        ))}
     </ContainerSafeView>
   );
 }
