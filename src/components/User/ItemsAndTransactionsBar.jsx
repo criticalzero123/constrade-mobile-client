@@ -60,7 +60,7 @@ export default function ItemsAndTransactionsBar({ data }) {
           />
         }
         title="Reviews & Feedbacks"
-        onPress={() => navigation.navigate("Reviews")}
+        onPress={() => navigation.navigate("Reviews", { user: data.user })}
         description="What other traders say about you"
       />
     </View>

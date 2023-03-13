@@ -38,7 +38,10 @@ import {
   getProductChatByUserIdReducer,
 } from "./reducers/productMessageReducer";
 
-import { getReviewsUserReducer } from "./reducers/reviewReducer";
+import {
+  getReviewsUserReducer,
+  getNotRatedReducer,
+} from "./reducers/reviewReducer";
 
 import {
   addProductReducer,
@@ -138,6 +141,7 @@ const finalReducer = combineReducers({
   editCommentPostReducer,
   getCommunityMembersReducer,
   deleteCommunityMemberByIdReducer,
+  getNotRatedReducer,
 });
 
 const rootReducer = (state, action) => {

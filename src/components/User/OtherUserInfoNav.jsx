@@ -74,6 +74,7 @@ export default function OtherUserInfoNav({ data }) {
               style={{ opacity: 0.75 }}
             />
           }
+          onPress={() => navigation.navigate("Reviews", { user: data.user })}
         />
 
         <Pressable

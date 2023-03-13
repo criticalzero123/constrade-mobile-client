@@ -23,3 +23,28 @@ export const getReviewsUserReducer = (state = {}, action) => {
       return { ...state };
   }
 };
+
+export const getNotRatedReducer = (state = {}, action) => {
+  switch (action.type) {
+    case "GET_NOT_RATED_REQUEST":
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case "GET_NOT_RATED_SUCCESS":
+      return {
+        loading: false,
+        data: action.payload,
+      };
+
+    case "GET_NOT_RATED_FAILED":
+      return {
+        loading: false,
+        error: action.error,
+      };
+
+    default:
+      return { ...state };
+  }
+};

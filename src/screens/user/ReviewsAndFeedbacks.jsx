@@ -5,10 +5,13 @@ import HeaderArrow from "../../components/HeaderArrow/HeaderArrow";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import ReviewsByYou from "../../components/Reviews/ReviewsByYou";
 import ReviewsByOthers from "../../components/Reviews/ReviewsByOthers";
+import useGetCurrentUser from "../../hooks/useGetCurrentUser";
 
 const Tab = createMaterialTopTabNavigator();
 
-export default function ReviewsAndFeedbacks() {
+export default function ReviewsAndFeedbacks({ route }) {
+  const { user: otherUser } = route.params;
+  const { user } = useGetCurrentUser();
   return (
     <ContainerSafeView>
       <HeaderArrow headerName="Reviews & Feedbacks" />
@@ -26,21 +29,24 @@ export default function ReviewsAndFeedbacks() {
           tabBarIndicatorStyle: {
             backgroundColor: "rgba(204,72,31,0.65)",
             height: "4%",
-            width: "40%",
+            width: user.userId === otherUser.userId ? "100%" : "40%",
             marginLeft: 20,
           },
         }}
       >
-        <Tab.Screen
-          name="ReviewsByYou"
-          component={ReviewsByYou}
-          options={{
-            tabBarLabel: "Reviews you made",
-            tabBarLabelStyle: {
-              textTransform: "capitalize",
-            },
-          }}
-        />
+        {user.userId !== otherUser.userId && (
+          <Tab.Screen
+            name="ReviewsByYou"
+            component={ReviewsByYou}
+            options={{
+              tabBarLabel: "Reviews you made",
+              tabBarLabelStyle: {
+                textTransform: "capitalize",
+              },
+            }}
+            initialParams={{ otherUserId: otherUser.userId }}
+          />
+        )}
         <Tab.Screen
           name="ReviewsByOthers"
           component={ReviewsByOthers}
