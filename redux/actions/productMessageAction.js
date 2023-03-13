@@ -21,7 +21,7 @@ export const getProductMessages =
   };
 
 export const getProductChatByUserId = (userId) => async (dispatch) => {
-  dispatch({ type: "GET_PRODUCT_CHAT_BY_USER_ID_REQUEST" });
+  dispatch({ type: "DELETE_PRODUCT_MESSAGE_REQUEST" });
 
   try {
     const res = await api.setAuthHeaders().get(`/api/productchat/${userId}`);
@@ -32,5 +32,21 @@ export const getProductChatByUserId = (userId) => async (dispatch) => {
     });
   } catch (error) {
     dispatch({ type: "GET_PRODUCT_CHAT_BY_USER_ID_FAILED", error: error });
+  }
+};
+
+export const deleteProductMessage = async (id) => {
+  try {
+    const res = await api
+      .setAuthHeaders()
+      .delete(`/api/productchat/messages/message/${id}`);
+
+    if (res.data.responseData) {
+      alert("deleted");
+    } else {
+      alert("not successfully deleted");
+    }
+  } catch (error) {
+    alert("Something Went Wrong");
   }
 };

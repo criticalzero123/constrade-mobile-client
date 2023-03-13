@@ -31,7 +31,7 @@ export default function ProductMessage({ route }) {
 
   const { height, width } = useWindowDimensions();
   const { user: currentUser } = useGetCurrentUser();
-  const [messageData, getMoreMessage] = useProductMessages(
+  const [messageData, getMoreMessage, deleteMessage] = useProductMessages(
     currentUser.userId,
     details.user.userId,
     details.product.productId,
@@ -79,12 +79,14 @@ export default function ProductMessage({ route }) {
                   return message.senderId === user.userId ? (
                     <MessageItem
                       key={message.userMessageId}
-                      message={message.message}
+                      message={message}
+                      onDelete={deleteMessage}
+                      isProduct={true}
                     />
                   ) : (
                     <OtherMessageItem
                       image={details.user.imageUrl}
-                      message={message.message}
+                      message={message}
                       key={message.userMessageId}
                     />
                   );

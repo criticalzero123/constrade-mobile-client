@@ -1,6 +1,9 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getProductMessages } from "../../../../redux/actions/productMessageAction";
+import {
+  deleteProductMessage,
+  getProductMessages,
+} from "../../../../redux/actions/productMessageAction";
 
 export default function useProductMessages(userId, userId2, productId, index) {
   const dispatch = useDispatch();
@@ -19,5 +22,9 @@ export default function useProductMessages(userId, userId2, productId, index) {
     dispatch(getProductMessages(userId, userId2, productId, indexNumber));
   };
 
-  return [data, getMoreMessage];
+  const deleteMessage = (id) => {
+    deleteProductMessage(id);
+  };
+
+  return [data, getMoreMessage, deleteMessage];
 }

@@ -66,6 +66,8 @@ export default function CommunityDiscussion({ route }) {
     setEditModeInfo({ active: true, commentInfo: info });
     setComment(value);
   };
+
+  if (memberInfo === undefined) return;
   return (
     <View style={{ paddingHorizontal: 20 }} className="mt-5">
       <ScrollView>
@@ -184,7 +186,7 @@ export default function CommunityDiscussion({ route }) {
                           onPress={() =>
                             reportById(
                               memberInfo.userId,
-                              post.communityPost.posterUserId,
+                              post.communityPost.communityPostId,
                               ReportEnum.CommunityPost
                             )
                           }
