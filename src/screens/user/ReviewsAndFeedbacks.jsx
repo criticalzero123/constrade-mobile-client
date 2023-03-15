@@ -44,7 +44,7 @@ export default function ReviewsAndFeedbacks({ route }) {
                 textTransform: "capitalize",
               },
             }}
-            initialParams={{ otherUserId: otherUser.userId }}
+            initialParams={{ otherUserId: otherUser.userId, user: user }}
           />
         )}
         <Tab.Screen
@@ -56,6 +56,7 @@ export default function ReviewsAndFeedbacks({ route }) {
               textTransform: "capitalize",
             },
           }}
+          initialParams={{ otherUserId: otherUser.userId, user: user }}
         />
       </Tab.Navigator>
     </ContainerSafeView>

@@ -1,19 +1,68 @@
-export const getReviewsUserReducer = (state = {}, action) => {
+export const getMyAverageRateReducer = (state = {}, action) => {
   switch (action.type) {
-    case "GET_USER_REVIEWS_REQUEST":
+    case "GET_MY_AVERAGE_RATE_REQUEST":
       return {
         ...state,
         loading: true,
       };
 
-    case "GET_USER_REVIEWS_SUCCESS":
+    case "GET_MY_AVERAGE_RATE_SUCCESS":
       return {
         loading: false,
-        success: true,
-        review: action.payload,
+        data: action.payload,
       };
 
-    case "GET_USER_REVIEWS_FAILED":
+    case "GET_MY_AVERAGE_RATE_FAILED":
+      return {
+        loading: false,
+        error: action.error,
+      };
+
+    default:
+      return { ...state };
+  }
+};
+
+export const getOtherReviewsUserReducer = (state = {}, action) => {
+  switch (action.type) {
+    case "GET_OTHER_USER_REVIEWS_REQUEST":
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case "GET_OTHER_USER_REVIEWS_SUCCESS":
+      return {
+        loading: false,
+        data: action.payload,
+      };
+
+    case "GET_OTHER_USER_REVIEWS_FAILED":
+      return {
+        loading: false,
+        error: action.error,
+      };
+
+    default:
+      return { ...state };
+  }
+};
+
+export const getMyReviewsUserReducer = (state = {}, action) => {
+  switch (action.type) {
+    case "GET_MY_USER_REVIEWS_REQUEST":
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case "GET_MY_USER_REVIEWS_SUCCESS":
+      return {
+        loading: false,
+        data: action.payload,
+      };
+
+    case "GET_MY_USER_REVIEWS_FAILED":
       return {
         loading: false,
         error: action.error,

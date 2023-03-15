@@ -1,5 +1,6 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
+import AddReview from "../../screens/review/AddReview";
 import SubscriptionScreen from "../../screens/Subscription/SubscriptionScreen";
 import ListingScreen from "../../screens/User/ListingScreen";
 import OtherUserProfile from "../../screens/User/OtherUserProfile";
@@ -32,6 +33,7 @@ export default function UserStack() {
       <Stack.Screen component={OtherUserProfile} name="OtherUserProfile" />
       <Stack.Screen component={SubscriptionScreen} name="Subscription" />
       <Stack.Screen component={HelpCenterStack} name="HelpCenter" />
+      <Stack.Screen component={AddReview} name="AddReview" />
     </Stack.Navigator>
   );
 }

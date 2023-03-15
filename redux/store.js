@@ -39,8 +39,10 @@ import {
 } from "./reducers/productMessageReducer";
 
 import {
-  getReviewsUserReducer,
+  getOtherReviewsUserReducer,
   getNotRatedReducer,
+  getMyReviewsUserReducer,
+  getMyAverageRateReducer,
 } from "./reducers/reviewReducer";
 
 import {
@@ -98,7 +100,7 @@ const finalReducer = combineReducers({
   requestOtpEmailReducer,
   verifyOtpReducer,
   getFollowAndFollowersUserReducer,
-  getReviewsUserReducer,
+  getOtherReviewsUserReducer,
   updatePersonInfoReducer,
   getAllUsersReducer,
   getUserByIdReducer,
@@ -142,6 +144,8 @@ const finalReducer = combineReducers({
   getCommunityMembersReducer,
   deleteCommunityMemberByIdReducer,
   getNotRatedReducer,
+  getMyReviewsUserReducer,
+  getMyAverageRateReducer,
 });
 
 const rootReducer = (state, action) => {
