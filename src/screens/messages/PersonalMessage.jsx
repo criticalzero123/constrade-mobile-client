@@ -82,6 +82,7 @@ export default function PersonalMessage({ route }) {
       {user !== undefined && (
         <>
           <View style={{ height: height * 0.9, paddingHorizontal: 20 }}>
+            <View className="mt-10" />
             <ChatHeader data={otherUser} />
 
             <ScrollView

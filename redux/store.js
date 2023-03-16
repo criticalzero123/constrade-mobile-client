@@ -87,6 +87,7 @@ import {
   editCommentPostReducer,
   getCommunityMembersReducer,
   deleteCommunityMemberByIdReducer,
+  getAllMyCommunityJoinedReducer,
 } from "./reducers/communityReducer";
 
 const finalReducer = combineReducers({
@@ -146,6 +147,7 @@ const finalReducer = combineReducers({
   getNotRatedReducer,
   getMyReviewsUserReducer,
   getMyAverageRateReducer,
+  getAllMyCommunityJoinedReducer,
 });
 
 const rootReducer = (state, action) => {

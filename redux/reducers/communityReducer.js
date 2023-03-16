@@ -445,3 +445,31 @@ export const deleteCommunityMemberByIdReducer = (state = {}, action) => {
       return { ...state };
   }
 };
+
+export const getAllMyCommunityJoinedReducer = (state = {}, action) => {
+  switch (action.type) {
+    case "GET_COMMUNITY_JOINED_REQUEST":
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case "GET_COMMUNITY_JOINED_SUCCESS":
+      return {
+        loading: false,
+        data: action.payload,
+      };
+
+    case "GET_COMMUNITY_JOINED_FAILED":
+      return {
+        loading: false,
+        error: action.error,
+      };
+
+    case "GET_COMMUNITY_JOINED_LEAVE":
+      return {};
+
+    default:
+      return { ...state };
+  }
+};

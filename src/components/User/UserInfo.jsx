@@ -97,7 +97,11 @@ export default function UserInfo({ headerName, myProfile = true, data }) {
                 <View className="flex-row items-center">
                   <FontAwesome name="star" size={20} color="white" />
                   <Text className="font-bold text-xl text-white ml-2">
-                    {review ? review : <ActivityIndicator size="small" />}
+                    {review !== undefined ? (
+                      review
+                    ) : (
+                      <ActivityIndicator size="small" />
+                    )}
                   </Text>
                 </View>
                 <Text className="mt-3 opacity-75 text-white">Ratings</Text>

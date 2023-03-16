@@ -6,8 +6,10 @@ import { TextInput } from "react-native-paper";
 import { Picker } from "@react-native-picker/picker";
 import useGetCurrentUser from "../../../hooks/useGetCurrentUser";
 import useCommunity from "../../../hooks/community/useCommunity";
+import { useHideBottomTab } from "../../../hooks/useHideBottomTab";
 
 export default function AddCommunity() {
+  useHideBottomTab();
   const { user } = useGetCurrentUser();
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");

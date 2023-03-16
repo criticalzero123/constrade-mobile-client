@@ -6,6 +6,7 @@ import {
   StatusBar,
   Platform,
   Pressable,
+  ScrollView,
 } from "react-native";
 import React from "react";
 
@@ -24,45 +25,46 @@ export default function SignInScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <SignInHeader
-        headerText="Welcome back"
-        bodyText="You can login into your account by using any of the following."
-      />
-
-      <GoogleButton text="Sign in using Google" type={"signin"} />
-
-      <LineTextCenter text="or continue using" />
-
-      <View className="flex-row w-full justify-between px-2">
-        <LoginMethodButton
-          Icon={<Feather name="phone" size={24} color="#CC481F" />}
-          text="Phone"
-          onPress={() =>
-            // navigation.navigate("SignInPhone")
-            alert("coming soon")
-          }
+      <ScrollView>
+        <SignInHeader
+          headerText="Welcome back"
+          bodyText="You can login into your account by using any of the following."
         />
 
-        <LoginMethodButton
-          Icon={
-            <MaterialCommunityIcons
-              name="email-outline"
-              size={24}
-              color="#CC481F"
-            />
-          }
-          text="Email"
-          onPress={() => navigation.navigate("SignInEmail")}
-        />
-      </View>
+        <GoogleButton text="Sign in using Google" type={"signin"} />
 
-      <Pressable
-        className="mt-7"
-        onPress={() => navigation.dispatch(StackActions.replace("SignUp"))}
-      >
-        <Text className="text-[#CC481F]">I don't have an account</Text>
-      </Pressable>
+        <LineTextCenter text="or continue using" />
 
+        <View className="flex-row w-full justify-between px-2">
+          <LoginMethodButton
+            Icon={<Feather name="phone" size={24} color="#CC481F" />}
+            text="Phone"
+            onPress={() =>
+              // navigation.navigate("SignInPhone")
+              alert("coming soon")
+            }
+          />
+
+          <LoginMethodButton
+            Icon={
+              <MaterialCommunityIcons
+                name="email-outline"
+                size={24}
+                color="#CC481F"
+              />
+            }
+            text="Email"
+            onPress={() => navigation.navigate("SignInEmail")}
+          />
+        </View>
+
+        <Pressable
+          className="mt-7"
+          onPress={() => navigation.dispatch(StackActions.replace("SignUp"))}
+        >
+          <Text className="text-[#CC481F]">I don't have an account</Text>
+        </Pressable>
+      </ScrollView>
       <TermsAndCondition />
     </SafeAreaView>
   );

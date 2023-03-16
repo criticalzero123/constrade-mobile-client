@@ -77,8 +77,8 @@ export default function Discover() {
             <View className="my-2" />
             <DealsNearYou />
 
-            <View className="my-2" />
-            <SuggestedCommunities />
+            {/* <View className="my-2" />
+            <SuggestedCommunities /> */}
 
             <View className="my-3" />
             <MightLikeThese />

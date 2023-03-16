@@ -75,7 +75,7 @@ export default function EmailSignInScreen() {
         value={onValidate()}
         loading={loading}
       />
-      <TermsAndCondition />
+      {/* <TermsAndCondition /> */}
     </KeyboardHideView>
   );
 }
