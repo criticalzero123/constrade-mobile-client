@@ -133,3 +133,50 @@ export const reportProduct = (info) => async (dispatch) => {
     dispatch({ type: "REPORT_PRODUCT_FAILED", error: err });
   }
 };
+
+export const getProductBoost = (id) => async (dispatch) => {
+  dispatch({ type: "GET_PRODUCT_BOOST_REQUEST" });
+
+  try {
+    const result = await api.setAuthHeaders().get(`api/products/boost/${id}`);
+
+    dispatch({
+      type: "GET_PRODUCT_BOOST_SUCCESS",
+      payload: result.data.responseData,
+    });
+  } catch (err) {
+    dispatch({ type: "GET_PRODUCT_BOOST_FAILED", error: err });
+  }
+};
+
+export const addProductBoost = async (id, days) => {
+  try {
+    const result = await api
+      .setAuthHeaders()
+      .post(`api/products/boost/${id}?days=${days}`);
+
+    if (result.data.responseData) {
+      alert("Boosted");
+    } else {
+      alert("Something Went wrong in boosting");
+    }
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+export const cancelProductBoost = async (id) => {
+  try {
+    const result = await api
+      .setAuthHeaders()
+      .put(`api/products/boost/${id}/cancel`);
+
+    if (result.data.responseData) {
+      alert("cancel");
+    } else {
+      alert("Something Went wrong in cancelling the boost");
+    }
+  } catch (err) {
+    console.error(err);
+  }
+};

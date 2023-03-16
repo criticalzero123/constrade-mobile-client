@@ -54,6 +54,7 @@ import {
   addFavoriteReducer,
   deleteFavoriteReducer,
   getFavoriteByUserIdReducer,
+  getProductBoostReducer,
 } from "./reducers/productReducer";
 import {
   getMessagesByUserIdsReducer,
@@ -152,6 +153,7 @@ const finalReducer = combineReducers({
   getMyAverageRateReducer,
   getAllMyCommunityJoinedReducer,
   getProductTransactionReducer,
+  getProductBoostReducer,
 });
 
 const rootReducer = (state, action) => {

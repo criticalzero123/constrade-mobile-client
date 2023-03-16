@@ -164,7 +164,7 @@ export default function ProductDescription({ route }) {
       )}
 
       {user.userId === details.product.posterUserId ? (
-        details.product.status === "unsold" ? (
+        details.product.productStatus === "unsold" ? (
           <>
             <Pressable
               className="w-full items-center p-4 bg-gray-500 my-4"
@@ -175,7 +175,11 @@ export default function ProductDescription({ route }) {
 
             <Pressable
               className="w-full items-center p-4 bg-gray-500 my-4"
-              onPress={() => navigation.navigate("BoostProduct")}
+              onPress={() =>
+                navigation.navigate("BoostProduct", {
+                  id: details.product.productId,
+                })
+              }
             >
               <Text className="text-white">BOOST ITEM</Text>
             </Pressable>
