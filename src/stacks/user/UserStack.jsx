@@ -8,6 +8,7 @@ import ReviewsAndFeedbacks from "../../screens/User/ReviewsAndFeedbacks";
 
 import UserProfile from "../../screens/User/UserProfile";
 import UserProfileEdit from "../../screens/User/UserProfileEdit";
+import VerificationScreen from "../../screens/User/VerificationScreen";
 import WishList from "../../screens/User/WishList";
 import SendWalletScreen from "../../screens/Wallet/SendWalletScreen";
 import WalletScreen from "../../screens/Wallet/WalletScreen";
@@ -34,6 +35,7 @@ export default function UserStack() {
       <Stack.Screen component={SubscriptionScreen} name="Subscription" />
       <Stack.Screen component={HelpCenterStack} name="HelpCenter" />
       <Stack.Screen component={AddReview} name="AddReview" />
+      <Stack.Screen component={VerificationScreen} name="Verification" />
     </Stack.Navigator>
   );
 }

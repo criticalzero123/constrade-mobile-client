@@ -28,6 +28,20 @@ export default function AccountBar({ data }) {
       />
 
       <NavItem
+        iconNav={
+          <Feather
+            name="user"
+            size={24}
+            color="white"
+            style={{ opacity: 0.75 }}
+          />
+        }
+        title="Verify Account"
+        description="Verify your account"
+        onPress={() => navigation.navigate("Verification", { data: data })}
+      />
+
+      <NavItem
         style={{ opacity: 0.75 }}
         iconNav={
           <Ionicons

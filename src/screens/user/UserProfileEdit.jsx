@@ -85,7 +85,7 @@ export default function UserProfileEdit({ route }) {
 
   return (
     <KeyboardHideView enabled={true}>
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <HeaderArrow headerName="Profile settings" />
         <View className="justify-between" style={{ height: height * 0.94 }}>
           <View>
@@ -95,8 +95,8 @@ export default function UserProfileEdit({ route }) {
                 className="rounded-full"
                 style={{
                   resizeMode: "contain",
-                  width: width * 0.3,
-                  height: height * 0.15,
+                  width: width * 0.25,
+                  height: height * 0.123,
                 }}
               />
               <Pressable

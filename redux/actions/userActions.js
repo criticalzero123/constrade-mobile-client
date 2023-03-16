@@ -63,3 +63,19 @@ export const userReport = (info) => async (dispatch) => {
 export const getUserInfo = (user) => (dispatch) => {
   dispatch({ type: "USER_INFO", payload: user });
 };
+
+export const submitIdRequest = async (info) => {
+  try {
+    const res = await api
+      .setAuthHeaders()
+      .post("api/verification/submit", info);
+
+    if (res.data.responseData) {
+      alert("Successfully submitted!");
+    } else {
+      alert("Not successful submitted!");
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};

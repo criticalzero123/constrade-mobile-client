@@ -16,3 +16,5 @@ export const ReportStatus = {
   Active: 0,
   Done: 1,
 };
+
+export const ValidIdType = ["Passport", "NBI", "Police Clearance"];
