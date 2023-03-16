@@ -14,27 +14,31 @@ import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import useGetCurrentUser from "../../../hooks/useGetCurrentUser";
 import useDeleteProduct from "../../../hooks/Product/useDeleteProduct";
-import useFavorite from "../../../hooks/Favorite/useFavorite";
 import useProductReport from "../../../hooks/Product/useProductReport";
 import { ReportEnum } from "../../../../service/enums";
+import { addFavorite } from "../../../../redux/actions/productActions";
 export default function ProductDescription({ route }) {
   const { details } = route.params;
 
   const [deleteProductById] = useDeleteProduct();
   const { productReport } = useProductReport();
   const { user } = useGetCurrentUser();
-  const { addToFavorite } = useFavorite();
   const { width, height } = useWindowDimensions();
   const navigation = useNavigation();
 
-  const onPressFavorite = () => {
+  const onPressFavorite = async () => {
     if (user.userId !== details.product.posterUserId) {
       const info = {
         productId: details.product.productId,
         UserId: user.userId,
         date: new Date(),
       };
-      addToFavorite(info);
+      const flag = await addFavorite(info);
+      if (flag) {
+        alert("Added to Favorite!");
+      } else {
+        alert("Remove from favorite");
+      }
     }
   };
 
@@ -85,20 +89,22 @@ export default function ProductDescription({ route }) {
           <Ionicons name="md-share-outline" size={24} color="black" />
         </View>
       </View>
-      <Pressable
-        className="mb-6"
-        onPress={() =>
-          navigation.navigate("Menu", {
-            screen: "Message",
-            params: {
-              screen: "ProductMessage",
-              params: { details: details },
-            },
-          })
-        }
-      >
-        <Text>Make an Offer</Text>
-      </Pressable>
+      {details.product.status === "unsold" && (
+        <Pressable
+          className="mb-6"
+          onPress={() =>
+            navigation.navigate("Menu", {
+              screen: "Message",
+              params: {
+                screen: "ProductMessage",
+                params: { details: details },
+              },
+            })
+          }
+        >
+          <Text>Make an Offer</Text>
+        </Pressable>
+      )}
 
       <View className="mb-6">
         <Text className="text-gray-400 mb-2">Item description</Text>
@@ -157,23 +163,35 @@ export default function ProductDescription({ route }) {
         </View>
       )}
 
-      {user.userId === details.product.posterUserId &&
-      details.product.status !== "unsold" ? (
-        <>
-          <Pressable
-            className="w-full items-center p-4 bg-gray-500 my-4"
-            onPress={() => deleteProductById(details.product.productId)}
-          >
-            <Text className="text-white">DELETE</Text>
-          </Pressable>
+      {user.userId === details.product.posterUserId ? (
+        details.product.status === "unsold" ? (
+          <>
+            <Pressable
+              className="w-full items-center p-4 bg-gray-500 my-4"
+              onPress={() => deleteProductById(details.product.productId)}
+            >
+              <Text className="text-white">DELETE</Text>
+            </Pressable>
 
+            <Pressable
+              className="w-full items-center p-4 bg-gray-500 my-4"
+              onPress={() => navigation.navigate("BoostProduct")}
+            >
+              <Text className="text-white">BOOST ITEM</Text>
+            </Pressable>
+          </>
+        ) : (
           <Pressable
             className="w-full items-center p-4 bg-gray-500 my-4"
-            onPress={() => navigation.navigate("BoostProduct")}
+            onPress={() =>
+              navigation.navigate("TransactionDetails", {
+                id: details.product.productId,
+              })
+            }
           >
-            <Text className="text-white">BOOST ITEM</Text>
+            <Text className="text-white">See transaction</Text>
           </Pressable>
-        </>
+        )
       ) : (
         <Pressable
           className="w-full items-center p-4 bg-gray-500 my-4"

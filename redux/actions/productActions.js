@@ -77,18 +77,15 @@ export const deleteProductById = (productId) => async (dispatch) => {
   }
 };
 
-export const addFavorite = (info) => async (dispatch) => {
-  dispatch({ type: "ADD_FAVORITE_REQUEST" });
-
+export const addFavorite = async (info) => {
   try {
     const res = await api.post(`/api/products/favorite`, info);
 
-    dispatch({
-      type: "ADD_FAVORITE_SUCCESS",
-      payload: res.data.responseData,
-    });
+    return res.data.responseData;
   } catch (error) {
-    dispatch({ type: "ADD_FAVORITE_FAILED", error: error });
+    console.error(error);
+    alert("Something Went Wrong");
+    return;
   }
 };
 

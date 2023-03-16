@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  addFavorite,
   deleteFavorite,
   getFavoriteByUserId,
 } from "../../../redux/actions/productActions";
@@ -25,13 +24,9 @@ export default function useFavorite(userId) {
     };
   }, [userId]);
 
-  const addToFavorite = (info) => {
-    dispatch(addFavorite(info));
-  };
-
   const deleteFromFavorite = (favoriteId) => {
     dispatch(deleteFavorite(favoriteId));
   };
 
-  return { data, addToFavorite, deleteFromFavorite };
+  return { data, deleteFromFavorite };
 }

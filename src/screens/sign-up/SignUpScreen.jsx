@@ -66,7 +66,7 @@ export default function SignUpScreen() {
               </Pressable>
             </View>
 
-            <TermsAndCondition />
+            {/* <TermsAndCondition /> */}
 
             <Portal>
               <Dialog

@@ -61,7 +61,10 @@ import {
   deleteMessageByIdReducer,
 } from "./reducers/userMessageReducer";
 
-import { soldProductReducer } from "./reducers/transactionReducer";
+import {
+  soldProductReducer,
+  getProductTransactionReducer,
+} from "./reducers/transactionReducer";
 
 import {
   subscribeUserReducer,
@@ -148,6 +151,7 @@ const finalReducer = combineReducers({
   getMyReviewsUserReducer,
   getMyAverageRateReducer,
   getAllMyCommunityJoinedReducer,
+  getProductTransactionReducer,
 });
 
 const rootReducer = (state, action) => {
