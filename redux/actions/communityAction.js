@@ -302,6 +302,23 @@ export const getAllMyCommunityJoined = (userId) => async (dispatch) => {
   }
 };
 
+export const getPopularCommunity = (userId) => async (dispatch) => {
+  dispatch({ type: "GET_SUGGESTED_COMMUNITY_REQUEST" });
+
+  try {
+    const res = await api
+      .setAuthHeaders()
+      .get(`/api/community/popular?uid=${userId}`);
+
+    dispatch({
+      type: "GET_SUGGESTED_COMMUNITY_SUCCESS",
+      payload: res.data.responseData,
+    });
+  } catch (error) {
+    dispatch({ type: "GET_SUGGESTED_COMMUNITY_FAILED", error: error });
+  }
+};
+
 export const cleanCommunity = () => (dispatch) => {
   dispatch({ type: "CREATE_COMMUNITY_LEAVE" });
   // dispatch({ type: "GET_MY_COMMUNITY_LEAVE" });

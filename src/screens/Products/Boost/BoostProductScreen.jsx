@@ -9,7 +9,7 @@ export default function BoostProductScreen({ route }) {
   const { id } = route.params;
   const [data, submit, cancel] = useBoostProduct(id);
   const [days, setDays] = useState(0);
-  console.log(data);
+
   return (
     <ContainerSafeView>
       {data !== undefined &&

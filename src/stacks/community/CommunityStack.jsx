@@ -11,12 +11,12 @@ const Stack = createNativeStackNavigator();
 export default function CommunityStack() {
   return (
     <Stack.Navigator
-      initialRouteName="Community"
+      initialRouteName="CommunityDiscover"
       screenOptions={{
         headerShown: false,
       }}
     >
-      <Stack.Screen component={Community} name="Community" />
+      <Stack.Screen component={Community} name="CommunityDiscover" />
       <Stack.Screen component={MyCommunity} name="MyCommunity" />
       <Stack.Screen component={AddCommunity} name="AddCommunity" />
       <Stack.Screen component={CommunityDetail} name="CommunityDetail" />

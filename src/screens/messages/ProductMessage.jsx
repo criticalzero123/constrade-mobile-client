@@ -79,7 +79,7 @@ export default function ProductMessage({ route }) {
                   return message.senderId === user.userId ? (
                     <MessageItem
                       key={message.userMessageId}
-                      message={message}
+                      message={message.message}
                       onDelete={deleteMessage}
                       isProduct={true}
                     />

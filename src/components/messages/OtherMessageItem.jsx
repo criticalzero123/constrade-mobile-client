@@ -9,6 +9,7 @@ import React from "react";
 
 export default function OtherMessageItem({ image, message }) {
   const { height, width } = useWindowDimensions();
+  console.log(message);
   return (
     <View className="flex-row my-1" style={{ width: width * 0.8 }}>
       <Image
@@ -17,7 +18,7 @@ export default function OtherMessageItem({ image, message }) {
         className="rounded-full"
       />
       <Text className="px-4 py-2 bg-gray-200 ml-2 rounded-b-lg rounded-r-lg">
-        {message.message}
+        {message}
       </Text>
     </View>
   );

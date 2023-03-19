@@ -473,3 +473,31 @@ export const getAllMyCommunityJoinedReducer = (state = {}, action) => {
       return { ...state };
   }
 };
+
+export const getPopularCommunityReducer = (state = {}, action) => {
+  switch (action.type) {
+    case "GET_SUGGESTED_COMMUNITY_REQUEST":
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case "GET_SUGGESTED_COMMUNITY_SUCCESS":
+      return {
+        loading: false,
+        data: action.payload,
+      };
+
+    case "GET_SUGGESTED_COMMUNITY_FAILED":
+      return {
+        loading: false,
+        error: action.error,
+      };
+
+    case "GET_SUGGESTED_COMMUNITY_LEAVE":
+      return {};
+
+    default:
+      return { ...state };
+  }
+};
