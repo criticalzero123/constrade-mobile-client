@@ -17,10 +17,15 @@ export default function CommunityComments({
   post,
   memberInfo,
 }) {
-  const [commentPost, _, deleteComment, updateComment, comments] =
-    useCommentPost(communityId);
+  const [
+    commentPost,
+    _,
+    deleteComment,
+    updateComment,
+    commentList,
+    setCommentList,
+  ] = useCommentPost(communityId);
 
-  const [commentList, setCommentList] = useState(comments);
   const [comment, setComment] = useState("");
   const [commentLoading, setCommentLoading] = useState(false);
 

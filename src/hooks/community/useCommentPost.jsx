@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -10,6 +11,13 @@ import {
 export default function useCommentPost(communityId) {
   const dispatch = useDispatch();
   const { data } = useSelector((state) => state.getCommentPostReducer);
+
+  const [comments, setComments] = useState(data);
+
+  useEffect(() => {
+    if (data === undefined) return;
+    setComments(data);
+  }, [data]);
 
   const commentPostCommunity = (info) => {
     return commentPost(communityId, info);
@@ -27,5 +35,12 @@ export default function useCommentPost(communityId) {
     return editCommentPost(communityId, info);
   };
 
-  return [commentPostCommunity, getComment, deleteComment, updateComment, data];
+  return [
+    commentPostCommunity,
+    getComment,
+    deleteComment,
+    updateComment,
+    comments,
+    setComments,
+  ];
 }
