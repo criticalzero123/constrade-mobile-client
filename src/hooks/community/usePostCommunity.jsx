@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -9,8 +10,14 @@ import {
 
 export default function usePostCommunity(id) {
   const dispatch = useDispatch();
-
+  const [posts, setPosts] = useState();
   const { data } = useSelector((state) => state.getPostByCommunityIdReducer);
+
+  useEffect(() => {
+    if (data === undefined) return;
+
+    setPosts(data);
+  }, [data]);
 
   useEffect(() => {
     if (id === undefined || !id) return;
@@ -29,5 +36,5 @@ export default function usePostCommunity(id) {
     dispatch(likePost(id, postId, userId));
   };
 
-  return { data, post, deletePost, like };
+  return { posts, setPosts, post, deletePost, like };
 }

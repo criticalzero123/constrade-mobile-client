@@ -22,16 +22,16 @@ import CommunityComments from "../../../components/Community/CommunityComments";
 
 export default function CommunityDiscussion({ route }) {
   const { memberInfo, id } = route.params;
+
   const { width, height } = useWindowDimensions();
   const { user, person } = useGetCurrentUser();
   const [_, getComments] = useCommentPost(id);
 
-  const { post, data, deletePost, like } = usePostCommunity(id);
+  const { post, deletePost, like, posts, setPosts } = usePostCommunity(id);
 
   const { reportById } = useReport();
 
   const [postValue, setPostValue] = useState("");
-  const [posts, setPosts] = useState(data ? data : []);
   const [showComment, setShowComment] = useState(-1);
 
   const [postLoading, setPostLoading] = useState(false);
