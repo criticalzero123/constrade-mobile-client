@@ -18,25 +18,23 @@ import useCommentPost from "../../../hooks/community/useCommentPost";
 import useReport from "../../../hooks/useReport";
 import { CommunityRole, ReportEnum } from "../../../../service/enums";
 import useGetCurrentUser from "../../../hooks/useGetCurrentUser";
+import CommunityComments from "../../../components/Community/CommunityComments";
 
 export default function CommunityDiscussion({ route }) {
   const { memberInfo, id } = route.params;
   const { width, height } = useWindowDimensions();
   const { user, person } = useGetCurrentUser();
+  const [_, getComments] = useCommentPost(id);
 
   const { post, data, deletePost, like } = usePostCommunity(id);
-  const [_commentPost, getComments, deleteComment, updateComment, comments] =
-    useCommentPost(id);
+
   const { reportById } = useReport();
 
   const [postValue, setPostValue] = useState("");
   const [posts, setPosts] = useState(data ? data : []);
-  const [comment, setComment] = useState("");
+  const [showComment, setShowComment] = useState(-1);
+
   const [postLoading, setPostLoading] = useState(false);
-  const [editModeInfo, setEditModeInfo] = useState({
-    active: false,
-    commentInfo: null,
-  });
 
   const onPost = async () => {
     setPostLoading(true);
@@ -66,36 +64,10 @@ export default function CommunityDiscussion({ route }) {
     setPostLoading(false);
   };
 
-  const onPressComment = (postId) => {
-    if (editModeInfo.active) {
-      const info = {
-        ...editModeInfo.commentInfo,
-        comment: comment,
-      };
-      updateComment(info);
-      setEditModeInfo({ active: false, commentInfo: null });
-    } else {
-      const info = {
-        communityPostId: postId,
-        commentedByUser: memberInfo.userId,
-        comment: comment,
-        dateCommented: new Date(),
-      };
-      _commentPost(info);
-    }
-
-    setComment("");
-  };
-
-  const onPressEdit = (value, info) => {
-    setEditModeInfo({ active: true, commentInfo: info });
-    setComment(value);
-  };
-
   if (memberInfo === undefined) return;
   return (
-    <View className="mt-5">
-      <ScrollView>
+    <ScrollView>
+      <View className="mt-5">
         {memberInfo && (
           <View className="flex-row items-center">
             <TextInput
@@ -115,12 +87,12 @@ export default function CommunityDiscussion({ route }) {
         )}
         <View>
           {posts &&
-            posts.map((post) => {
+            posts.map((post, index) => {
               const { user, person } = post.user;
 
               return (
-                <View className="bg-gray-200 mb-10">
-                  <View className="p-5">
+                <View className=" mb-10" key={index}>
+                  <View className="p-5 bg-gray-200">
                     <View className="flex-row justify-between mb-6">
                       <View className="flex-row gap-2">
                         <Image
@@ -138,16 +110,19 @@ export default function CommunityDiscussion({ route }) {
                           <Text>Date</Text>
                         </View>
                       </View>
-                      {(post.user.userId === memberInfo.userId ||
-                        memberInfo.role === CommunityRole.Owner) && (
-                        <Pressable
-                          onPress={() =>
-                            deletePost(post.communityPost.communityPostId)
-                          }
-                        >
-                          <Text className="text-red-500">Delete</Text>
-                        </Pressable>
-                      )}
+                      <View className="flex-row gap-2">
+                        {user.userId === memberInfo.userId && <Text>Edit</Text>}
+                        {(user.userId === memberInfo.userId ||
+                          memberInfo.role === CommunityRole.Owner) && (
+                          <Pressable
+                            onPress={() =>
+                              deletePost(post.communityPost.communityPostId)
+                            }
+                          >
+                            <Text className="text-red-500">Delete</Text>
+                          </Pressable>
+                        )}
+                      </View>
                       {post.communityPost.posterUserId !==
                         memberInfo.userId && (
                         <Pressable
@@ -183,9 +158,10 @@ export default function CommunityDiscussion({ route }) {
                       </Pressable>
                       <View className="flex-row ml-8">
                         <Pressable
-                          onPress={() =>
-                            getComments(post.communityPost.communityPostId)
-                          }
+                          onPress={() => {
+                            getComments(post.communityPost.communityPostId);
+                            setShowComment(post.communityPost.communityPostId);
+                          }}
                         >
                           <MaterialCommunityIcons
                             name="comment-multiple-outline"
@@ -193,7 +169,9 @@ export default function CommunityDiscussion({ route }) {
                             color="gray"
                           />
                         </Pressable>
-                        {post.commentsLength !== 0 ? (
+
+                        {post.commentsLength !== undefined &&
+                        post.commentsLength !== 0 ? (
                           <Text className="justify-center ml-1 text-gray-500">
                             {post.commentsLength}
                           </Text>
@@ -204,83 +182,19 @@ export default function CommunityDiscussion({ route }) {
                         )}
                       </View>
                     </View>
-
-                    <View className=" mt-3">
-                      {comments &&
-                        comments.map(
-                          (_c) =>
-                            _c.communityPostId ===
-                              post.communityPost.communityPostId && (
-                              <View className="flex-row items-center">
-                                <Text className="mr-3"> {_c.comment}</Text>
-                                {_c.commentedByUser === memberInfo.userId ? (
-                                  <>
-                                    <Pressable
-                                      onPress={() =>
-                                        deleteComment(
-                                          post.communityPost.communityPostId,
-                                          _c.communityPostCommentId
-                                        )
-                                      }
-                                    >
-                                      <Text className="text-red-500">
-                                        Delete
-                                      </Text>
-                                    </Pressable>
-
-                                    <Pressable
-                                      onPress={() =>
-                                        onPressEdit(_c.comment, _c)
-                                      }
-                                      className="ml-5"
-                                    >
-                                      <Text className="text-red-500">Edit</Text>
-                                    </Pressable>
-                                  </>
-                                ) : (
-                                  <Pressable
-                                    onPress={() =>
-                                      reportById(
-                                        memberInfo.userId,
-                                        _c.communityPostCommentId,
-                                        ReportEnum.CommunityPostComment
-                                      )
-                                    }
-                                  >
-                                    <Text className="text-gray-500">
-                                      Report
-                                    </Text>
-                                  </Pressable>
-                                )}
-                              </View>
-                            )
-                        )}
-
-                      <View className="flex-row items-center">
-                        <TextInput
-                          value={comment}
-                          onChangeText={setComment}
-                          className="border p-2 w-52 mr-2"
-                          placeholder="Comment here..."
-                        />
-                        <Pressable
-                          onPress={() =>
-                            onPressComment(post.communityPost.communityPostId)
-                          }
-                        >
-                          <Text>
-                            {editModeInfo.active ? "Done" : "Comment"}
-                          </Text>
-                        </Pressable>
-                      </View>
-                    </View>
                   </View>
+                  <CommunityComments
+                    communityId={id}
+                    showComment={showComment}
+                    post={post}
+                    memberInfo={memberInfo}
+                  />
                 </View>
               );
             })}
         </View>
-      </ScrollView>
-    </View>
+      </View>
+    </ScrollView>
   );
 }
 

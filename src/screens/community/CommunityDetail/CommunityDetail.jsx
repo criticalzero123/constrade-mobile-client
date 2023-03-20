@@ -71,7 +71,10 @@ export default function CommunityDetail({ route }) {
     const currentMember = data.members.find((_m) => _m.userId === user.userId);
     return (
       <SafeAreaView style={styles.container}>
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ flex: 1 }}
+        >
           <View
             style={{ paddingHorizontal: 20 }}
             className="flex-row items-center justify-between"
@@ -238,6 +241,7 @@ export default function CommunityDetail({ route }) {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
   },
 });
