@@ -193,9 +193,9 @@ export default function CommunityDiscussion({ route }) {
                             color="gray"
                           />
                         </Pressable>
-                        {comments && comments.length !== 0 ? (
+                        {post.commentsLength !== 0 ? (
                           <Text className="justify-center ml-1 text-gray-500">
-                            {comments.length}
+                            {post.commentsLength}
                           </Text>
                         ) : (
                           <Text className="justify-center ml-2 text-gray-500">

@@ -67,18 +67,6 @@ export default function AccountBar({ data }) {
         title="Subscription"
         onPress={() => navigation.navigate("Subscription")}
       />
-
-      <NavItem
-        iconNav={
-          <Ionicons
-            name="md-notifications-outline"
-            size={24}
-            color="white"
-            style={{ opacity: 0.75 }}
-          />
-        }
-        title="Notifications"
-      />
     </View>
   );
 }
