@@ -9,7 +9,7 @@ import React from "react";
 
 export default function OtherMessageItem({ image, message }) {
   const { height, width } = useWindowDimensions();
-  console.log(message);
+
   return (
     <View className="flex-row my-1" style={{ width: width * 0.8 }}>
       <Image

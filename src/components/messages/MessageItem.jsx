@@ -48,7 +48,7 @@ export default function MessageItem({ message, onDelete, isProduct = false }) {
         className="rounded-b-lg rounded-l-lg px-4 py-2 bg-[#D14519] text-white"
         onLongPress={onPressDelete}
       >
-        {message.message}
+        {message}
       </Text>
     </View>
   );

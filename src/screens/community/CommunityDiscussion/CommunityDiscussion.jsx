@@ -1,20 +1,27 @@
 import {
+  Image,
   Pressable,
   ScrollView,
   StyleSheet,
   Text,
   TextInput,
+  useWindowDimensions,
   View,
 } from "react-native";
 import React from "react";
 import { useState } from "react";
+import { AntDesign } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import usePostCommunity from "../../../hooks/community/usePostCommunity";
 import useCommentPost from "../../../hooks/community/useCommentPost";
 import useReport from "../../../hooks/useReport";
 import { CommunityRole, ReportEnum } from "../../../../service/enums";
+import useGetCurrentUser from "../../../hooks/useGetCurrentUser";
 
 export default function CommunityDiscussion({ route }) {
   const { memberInfo, id } = route.params;
+  const { width, height } = useWindowDimensions();
+  const { user, person } = useGetCurrentUser();
 
   const { post, data, deletePost, like } = usePostCommunity(id);
   const [_commentPost, getComments, deleteComment, updateComment, comments] =
@@ -22,6 +29,7 @@ export default function CommunityDiscussion({ route }) {
   const { reportById } = useReport();
 
   const [postValue, setPostValue] = useState("");
+  const [posts, setPosts] = useState(data ? data : []);
   const [comment, setComment] = useState("");
   const [editModeInfo, setEditModeInfo] = useState({
     active: false,
@@ -39,6 +47,14 @@ export default function CommunityDiscussion({ route }) {
     };
 
     post(info);
+    setPostValue("");
+    setPosts([
+      ...posts,
+      {
+        communityPost: info,
+        user: { user: { ...memberInfo, ...user }, person: { ...person } },
+      },
+    ]);
   };
 
   const onPressComment = (postId) => {
@@ -69,7 +85,7 @@ export default function CommunityDiscussion({ route }) {
 
   if (memberInfo === undefined) return;
   return (
-    <View style={{ paddingHorizontal: 20 }} className="mt-5">
+    <View className="mt-5">
       <ScrollView>
         {memberInfo && (
           <View className="flex-row items-center">
@@ -85,101 +101,40 @@ export default function CommunityDiscussion({ route }) {
           </View>
         )}
         <View>
-          <Text className="mb-10">POSTS</Text>
+          {posts &&
+            posts.map((post) => {
+              const { user, person } = post.user;
 
-          {data &&
-            data.map((post) => (
-              <View>
-                <Text>{post.communityPost.description}</Text>
-                <View className="p-2 border">
-                  <Pressable
-                    onPress={() =>
-                      getComments(post.communityPost.communityPostId)
-                    }
-                  >
-                    <Text className="mb-2">Comments</Text>
-                  </Pressable>
-                  {comments &&
-                    comments.map(
-                      (_c) =>
-                        _c.communityPostId ===
-                          post.communityPost.communityPostId && (
-                          <View className="flex-row items-center">
-                            <Text className="mr-3"> {_c.comment}</Text>
-                            {_c.commentedByUser === memberInfo.userId ? (
-                              <>
-                                <Pressable
-                                  onPress={() =>
-                                    deleteComment(
-                                      post.communityPost.communityPostId,
-                                      _c.communityPostCommentId
-                                    )
-                                  }
-                                >
-                                  <Text className="text-red-500">Delete</Text>
-                                </Pressable>
-
-                                <Pressable
-                                  onPress={() => onPressEdit(_c.comment, _c)}
-                                  className="ml-5"
-                                >
-                                  <Text className="text-red-500">Edit</Text>
-                                </Pressable>
-                              </>
-                            ) : (
-                              <Pressable
-                                onPress={() =>
-                                  reportById(
-                                    memberInfo.userId,
-                                    _c.communityPostCommentId,
-                                    ReportEnum.CommunityPostComment
-                                  )
-                                }
-                              >
-                                <Text className="text-gray-500">Report</Text>
-                              </Pressable>
-                            )}
-                          </View>
-                        )
-                    )}
-
-                  <View className="flex-row items-center">
-                    <TextInput
-                      value={comment}
-                      onChangeText={setComment}
-                      className="border p-2 w-52 mr-2"
-                      placeholder="Comment here..."
-                    />
-                    <Pressable
-                      onPress={() =>
-                        onPressComment(post.communityPost.communityPostId)
-                      }
-                    >
-                      <Text>Comment</Text>
-                    </Pressable>
-                  </View>
-                  {(post.user.userId === memberInfo.userId ||
-                    memberInfo.role === CommunityRole.Owner) && (
-                    <Pressable
-                      onPress={() =>
-                        deletePost(post.communityPost.communityPostId)
-                      }
-                    >
-                      <Text className="text-red-500 mt-2">Delete</Text>
-                    </Pressable>
-                  )}
-                  <Pressable
-                    onPress={() =>
-                      like(
-                        post.communityPost.communityPostId,
-                        memberInfo.userId
-                      )
-                    }
-                  >
-                    <View className="flex-row">
-                      <Text className="mt-5">
-                        {post.communityPost.like} Like
-                      </Text>
+              return (
+                <View className="bg-gray-200 mb-10">
+                  <View className="p-5">
+                    <View className="flex-row justify-between mb-6">
+                      <View className="flex-row gap-2">
+                        <Image
+                          source={{ uri: user.imageUrl }}
+                          style={{
+                            width: width * 0.08,
+                            height: height * 0.04,
+                            borderRadius: 100,
+                          }}
+                        />
+                        <View>
+                          <Text className="capitalize font-semibold">
+                            {person.firstName} {person.lastName}
+                          </Text>
+                          <Text>Date</Text>
+                        </View>
+                      </View>
+                      {(post.user.userId === memberInfo.userId ||
+                        memberInfo.role === CommunityRole.Owner) && (
+                        <Pressable
+                          onPress={() =>
+                            deletePost(post.communityPost.communityPostId)
+                          }
+                        >
+                          <Text className="text-red-500">Delete</Text>
+                        </Pressable>
+                      )}
                       {post.communityPost.posterUserId !==
                         memberInfo.userId && (
                         <Pressable
@@ -191,14 +146,127 @@ export default function CommunityDiscussion({ route }) {
                             )
                           }
                         >
-                          <Text className="mt-5 ml-5">Report</Text>
+                          <Text>Report</Text>
                         </Pressable>
                       )}
                     </View>
-                  </Pressable>
+                    <Text>{post.communityPost.description}</Text>
+
+                    <View className="flex-row items-center mt-5">
+                      <Pressable
+                        onPress={() =>
+                          like(
+                            post.communityPost.communityPostId,
+                            memberInfo.userId
+                          )
+                        }
+                      >
+                        <View className="flex-row">
+                          <AntDesign name="hearto" size={20} color="gray" />
+                          <Text className="justify-center ml-1 text-gray-500 font-semibold">
+                            {post.communityPost.like
+                              ? post.communityPost.like
+                              : 0}
+                          </Text>
+                        </View>
+                      </Pressable>
+                      <View className="flex-row ml-8">
+                        <Pressable
+                          onPress={() =>
+                            getComments(post.communityPost.communityPostId)
+                          }
+                        >
+                          <MaterialCommunityIcons
+                            name="comment-multiple-outline"
+                            size={20}
+                            color="gray"
+                          />
+                        </Pressable>
+                        {comments && comments.length !== 0 ? (
+                          <Text className="justify-center ml-1 text-gray-500">
+                            {comments.length}
+                          </Text>
+                        ) : (
+                          <Text className="justify-center ml-2 text-gray-500">
+                            No discussion yet
+                          </Text>
+                        )}
+                      </View>
+                    </View>
+
+                    <View className=" mt-3">
+                      {comments &&
+                        comments.map(
+                          (_c) =>
+                            _c.communityPostId ===
+                              post.communityPost.communityPostId && (
+                              <View className="flex-row items-center">
+                                <Text className="mr-3"> {_c.comment}</Text>
+                                {_c.commentedByUser === memberInfo.userId ? (
+                                  <>
+                                    <Pressable
+                                      onPress={() =>
+                                        deleteComment(
+                                          post.communityPost.communityPostId,
+                                          _c.communityPostCommentId
+                                        )
+                                      }
+                                    >
+                                      <Text className="text-red-500">
+                                        Delete
+                                      </Text>
+                                    </Pressable>
+
+                                    <Pressable
+                                      onPress={() =>
+                                        onPressEdit(_c.comment, _c)
+                                      }
+                                      className="ml-5"
+                                    >
+                                      <Text className="text-red-500">Edit</Text>
+                                    </Pressable>
+                                  </>
+                                ) : (
+                                  <Pressable
+                                    onPress={() =>
+                                      reportById(
+                                        memberInfo.userId,
+                                        _c.communityPostCommentId,
+                                        ReportEnum.CommunityPostComment
+                                      )
+                                    }
+                                  >
+                                    <Text className="text-gray-500">
+                                      Report
+                                    </Text>
+                                  </Pressable>
+                                )}
+                              </View>
+                            )
+                        )}
+
+                      <View className="flex-row items-center">
+                        <TextInput
+                          value={comment}
+                          onChangeText={setComment}
+                          className="border p-2 w-52 mr-2"
+                          placeholder="Comment here..."
+                        />
+                        <Pressable
+                          onPress={() =>
+                            onPressComment(post.communityPost.communityPostId)
+                          }
+                        >
+                          <Text>
+                            {editModeInfo.active ? "Done" : "Comment"}
+                          </Text>
+                        </Pressable>
+                      </View>
+                    </View>
+                  </View>
                 </View>
-              </View>
-            ))}
+              );
+            })}
         </View>
       </ScrollView>
     </View>

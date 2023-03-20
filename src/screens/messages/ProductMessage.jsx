@@ -86,7 +86,7 @@ export default function ProductMessage({ route }) {
                   ) : (
                     <OtherMessageItem
                       image={details.user.imageUrl}
-                      message={message}
+                      message={message.message}
                       key={message.userMessageId}
                     />
                   );

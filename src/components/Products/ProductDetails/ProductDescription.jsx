@@ -145,8 +145,10 @@ export default function ProductDescription({ route }) {
       </View>
 
       <View className="mb-6">
-        <Text className="text-gray-400 mb-2 ">Date Created</Text>
-        <Text className="capitalize">{details.product.dateCreated}</Text>
+        <Text className="text-gray-400 mb-2 ">Date Posted</Text>
+        <Text className="capitalize">
+          {new Date(details.product.dateCreated).toLocaleDateString()}
+        </Text>
       </View>
 
       {details.product.hasReceipts && (
