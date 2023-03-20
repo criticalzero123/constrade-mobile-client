@@ -250,34 +250,6 @@ export const likePostReducer = (state = {}, action) => {
   }
 };
 
-export const commentPostReducer = (state = {}, action) => {
-  switch (action.type) {
-    case "COMMENT_POST_REQUEST":
-      return {
-        ...state,
-        loading: true,
-      };
-
-    case "COMMENT_POST_SUCCESS":
-      return {
-        loading: false,
-        data: action.payload,
-      };
-
-    case "COMMENT_POST_FAILED":
-      return {
-        loading: false,
-        error: action.error,
-      };
-
-    case "COMMENT_POST_LEAVE":
-      return {};
-
-    default:
-      return { ...state };
-  }
-};
-
 export const getCommentPostReducer = (state = {}, action) => {
   switch (action.type) {
     case "GET_COMMENT_POST_BY_ID_REQUEST":
@@ -305,35 +277,6 @@ export const getCommentPostReducer = (state = {}, action) => {
       return { ...state };
   }
 };
-
-export const editCommentPostReducer = (state = {}, action) => {
-  switch (action.type) {
-    case "EDIT_COMMENT_POST_REQUEST":
-      return {
-        ...state,
-        loading: true,
-      };
-
-    case "EDIT_COMMENT_POST_SUCCESS":
-      return {
-        loading: false,
-        data: action.payload,
-      };
-
-    case "EDIT_COMMENT_POST_FAILED":
-      return {
-        loading: false,
-        error: action.error,
-      };
-
-    case "EDIT_COMMENT_POST_LEAVE":
-      return {};
-
-    default:
-      return { ...state };
-  }
-};
-
 export const deleteCommentPostReducer = (state = {}, action) => {
   switch (action.type) {
     case "DELETE_COMMENT_BY_ID_REQUEST":

@@ -171,9 +171,7 @@ export const deletePostInCommunity =
     }
   };
 
-export const commentPost = (communityId, info) => async (dispatch) => {
-  dispatch({ type: "COMMENT_POST_REQUEST" });
-
+export const commentPost = async (communityId, info) => {
   try {
     const res = await api
       .setAuthHeaders()
@@ -182,18 +180,13 @@ export const commentPost = (communityId, info) => async (dispatch) => {
         info
       );
 
-    dispatch({
-      type: "COMMENT_POST_SUCCESS",
-      payload: res.data.responseData,
-    });
+    return res.data.responseData;
   } catch (error) {
-    dispatch({ type: "COMMENT_POST_FAILED", error: error });
+    console.log(error);
   }
 };
 
-export const editCommentPost = (communityId, info) => async (dispatch) => {
-  dispatch({ type: "EDIT_COMMENT_POST_REQUEST" });
-
+export const editCommentPost = async (communityId, info) => {
   try {
     const res = await api
       .setAuthHeaders()
@@ -202,12 +195,9 @@ export const editCommentPost = (communityId, info) => async (dispatch) => {
         info
       );
 
-    dispatch({
-      type: "EDIT_COMMENT_POST_SUCCESS",
-      payload: res.data.responseData,
-    });
+    return res.data.responseData;
   } catch (error) {
-    dispatch({ type: "EDIT_COMMENT_POST_FAILED", error: error });
+    console.log(error);
   }
 };
 

@@ -9,6 +9,7 @@ import React from "react";
 import useCommentPost from "../../hooks/community/useCommentPost";
 import { useState } from "react";
 import CommunityCommentItem from "./CommunityCommentItem";
+import useGetCurrentUser from "../../hooks/useGetCurrentUser";
 
 export default function CommunityComments({
   communityId,
@@ -16,18 +17,21 @@ export default function CommunityComments({
   post,
   memberInfo,
 }) {
-  const [_commentPost, _, deleteComment, updateComment, comments] =
+  const [commentPost, _, deleteComment, updateComment, comments] =
     useCommentPost(communityId);
 
+  const [commentList, setCommentList] = useState(comments);
   const [comment, setComment] = useState("");
   const [commentLoading, setCommentLoading] = useState(false);
+
+  const { user, person } = useGetCurrentUser();
 
   const [editModeInfo, setEditModeInfo] = useState({
     active: false,
     commentInfo: null,
   });
 
-  const onPressComment = (postId) => {
+  const onPressComment = async (postId) => {
     setCommentLoading(true);
 
     if (editModeInfo.active) {
@@ -35,7 +39,21 @@ export default function CommunityComments({
         ...editModeInfo.commentInfo,
         comment: comment,
       };
-      updateComment(info);
+      const flag = await updateComment(info);
+      if (flag) {
+        setCommentList((prevState) => {
+          let _newState = prevState;
+          let data = _newState.find(
+            (_c) =>
+              _c.comment.communityPostCommentId === info.communityPostCommentId
+          );
+
+          Object.assign(data, { comment: info, userInfo: data.userInfo });
+          return _newState;
+        });
+      } else {
+        alert("Something went wrong in updating");
+      }
       setEditModeInfo({ active: false, commentInfo: null });
     } else {
       const info = {
@@ -44,7 +62,19 @@ export default function CommunityComments({
         comment: comment,
         dateCommented: new Date(),
       };
-      _commentPost(info);
+      const id = await commentPost(info);
+
+      if (Number.isInteger(id)) {
+        setCommentList([
+          {
+            comment: { ...info, communityPostCommentId: id },
+            userInfo: { user, person },
+          },
+          ...commentList,
+        ]);
+      } else {
+        alert("Something went wrong in adding the comment");
+      }
     }
 
     setComment("");
@@ -81,11 +111,11 @@ export default function CommunityComments({
               </>
             )}
           </View>
-          {comments &&
-            comments.map((_c, index) => {
+          {commentList &&
+            commentList.map((_c, index) => {
               const postId = post.communityPost.communityPostId;
               const commentId = _c.comment.communityPostCommentId;
-
+              console.log(commentList);
               return (
                 <CommunityCommentItem
                   key={index}

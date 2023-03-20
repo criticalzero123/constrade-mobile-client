@@ -12,7 +12,7 @@ export default function useCommentPost(communityId) {
   const { data } = useSelector((state) => state.getCommentPostReducer);
 
   const commentPostCommunity = (info) => {
-    dispatch(commentPost(communityId, info));
+    return commentPost(communityId, info);
   };
 
   const getComment = (postId) => {
@@ -24,7 +24,7 @@ export default function useCommentPost(communityId) {
   };
 
   const updateComment = (info) => {
-    dispatch(editCommentPost(communityId, info));
+    return editCommentPost(communityId, info);
   };
 
   return [commentPostCommunity, getComment, deleteComment, updateComment, data];

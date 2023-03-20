@@ -27,8 +27,8 @@ export default function CommunityCommentItem(props) {
         source={{ uri: userInfo.user.imageUrl }}
       />
       <View className="ml-2">
-        <View className="bg-gray-300 p-2" style={{ borderRadius: 10 }}>
-          <Text className="capitalize text-gray-400 font-semibold">
+        <View className="bg-gray-200 p-2" style={{ borderRadius: 10 }}>
+          <Text className="capitalize text-gray-500 font-semibold">
             {userInfo.person.firstName} {userInfo.person.lastName}
           </Text>
           <Text className="mt-1">{commentInfo.comment}</Text>
