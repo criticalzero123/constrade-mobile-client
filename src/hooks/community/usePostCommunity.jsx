@@ -18,7 +18,7 @@ export default function usePostCommunity(id) {
   }, []);
 
   const post = (info) => {
-    dispatch(postCommunity(id, info));
+    return postCommunity(id, info);
   };
 
   const deletePost = (postId) => {

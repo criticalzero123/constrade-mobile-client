@@ -1,4 +1,5 @@
 import {
+  ActivityIndicator,
   Image,
   Pressable,
   ScrollView,
@@ -31,12 +32,14 @@ export default function CommunityDiscussion({ route }) {
   const [postValue, setPostValue] = useState("");
   const [posts, setPosts] = useState(data ? data : []);
   const [comment, setComment] = useState("");
+  const [postLoading, setPostLoading] = useState(false);
   const [editModeInfo, setEditModeInfo] = useState({
     active: false,
     commentInfo: null,
   });
 
-  const onPost = () => {
+  const onPost = async () => {
+    setPostLoading(true);
     if (postValue.trim() === "") return;
 
     const info = {
@@ -46,15 +49,21 @@ export default function CommunityDiscussion({ route }) {
       createdDate: new Date(),
     };
 
-    post(info);
+    const postId = await post(info);
     setPostValue("");
-    setPosts([
-      ...posts,
-      {
-        communityPost: info,
-        user: { user: { ...memberInfo, ...user }, person: { ...person } },
-      },
-    ]);
+
+    if (Number.isInteger(postId)) {
+      setPosts([
+        {
+          communityPost: { ...info, communityPostId: postId, like: 0 },
+          user: { user: { ...memberInfo, ...user }, person: { ...person } },
+        },
+        ...posts,
+      ]);
+    } else {
+      alert("Post Doesn't added successfully");
+    }
+    setPostLoading(false);
   };
 
   const onPressComment = (postId) => {
@@ -95,9 +104,13 @@ export default function CommunityDiscussion({ route }) {
               placeholder="Post here..."
               className="border p-2 w-52 mr-2"
             />
-            <Pressable onPress={onPost}>
-              <Text>Post</Text>
-            </Pressable>
+            {postLoading ? (
+              <ActivityIndicator />
+            ) : (
+              <Pressable onPress={onPost}>
+                <Text>Post</Text>
+              </Pressable>
+            )}
           </View>
         )}
         <View>
@@ -164,9 +177,7 @@ export default function CommunityDiscussion({ route }) {
                         <View className="flex-row">
                           <AntDesign name="hearto" size={20} color="gray" />
                           <Text className="justify-center ml-1 text-gray-500 font-semibold">
-                            {post.communityPost.like
-                              ? post.communityPost.like
-                              : 0}
+                            {post.communityPost.like}
                           </Text>
                         </View>
                       </Pressable>

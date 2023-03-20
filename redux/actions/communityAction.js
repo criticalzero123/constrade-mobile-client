@@ -104,20 +104,16 @@ export const joinCommunityById = (info) => async (dispatch) => {
   }
 };
 
-export const postCommunity = (communityId, info) => async (dispatch) => {
-  dispatch({ type: "POST_COMMUNITY_REQUEST" });
-
+export const postCommunity = async (communityId, info) => {
   try {
     const res = await api
       .setAuthHeaders()
       .post(`/api/community/${communityId}/post`, info);
 
-    dispatch({
-      type: "POST_COMMUNITY_SUCCESS",
-      payload: res.data.responseData,
-    });
+    return parseInt(res.data.responseData);
   } catch (error) {
-    dispatch({ type: "POST_COMMUNITY_FAILED", error: error });
+    console.log(error);
+    alert("Something went wrong in server.");
   }
 };
 

@@ -81,7 +81,6 @@ import {
   deleteCommunityReducer,
   getAllCommunityReducer,
   joinCommunityByIdReducer,
-  postCommunityReducer,
   getPostByCommunityIdReducer,
   deletePostInCommunityReducer,
   commentPostReducer,
@@ -139,7 +138,7 @@ const finalReducer = combineReducers({
   deleteCommunityReducer,
   getAllCommunityReducer,
   joinCommunityByIdReducer,
-  postCommunityReducer,
+
   getPostByCommunityIdReducer,
   deletePostInCommunityReducer,
   commentPostReducer,
