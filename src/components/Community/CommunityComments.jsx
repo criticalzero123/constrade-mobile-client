@@ -1,8 +1,8 @@
 import {
   ActivityIndicator,
-  Pressable,
-  Text,
+  Image,
   TextInput,
+  useWindowDimensions,
   View,
 } from "react-native";
 import React from "react";
@@ -11,12 +11,9 @@ import { useState } from "react";
 import CommunityCommentItem from "./CommunityCommentItem";
 import useGetCurrentUser from "../../hooks/useGetCurrentUser";
 
-export default function CommunityComments({
-  communityId,
-  showComment,
-  post,
-  memberInfo,
-}) {
+export default function CommunityComments(props) {
+  const { communityId, showComment, post, memberInfo } = props;
+  const { width, height } = useWindowDimensions();
   const [
     commentPost,
     _,
@@ -64,7 +61,7 @@ export default function CommunityComments({
       const info = {
         communityPostId: postId,
         commentedByUser: memberInfo.userId,
-        comment: comment,
+        comment: comment.trim(),
         dateCommented: new Date(),
       };
       const id = await commentPost(info);
@@ -94,33 +91,39 @@ export default function CommunityComments({
   return (
     <>
       {showComment === post.communityPost.communityPostId && (
-        <View>
-          <View className="flex-row items-center">
+        <View className="py-2">
+          <View className="flex-row items-center mb-2">
             {commentLoading ? (
               <ActivityIndicator />
             ) : (
-              <>
+              <View className="flex-row mx-5  mt-2 ">
+                <Image
+                  source={{ uri: user.imageUrl }}
+                  style={{
+                    width: width * 0.08,
+                    height: height * 0.04,
+                    borderRadius: 1000,
+                  }}
+                />
                 <TextInput
                   value={comment}
                   onChangeText={setComment}
-                  className="border p-2 w-52 mr-2"
+                  className="border border-gray-400 py-1 px-3 ml-2"
                   placeholder="Comment here..."
-                />
-                <Pressable
-                  onPress={() =>
+                  style={{ width: width * 0.75, borderRadius: 20 }}
+                  onSubmitEditing={() =>
                     onPressComment(post.communityPost.communityPostId)
                   }
-                >
-                  <Text>{editModeInfo.active ? "Done" : "Comment"}</Text>
-                </Pressable>
-              </>
+                />
+              </View>
             )}
           </View>
+
           {commentList &&
             commentList.map((_c, index) => {
               const postId = post.communityPost.communityPostId;
               const commentId = _c.comment.communityPostCommentId;
-              console.log(commentList);
+
               return (
                 <CommunityCommentItem
                   key={index}

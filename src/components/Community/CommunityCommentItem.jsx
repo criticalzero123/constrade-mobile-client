@@ -17,7 +17,7 @@ export default function CommunityCommentItem(props) {
   const { reportById } = useReport();
   const { width, height } = useWindowDimensions();
   return (
-    <View className="flex-row px-5 py-1">
+    <View className="flex-row px-5 py-1 ">
       <Image
         style={{
           width: width * 0.08,

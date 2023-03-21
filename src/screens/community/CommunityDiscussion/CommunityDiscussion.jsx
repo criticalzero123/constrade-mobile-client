@@ -138,48 +138,52 @@ export default function CommunityDiscussion({ route }) {
                         </Pressable>
                       )}
                     </View>
-                    <Text>{post.communityPost.description}</Text>
-
-                    <View className="flex-row items-center mt-5">
-                      <Pressable
-                        onPress={() =>
-                          like(
-                            post.communityPost.communityPostId,
-                            memberInfo.userId
-                          )
-                        }
-                      >
-                        <View className="flex-row">
-                          <AntDesign name="hearto" size={20} color="gray" />
-                          <Text className="justify-center ml-1 text-gray-500 font-semibold">
-                            {post.communityPost.like}
-                          </Text>
-                        </View>
-                      </Pressable>
-                      <View className="flex-row ml-8">
+                    <View className="ml-10">
+                      <Text>{post.communityPost.description}</Text>
+                      <View className="border-b border-b-gray-400 my-3" />
+                      <View className="flex-row items-center">
                         <Pressable
-                          onPress={() => {
-                            getComments(post.communityPost.communityPostId);
-                            setShowComment(post.communityPost.communityPostId);
-                          }}
+                          onPress={() =>
+                            like(
+                              post.communityPost.communityPostId,
+                              memberInfo.userId
+                            )
+                          }
                         >
-                          <MaterialCommunityIcons
-                            name="comment-multiple-outline"
-                            size={20}
-                            color="gray"
-                          />
+                          <View className="flex-row">
+                            <AntDesign name="hearto" size={20} color="gray" />
+                            <Text className="justify-center ml-1 text-gray-500 font-semibold">
+                              {post.communityPost.like}
+                            </Text>
+                          </View>
                         </Pressable>
+                        <View className="flex-row ml-8">
+                          <Pressable
+                            onPress={() => {
+                              getComments(post.communityPost.communityPostId);
+                              setShowComment(
+                                post.communityPost.communityPostId
+                              );
+                            }}
+                          >
+                            <MaterialCommunityIcons
+                              name="comment-multiple-outline"
+                              size={20}
+                              color="gray"
+                            />
+                          </Pressable>
 
-                        {post.commentsLength !== undefined &&
-                        post.commentsLength !== 0 ? (
-                          <Text className="justify-center ml-1 text-gray-500">
-                            {post.commentsLength}
-                          </Text>
-                        ) : (
-                          <Text className="justify-center ml-2 text-gray-500">
-                            No discussion yet
-                          </Text>
-                        )}
+                          {post.commentsLength !== undefined &&
+                          post.commentsLength !== 0 ? (
+                            <Text className="justify-center ml-1 text-gray-500">
+                              {post.commentsLength}
+                            </Text>
+                          ) : (
+                            <Text className="justify-center ml-2 text-gray-500">
+                              No discussion yet
+                            </Text>
+                          )}
+                        </View>
                       </View>
                     </View>
                   </View>
