@@ -21,7 +21,7 @@ export default function RecentTransactionItem({ data, currentUserWalletId }) {
 
   const Receiver = () => {
     return (
-      <View className="justify-between flex-row items-center">
+      <View className="justify-between flex-row items-center my-2">
         <View>
           <Text className="text-base mb-1">Received Payment</Text>
           <Text className="text-md opacity-50">

@@ -11,7 +11,8 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import useGetCurrentUser from "../../hooks/useGetCurrentUser";
 import Advertisement from "../../components/Home/Advertisement";
 import { StackActions, useNavigation } from "@react-navigation/native";
-export default function SuccessfulScreen({ route }) {
+import { getDateFull } from "../../../service/dateService";
+export default function SendMoneyReceiptScreen({ route }) {
   const { data } = route.params;
   const { person } = useGetCurrentUser();
   const { width, height } = useWindowDimensions();
@@ -63,7 +64,7 @@ export default function SuccessfulScreen({ route }) {
           <View className="my-5 border-t border-t-gray-400 border-dashed" />
           <TextContainer
             textL="Transfer Date"
-            textR={new Date().toLocaleDateString()}
+            textR={getDateFull(new Date())}
           />
           <TextContainer
             textL="Receiver"

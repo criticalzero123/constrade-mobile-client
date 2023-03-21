@@ -6,7 +6,7 @@ import {
   ActivityIndicator,
 } from "react-native";
 import React, { useState } from "react";
-import { useNavigation } from "@react-navigation/native";
+import { StackActions, useNavigation } from "@react-navigation/native";
 import Header from "../../../components/Products/AddProduct/Header";
 import CustomTextInput from "../../../components/CustomTextInput/CustomTextInput";
 import { Modal, Portal, Provider } from "react-native-paper";
@@ -19,12 +19,13 @@ export default function AddProductDeliveryDetails({ route }) {
   const [location, setLocation] = useState("");
   const [method, setMethod] = useState("");
   const [sending, setSending] = useState(false);
-  const [onListItem, data, loading, error] = usePostProduct();
+  const [onListItem] = usePostProduct();
 
   const { productInfo, imageList } = route.params;
   const navigation = useNavigation();
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
+    setSending(true);
     if (method.trim() === "") {
       alert("Please select a delivery method details");
       return;
@@ -35,8 +36,6 @@ export default function AddProductDeliveryDetails({ route }) {
       return;
     }
 
-    setSending(!sending);
-
     const productDetails = {
       ...productInfo,
       deliveryMethod: method,
@@ -44,14 +43,22 @@ export default function AddProductDeliveryDetails({ route }) {
       dateCreated: new Date(),
     };
 
-    onListItem(imageList, productDetails);
-  };
+    const _result = await onListItem(imageList, productDetails);
 
-  useEffect(() => {
-    if (loading === undefined) return;
-    if (!loading) setSending(!sending);
-    if (error !== undefined) console.log(error);
-  }, [loading]);
+    if (Number.isInteger(_result)) {
+      navigation.dispatch(
+        StackActions.replace("ProductDetails", {
+          productId: parseInt(_result),
+        })
+      );
+    } else if (_result === "NoPostCount") {
+      alert("You dont have any count post");
+    } else if (_result === "NotVerified") {
+      alert("You are not verified");
+    }
+
+    setSending(false);
+  };
 
   return (
     <Provider>
@@ -74,11 +81,7 @@ export default function AddProductDeliveryDetails({ route }) {
             placeholder="Please input the location"
             label="Location"
           />
-          {data === "NoPostCount" ? (
-            <Text>Count Post is not enough</Text>
-          ) : (
-            data !== undefined && <Text>Product is posted</Text>
-          )}
+
           <Pressable
             className={`w-full ${
               sending ? "bg-[#e48568] " : "bg-[#CC481F] "

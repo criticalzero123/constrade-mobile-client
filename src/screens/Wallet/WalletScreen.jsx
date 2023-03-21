@@ -1,4 +1,4 @@
-import { Text, useWindowDimensions, View } from "react-native";
+import { Text, useWindowDimensions, View, ScrollView } from "react-native";
 import React from "react";
 import ContainerSafeView from "../../components/CustomViews/ContainerSafeView";
 import useGetCurrentUser from "../../hooks/useGetCurrentUser";
@@ -22,54 +22,57 @@ export default function WalletScreen() {
   return (
     <ContainerSafeView>
       <HeaderArrow headerName={"Wallet"} />
-      <View
-        className="bg-[#CF3100] justify-center items-center rounded-lg"
-        style={{ height: height * 0.2 }}
-      >
-        <Text className="text-white font-semibold text-4xl">
-          ₱ {data && data.balance}
-        </Text>
-        <Text className="text-white font-semibold text-base opacity-80">
-          Available balance
-        </Text>
-      </View>
-      <View className="flex-row justify-between mt-2">
-        {data &&
-          itemWallet.map((item) => (
-            <WalletItemAction
-              key={item.id}
-              data={item}
-              onPress={() =>
-                navigation.navigate(item.to, {
-                  currentWalletId: data.walletId,
-                  balance: data.balance,
-                })
-              }
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View
+          className="bg-[#CF3100] justify-center items-center rounded-lg"
+          style={{ height: height * 0.2 }}
+        >
+          <Text className="text-white font-semibold text-4xl">
+            ₱ {data && data.balance}
+          </Text>
+          <Text className="text-white font-semibold text-base opacity-80">
+            Available balance
+          </Text>
+        </View>
+        <View className="flex-row justify-between mt-2">
+          {data &&
+            itemWallet.map((item) => (
+              <WalletItemAction
+                key={item.id}
+                data={item}
+                onPress={() =>
+                  navigation.navigate(item.to, {
+                    currentWalletId: data.walletId,
+                    balance: data.balance,
+                  })
+                }
+              />
+            ))}
+        </View>
+        <View className="mt-5">
+          <Text className="mb-3 text-xl font-semibold">
+            Recent transactions
+          </Text>
+
+          {transacs && transacs.length === 0 ? (
+            <MessageEmpty
+              title="You got no transaction"
+              description="Go transac to get a wallet transaction"
+              ads={false}
             />
-          ))}
-      </View>
-
-      <View className="mt-5">
-        <Text className="mb-3 text-xl font-semibold">Recent transactions</Text>
-
-        {transacs && transacs.length === 0 ? (
-          <MessageEmpty
-            title="You got no transaction"
-            description="Go transac to get a wallet transaction"
-            ads={false}
-          />
-        ) : (
-          <>
-            {transacs &&
-              transacs.map((_data) => (
-                <RecentTransactionItem
-                  data={_data}
-                  currentUserWalletId={data.walletId}
-                />
-              ))}
-          </>
-        )}
-      </View>
+          ) : (
+            <>
+              {transacs &&
+                transacs.map((_data) => (
+                  <RecentTransactionItem
+                    data={_data}
+                    currentUserWalletId={data.walletId}
+                  />
+                ))}
+            </>
+          )}
+        </View>
+      </ScrollView>
     </ContainerSafeView>
   );
 }

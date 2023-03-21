@@ -45,7 +45,6 @@ import {
 } from "./reducers/reviewReducer";
 
 import {
-  addProductReducer,
   getProductByUserReducer,
   getAllProductsReducer,
   getProductByIdReducer,
@@ -91,7 +90,6 @@ import {
 const finalReducer = combineReducers({
   emailAndPasswordRegisterReducer,
   checkEmailReducer,
-  addProductReducer,
   googleAuthLoginReducer,
   googleAuthRegisterReducer,
   userInfoReducer,
@@ -111,7 +109,6 @@ const finalReducer = combineReducers({
   getWalletUserReducer,
   getAllTransactionsWalletUserReducer,
   getAllWalletUserReducer,
-
   getAllProductsReducer,
   getProductByIdReducer,
   getProductMessagesReducer,

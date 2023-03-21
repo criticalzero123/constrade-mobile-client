@@ -178,7 +178,8 @@ export default function SendWalletScreen({ route }) {
               <Pressable
                 className="justify-self-end p-3 bg-[#CC481F] "
                 style={{ borderRadius: 10 }}
-                onPress={!sending ? onSendMoney : () => console.log("sending")}
+                onPress={!sending && onSendMoney}
+                disabled={sending}
               >
                 <Text className="text-center text-white font-semibold text-base">
                   {sending ? <ActivityIndicator /> : "Send"}

@@ -1,10 +1,4 @@
-import {
-  Image,
-  StyleSheet,
-  Text,
-  useWindowDimensions,
-  View,
-} from "react-native";
+import { Image, StyleSheet, useWindowDimensions } from "react-native";
 import React from "react";
 import ContainerSafeView from "../../../components/CustomViews/ContainerSafeView";
 import HeaderArrow from "../../../components/HeaderArrow/HeaderArrow";

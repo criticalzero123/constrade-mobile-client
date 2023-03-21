@@ -15,3 +15,11 @@ export const getDateTime = (date) => {
     year: "2-digit",
   });
 };
+
+export const getDateFull = (date) => {
+  return new Date(date).toLocaleString([], {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  });
+};

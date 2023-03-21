@@ -1,7 +1,6 @@
 import api from "../../service/api";
 
-export const addProduct = (productDetails, imageList) => async (dispatch) => {
-  dispatch({ type: "PRODUCT_ADD_REQUEST" });
+export const addProduct = async (productDetails, imageList) => {
   try {
     const data = {
       product: productDetails,
@@ -9,12 +8,9 @@ export const addProduct = (productDetails, imageList) => async (dispatch) => {
     };
     const res = await api.setAuthHeaders().post(`/api/products`, data);
 
-    dispatch({
-      type: "PRODUCT_ADD_SUCCESS",
-      payload: res.data.responseData,
-    });
+    return res.data.responseData;
   } catch (error) {
-    dispatch({ type: "PRODUCT_ADD_FAILED", error: error });
+    console.error(error);
   }
 };
 
