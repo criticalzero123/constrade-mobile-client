@@ -9,9 +9,10 @@ import {
   updatePost,
 } from "../../../redux/actions/communityAction";
 
-export default function usePostCommunity(id) {
+export default function usePostCommunity(id, userId) {
   const dispatch = useDispatch();
   const [posts, setPosts] = useState();
+  const [isLike, setIsLike] = useState(false);
   const { data } = useSelector((state) => state.getPostByCommunityIdReducer);
 
   useEffect(() => {
@@ -22,7 +23,7 @@ export default function usePostCommunity(id) {
 
   useEffect(() => {
     if (id === undefined || !id) return;
-    dispatch(getPostByCommunityId(id));
+    dispatch(getPostByCommunityId(id, userId));
   }, []);
 
   const post = (info) => {
@@ -38,7 +39,7 @@ export default function usePostCommunity(id) {
   };
 
   const like = (postId, userId) => {
-    dispatch(likePost(id, postId, userId));
+    return likePost(id, postId, userId);
   };
 
   return { posts, setPosts, post, deletePost, like, edit };

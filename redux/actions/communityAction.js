@@ -130,26 +130,25 @@ export const updatePost = async (communityId, info) => {
   }
 };
 
-export const getPostByCommunityId = (communityId) => async (dispatch) => {
-  dispatch({ type: "GET_POST_BY_COMMUNITY_ID_REQUEST" });
+export const getPostByCommunityId =
+  (communityId, userId) => async (dispatch) => {
+    dispatch({ type: "GET_POST_BY_COMMUNITY_ID_REQUEST" });
 
-  try {
-    const res = await api
-      .setAuthHeaders()
-      .get(`/api/community/${communityId}/post`);
+    try {
+      const res = await api
+        .setAuthHeaders()
+        .get(`/api/community/${communityId}/post?userId=${userId}`);
 
-    dispatch({
-      type: "GET_POST_BY_COMMUNITY_ID_SUCCESS",
-      payload: res.data.responseData,
-    });
-  } catch (error) {
-    dispatch({ type: "GET_POST_BY_COMMUNITY_ID_FAILED", error: error });
-  }
-};
+      dispatch({
+        type: "GET_POST_BY_COMMUNITY_ID_SUCCESS",
+        payload: res.data.responseData,
+      });
+    } catch (error) {
+      dispatch({ type: "GET_POST_BY_COMMUNITY_ID_FAILED", error: error });
+    }
+  };
 
-export const likePost = (communityId, postId, userId) => async (dispatch) => {
-  dispatch({ type: "LIKE_POST_REQUEST" });
-
+export const likePost = async (communityId, postId, userId) => {
   try {
     const res = await api
       .setAuthHeaders()
@@ -157,12 +156,9 @@ export const likePost = (communityId, postId, userId) => async (dispatch) => {
         `/api/community/${communityId}/post/${postId}/like?userId=${userId}`
       );
 
-    dispatch({
-      type: "LIKE_POST_SUCCESS",
-      payload: res.data.responseData,
-    });
+    return res.data.responseData;
   } catch (error) {
-    dispatch({ type: "LIKE_POST_FAILED", error: error });
+    console.log(error);
   }
 };
 

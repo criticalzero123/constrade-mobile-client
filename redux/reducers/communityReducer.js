@@ -194,34 +194,6 @@ export const getPostByCommunityIdReducer = (state = {}, action) => {
   }
 };
 
-export const likePostReducer = (state = {}, action) => {
-  switch (action.type) {
-    case "LIKE_POST__REQUEST":
-      return {
-        ...state,
-        loading: true,
-      };
-
-    case "LIKE_POST__SUCCESS":
-      return {
-        loading: false,
-        data: action.payload,
-      };
-
-    case "LIKE_POST__FAILED":
-      return {
-        loading: false,
-        error: action.error,
-      };
-
-    case "LIKE_POST__LEAVE":
-      return {};
-
-    default:
-      return { ...state };
-  }
-};
-
 export const getCommentPostReducer = (state = {}, action) => {
   switch (action.type) {
     case "GET_COMMENT_POST_BY_ID_REQUEST":

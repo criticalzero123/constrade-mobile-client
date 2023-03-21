@@ -28,8 +28,10 @@ export default function CommunityDiscussion({ route }) {
   const { user, person } = useGetCurrentUser();
   const [_, getComments] = useCommentPost(id);
 
-  const { post, deletePost, like, posts, setPosts, edit } =
-    usePostCommunity(id);
+  const { post, deletePost, like, posts, setPosts, edit } = usePostCommunity(
+    id,
+    user.userId
+  );
 
   const { reportById } = useReport();
 
@@ -209,8 +211,18 @@ export default function CommunityDiscussion({ route }) {
                             }
                           >
                             <View className="flex-row">
-                              <AntDesign name="hearto" size={20} color="gray" />
-                              <Text className="justify-center ml-1 text-gray-500 font-semibold">
+                              <AntDesign
+                                name="hearto"
+                                size={20}
+                                color={post.isLiked ? "red" : "gray"}
+                              />
+                              <Text
+                                className={`justify-center ml-1  font-semibold ${
+                                  post.isLiked
+                                    ? "text-red-500"
+                                    : "text-gray-500"
+                                }`}
+                              >
                                 {post.communityPost.like}
                               </Text>
                             </View>
