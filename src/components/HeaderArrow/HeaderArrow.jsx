@@ -8,7 +8,15 @@ export default function HeaderArrow({ headerName }) {
   return (
     <View className="flex-row justify-between mt-3 mb-4">
       <View className="flex-row">
-        <Pressable onPress={() => navigation.goBack()}>
+        <Pressable
+          onPress={() => {
+            if (navigation.canGoBack()) {
+              navigation.goBack();
+            } else {
+              navigation.navigate("Menu");
+            }
+          }}
+        >
           <Ionicons name="arrow-back" size={24} color="black" />
         </Pressable>
         <Text className="ml-4 text-lg font-semibold text-black capitalize">
