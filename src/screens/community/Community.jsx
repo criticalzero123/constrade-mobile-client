@@ -79,7 +79,6 @@ export default function Community() {
             />
           ))}
       </View>
-      {console.log(suggested)}
       <View className="mt-8">
         {suggested && suggested.length !== 0 && (
           <>

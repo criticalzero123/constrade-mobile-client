@@ -117,6 +117,19 @@ export const postCommunity = async (communityId, info) => {
   }
 };
 
+export const updatePost = async (communityId, info) => {
+  try {
+    const res = await api
+      .setAuthHeaders()
+      .put(`/api/community/${communityId}/post`, info);
+
+    return res.data.responseData;
+  } catch (error) {
+    console.log(error);
+    alert("Something went wrong in server.");
+  }
+};
+
 export const getPostByCommunityId = (communityId) => async (dispatch) => {
   dispatch({ type: "GET_POST_BY_COMMUNITY_ID_REQUEST" });
 

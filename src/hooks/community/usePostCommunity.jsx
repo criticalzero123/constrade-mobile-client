@@ -6,6 +6,7 @@ import {
   getPostByCommunityId,
   likePost,
   postCommunity,
+  updatePost,
 } from "../../../redux/actions/communityAction";
 
 export default function usePostCommunity(id) {
@@ -28,6 +29,10 @@ export default function usePostCommunity(id) {
     return postCommunity(id, info);
   };
 
+  const edit = (info) => {
+    return updatePost(id, info);
+  };
+
   const deletePost = (postId) => {
     dispatch(deletePostInCommunity(id, postId));
   };
@@ -36,5 +41,5 @@ export default function usePostCommunity(id) {
     dispatch(likePost(id, postId, userId));
   };
 
-  return { posts, setPosts, post, deletePost, like };
+  return { posts, setPosts, post, deletePost, like, edit };
 }
