@@ -45,17 +45,12 @@ export const getAllWalletUser = () => async (dispatch) => {
   }
 };
 
-export const sendMoney = (info) => async (dispatch) => {
-  dispatch({ type: "SEND_MONEY_WALLET_REQUEST" });
-
+export const sendMoney = async (info) => {
   try {
     const res = await api.setAuthHeaders().post(`/api/wallet/send`, info);
 
-    dispatch({
-      type: "SEND_MONEY_WALLET_SUCCESS",
-      payload: res.data.responseData,
-    });
+    return res.data.responseData;
   } catch (error) {
-    dispatch({ type: "SEND_MONEY_WALLET_FAILED", error: error });
+    console.log(error);
   }
 };

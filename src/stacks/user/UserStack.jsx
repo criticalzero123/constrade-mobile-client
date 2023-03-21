@@ -11,6 +11,7 @@ import UserProfileEdit from "../../screens/User/UserProfileEdit";
 import VerificationScreen from "../../screens/User/VerificationScreen";
 import WishList from "../../screens/User/WishList";
 import SendWalletScreen from "../../screens/Wallet/SendWalletScreen";
+import SuccessfulScreen from "../../screens/Wallet/SuccessfulScreen";
 import WalletScreen from "../../screens/Wallet/WalletScreen";
 import HelpCenterStack from "../help-center/HelpCenterStack";
 
@@ -30,6 +31,7 @@ export default function UserStack() {
       <Stack.Screen component={ReviewsAndFeedbacks} name="Reviews" />
       <Stack.Screen component={UserProfileEdit} name="UserProfileEdit" />
       <Stack.Screen component={WalletScreen} name="Wallet" />
+      <Stack.Screen component={SuccessfulScreen} name="SendReceipt" />
       <Stack.Screen component={SendWalletScreen} name="WalletTransfer" />
       <Stack.Screen component={OtherUserProfile} name="OtherUserProfile" />
       <Stack.Screen component={SubscriptionScreen} name="Subscription" />

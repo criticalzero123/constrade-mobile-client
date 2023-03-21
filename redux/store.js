@@ -24,7 +24,6 @@ import {
   getWalletUserReducer,
   getAllTransactionsWalletUserReducer,
   getAllWalletUserReducer,
-  sendMoneyReducer,
 } from "./reducers/walletReducer";
 
 import {
@@ -112,7 +111,7 @@ const finalReducer = combineReducers({
   getWalletUserReducer,
   getAllTransactionsWalletUserReducer,
   getAllWalletUserReducer,
-  sendMoneyReducer,
+
   getAllProductsReducer,
   getProductByIdReducer,
   getProductMessagesReducer,

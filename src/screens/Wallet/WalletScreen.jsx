@@ -40,7 +40,10 @@ export default function WalletScreen() {
               key={item.id}
               data={item}
               onPress={() =>
-                navigation.navigate(item.to, { currentWalletId: data.walletId })
+                navigation.navigate(item.to, {
+                  currentWalletId: data.walletId,
+                  balance: data.balance,
+                })
               }
             />
           ))}

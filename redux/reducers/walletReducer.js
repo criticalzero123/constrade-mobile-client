@@ -69,27 +69,3 @@ export const getAllWalletUserReducer = (state = {}, action) => {
       return { ...state };
   }
 };
-
-export const sendMoneyReducer = (state = {}, action) => {
-  switch (action.type) {
-    case "SEND_MONEY_WALLET_REQUEST":
-      return {
-        ...state,
-        loading: true,
-      };
-    case "SEND_MONEY_WALLET_SUCCESS":
-      return {
-        loading: false,
-        result: action.payload,
-      };
-
-    case "SEND_MONEY_WALLET_FAILED":
-      return {
-        loading: false,
-        error: action.error,
-      };
-
-    default:
-      return { ...state };
-  }
-};
