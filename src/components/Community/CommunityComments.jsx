@@ -88,6 +88,17 @@ export default function CommunityComments(props) {
     setComment(value);
   };
 
+  const onDeleteComment = async (postId, commentId) => {
+    const flag = await deleteComment(postId, commentId);
+    if (flag) {
+      const newData = commentList.filter(
+        (_cm) => _cm.comment.communityPostCommentId !== commentId
+      );
+
+      setCommentList(newData);
+    } else alert("Something went wrong in deleting the comment");
+  };
+
   return (
     <>
       {showComment === post.communityPost.communityPostId && (
@@ -131,7 +142,7 @@ export default function CommunityComments(props) {
                   userInfo={_c.userInfo}
                   memberInfo={memberInfo}
                   onPressEdit={onPressEdit}
-                  deleteComment={() => deleteComment(postId, commentId)}
+                  deleteComment={() => onDeleteComment(postId, commentId)}
                 />
               );
             })}

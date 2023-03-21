@@ -166,23 +166,17 @@ export const likePost = (communityId, postId, userId) => async (dispatch) => {
   }
 };
 
-export const deletePostInCommunity =
-  (communityId, postId) => async (dispatch) => {
-    dispatch({ type: "DELETE_POST_IN_COMMUNITY_REQUEST" });
+export const deletePostInCommunity = async (communityId, postId) => {
+  try {
+    const res = await api
+      .setAuthHeaders()
+      .delete(`/api/community/${communityId}/post/${postId}`);
 
-    try {
-      const res = await api
-        .setAuthHeaders()
-        .delete(`/api/community/${communityId}/post/${postId}`);
-
-      dispatch({
-        type: "DELETE_POST_IN_COMMUNITY_SUCCESS",
-        payload: res.data.responseData,
-      });
-    } catch (error) {
-      dispatch({ type: "DELETE_POST_IN_COMMUNITY_FAILED", error: error });
-    }
-  };
+    return res.data.responseData;
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 export const commentPost = async (communityId, info) => {
   try {
@@ -231,25 +225,19 @@ export const getCommentPost = (communityId, postId) => async (dispatch) => {
   }
 };
 
-export const deleteCommentPost =
-  (communityId, postId, commentId) => async (dispatch) => {
-    dispatch({ type: "DELETE_COMMENT_BY_ID_REQUEST" });
+export const deleteCommentPost = async (communityId, postId, commentId) => {
+  try {
+    const res = await api
+      .setAuthHeaders()
+      .delete(
+        `/api/community/${communityId}/post/${postId}/comment/${commentId}`
+      );
 
-    try {
-      const res = await api
-        .setAuthHeaders()
-        .delete(
-          `/api/community/${communityId}/post/${postId}/comment/${commentId}`
-        );
-
-      dispatch({
-        type: "DELETE_COMMENT_BY_ID_SUCCESS",
-        payload: res.data.responseData,
-      });
-    } catch (error) {
-      dispatch({ type: "DELETE_COMMENT_BY_ID_FAILED", error: error });
-    }
-  };
+    return res.data.responseData;
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 export const getCommunityMembers = (communityId) => async (dispatch) => {
   dispatch({ type: "GET_COMMUNITY_MEMBERS_REQUEST" });

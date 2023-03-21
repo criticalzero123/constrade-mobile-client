@@ -34,7 +34,7 @@ export default function usePostCommunity(id) {
   };
 
   const deletePost = (postId) => {
-    dispatch(deletePostInCommunity(id, postId));
+    return deletePostInCommunity(id, postId);
   };
 
   const like = (postId, userId) => {

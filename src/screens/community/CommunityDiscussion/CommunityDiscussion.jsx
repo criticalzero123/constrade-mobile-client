@@ -71,8 +71,6 @@ export default function CommunityDiscussion({ route }) {
   };
 
   const onPostEdit = async () => {
-    console.log(postEditValue);
-
     const info = {
       ...postEditValue.communityPost,
       description: editVal,
@@ -102,6 +100,16 @@ export default function CommunityDiscussion({ route }) {
 
     setEditVisible(false);
     setEditVal("");
+  };
+
+  const onDeletePost = async (id) => {
+    const flag = await deletePost(id);
+    if (flag) {
+      const newPost = posts.filter(
+        (_p) => _p.communityPost.communityPostId !== id
+      );
+      setPosts(newPost);
+    } else alert("Something went wrong in deleting post");
   };
 
   if (memberInfo === undefined) return;
@@ -166,7 +174,7 @@ export default function CommunityDiscussion({ route }) {
                             memberInfo.role === CommunityRole.Owner) && (
                             <Pressable
                               onPress={() =>
-                                deletePost(post.communityPost.communityPostId)
+                                onDeletePost(post.communityPost.communityPostId)
                               }
                             >
                               <Text className="text-red-500">Delete</Text>

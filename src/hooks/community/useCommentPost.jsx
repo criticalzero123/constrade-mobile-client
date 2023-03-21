@@ -28,7 +28,7 @@ export default function useCommentPost(communityId) {
   };
 
   const deleteComment = (postId, commentId) => {
-    dispatch(deleteCommentPost(communityId, postId, commentId));
+    return deleteCommentPost(communityId, postId, commentId);
   };
 
   const updateComment = (info) => {
