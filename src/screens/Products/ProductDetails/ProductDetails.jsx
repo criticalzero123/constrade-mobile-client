@@ -8,14 +8,16 @@ import ProductTrade from "../../../components/Products/ProductDetails/ProductTra
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import ProductImageDisplayList from "../../../components/Products/ProductDetails/ProductImageDisplayList";
 import { useState } from "react";
+import useGetCurrentUser from "../../../hooks/useGetCurrentUser";
 
 const Tab = createMaterialTopTabNavigator();
 
 export default function ProductDetails({ route }) {
   const { productId } = route.params;
+  const { user } = useGetCurrentUser();
 
   const { width, height } = useWindowDimensions();
-  const { data } = useGetProductId(productId);
+  const { data } = useGetProductId(productId, user.userId);
   const [imageDisplay, setImageDisplay] = useState(
     data && data.product.thumbnailUrl
   );

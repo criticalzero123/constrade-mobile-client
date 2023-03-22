@@ -6,6 +6,7 @@ import {
   useWindowDimensions,
   ScrollView,
   Pressable,
+  ActivityIndicator,
 } from "react-native";
 import React from "react";
 import { AntDesign } from "@expo/vector-icons";
@@ -17,6 +18,7 @@ import useDeleteProduct from "../../../hooks/Product/useDeleteProduct";
 import useProductReport from "../../../hooks/Product/useProductReport";
 import { ReportEnum } from "../../../../service/enums";
 import { addFavorite } from "../../../../redux/actions/productActions";
+import { useState } from "react";
 export default function ProductDescription({ route }) {
   const { details } = route.params;
 
@@ -24,21 +26,27 @@ export default function ProductDescription({ route }) {
   const { productReport } = useProductReport();
   const { user } = useGetCurrentUser();
   const { width, height } = useWindowDimensions();
+  const [addingToFav, setAddingToFav] = useState(false);
   const navigation = useNavigation();
 
   const onPressFavorite = async () => {
     if (user.userId !== details.product.posterUserId) {
+      setAddingToFav(true);
+
       const info = {
         productId: details.product.productId,
         UserId: user.userId,
         date: new Date(),
       };
+
       const flag = await addFavorite(info);
       if (flag) {
         alert("Added to Favorite!");
       } else {
         alert("Remove from favorite");
       }
+
+      setAddingToFav(false);
     }
   };
 
@@ -81,9 +89,13 @@ export default function ProductDescription({ route }) {
             <Text className="text-base mr-2">
               {details.product.countFavorite}
             </Text>
-            <Pressable onPress={onPressFavorite}>
-              <AntDesign name="hearto" size={20} color="black" />
-            </Pressable>
+            {addingToFav ? (
+              <ActivityIndicator />
+            ) : (
+              <Pressable onPress={onPressFavorite}>
+                <AntDesign name="hearto" size={20} color="black" />
+              </Pressable>
+            )}
           </View>
           <View className="mx-2" />
           <Ionicons name="md-share-outline" size={24} color="black" />
