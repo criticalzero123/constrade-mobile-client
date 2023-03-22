@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -7,26 +8,29 @@ import {
 
 export default function useFavorite(userId) {
   const dispatch = useDispatch();
+  const { data } = useSelector((state) => state.getFavoriteByUserIdReducer);
 
-  const { loading, data } = useSelector(
-    (state) => state.getFavoriteByUserIdReducer
-  );
+  const [favorites, setFavorites] = useState();
 
   useEffect(() => {
-    if (userId == undefined || !userId || loading) return;
+    if (data === undefined) return;
+
+    setFavorites(data);
+  }, [data]);
+
+  useEffect(() => {
+    if (userId == undefined) return;
 
     dispatch(getFavoriteByUserId(userId));
 
     return () => {
-      dispatch({ type: "ADD_FAVORITE_LEAVE  " });
-      dispatch({ type: "DELETE_FAVORITE_LEAVE  " });
       dispatch({ type: "GET_FAVORITE_LEAVE  " });
     };
   }, [userId]);
 
   const deleteFromFavorite = (favoriteId) => {
-    dispatch(deleteFavorite(favoriteId));
+    return deleteFavorite(favoriteId);
   };
 
-  return { data, deleteFromFavorite };
+  return { favorites, setFavorites, deleteFromFavorite };
 }

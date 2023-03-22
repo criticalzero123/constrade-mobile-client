@@ -70,58 +70,6 @@ export const getProductByIdReducer = (state = {}, action) => {
   }
 };
 
-export const addFavoriteReducer = (state = {}, action) => {
-  switch (action.type) {
-    case "ADD_FAVORITE_REQUEST":
-      return {
-        ...state,
-        loading: true,
-      };
-    case "ADD_FAVORITE_SUCCESS":
-      return {
-        loading: false,
-        data: action.payload,
-      };
-    case "ADD_FAVORITE_FAILED":
-      return {
-        loading: false,
-        error: action.error,
-      };
-
-    case "ADD_FAVORITE_LEAVE":
-      return {};
-
-    default:
-      return { ...state };
-  }
-};
-
-export const deleteFavoriteReducer = (state = {}, action) => {
-  switch (action.type) {
-    case "DELETE_FAVORITE_REQUEST":
-      return {
-        ...state,
-        loading: true,
-      };
-    case "DELETE_FAVORITE_SUCCESS":
-      return {
-        loading: false,
-        data: action.payload,
-      };
-    case "DELETE_FAVORITE_FAILED":
-      return {
-        loading: false,
-        error: action.error,
-      };
-
-    case "DELETE_FAVORITE_LEAVE":
-      return {};
-
-    default:
-      return { ...state };
-  }
-};
-
 export const getFavoriteByUserIdReducer = (state = {}, action) => {
   switch (action.type) {
     case "GET_FAVORITE_REQUEST":

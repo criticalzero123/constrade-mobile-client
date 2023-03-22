@@ -49,8 +49,6 @@ import {
   getAllProductsReducer,
   getProductByIdReducer,
   deleteProductByIdReducer,
-  addFavoriteReducer,
-  deleteFavoriteReducer,
   getFavoriteByUserIdReducer,
   getProductBoostReducer,
 } from "./reducers/productReducer";
@@ -116,8 +114,6 @@ const finalReducer = combineReducers({
   soldProductReducer,
   changePasswordEmailReducer,
   deleteProductByIdReducer,
-  addFavoriteReducer,
-  deleteFavoriteReducer,
   getFavoriteByUserIdReducer,
   subscribeUserReducer,
   getSubscriptionHistoryReducer,
