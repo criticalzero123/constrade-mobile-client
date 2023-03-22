@@ -19,19 +19,23 @@ import useProductReport from "../../../hooks/Product/useProductReport";
 import { ReportEnum } from "../../../../service/enums";
 import { addFavorite } from "../../../../redux/actions/productActions";
 import { useState } from "react";
+import useGetProductId from "../../../hooks/Product/useGetProductId";
 export default function ProductDescription({ route }) {
   const { details } = route.params;
 
   const [deleteProductById] = useDeleteProduct();
   const { productReport } = useProductReport();
+  const { isFavorite, setIsFavorite } = useGetProductId();
   const { user } = useGetCurrentUser();
   const { width, height } = useWindowDimensions();
   const [addingToFav, setAddingToFav] = useState(false);
+  const [addFlag, setAddFlag] = useState(false);
   const navigation = useNavigation();
 
   const onPressFavorite = async () => {
     if (user.userId !== details.product.posterUserId) {
       setAddingToFav(true);
+      setAddFlag(!addFlag);
 
       const info = {
         productId: details.product.productId,
@@ -46,6 +50,7 @@ export default function ProductDescription({ route }) {
         alert("Remove from favorite");
       }
 
+      setIsFavorite(!isFavorite);
       setAddingToFav(false);
     }
   };
@@ -59,6 +64,16 @@ export default function ProductDescription({ route }) {
       dateSubmitted: new Date(),
     };
     productReport(info);
+  };
+
+  const favoriteCount = (favCount) => {
+    if (addFlag) {
+      const _favoriteFlag = isFavorite ? 1 : -1;
+
+      return favCount + _favoriteFlag;
+    }
+
+    return favCount;
   };
 
   return (
@@ -86,14 +101,18 @@ export default function ProductDescription({ route }) {
         </View>
         <View className="flex-row items-center">
           <View className="flex-row items-center">
-            <Text className="text-base mr-2">
-              {details.product.countFavorite}
+            <Text className={`text-base mr-2 ${isFavorite && "text-red-500"}`}>
+              {favoriteCount(details.product.countFavorite)}
             </Text>
             {addingToFav ? (
               <ActivityIndicator />
             ) : (
               <Pressable onPress={onPressFavorite}>
-                <AntDesign name="hearto" size={20} color="black" />
+                <AntDesign
+                  name="hearto"
+                  size={20}
+                  color={isFavorite ? "red" : "black"}
+                />
               </Pressable>
             )}
           </View>

@@ -16,7 +16,7 @@ export default function ProductDetails({ route }) {
   const { productId } = route.params;
   const { user } = useGetCurrentUser();
 
-  const { width, height } = useWindowDimensions();
+  const { height } = useWindowDimensions();
   const { data } = useGetProductId(productId, user.userId);
   const [imageDisplay, setImageDisplay] = useState(
     data && data.product.thumbnailUrl
