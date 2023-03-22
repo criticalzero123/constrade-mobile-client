@@ -95,18 +95,18 @@ export default function PersonalMessage({ route }) {
                 <Text className="text-center">See more</Text>
               </Pressable>
               {messageList.length !== 0 &&
-                messageList.map((message, index) => {
+                messageList.map((message) => {
                   return message.senderId === user.userId ? (
                     <MessageItem
                       key={message.userMessageId}
-                      message={message}
+                      message={message.message}
                       onDelete={deleteMessage}
                     />
                   ) : (
                     <OtherMessageItem
+                      key={message.userMessageId}
                       image={otherUser.imageUrl}
                       message={message.message}
-                      key={message.userMessageId}
                     />
                   );
                 })}
