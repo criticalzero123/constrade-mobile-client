@@ -11,33 +11,30 @@ import { AntDesign } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
 
-export default function ItemCard({
-  data,
-  index,
-  showLike = true,
-  person,
-  user,
-}) {
-  const imageConsole = {
-    uri: "https://images.saymedia-content.com/.image/t_share/MTc0MzY1MzUwMzM3NDU1NzUw/most-annoying-monsters-breath-of-the-wild.png",
-  };
+export default function ItemCard({ data, index, showLike = true }) {
+  const imageConsole =
+    "https://images.saymedia-content.com/.image/t_share/MTc0MzY1MzUwMzM3NDU1NzUw/most-annoying-monsters-breath-of-the-wild.png";
   const { height, width } = useWindowDimensions();
-
   const navigation = useNavigation();
 
   return (
     <Pressable
-      className={`mb-4 mr-2  ${index === 0 && "ml-5"}`}
-      style={{ width: width * 0.45, height: height * 0.25 }}
+      className={`mb-6 mr-2  ${index === 0 && "ml-5 "}`}
+      style={{ width: width * 0.4, height: height * 0.25 }}
       onPress={() =>
-        navigation.navigate("ProductDetails", { productId: data.productId })
+        navigation.navigate("ProductDetails", {
+          productId: data.productId,
+        })
       }
     >
       <View className="h-3/4 relative overflow-hidden rounded-t-lg">
         <Image
-          source={
-            data.thumbnailUrl !== undefined ? data.thumbnailUrl : imageConsole
-          }
+          source={{
+            uri:
+              data.thumbnailUrl !== undefined
+                ? data.thumbnailUrl
+                : imageConsole,
+          }}
           style={{
             flex: 1,
             width: undefined,
@@ -56,27 +53,33 @@ export default function ItemCard({
             {data.preferTrade}
           </Text>
         </View>
-        <Text className="absolute  bottom-0 py-2 px-1 text-white">
-          {" "}
+        <Text className="absolute  bottom-0 py-2 px-1 text-white ml-2">
           1 day ago
         </Text>
       </View>
-      <View className="bg-white p-2 rounded-b-lg shadow-2xl">
-        <View className="flex-row justify-between">
-          <Text numberOfLines={1} className="font-semibold">
-            {data.title}
+      <View className="bg-white p-2 rounded-b-lg shadow-2xl w-full">
+        <View className="flex-row justify-between ">
+          <Text numberOfLines={1} className="font-semibold flex-1">
+            {data.productName}
           </Text>
 
           {showLike && <AntDesign name="hearto" size={18} color="gray" />}
         </View>
-        <View className="flex-row items-center gap-1 mt-1">
+        <View className="flex-row items-center mt-2 w-full ">
           <Image
-            source={{ uri: user.imageUrl }}
-            className="w-5 h-5 rounded-full mr-1"
+            source={{ uri: data.userImage }}
+            className="w-5 h-5 rounded-full"
           />
+
+          <View className="mx-1" />
+
           <Text className="text-gray-400">by</Text>
-          <Text className="capitalize font-semibold">
-            {person.firstName} {person.lastName}
+
+          <Text
+            className="capitalize ml-1 font-semibold truncate flex-1"
+            numberOfLines={1}
+          >
+            {data.userName}
           </Text>
         </View>
       </View>
