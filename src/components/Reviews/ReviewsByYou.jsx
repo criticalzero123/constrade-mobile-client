@@ -2,6 +2,7 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import useMyReview from "../../hooks/review/useMyReview";
 import { useNavigation } from "@react-navigation/native";
+import ReviewItem from "./ReviewItem";
 
 export default function ReviewsByYou({ route }) {
   const { otherUserId, user } = route.params;
@@ -34,11 +35,8 @@ export default function ReviewsByYou({ route }) {
 
       {myRate && myRate.length !== 0 && (
         <View>
-          {myRate.map((_review) => (
-            <View className="flex-row">
-              <Text>{_review.rate}</Text>
-              <Text>{_review.description}</Text>
-            </View>
+          {myRate.map((_review, index) => (
+            <ReviewItem review={_review} key={index} />
           ))}
         </View>
       )}

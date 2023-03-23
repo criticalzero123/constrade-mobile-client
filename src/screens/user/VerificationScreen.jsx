@@ -53,7 +53,7 @@ export default function VerificationScreen({ route }) {
           onValueChange={(item) => setIdType(item)}
         >
           {ValidIdType.map((id, index) => (
-            <Picker.Item value={index} label={id} />
+            <Picker.Item value={index} label={id} key={index} />
           ))}
         </Picker>
         <Pressable className="mt-5 p-2 border" onPress={onPress}>

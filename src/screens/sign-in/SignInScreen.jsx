@@ -65,7 +65,7 @@ export default function SignInScreen() {
           <Text className="text-[#CC481F]">I don't have an account</Text>
         </Pressable>
       </ScrollView>
-      <TermsAndCondition />
+      {/* <TermsAndCondition /> */}
     </SafeAreaView>
   );
 }

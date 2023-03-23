@@ -71,9 +71,9 @@ export default function Community() {
                   data={item}
                   index={index}
                   currentUserId={user.userId}
+                  key={index}
                 />
               )}
-              keyExtractor={(item) => item.id}
               horizontal
               showsHorizontalScrollIndicator={false}
             />
@@ -94,9 +94,9 @@ export default function Community() {
                   data={item}
                   index={index}
                   currentUserId={user.userId}
+                  key={index}
                 />
               )}
-              keyExtractor={(item) => item.id}
               horizontal
               showsHorizontalScrollIndicator={false}
             />

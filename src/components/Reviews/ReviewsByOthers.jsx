@@ -1,6 +1,7 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import React from "react";
 import useOtherReview from "../../hooks/review/useOtherReview";
+import ReviewItem from "./ReviewItem";
 
 export default function ReviewsByOthers({ route }) {
   const { otherUserId, user } = route.params;
@@ -10,11 +11,8 @@ export default function ReviewsByOthers({ route }) {
     <View>
       {otherReview && otherReview.length !== 0 && (
         <View>
-          {otherReview.map((_review) => (
-            <View className="flex-row">
-              <Text>{_review.rate}</Text>
-              <Text>{_review.description}</Text>
-            </View>
+          {otherReview.map((_review, index) => (
+            <ReviewItem review={_review} key={index} />
           ))}
         </View>
       )}
