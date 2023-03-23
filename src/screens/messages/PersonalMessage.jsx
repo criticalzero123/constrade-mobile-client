@@ -48,14 +48,14 @@ export default function PersonalMessage({ route }) {
   //for fetching in database
   useEffect(() => {
     if (messageData === undefined) return;
+    const reverseArray = [...messageData].reverse();
 
     if (firstFetch) {
-      const reverseArray = [...messageData].reverse();
       setMessageList([...messageList, ...reverseArray]);
       setFirstFetch(false);
       onClickScrollDown();
     } else {
-      setMessageList([...messageData, ...messageList]);
+      setMessageList([...reverseArray, ...messageList]);
     }
   }, [messageData]);
 
@@ -82,18 +82,21 @@ export default function PersonalMessage({ route }) {
       {user !== undefined && (
         <>
           <View style={{ height: height * 0.9, paddingHorizontal: 20 }}>
-            <View className="mt-10" />
+            <View />
             <ChatHeader data={otherUser} />
 
             <ScrollView
               showsVerticalScrollIndicator={false}
               className="mb-4"
               ref={scrollDown}
-              onContentSizeChange={firstFetch ? onClickScrollDown : null}
+              onContentSizeChange={onClickScrollDown}
             >
-              <Pressable onPress={onPress} className="w-full">
-                <Text className="text-center">See more</Text>
-              </Pressable>
+              {messageData && messageData.length === 20 && (
+                <Pressable onPress={onPress} className="w-full">
+                  <Text className="text-center">See more</Text>
+                </Pressable>
+              )}
+
               {messageList.length !== 0 &&
                 messageList.map((message) => {
                   return message.senderId === user.userId ? (

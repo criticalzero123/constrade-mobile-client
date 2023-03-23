@@ -17,8 +17,8 @@ export default function MenuStack() {
       // initialRouteName="AddProduct"
       // initialRouteName="Home"
       // initialRouteName="User"
-      // initialRouteName="Message"
-      initialRouteName="Community"
+      initialRouteName="Message"
+      // initialRouteName="Community"
       screenOptions={{
         tabBarActiveTintColor: "#CC481F",
         headerShown: false,

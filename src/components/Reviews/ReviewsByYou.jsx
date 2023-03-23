@@ -13,7 +13,9 @@ export default function ReviewsByYou({ route }) {
     <View>
       {notReviewed && notReviewed.length !== 0 && (
         <View>
-          <Text>Available To Review</Text>
+          <Text className="my-3 font-semibold ">
+            You have a transaction that not yet reviewed.
+          </Text>
           {notReviewed.map((_review) => (
             <View>
               <Pressable
@@ -24,7 +26,10 @@ export default function ReviewsByYou({ route }) {
                   })
                 }
               >
-                <Text className="p-4 border border-red-400">
+                <Text
+                  className="p-4 border border-red-300 text-red-500"
+                  style={{ borderRadius: 5 }}
+                >
                   Click Here to review!
                 </Text>
               </Pressable>

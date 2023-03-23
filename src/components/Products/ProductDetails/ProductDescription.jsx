@@ -120,7 +120,7 @@ export default function ProductDescription({ route }) {
           <Ionicons name="md-share-outline" size={24} color="black" />
         </View>
       </View>
-      {details.product.productStatus === "unsold" && (
+      {details.product.productStatus === "unsold" ? (
         <Pressable
           className="mb-6"
           onPress={() =>
@@ -135,6 +135,13 @@ export default function ProductDescription({ route }) {
         >
           <Text>Make an Offer</Text>
         </Pressable>
+      ) : (
+        <View className="mb-6">
+          <Text>Already sold</Text>
+          <Pressable>
+            <Text>Go to transaction</Text>
+          </Pressable>
+        </View>
       )}
 
       <View className="mb-6">
