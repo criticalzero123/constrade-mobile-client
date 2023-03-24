@@ -1,16 +1,29 @@
+import { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getProductTransaction } from "../../../redux/actions/transactionAction";
+import {
+  getProductTransaction,
+  getUserTransactions,
+} from "../../../redux/actions/transactionAction";
 
 export default function useTransaction(id) {
-  const dispatch = useDispatch();
-  const { data } = useSelector((state) => state.getProductTransactionReducer);
+  const [transactions, setTransactions] = useState();
 
   useEffect(() => {
     if (id === undefined) return;
 
-    dispatch(getProductTransaction(id));
+    const fetch = async () => {
+      const result = await getUserTransactions(id);
+
+      if (result) {
+        setTransactions(result);
+      } else {
+        alert("Something went wrong in fetching");
+      }
+    };
+
+    fetch();
   }, [id]);
 
-  return [data];
+  return [transactions, setTransactions];
 }

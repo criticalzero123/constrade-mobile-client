@@ -11,12 +11,10 @@ import {
 } from "react-native";
 import React from "react";
 import ContainerSafeView from "../../components/CustomViews/ContainerSafeView";
-import { Picker } from "@react-native-picker/picker";
 import useGetCurrentUser from "../../hooks/useGetCurrentUser";
 import { useState } from "react";
-import useGetAllWalletUser from "../../hooks/Wallet/useGetAllWalletUser";
-import useSendMoney from "../../hooks/Wallet/useSendMoney";
-import { useEffect } from "react";
+import useGetAllWalletUser from "../../hooks/wallet/useGetAllWalletUser";
+import useSendMoney from "../../hooks/wallet/useSendMoney";
 import HeaderArrow from "../../components/HeaderArrow/HeaderArrow";
 import { StackActions, useNavigation } from "@react-navigation/native";
 

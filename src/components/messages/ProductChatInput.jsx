@@ -11,7 +11,7 @@ import React from "react";
 import { Feather } from "@expo/vector-icons";
 import { useState } from "react";
 import { SimpleLineIcons } from "@expo/vector-icons";
-import useSoldProduct from "../../hooks/Transaction/useSoldProduct";
+import useSoldProduct from "../../hooks/transaction/useSoldProduct";
 
 export default function ProductChatInput({
   details,

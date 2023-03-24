@@ -14,19 +14,26 @@ export const soldProduct = (info) => async (dispatch) => {
   }
 };
 
-export const getProductTransaction = (productId) => async (dispatch) => {
-  dispatch({ type: "GET_PRODUCT_TRANSACTION_REQUEST" });
-
+export const getProductTransaction = async (productId) => {
   try {
     const res = await api
       .setAuthHeaders()
       .get(`/api/transactions/product/${productId}`);
 
-    dispatch({
-      type: "GET_PRODUCT_TRANSACTION_SUCCESS",
-      payload: res.data.responseData,
-    });
+    return res.data.responseData;
   } catch (error) {
-    dispatch({ type: "GET_PRODUCT_TRANSACTION_FAILED", error: error });
+    console.error(error);
+  }
+};
+
+export const getUserTransactions = async (userId) => {
+  try {
+    const res = await api
+      .setAuthHeaders()
+      .get(`/api/transactions/users/${userId}`);
+
+    return res.data.responseData;
+  } catch (error) {
+    console.error(error);
   }
 };

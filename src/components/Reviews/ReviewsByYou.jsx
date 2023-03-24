@@ -41,7 +41,7 @@ export default function ReviewsByYou({ route }) {
       {myRate && myRate.length !== 0 && (
         <View>
           {myRate.map((_review, index) => (
-            <ReviewItem review={_review} key={index} />
+            <ReviewItem review={_review} key={_review.reviewId} />
           ))}
         </View>
       )}

@@ -11,8 +11,8 @@ export default function ReviewsByOthers({ route }) {
     <View>
       {otherReview && otherReview.length !== 0 && (
         <View>
-          {otherReview.map((_review, index) => (
-            <ReviewItem review={_review} key={index} />
+          {otherReview.map((_review) => (
+            <ReviewItem review={_review} key={_review.reviewId} />
           ))}
         </View>
       )}

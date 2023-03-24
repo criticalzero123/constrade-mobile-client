@@ -77,6 +77,21 @@ export default function OtherUserInfoNav({ data }) {
           onPress={() => navigation.navigate("Reviews", { user: data.user })}
         />
 
+        <NavItem
+          title={"Transactions"}
+          iconNav={
+            <Octicons
+              name="arrow-switch"
+              size={24}
+              color="white"
+              style={{ opacity: 0.75, marginRight: 5 }}
+            />
+          }
+          onPress={() =>
+            navigation.navigate("TransactionAll", { user: data.user })
+          }
+        />
+
         <Pressable
           className="flex-row items-center w-full"
           onPress={onPressReport}

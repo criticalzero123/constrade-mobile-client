@@ -23,7 +23,7 @@ import EndMessage from "../../components/EndMessage/EndMessage";
 
 import { useNavigation } from "@react-navigation/native";
 import useGetCurrentUser from "../../hooks/useGetCurrentUser";
-import useGetAllUsers from "../../hooks/User/useGetAllUsers";
+import useGetAllUsers from "../../hooks/user/useGetAllUsers";
 export default function Discover() {
   const { user } = useGetCurrentUser();
   const [data] = useGetAllUsers();

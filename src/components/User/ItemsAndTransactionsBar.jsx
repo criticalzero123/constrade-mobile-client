@@ -5,6 +5,7 @@ import NavItem from "./NavItem";
 import { Feather } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import { Octicons } from "@expo/vector-icons";
 
 export default function ItemsAndTransactionsBar({ data }) {
   const navigation = useNavigation();
@@ -57,6 +58,22 @@ export default function ItemsAndTransactionsBar({ data }) {
         title="Reviews & Feedbacks"
         onPress={() => navigation.navigate("Reviews", { user: data.user })}
         description="What other traders say about you"
+      />
+
+      <NavItem
+        iconNav={
+          <Octicons
+            name="arrow-switch"
+            size={24}
+            color="white"
+            style={{ opacity: 0.75, marginRight: 5 }}
+          />
+        }
+        title="Transactions"
+        onPress={() =>
+          navigation.navigate("TransactionAll", { user: data.user })
+        }
+        description="See all your item transactions"
       />
     </View>
   );

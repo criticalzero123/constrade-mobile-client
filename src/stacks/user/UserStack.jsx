@@ -1,18 +1,18 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
 import AddReview from "../../screens/review/AddReview";
-import SubscriptionScreen from "../../screens/Subscription/SubscriptionScreen";
-import ListingScreen from "../../screens/User/ListingScreen";
-import OtherUserProfile from "../../screens/User/OtherUserProfile";
-import ReviewsAndFeedbacks from "../../screens/User/ReviewsAndFeedbacks";
+import SubscriptionScreen from "../../screens/subscription/SubscriptionScreen";
+import ListingScreen from "../../screens/user/ListingScreen";
+import OtherUserProfile from "../../screens/user/OtherUserProfile";
+import ReviewsAndFeedbacks from "../../screens/user/ReviewsAndFeedbacks";
 
-import UserProfile from "../../screens/User/UserProfile";
-import UserProfileEdit from "../../screens/User/UserProfileEdit";
-import VerificationScreen from "../../screens/User/VerificationScreen";
-import WishList from "../../screens/User/WishList";
-import SendWalletScreen from "../../screens/Wallet/SendWalletScreen";
-import SendMoneyReceiptScreen from "../../screens/Wallet/SendMoneyReceiptScreen";
-import WalletScreen from "../../screens/Wallet/WalletScreen";
+import UserProfile from "../../screens/user/UserProfile";
+import UserProfileEdit from "../../screens/user/UserProfileEdit";
+import VerificationScreen from "../../screens/user/VerificationScreen";
+import WishList from "../../screens/user/WishList";
+import SendWalletScreen from "../../screens/wallet/SendWalletScreen";
+import SendMoneyReceiptScreen from "../../screens/wallet/SendMoneyReceiptScreen";
+import WalletScreen from "../../screens/wallet/WalletScreen";
 import HelpCenterStack from "../help-center/HelpCenterStack";
 
 const Stack = createNativeStackNavigator();

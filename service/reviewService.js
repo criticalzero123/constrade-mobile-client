@@ -3,9 +3,9 @@ import { AntDesign } from "@expo/vector-icons";
 export const getStar = (num) => {
   const starDisplay = (index) => {
     return index < num ? (
-      <AntDesign name="star" size={24} color={starColor()} />
+      <AntDesign name="star" size={24} color={starColor()} key={index} />
     ) : (
-      <AntDesign name="star" size={24} color="silver" />
+      <AntDesign name="star" size={24} color="silver" key={index} />
     );
   };
 
