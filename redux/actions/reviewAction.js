@@ -1,16 +1,12 @@
 import api from "../../service/api";
 
-export const getMyAverageRate = (userId) => async (dispatch) => {
-  dispatch({ type: "GET_MY_AVERAGE_RATE_REQUEST" });
-
+export const getMyAverageRate = async (userId) => {
   try {
     const res = await api.setAuthHeaders().get(`/api/review/${userId}`);
-    dispatch({
-      type: "GET_MY_AVERAGE_RATE_SUCCESS",
-      payload: res.data.responseData,
-    });
+
+    return res.data.responseData;
   } catch (err) {
-    dispatch({ type: "GET_MY_AVERAGE_RATE_FAILED", error: err });
+    console.error(err);
   }
 };
 

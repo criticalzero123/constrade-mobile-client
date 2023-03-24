@@ -1,14 +1,18 @@
+import { useState } from "react";
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { getMyAverageRate } from "../../redux/actions/reviewAction";
 
 export default function useUserReview(userId) {
-  const { data } = useSelector((state) => state.getMyAverageRateReducer);
-  const dispatch = useDispatch();
-
+  const [average, setAverage] = useState();
   useEffect(() => {
-    dispatch(getMyAverageRate(userId));
+    const fetch = async () => {
+      const result = await getMyAverageRate(userId);
+
+      setAverage(result);
+    };
+
+    fetch();
   }, [userId]);
 
-  return [data];
+  return [average];
 }

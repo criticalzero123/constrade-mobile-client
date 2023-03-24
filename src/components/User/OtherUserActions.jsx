@@ -7,12 +7,14 @@ import { useNavigation } from "@react-navigation/native";
 
 export default function OtherUserActions({ otherUser, currentUserId }) {
   const navigation = useNavigation();
+
   return (
     <View className="flex-row w-full justify-between items-center mt-4">
       <FollowActionButton
         otherUserId={otherUser.userId}
         currentUserId={currentUserId}
       />
+
       <View className="px-7 py-5 w-1/2 flex-row items-center justify-center">
         <Ionicons name="md-chatbubbles-outline" size={24} color="#FF6838" />
         <Pressable

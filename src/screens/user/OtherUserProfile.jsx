@@ -6,7 +6,8 @@ import OtherUserInfoNav from "../../components/User/OtherUserInfoNav";
 import OtherUserActions from "../../components/User/OtherUserActions";
 import useGetUserById from "../../hooks/useGetUserById";
 import useGetCurrentUser from "../../hooks/useGetCurrentUser";
-
+import ContainerSafeView from "../../components/CustomViews/ContainerSafeView";
+import { ActivityIndicator } from "react-native-paper";
 export default function OtherUserProfile({ route }) {
   // This is for the userId of other user
   const { userId } = route.params;
@@ -15,6 +16,13 @@ export default function OtherUserProfile({ route }) {
   const { user } = useGetCurrentUser();
 
   const firstWordName = data && data.person.firstName.toString().split(" ")[0];
+
+  if (data === undefined)
+    return (
+      <ContainerSafeView styleName="flex-row justify-center items-center">
+        <ActivityIndicator />
+      </ContainerSafeView>
+    );
 
   return (
     <SafeAreaView className=" bg-[#242120]">

@@ -1,28 +1,3 @@
-export const getMyAverageRateReducer = (state = {}, action) => {
-  switch (action.type) {
-    case "GET_MY_AVERAGE_RATE_REQUEST":
-      return {
-        ...state,
-        loading: true,
-      };
-
-    case "GET_MY_AVERAGE_RATE_SUCCESS":
-      return {
-        loading: false,
-        data: action.payload,
-      };
-
-    case "GET_MY_AVERAGE_RATE_FAILED":
-      return {
-        loading: false,
-        error: action.error,
-      };
-
-    default:
-      return { ...state };
-  }
-};
-
 export const getOtherReviewsUserReducer = (state = {}, action) => {
   switch (action.type) {
     case "GET_OTHER_USER_REVIEWS_REQUEST":

@@ -11,15 +11,11 @@ export default function FollowActionButton({ otherUserId, currentUserId }) {
     currentUserId
   );
 
-  const onPressAction = () => {
-    followAction(otherUserId, currentUserId);
-  };
-
   const FollowButton = () => {
     return (
       <Pressable
         className="py-4 rounded-lg  bg-[#F76363] w-1/2 justify-center flex-row items-center"
-        onPress={onPressAction}
+        onPress={followAction}
       >
         <Feather name="user-plus" size={24} color="white" />
         <Text className="text-white font-semibold text-base ml-2">Follow</Text>
@@ -31,7 +27,7 @@ export default function FollowActionButton({ otherUserId, currentUserId }) {
     return (
       <Pressable
         className="py-4 rounded-lg  border border-[#F76363] w-1/2 justify-center flex-row items-center"
-        onPress={onPressAction}
+        onPress={followAction}
       >
         <Feather name="user-check" size={24} color="#F76363" />
         <Text className="text-[#F76363] font-semibold text-base ml-2">
@@ -43,7 +39,7 @@ export default function FollowActionButton({ otherUserId, currentUserId }) {
 
   return (
     <>
-      {loading ? (
+      {isFollow === undefined || loading ? (
         <View className="w-1/2 justify-center items-center">
           <ActivityIndicator size="small" />
         </View>

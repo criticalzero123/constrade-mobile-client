@@ -20,17 +20,13 @@ import {
   getUserByIdReducer,
 } from "./reducers/userReducer";
 
+import { followCountReducer } from "./reducers/followReducer";
+
 import {
   getWalletUserReducer,
   getAllTransactionsWalletUserReducer,
   getAllWalletUserReducer,
 } from "./reducers/walletReducer";
-
-import {
-  getFollowAndFollowersUserReducer,
-  followUserReducer,
-  isFollowUserReducer,
-} from "./reducers/followReducer";
 
 import {
   getProductMessagesReducer,
@@ -41,7 +37,6 @@ import {
   getOtherReviewsUserReducer,
   getNotRatedReducer,
   getMyReviewsUserReducer,
-  getMyAverageRateReducer,
 } from "./reducers/reviewReducer";
 
 import {
@@ -91,13 +86,10 @@ const finalReducer = combineReducers({
   emailAndPasswordAuthLoginReducer,
   requestOtpEmailReducer,
   verifyOtpReducer,
-  getFollowAndFollowersUserReducer,
   getOtherReviewsUserReducer,
   updatePersonInfoReducer,
   getAllUsersReducer,
   getUserByIdReducer,
-  followUserReducer,
-  isFollowUserReducer,
   getMessagesByUserIdsReducer,
   getChatByUserIdReducer,
   getProductByUserReducer,
@@ -128,7 +120,7 @@ const finalReducer = combineReducers({
   deleteCommunityMemberByIdReducer,
   getNotRatedReducer,
   getMyReviewsUserReducer,
-  getMyAverageRateReducer,
+  followCountReducer,
   getAllMyCommunityJoinedReducer,
   getProductBoostReducer,
   getPopularCommunityReducer,
