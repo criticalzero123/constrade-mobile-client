@@ -305,3 +305,16 @@ export const getPopularCommunityReducer = (state = {}, action) => {
       return { ...state };
   }
 };
+
+export const communityData = (state = {}, action) => {
+  switch (action.type) {
+    case "COMMUNITY_DATA":
+      return {
+        id: action.payload.id,
+        memberInfo: action.payload.memberInfo,
+      };
+
+    default:
+      return { ...state };
+  }
+};

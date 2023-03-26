@@ -74,6 +74,7 @@ import {
   deleteCommunityMemberByIdReducer,
   getAllMyCommunityJoinedReducer,
   getPopularCommunityReducer,
+  communityData,
 } from "./reducers/communityReducer";
 
 const finalReducer = combineReducers({
@@ -122,6 +123,7 @@ const finalReducer = combineReducers({
   getAllMyCommunityJoinedReducer,
   getProductBoostReducer,
   getPopularCommunityReducer,
+  communityData,
 });
 
 const rootReducer = (state, action) => {

@@ -29,6 +29,7 @@ import CommunityDiscussion from "../CommunityDiscussion/CommunityDiscussion";
 import CommunityMember from "../CommunityMember/CommunityMember";
 import { useHideBottomTab } from "../../../hooks/useHideBottomTab";
 import { useNavigation } from "@react-navigation/native";
+import { communityDataInfo } from "../../../../redux/actions/communityAction";
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -36,7 +37,7 @@ export default function CommunityDetail({ route }) {
   useHideBottomTab();
 
   const { id } = route.params;
-  const { data } = useGetCommunity(id);
+  const { data, currentMember } = useGetCommunity(id);
   const { deleteCommunityById, reportCommunityUser, join } = useCommunity();
   const { user } = useGetCurrentUser();
   const navigation = useNavigation();
@@ -72,7 +73,6 @@ export default function CommunityDetail({ route }) {
   };
 
   if (data) {
-    const currentMember = data.members.find((_m) => _m.userId === user.userId);
     return (
       <SafeAreaView style={styles.container}>
         <ScrollView
@@ -223,7 +223,6 @@ export default function CommunityDetail({ route }) {
                   textTransform: "capitalize",
                 },
               }}
-              initialParams={{ id: id, memberInfo: currentMember }}
             />
             <Tab.Screen
               name="CommunityMember"
@@ -234,7 +233,6 @@ export default function CommunityDetail({ route }) {
                   textTransform: "capitalize",
                 },
               }}
-              initialParams={{ id: id, memberInfo: currentMember }}
             />
           </Tab.Navigator>
         </ScrollView>

@@ -343,3 +343,7 @@ export const rejectMemberRequest = async (id, reqId) => {
     console.error(error);
   }
 };
+
+export const communityDataInfo = (id, memberInfo) => async (dispatch) => {
+  dispatch({ type: "COMMUNITY_DATA", payload: { id, memberInfo } });
+};

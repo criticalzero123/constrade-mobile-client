@@ -23,13 +23,11 @@ import { Button, Dialog, Portal, Provider } from "react-native-paper";
 import PrivateMessageComponent from "../../../components/Community/PrivateMessageComponent";
 import useGetCommunity from "../../../hooks/community/useGetCommunity";
 
-export default function CommunityDiscussion({ route }) {
-  const { memberInfo, id } = route.params;
-
+export default function CommunityDiscussion() {
   const { width, height } = useWindowDimensions();
   const { user, person } = useGetCurrentUser();
   const [_, getComments] = useCommentPost(id);
-  const { visibility } = useGetCommunity();
+  const { visibility, currentMember, id } = useGetCommunity();
 
   const { post, deletePost, like, posts, setPosts, edit } = usePostCommunity(
     id,
@@ -52,8 +50,8 @@ export default function CommunityDiscussion({ route }) {
     if (postValue.trim() === "") return;
 
     const info = {
-      communityId: memberInfo.communityId,
-      posterUserId: memberInfo.userId,
+      communityId: currentMember.communityId,
+      posterUserId: currentMember.userId,
       description: postValue,
       createdDate: new Date(),
     };
@@ -65,7 +63,7 @@ export default function CommunityDiscussion({ route }) {
       setPosts([
         {
           communityPost: { ...info, communityPostId: postId, like: 0 },
-          user: { user: { ...memberInfo, ...user }, person: { ...person } },
+          user: { user: { ...currentMember, ...user }, person: { ...person } },
         },
         ...posts,
       ]);
@@ -117,11 +115,11 @@ export default function CommunityDiscussion({ route }) {
     } else alert("Something went wrong in deleting post");
   };
 
-  if (memberInfo === undefined && visibility === "private")
+  if (currentMember === undefined && visibility === "private")
     return <PrivateMessageComponent text={"Discussions"} />;
 
   // For the non-member and visibility public
-  if (memberInfo === undefined)
+  if (currentMember === undefined)
     return (
       <View>
         {posts &&
@@ -206,7 +204,7 @@ export default function CommunityDiscussion({ route }) {
     <Provider>
       <ScrollView>
         <View className="mt-5">
-          {memberInfo && (
+          {currentMember && (
             <View className="flex-row items-center">
               <TextInput
                 value={postValue}
@@ -249,7 +247,7 @@ export default function CommunityDiscussion({ route }) {
                           </View>
                         </View>
                         <View className="flex-row gap-2">
-                          {user.userId === memberInfo.userId && (
+                          {user.userId === currentMember.userId && (
                             <Pressable
                               onPress={() => {
                                 setPostEditValue(post);
@@ -259,8 +257,8 @@ export default function CommunityDiscussion({ route }) {
                               <Text>Edit</Text>
                             </Pressable>
                           )}
-                          {(user.userId === memberInfo.userId ||
-                            memberInfo.role === CommunityRole.Owner) && (
+                          {(user.userId === currentMember.userId ||
+                            currentMember.role === CommunityRole.Owner) && (
                             <Pressable
                               onPress={() =>
                                 onDeletePost(post.communityPost.communityPostId)
@@ -271,11 +269,11 @@ export default function CommunityDiscussion({ route }) {
                           )}
                         </View>
                         {post.communityPost.posterUserId !==
-                          memberInfo.userId && (
+                          currentMember.userId && (
                           <Pressable
                             onPress={() =>
                               reportById(
-                                memberInfo.userId,
+                                currentMember.userId,
                                 post.communityPost.communityPostId,
                                 ReportEnum.CommunityPost
                               )
@@ -293,7 +291,7 @@ export default function CommunityDiscussion({ route }) {
                             onPress={() =>
                               like(
                                 post.communityPost.communityPostId,
-                                memberInfo.userId
+                                currentMember.userId
                               )
                             }
                           >
@@ -348,7 +346,7 @@ export default function CommunityDiscussion({ route }) {
                       communityId={id}
                       showComment={showComment}
                       post={post}
-                      memberInfo={memberInfo}
+                      currentMember={currentMember}
                     />
                   </View>
                 );

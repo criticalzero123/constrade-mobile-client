@@ -13,18 +13,16 @@ import useGetCommunity from "../../../hooks/community/useGetCommunity";
 import { useNavigation } from "@react-navigation/native";
 import PrivateMessageComponent from "../../../components/Community/PrivateMessageComponent";
 
-export default function CommunityMember({ route }) {
-  const { id, memberInfo } = route.params;
+export default function CommunityMember() {
   const { height, width } = useWindowDimensions();
+  const { visibility, currentMember, id } = useGetCommunity();
   const [members, remove] = useCommunityMembers(id);
-  const { visibility } = useGetCommunity();
   const navigation = useNavigation();
 
-  if (memberInfo === undefined && visibility === "private")
+  if (currentMember === undefined && visibility === "private")
     return <PrivateMessageComponent text={"Members"} />;
-
   // For the non-member and visibility public
-  if (memberInfo === undefined)
+  if (currentMember === undefined)
     return (
       <View className="p-4">
         {members &&
@@ -56,18 +54,19 @@ export default function CommunityMember({ route }) {
 
   return (
     <View className="p-4">
-      {visibility === "private" && memberInfo.role === CommunityRole.Owner && (
-        <Pressable
-          onPress={() => navigation.navigate("SeeMemberRequest", { id })}
-        >
-          <Text
-            className="py-3 text-center bg-[#CC481F] text-white mb-4 font-semibold"
-            style={{ borderRadius: 5 }}
+      {visibility === "private" &&
+        currentMember.role === CommunityRole.Owner && (
+          <Pressable
+            onPress={() => navigation.navigate("SeeMemberRequest", { id })}
           >
-            See member request
-          </Text>
-        </Pressable>
-      )}
+            <Text
+              className="py-3 text-center bg-[#CC481F] text-white mb-4 font-semibold"
+              style={{ borderRadius: 5 }}
+            >
+              See member request
+            </Text>
+          </Pressable>
+        )}
       {members &&
         members.map((member) => (
           <View
@@ -91,8 +90,8 @@ export default function CommunityMember({ route }) {
               </View>
             </View>
 
-            {memberInfo.role === CommunityRole.Owner &&
-              memberInfo.userId !== member.member.userId && (
+            {currentMember.role === CommunityRole.Owner &&
+              currentMember.userId !== member.member.userId && (
                 <Pressable
                   onPress={() => remove(member.member.communityMemberId)}
                 >
