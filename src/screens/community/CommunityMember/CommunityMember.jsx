@@ -11,6 +11,7 @@ import useCommunityMembers from "../../../hooks/community/useCommunityMembers";
 import { CommunityRole, communityRoleString } from "../../../../service/enums";
 import useGetCommunity from "../../../hooks/community/useGetCommunity";
 import { useNavigation } from "@react-navigation/native";
+import PrivateMessageComponent from "../../../components/Community/PrivateMessageComponent";
 
 export default function CommunityMember({ route }) {
   const { id, memberInfo } = route.params;
@@ -18,7 +19,40 @@ export default function CommunityMember({ route }) {
   const [members, remove] = useCommunityMembers(id);
   const { visibility } = useGetCommunity();
   const navigation = useNavigation();
-  if (memberInfo === undefined) return;
+
+  if (memberInfo === undefined && visibility === "private")
+    return <PrivateMessageComponent text={"Members"} />;
+
+  // For the non-member and visibility public
+  if (memberInfo === undefined)
+    return (
+      <View className="p-4">
+        {members &&
+          members.map((member) => (
+            <View
+              className="flex-row items-center gap-4 mb-3 justify-between"
+              key={member.member.userId}
+            >
+              <View className="flex-row items-center">
+                <Image
+                  style={{
+                    height: height * 0.04,
+                    width: width * 0.08,
+                    borderRadius: 1000,
+                  }}
+                  source={{ uri: member.userImageUrl }}
+                />
+                <View>
+                  <Text className="ml-2">{member.userName}</Text>
+                  <Text className="ml-2 text-gray-400">
+                    {communityRoleString(member.member.role)}
+                  </Text>
+                </View>
+              </View>
+            </View>
+          ))}
+      </View>
+    );
 
   return (
     <View className="p-4">

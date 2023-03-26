@@ -20,6 +20,8 @@ import { CommunityRole, ReportEnum } from "../../../../service/enums";
 import useGetCurrentUser from "../../../hooks/useGetCurrentUser";
 import CommunityComments from "../../../components/Community/CommunityComments";
 import { Button, Dialog, Portal, Provider } from "react-native-paper";
+import PrivateMessageComponent from "../../../components/Community/PrivateMessageComponent";
+import useGetCommunity from "../../../hooks/community/useGetCommunity";
 
 export default function CommunityDiscussion({ route }) {
   const { memberInfo, id } = route.params;
@@ -27,6 +29,7 @@ export default function CommunityDiscussion({ route }) {
   const { width, height } = useWindowDimensions();
   const { user, person } = useGetCurrentUser();
   const [_, getComments] = useCommentPost(id);
+  const { visibility } = useGetCommunity();
 
   const { post, deletePost, like, posts, setPosts, edit } = usePostCommunity(
     id,
@@ -114,7 +117,90 @@ export default function CommunityDiscussion({ route }) {
     } else alert("Something went wrong in deleting post");
   };
 
-  if (memberInfo === undefined) return;
+  if (memberInfo === undefined && visibility === "private")
+    return <PrivateMessageComponent text={"Discussions"} />;
+
+  // For the non-member and visibility public
+  if (memberInfo === undefined)
+    return (
+      <View>
+        {posts &&
+          (posts.length !== 0 ? (
+            posts.map((post, index) => {
+              const { user, person } = post.user;
+
+              return (
+                <View className=" mb-10" key={index}>
+                  <View className="p-5 bg-gray-200">
+                    <View className="flex-row justify-between mb-6">
+                      <View className="flex-row gap-2">
+                        <Image
+                          source={{ uri: user.imageUrl }}
+                          style={{
+                            width: width * 0.08,
+                            height: height * 0.04,
+                            borderRadius: 100,
+                          }}
+                        />
+                        <View>
+                          <Text className="capitalize font-semibold">
+                            {person.firstName} {person.lastName}
+                          </Text>
+                          <Text>Date</Text>
+                        </View>
+                      </View>
+                    </View>
+                    <View className="ml-10">
+                      <Text>{post.communityPost.description}</Text>
+                      <View className="border-b border-b-gray-400 my-3" />
+                      <View className="flex-row items-center">
+                        <Pressable onPress={() => alert("Join First")}>
+                          <View className="flex-row">
+                            <AntDesign
+                              name="hearto"
+                              size={20}
+                              color={post.isLiked ? "red" : "gray"}
+                            />
+                            <Text
+                              className={`justify-center ml-1  font-semibold ${
+                                post.isLiked ? "text-red-500" : "text-gray-500"
+                              }`}
+                            >
+                              {post.communityPost.like}
+                            </Text>
+                          </View>
+                        </Pressable>
+                        <View className="flex-row ml-8">
+                          <Pressable onPress={() => alert("Join First")}>
+                            <MaterialCommunityIcons
+                              name="comment-multiple-outline"
+                              size={20}
+                              color="gray"
+                            />
+                          </Pressable>
+
+                          {post.commentsLength !== undefined &&
+                          post.commentsLength !== 0 ? (
+                            <Text className="justify-center ml-1 text-gray-500">
+                              {post.commentsLength}
+                            </Text>
+                          ) : (
+                            <Text className="justify-center ml-2 text-gray-500">
+                              No discussion yet
+                            </Text>
+                          )}
+                        </View>
+                      </View>
+                    </View>
+                  </View>
+                </View>
+              );
+            })
+          ) : (
+            <Text>No Posts</Text>
+          ))}
+      </View>
+    );
 
   return (
     <Provider>
