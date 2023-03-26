@@ -6,6 +6,7 @@ import Community from "../../screens/community/Community";
 import CommunityDetail from "../../screens/community/CommunityDetail/CommunityDetail";
 import CommunityEdit from "../../screens/community/CommunityEdit";
 import MyCommunity from "../../screens/community/MyCommunity";
+import SeeMemberRequest from "../../screens/community/SeeMemberRequest";
 
 const Stack = createNativeStackNavigator();
 
@@ -22,6 +23,7 @@ export default function CommunityStack() {
       <Stack.Screen component={AddCommunity} name="AddCommunity" />
       <Stack.Screen component={CommunityEdit} name="CommunityEdit" />
       <Stack.Screen component={CommunityDetail} name="CommunityDetail" />
+      <Stack.Screen component={SeeMemberRequest} name="SeeMemberRequest" />
     </Stack.Navigator>
   );
 }

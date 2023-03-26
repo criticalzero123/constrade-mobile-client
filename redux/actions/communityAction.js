@@ -308,9 +308,38 @@ export const getPopularCommunity = (userId) => async (dispatch) => {
   }
 };
 
-export const cleanCommunity = () => (dispatch) => {
-  dispatch({ type: "CREATE_COMMUNITY_LEAVE" });
-  // dispatch({ type: "GET_MY_COMMUNITY_LEAVE" });
-  // dispatch({ type: "GET_COMMUNITY_BY_ID_LEAVE" });
-  // dispatch({ type: "GET_ALL_COMMUNITY_LEAVE" });
+export const getMemberRequests = async (id) => {
+  try {
+    const res = await api
+      .setAuthHeaders()
+      .get(`/api/community/${id}/members/requests`);
+
+    return res.data.responseData;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const acceptMemberRequest = async (id, reqId) => {
+  try {
+    const res = await api
+      .setAuthHeaders()
+      .put(`/api/community/${id}/members/accept/${reqId}`);
+
+    return res.data.responseData;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const rejectMemberRequest = async (id, reqId) => {
+  try {
+    const res = await api
+      .setAuthHeaders()
+      .put(`/api/community/${id}/members/reject/${reqId}`);
+
+    return res.data.responseData;
+  } catch (error) {
+    console.error(error);
+  }
 };

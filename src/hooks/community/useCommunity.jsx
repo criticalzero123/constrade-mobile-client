@@ -21,10 +21,6 @@ export default function useCommunity(userId) {
   useEffect(() => {
     if (userId === undefined) return;
     dispatch(getMyCommunity(userId));
-
-    return () => {
-      dispatch(cleanCommunity());
-    };
   }, []);
 
   const deleteCommunityById = (id, userId) => {

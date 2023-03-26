@@ -8,6 +8,7 @@ import {
 export default function useCommunityMembers(communityId) {
   const dispatch = useDispatch();
   const { data } = useSelector((state) => state.getCommunityMembersReducer);
+
   useEffect(() => {
     if (communityId === undefined) return;
 

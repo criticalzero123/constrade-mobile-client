@@ -115,6 +115,7 @@ export default function CommunityDiscussion({ route }) {
   };
 
   if (memberInfo === undefined) return;
+
   return (
     <Provider>
       <ScrollView>

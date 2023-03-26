@@ -8,11 +8,29 @@ import {
 } from "react-native";
 import React from "react";
 
-import { Feather } from "@expo/vector-icons";
+import { Entypo, Feather, MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 export default function CommunityCard({ data, index, currentUserId }) {
   const { width, height } = useWindowDimensions();
   const navigation = useNavigation();
+
+  const VisibilityPrivate = () => {
+    return (
+      <View className="flex-row items-center">
+        <Entypo name="lock" size={20} color="silver" />
+        <Text className="ml-2 capitalize text-[#8193A3]">Private group</Text>
+      </View>
+    );
+  };
+
+  const VisibilityPublic = () => {
+    return (
+      <View className="flex-row items-center">
+        <MaterialIcons name="public" size={20} color="gray" />
+        <Text className="ml-2 capitalize text-[#8193A3]">Public group</Text>
+      </View>
+    );
+  };
 
   return (
     <Pressable
@@ -47,11 +65,12 @@ export default function CommunityCard({ data, index, currentUserId }) {
       <View className="p-3 h-2/3 justify-between rounded-b-lg">
         <View className="mt-1">
           <Text className="font-bold text-xl">{data.community.name}</Text>
-          <View className="flex-row items-center mt-4">
-            <Feather name="lock" size={18} color="gray" />
-            <Text className="text-gray-500 ml-3 text-base">
-              {data.private ? "Private " : "Public "}group
-            </Text>
+          <View className="mt-4">
+            {data.community.visibility === "private" ? (
+              <VisibilityPrivate />
+            ) : (
+              <VisibilityPublic />
+            )}
           </View>
           <View className="my-1"></View>
           <View className="flex-row items-center">

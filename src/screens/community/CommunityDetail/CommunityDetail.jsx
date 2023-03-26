@@ -36,7 +36,7 @@ export default function CommunityDetail({ route }) {
   useHideBottomTab();
 
   const { id } = route.params;
-  const [data] = useGetCommunity(id);
+  const { data } = useGetCommunity(id);
   const { deleteCommunityById, reportCommunityUser, join } = useCommunity();
   const { user } = useGetCurrentUser();
   const navigation = useNavigation();
