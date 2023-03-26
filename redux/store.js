@@ -63,7 +63,6 @@ import {
 import { getNotificationUserReducer } from "./reducers/notificationReducer";
 
 import {
-  createCommunityReducer,
   getMyCommunityReducer,
   getCommunityByIdReducer,
   deleteCommunityReducer,
@@ -108,7 +107,6 @@ const finalReducer = combineReducers({
   getSubscriptionHistoryReducer,
   deleteMessageByIdReducer,
   getNotificationUserReducer,
-  createCommunityReducer,
   getMyCommunityReducer,
   getCommunityByIdReducer,
   deleteCommunityReducer,

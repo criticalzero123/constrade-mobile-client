@@ -9,7 +9,7 @@ export default function useCommunityJoined(id) {
     if (id === undefined) return;
 
     dispatch(getAllMyCommunityJoined(id));
-  }, [dispatch, id]);
+  }, []);
 
   return [data];
 }

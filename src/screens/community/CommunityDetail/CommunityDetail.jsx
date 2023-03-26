@@ -28,6 +28,7 @@ import { ReportEnum } from "../../../../service/enums";
 import CommunityDiscussion from "../CommunityDiscussion/CommunityDiscussion";
 import CommunityMember from "../CommunityMember/CommunityMember";
 import { useHideBottomTab } from "../../../hooks/useHideBottomTab";
+import { useNavigation } from "@react-navigation/native";
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -38,19 +39,22 @@ export default function CommunityDetail({ route }) {
   const [data] = useGetCommunity(id);
   const { deleteCommunityById, reportCommunityUser, join } = useCommunity();
   const { user } = useGetCurrentUser();
-
+  const navigation = useNavigation();
   const { width, height } = useWindowDimensions();
 
   const onShowAction = () => {
-    Alert.alert("Information", "Please Choose your Action", [
+    Alert.alert("", "Please Choose your Action", [
       {
         text: "Delete",
         onPress: () => deleteCommunityById(id, user.userId),
       },
-      { text: "Update", onPress: () => alert("Update") },
+      {
+        text: "Update",
+        onPress: () =>
+          navigation.navigate("CommunityEdit", { data: data.community }),
+      },
       {
         text: "Cancel",
-        onPress: () => console.log("Cancel Pressed"),
         style: "cancel",
       },
     ]);

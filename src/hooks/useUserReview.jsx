@@ -5,6 +5,7 @@ import { getMyAverageRate } from "../../redux/actions/reviewAction";
 export default function useUserReview(userId) {
   const [average, setAverage] = useState();
   useEffect(() => {
+    if (userId === undefined) return;
     const fetch = async () => {
       const result = await getMyAverageRate(userId);
 

@@ -1,4 +1,10 @@
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import {
+  ActivityIndicator,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import React from "react";
 import ContainerSafeView from "../../../components/CustomViews/ContainerSafeView";
 import { useState } from "react";
@@ -7,10 +13,14 @@ import { Picker } from "@react-native-picker/picker";
 import useGetCurrentUser from "../../../hooks/useGetCurrentUser";
 import useCommunity from "../../../hooks/community/useCommunity";
 import { useHideBottomTab } from "../../../hooks/useHideBottomTab";
+import { StackActions, useNavigation } from "@react-navigation/native";
 
 export default function AddCommunity() {
   useHideBottomTab();
   const { user } = useGetCurrentUser();
+  const navigation = useNavigation();
+  const [loading, setLoading] = useState(false);
+
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [image, setImage] = useState(
@@ -20,7 +30,8 @@ export default function AddCommunity() {
 
   const { create } = useCommunity();
 
-  const onPress = () => {
+  const onPress = async () => {
+    setLoading(true);
     const info = {
       ownerUserId: user.userId,
       name: name,
@@ -28,7 +39,13 @@ export default function AddCommunity() {
       imageUrl: image,
       visibility: visibility,
     };
-    create(info);
+    const res = await create(info);
+    if (res.toString().toLowerCase().includes("success")) {
+      navigation.dispatch(StackActions.replace("MyCommunity"));
+    } else {
+      alert(res);
+    }
+    setLoading(false);
   };
 
   return (
@@ -47,8 +64,12 @@ export default function AddCommunity() {
         <Picker.Item value="private" label="Private" />
       </Picker>
 
-      <Pressable onPress={onPress} className="p-4 items-center bg-gray-300">
-        <Text>Create</Text>
+      <Pressable
+        onPress={onPress}
+        className="p-4 items-center bg-gray-300"
+        disabled={loading}
+      >
+        {loading ? <ActivityIndicator /> : <Text>Create</Text>}
       </Pressable>
     </ContainerSafeView>
   );

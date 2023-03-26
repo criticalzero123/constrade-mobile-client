@@ -10,7 +10,6 @@ import React from "react";
 
 import { Feather } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-
 export default function CommunityCard({ data, index, currentUserId }) {
   const { width, height } = useWindowDimensions();
   const navigation = useNavigation();
@@ -25,11 +24,26 @@ export default function CommunityCard({ data, index, currentUserId }) {
         })
       }
     >
-      <Image
-        source={{ uri: data.community.imageUrl }}
-        style={{ width: undefined, resizeMode: "cover" }}
-        className="h-1/3 rounded-t-lg"
-      />
+      <View style={{ height: height * 0.11 }} className="relative">
+        <Image
+          source={{ uri: data.community.imageUrl }}
+          style={{
+            width: undefined,
+            height: undefined,
+            resizeMode: "cover",
+          }}
+          className="rounded-t-lg flex-1"
+        />
+        {data.isJoined && (
+          <View
+            style={{ borderRadius: 5 }}
+            className="flex-row items-center absolute bottom-0 left-0 p-2 m-2 bg-[#CC481F]"
+          >
+            <Feather name="check" size={15} color="white" />
+            <Text className=" text-white ml-2">Joined</Text>
+          </View>
+        )}
+      </View>
       <View className="p-3 h-2/3 justify-between rounded-b-lg">
         <View className="mt-1">
           <Text className="font-bold text-xl">{data.community.name}</Text>
@@ -49,14 +63,14 @@ export default function CommunityCard({ data, index, currentUserId }) {
         </View>
         <View className="mb-2 flex-row items-center">
           <Image
-            source={{ uri: data.owner.user.imageUrl }}
+            source={{ uri: data.ownerImage }}
             className="w-6 h-6 rounded-full mr-3"
           />
           <Text className="text-gray-400">by</Text>
           <Text className="text-black font-semibold ml-1">
             {currentUserId === data.community.ownerUserId
               ? "you"
-              : data.owner.person.firstName + " " + data.owner.person.lastName}
+              : data.ownerName}
           </Text>
         </View>
       </View>

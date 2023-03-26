@@ -4,6 +4,7 @@ import {
   cleanCommunity,
   createCommunity,
   deleteCommunity,
+  editCommunity,
   getMyCommunity,
   joinCommunityById,
   reportCommunity,
@@ -11,19 +12,10 @@ import {
 
 export default function useCommunity(userId) {
   const dispatch = useDispatch();
-  const { data: created } = useSelector(
-    (state) => state.createCommunityReducer
-  );
+
   const { data: communityList } = useSelector(
     (state) => state.getMyCommunityReducer
   );
-
-  //   Getting if success creating community
-  useEffect(() => {
-    if (created === undefined) return;
-
-    alert(created);
-  }, [created]);
 
   //   Getting my community
   useEffect(() => {
@@ -44,11 +36,15 @@ export default function useCommunity(userId) {
   };
 
   const create = (info) => {
-    dispatch(createCommunity(info));
+    return createCommunity(info);
   };
 
   const join = (communityId, userId) => {
     dispatch(joinCommunityById({ communityId, userId }));
+  };
+
+  const edit = (info) => {
+    return editCommunity(info);
   };
 
   return {
@@ -57,5 +53,6 @@ export default function useCommunity(userId) {
     deleteCommunityById,
     reportCommunityUser,
     join,
+    edit,
   };
 }

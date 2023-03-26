@@ -1,16 +1,12 @@
 import api from "../../service/api";
 
-export const createCommunity = (info) => async (dispatch) => {
-  dispatch({ type: "CREATE_COMMUNITY_REQUEST" });
-
+export const createCommunity = async (info) => {
   try {
     const res = await api.setAuthHeaders().post("/api/community/create", info);
-    dispatch({
-      type: "CREATE_COMMUNITY_SUCCESS",
-      payload: res.data.responseData,
-    });
+
+    return res.data.responseData;
   } catch (error) {
-    dispatch({ type: "CREATE_COMMUNITY_FAILED", error: error });
+    console.error(error);
   }
 };
 
@@ -41,6 +37,16 @@ export const getCommunityById = (id) => async (dispatch) => {
     });
   } catch (error) {
     dispatch({ type: "GET_COMMUNITY_BY_ID_FAILED", error: error });
+  }
+};
+
+export const editCommunity = async (info) => {
+  try {
+    const res = await api.setAuthHeaders().put("/api/community", info);
+
+    return res.data.responseData;
+  } catch (error) {
+    console.error(error);
   }
 };
 
