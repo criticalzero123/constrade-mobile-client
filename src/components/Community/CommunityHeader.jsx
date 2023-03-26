@@ -41,7 +41,7 @@ export default function CommunityHeader() {
           <Text className="font-bold text-lg text-black">Communities</Text>
           <Ionicons name="notifications-outline" size={24} color="black" />
         </View>
-        <Text className="text-black text-center text-3xl font-bold absolute bottom-0  w-full">
+        <Text className="text-black text-center text-2xl font-bold absolute bottom-0 mb-10 w-full">
           Find the perfect place just for you.
         </Text>
       </View>

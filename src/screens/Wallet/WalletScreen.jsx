@@ -36,9 +36,9 @@ export default function WalletScreen() {
         </View>
         <View className="flex-row justify-between mt-2">
           {data &&
-            itemWallet.map((item) => (
+            itemWallet.map((item, index) => (
               <WalletItemAction
-                key={item.id}
+                key={index}
                 data={item}
                 onPress={() =>
                   navigation.navigate(item.to, {

@@ -37,7 +37,6 @@ export default function AccountBar({ data }) {
           />
         }
         title="Verify Account"
-        description="Verify your account"
         onPress={() => navigation.navigate("Verification", { data: data })}
       />
 

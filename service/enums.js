@@ -12,6 +12,17 @@ export const CommunityRole = {
   Owner: 2,
 };
 
+export const communityRoleString = (num) => {
+  switch (num) {
+    case 0:
+      return "Member";
+    case 1:
+      return "Admin";
+    case 2:
+      return "Owner";
+  }
+};
+
 export const ReportStatus = {
   Active: 0,
   Done: 1,
