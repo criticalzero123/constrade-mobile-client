@@ -29,7 +29,7 @@ import CommunityDiscussion from "../CommunityDiscussion/CommunityDiscussion";
 import CommunityMember from "../CommunityMember/CommunityMember";
 import { useHideBottomTab } from "../../../hooks/useHideBottomTab";
 import { useNavigation } from "@react-navigation/native";
-import { communityDataInfo } from "../../../../redux/actions/communityAction";
+import ContainerSafeView from "../../../components/CustomViews/ContainerSafeView";
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -37,7 +37,7 @@ export default function CommunityDetail({ route }) {
   useHideBottomTab();
 
   const { id } = route.params;
-  const { data, currentMember } = useGetCommunity(id);
+  const { data, currentMember, refresh } = useGetCommunity(id);
   const { deleteCommunityById, reportCommunityUser, join } = useCommunity();
   const { user } = useGetCurrentUser();
   const navigation = useNavigation();
@@ -72,9 +72,22 @@ export default function CommunityDetail({ route }) {
     reportCommunityUser(info);
   };
 
+  const handleJoin = async () => {
+    const res = await join(id, user.userId);
+    const resLower = res.toString().toLowerCase();
+
+    if (resLower === "pending") {
+      alert("pending");
+    } else if (resLower === "approved") {
+      refresh(user.userId);
+    } else {
+      alert("Rejected");
+    }
+  };
+
   if (data) {
     return (
-      <SafeAreaView style={styles.container}>
+      <ContainerSafeView horizontalSpace={false}>
         <ScrollView
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ flex: 1 }}
@@ -167,7 +180,7 @@ export default function CommunityDetail({ route }) {
 
                 <Pressable
                   className="w-full items-center p-4 bg-[#D14519] rounded-lg"
-                  onPress={() => join(id, user.userId)}
+                  onPress={handleJoin}
                 >
                   <Text className="text-white font-semibold">Join group</Text>
                 </Pressable>
@@ -236,7 +249,7 @@ export default function CommunityDetail({ route }) {
             />
           </Tab.Navigator>
         </ScrollView>
-      </SafeAreaView>
+      </ContainerSafeView>
     );
   }
 }

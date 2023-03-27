@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   communityDataInfo,
   getCommunityById,
+  getCommunityMembers,
+  getPostByCommunityId,
 } from "../../../redux/actions/communityAction";
 
 export default function useGetCommunity(id) {
@@ -26,12 +28,19 @@ export default function useGetCommunity(id) {
     // Getting if member
     const currentMember = data.members.find((_m) => _m.userId === user.userId);
     dispatch(communityDataInfo(data.community.communityId, currentMember));
-  }, []);
+  }, [data]);
+
+  const refresh = (userId) => {
+    dispatch(getCommunityById(id));
+    dispatch(getCommunityMembers(id));
+    dispatch(getPostByCommunityId(id, userId));
+  };
 
   return {
     data,
     visibility,
     currentMember: communityInfo.memberInfo,
     id: communityInfo.id,
+    refresh,
   };
 }

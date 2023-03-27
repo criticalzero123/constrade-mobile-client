@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  cleanCommunity,
   createCommunity,
   deleteCommunity,
   editCommunity,
@@ -36,7 +35,7 @@ export default function useCommunity(userId) {
   };
 
   const join = (communityId, userId) => {
-    dispatch(joinCommunityById({ communityId, userId }));
+    return joinCommunityById({ communityId, userId });
   };
 
   const edit = (info) => {

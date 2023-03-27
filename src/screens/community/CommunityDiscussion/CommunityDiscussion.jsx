@@ -28,7 +28,6 @@ export default function CommunityDiscussion() {
   const { user, person } = useGetCurrentUser();
   const [_, getComments] = useCommentPost(id);
   const { visibility, currentMember, id } = useGetCommunity();
-
   const { post, deletePost, like, posts, setPosts, edit } = usePostCommunity(
     id,
     user.userId
@@ -58,12 +57,14 @@ export default function CommunityDiscussion() {
 
     const postId = await post(info);
     setPostValue("");
-
+    console.log(currentMember, postId, posts);
     if (Number.isInteger(postId)) {
       setPosts([
         {
           communityPost: { ...info, communityPostId: postId, like: 0 },
           user: { user: { ...currentMember, ...user }, person: { ...person } },
+          isLiked: false,
+          commentsLength: 0,
         },
         ...posts,
       ]);

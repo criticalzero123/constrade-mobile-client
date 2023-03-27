@@ -82,34 +82,6 @@ export const deleteCommunityReducer = (state = {}, action) => {
   }
 };
 
-export const joinCommunityByIdReducer = (state = {}, action) => {
-  switch (action.type) {
-    case "JOIN_COMMUNITY_BY_ID_REQUEST":
-      return {
-        ...state,
-        loading: true,
-      };
-
-    case "JOIN_COMMUNITY_BY_ID_SUCCESS":
-      return {
-        loading: false,
-        data: action.payload,
-      };
-
-    case "JOIN_COMMUNITY_BY_ID_FAILED":
-      return {
-        loading: false,
-        error: action.error,
-      };
-
-    case "JOIN_COMMUNITY_BY_ID_LEAVE":
-      return {};
-
-    default:
-      return { ...state };
-  }
-};
-
 export const getAllCommunityReducer = (state = {}, action) => {
   switch (action.type) {
     case "GET_ALL_COMMUNITY_REQUEST":

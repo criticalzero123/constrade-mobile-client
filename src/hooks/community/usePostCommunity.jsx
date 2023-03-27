@@ -17,14 +17,14 @@ export default function usePostCommunity(id, userId) {
 
   useEffect(() => {
     if (data === undefined) return;
-
+    console.log(data);
     setPosts(data);
   }, [data]);
 
   useEffect(() => {
-    if (id === undefined || !id) return;
+    if (id === undefined) return;
     dispatch(getPostByCommunityId(id, userId));
-  }, []);
+  }, [id]);
 
   const post = (info) => {
     return postCommunity(id, info);

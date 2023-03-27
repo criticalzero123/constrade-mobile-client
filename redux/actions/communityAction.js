@@ -96,17 +96,13 @@ export const getAllCommunity = () => async (dispatch) => {
   }
 };
 
-export const joinCommunityById = (info) => async (dispatch) => {
-  dispatch({ type: "JOIN_COMMUNITY_BY_ID_REQUEST" });
-
+export const joinCommunityById = async (info) => {
   try {
     const res = await api.setAuthHeaders().post("/api/community/join", info);
-    dispatch({
-      type: "JOIN_COMMUNITY_BY_ID_SUCCESS",
-      payload: res.data.responseData,
-    });
+
+    return res.data.responseData;
   } catch (error) {
-    dispatch({ type: "JOIN_COMMUNITY_BY_ID_FAILED", error: error });
+    console.error(error);
   }
 };
 
