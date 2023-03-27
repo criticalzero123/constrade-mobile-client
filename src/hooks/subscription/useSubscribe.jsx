@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  cancelSubscription,
   getSubscriptionHistory,
   subscribeUser,
 } from "../../../redux/actions/subscriptionAction";
@@ -34,5 +35,9 @@ export default function useSubscribe(userId) {
     dispatch(subscribeUser(userId));
   };
 
-  return { subscribe, data, historyData };
+  const cancel = (userId) => {
+    return cancelSubscription(userId);
+  };
+
+  return { subscribe, data, historyData, cancel };
 }

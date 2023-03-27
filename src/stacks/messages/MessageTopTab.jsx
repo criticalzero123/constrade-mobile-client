@@ -1,7 +1,7 @@
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { Platform, Text, StatusBar, View, Pressable } from "react-native";
-import MessagesAll from "../../screens/messages/MessagesAll";
-import MessagesUnread from "../../screens/messages/MessagesUnread";
+import MessagesListPersonal from "../../screens/messages/MessagesListPersonal";
+import MessagesListProduct from "../../screens/messages/MessagesListProduct";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 
@@ -46,20 +46,20 @@ export default function MessageTopTab() {
         }}
       >
         <Tab.Screen
-          name="MessageAll"
-          component={MessagesAll}
+          name="MessagesListPersonal"
+          component={MessagesListPersonal}
           options={{
-            tabBarLabel: "All",
+            tabBarLabel: "Personal",
             tabBarLabelStyle: {
               textTransform: "capitalize",
             },
           }}
         />
         <Tab.Screen
-          name="MessageUnread"
-          component={MessagesUnread}
+          name="MessagesListProduct"
+          component={MessagesListProduct}
           options={{
-            tabBarLabel: "Unread",
+            tabBarLabel: "Product",
             tabBarLabelStyle: { textTransform: "capitalize" },
           }}
         />

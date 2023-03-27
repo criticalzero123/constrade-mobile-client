@@ -28,3 +28,13 @@ export const getSubscriptionHistory = (userId) => async (dispatch) => {
     dispatch({ type: "GET_SUBSCRIPTION_HISTORY_FAILED", error: error });
   }
 };
+
+export const cancelSubscription = async (userId) => {
+  try {
+    const res = await api.put(`/api/subscription/cancel/${userId}`);
+
+    return res.data.responseData;
+  } catch (error) {
+    console.error(error);
+  }
+};

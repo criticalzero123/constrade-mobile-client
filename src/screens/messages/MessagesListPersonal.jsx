@@ -1,13 +1,13 @@
 import { StyleSheet, View } from "react-native";
 import React from "react";
 
-import useGetChatList from "../../hooks/Message/useGetChatList";
+import usePersonalList from "../../hooks/Message/usePersonalList";
 import { ActivityIndicator } from "react-native-paper";
 import ChatInfoItem from "../../components/messages/ChatInfoItem";
 import MessageEmpty from "../../components/messages/MessageEmpty";
 
-export default function MessagesAll() {
-  const [chats] = useGetChatList();
+export default function MessagesListPersonal() {
+  const [chats] = usePersonalList();
 
   return (
     <View className="mt-4" style={{ paddingHorizontal: 20 }}>
