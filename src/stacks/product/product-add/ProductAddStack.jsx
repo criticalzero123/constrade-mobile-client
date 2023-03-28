@@ -4,6 +4,8 @@ import React from "react";
 import AddProductOptions from "../../../screens/Products/AddProduct/AddProductOptions";
 import AddProductItemDetails from "../../../screens/Products/AddProduct/AddProductItemDetails";
 import AddProductDeliveryDetails from "../../../screens/Products/AddProduct/AddProductDeliveryDetails";
+import AddProductSearchItems from "../../../screens/Products/AddProduct/AddProductSearchItems";
+import AddProductSearchResults from "../../../screens/Products/AddProduct/AddProductSearchResults";
 
 const Stack = createNativeStackNavigator();
 
@@ -14,6 +16,14 @@ export default function ProductAddStack() {
       screenOptions={{ headerShown: false }}
     >
       <Stack.Screen component={AddProductOptions} name="AddProductOptions" />
+      <Stack.Screen
+        component={AddProductSearchItems}
+        name="AddProductSearchItems"
+      />
+      <Stack.Screen
+        component={AddProductSearchResults}
+        name="AddProductSearchResults"
+      />
       <Stack.Screen
         component={AddProductItemDetails}
         name="AddProductItemDetails"

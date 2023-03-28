@@ -63,7 +63,7 @@ export default function AddProductOptions() {
 
       <Pressable
         className="w-full bg-[#CC481F] p-4 items-center rounded mb-5"
-        onPress={() => navigation.navigate("AddProductItemDetails")}
+        onPress={() => navigation.navigate("AddProductSearchItems")}
       >
         <Text className="font-semibold text-base text-white">Proceed</Text>
       </Pressable>

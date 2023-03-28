@@ -95,10 +95,10 @@ export default function ProductMessage({ route }) {
               )}
 
               {messageList.length !== 0 &&
-                messageList.map((message) => {
+                messageList.map((message, index) => {
                   return message.senderId === user.userId ? (
                     <MessageItem
-                      key={message.userMessageId}
+                      key={index}
                       message={message.message}
                       onDelete={deleteMessage}
                       isProduct={true}
@@ -107,7 +107,7 @@ export default function ProductMessage({ route }) {
                     <OtherMessageItem
                       image={details.user.imageUrl}
                       message={message.message}
-                      key={message.userMessageId}
+                      key={index}
                     />
                   );
                 })}
