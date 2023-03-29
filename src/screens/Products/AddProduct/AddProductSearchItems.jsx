@@ -52,6 +52,18 @@ export default function AddProductSearchItems({ route }) {
     navigation.navigate("AddProductItemDetails1", { data: info });
   };
 
+  const OwnPrice = () => {
+    return (
+      <View className="flex-1 flex-row items-end mb-2">
+        <Text
+          className="py-4 bg-[#CC481F] flex-1 text-center text-white font-semibold"
+          style={{ borderRadius: 5 }}
+        >
+          I will provide my own price
+        </Text>
+      </View>
+    );
+  };
   return (
     <ContainerSafeView>
       <HeaderArrow headerName={"Search item"} />
@@ -109,14 +121,16 @@ export default function AddProductSearchItems({ route }) {
         </ScrollView>
       )}
       <>
-        {shops && shops.length !== 0 && (
-          <View className="flex-1 flex-row items-end mb-2">
-            <Text
-              className="py-4 bg-[#CC481F] flex-1 text-center text-white font-semibold"
-              style={{ borderRadius: 5 }}
-            >
-              I will provide my own price
-            </Text>
+        {shops && (
+          <View className="flex-1">
+            {shops.length === 0 && param && param.itemName !== undefined ? (
+              <View className="flex-1">
+                <Text>No price data exist in our database</Text>
+                <OwnPrice />
+              </View>
+            ) : (
+              <OwnPrice />
+            )}
           </View>
         )}
 

@@ -15,6 +15,8 @@ import { useState } from "react";
 import { RadioButton } from "react-native-paper";
 import { itemConditionList } from "../../../../service/addProductService";
 import BottomModal from "../../../components/modal/BottomModal";
+import { Entypo } from "@expo/vector-icons";
+
 export default function AddProductItemDetails1({ route }) {
   const param = route.params;
   const [conditionModalVisible, setConditionModalVisible] = useState(false);
@@ -25,6 +27,17 @@ export default function AddProductItemDetails1({ route }) {
 
   const [condition, setCondition] = useState();
   const { height, width } = useWindowDimensions();
+
+  const handleSubmit = () => {
+    setItem("");
+    setItemList([...itemList, item]);
+  };
+
+  const onRemove = (text) => {
+    const filtered = itemList.filter((_p) => _p !== text);
+
+    setItemList(filtered);
+  };
 
   return (
     <ContainerSafeView>
@@ -118,18 +131,24 @@ export default function AddProductItemDetails1({ route }) {
         <Text>Enter platform</Text>
         <TextInput
           value={item}
-          onchangeText={setItem}
+          onChangeText={setItem}
           placeholder="Enter platform here..."
           className="p-3  border w-full my-2 border-gray-300"
           style={{ borderRadius: 5 }}
+          onSubmitEditing={handleSubmit}
         />
         <ScrollView
           style={{ height: height * 0.2 }}
           showsVerticalScrollIndicator={false}
         >
-          <Text>ASDASDa</Text>
-          <Text>ASDASDa</Text>
-          <Text>ASDASDa</Text>
+          {itemList.map((item, index) => (
+            <View key={index} className="flex-row items-center">
+              <Pressable onPress={() => onRemove(item)}>
+                <Entypo name="minus" size={24} color="#CC481F" />
+              </Pressable>
+              <Text>{item}</Text>
+            </View>
+          ))}
         </ScrollView>
         <View className="justify-end">
           <Pressable className="bg-[#CC481F] py-4" style={{ borderRadius: 5 }}>

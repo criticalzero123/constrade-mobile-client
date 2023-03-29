@@ -53,11 +53,12 @@ export default function AddProductSearchResults({ route }) {
         {results ? (
           results.length === 0 ? (
             <View>
-              <Text>No</Text>
+              <Text>No data</Text>
             </View>
           ) : (
             results.map((r, index) => (
-              <ResultItem name={r.toLowerCase()} key={index} />
+              <ResultItem name={r["product-name"]} key={index} />
+              // <ResultItem name={r.toLowerCase()} key={index} />
             ))
           )
         ) : (
