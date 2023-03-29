@@ -1,8 +1,6 @@
 import {
-  Button,
   Pressable,
   ScrollView,
-  StyleSheet,
   Text,
   TextInput,
   useWindowDimensions,
@@ -19,6 +17,7 @@ import { Ionicons } from "@expo/vector-icons";
 import * as Linking from "expo-linking";
 import { useHideBottomTab } from "../../../hooks/useHideBottomTab";
 import Modal from "react-native-modal";
+import BottomModal from "../../../components/modal/BottomModal";
 
 export default function AddProductSearchItems({ route }) {
   useHideBottomTab();
@@ -33,15 +32,24 @@ export default function AddProductSearchItems({ route }) {
   const { width, height } = useWindowDimensions();
 
   const handleSubmit = () => {
-    if (search.trim() !== "") {
-      setSearch("");
+    if (search.trim() !== "")
       navigation.navigate("AddProductSearchResults", { search });
-    } else alert("Please input something ");
+    else alert("Please input something ");
   };
 
   const toggleModal = (shop) => {
     setShopInfo(shop);
     setModalVisible(!isModalVisible);
+  };
+
+  const onHandleProceedWithPrice = () => {
+    setModalVisible(false);
+    const info = {
+      title: param.itemName,
+      value: shopInfo.value,
+      sourceId: shopInfo.productPricesId,
+    };
+    navigation.navigate("AddProductItemDetails1", { data: info });
   };
 
   return (
@@ -52,6 +60,8 @@ export default function AddProductSearchItems({ route }) {
         onChangeText={setSearch}
         placeholder="Search here..."
         onSubmitEditing={handleSubmit}
+        className="py-3 bg-gray-200 px-4 mb-4"
+        style={{ borderRadius: 5 }}
       />
       {shops && shops.length !== 0 && (
         <ScrollView
@@ -98,35 +108,22 @@ export default function AddProductSearchItems({ route }) {
           ))}
         </ScrollView>
       )}
-      {shops && shops.length !== 0 && (
-        <View className="flex-1 flex-row items-end mb-2">
-          <Text
-            className="py-4 bg-[#CC481F] flex-1 text-center text-white font-semibold"
-            style={{ borderRadius: 5 }}
-          >
-            I will provide my own price
-          </Text>
-        </View>
-      )}
-      <Modal
-        isVisible={isModalVisible}
-        className="m-0 flex-1 justify-end"
-        onBackdropPress={() => setModalVisible(!isModalVisible)}
-        hasBackdrop
-        hideModalContentWhileAnimating
-        backdropTransitionOutTiming={50}
-      >
-        <View
-          className="bg-white p-6"
-          style={{
-            height: height * 0.3,
-            borderTopStartRadius: 20,
-            borderTopEndRadius: 20,
-          }}
-        >
+      <>
+        {shops && shops.length !== 0 && (
+          <View className="flex-1 flex-row items-end mb-2">
+            <Text
+              className="py-4 bg-[#CC481F] flex-1 text-center text-white font-semibold"
+              style={{ borderRadius: 5 }}
+            >
+              I will provide my own price
+            </Text>
+          </View>
+        )}
+
+        <BottomModal setIsVisible={setModalVisible} isVisible={isModalVisible}>
           {shopInfo && (
-            <>
-              <Text className="text-xl text-gray-500 mb-4">
+            <View className="w-full">
+              <Text className="text-xl text-gray-500 mb-4 capitalize">
                 {shopInfo.shopName}
               </Text>
 
@@ -146,22 +143,20 @@ export default function AddProductSearchItems({ route }) {
                   <Text className="ml-2 text-blue-400 underline">Source</Text>
                 </Pressable>
               </View>
-              <View className=" flex-1 justify-end">
-                <Pressable
-                  className="py-4 bg-[#CC481F]"
-                  style={{ borderRadius: 5 }}
-                >
-                  <Text className="text-center font-semibold text-white">
-                    Proceed with this price
-                  </Text>
-                </Pressable>
-              </View>
-            </>
+
+              <Pressable
+                className="bg-[#CC481F] p-4 mt-10"
+                style={{ borderRadius: 5 }}
+                onPress={onHandleProceedWithPrice}
+              >
+                <Text className="text-center font-semibold text-white ">
+                  Proceed with this price
+                </Text>
+              </Pressable>
+            </View>
           )}
-        </View>
-      </Modal>
+        </BottomModal>
+      </>
     </ContainerSafeView>
   );
 }
-
-const styles = StyleSheet.create({});

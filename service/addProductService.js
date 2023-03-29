@@ -78,3 +78,48 @@ export const pickProductImage = async (setImageList, imageList) => {
     setImageList([...imageList, ...result.assets]);
   }
 };
+
+export const itemConditionList = [
+  {
+    id: 1,
+    title: "Brand new",
+    value: "brand-new",
+    description: "Describe this condition",
+    deduction: 0,
+  },
+  {
+    id: 2,
+    title: "Like new",
+    value: "like-new",
+    description: "Describe this condition",
+    deduction: 10,
+  },
+  {
+    id: 3,
+    title: "Lightly used",
+    value: "lightly-used",
+    description: "Describe this condition",
+    deduction: 15,
+  },
+  {
+    id: 4,
+    title: "Well used",
+    value: "well-used",
+    description: "Describe this condition",
+    deduction: 25,
+  },
+  {
+    id: 5,
+    title: "Heavily used",
+    value: "heavily-used",
+    description: "Describe this condition",
+    deduction: 50,
+  },
+  {
+    id: 6,
+    title: "Not good",
+    value: "not-good",
+    description: "Describe this condition",
+    deduction: 70,
+  },
+];
