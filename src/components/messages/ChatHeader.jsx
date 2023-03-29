@@ -32,9 +32,6 @@ export default function ChatHeader({ data, product }) {
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
-  const image =
-    "https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80";
-
   useEffect(() => {
     return () => {
       dispatch({ type: "GET_MESSAGES_BY_USER_IDS_LEAVE" });
@@ -93,7 +90,7 @@ export default function ChatHeader({ data, product }) {
             <Ionicons name="arrow-back-sharp" size={24} color="black" />
           </Pressable>
           <Image
-            source={{ uri: data.imageUrl === "" ? image : data.imageUrl }}
+            source={{ uri: data.imageUrl }}
             className="h-7 w-7 rounded-full ml-4"
             style={{ resizeMode: "contain" }}
           />
@@ -143,12 +140,15 @@ export default function ChatHeader({ data, product }) {
       )}
       <BottomModal setIsVisible={setModalVisible} isVisible={modalVisible}>
         {product.posterUserId !== user.userId && (
-          <View className="flex-row items-center">
-            <FontAwesome5 name="flag" size={20} color="red" />
-            <Text className="text-red-500 ml-2">Report user</Text>
+          <View>
+            <View className="flex-row items-center">
+              <FontAwesome5 name="flag" size={20} color="red" />
+              <Text className="text-red-500 ml-2">Report user</Text>
+            </View>
+            <View className="my-4" />
           </View>
         )}
-        <View className="my-4" />
+
         {product.posterUserId === user.userId && (
           <View>
             <Pressable
@@ -167,10 +167,20 @@ export default function ChatHeader({ data, product }) {
             <View className="my-4" />
           </View>
         )}
-        <View className="flex-row items-center">
+        <Pressable
+          className="flex-row items-center"
+          onPress={() =>
+            navigation.navigate("User", {
+              screen: "OtherUserProfile",
+              params: {
+                userId: data.userId,
+              },
+            })
+          }
+        >
           <FontAwesome name="user-circle-o" size={20} color="gray" />
           <Text className="text-gray-500 ml-2">View profile</Text>
-        </View>
+        </Pressable>
       </BottomModal>
     </View>
   );
