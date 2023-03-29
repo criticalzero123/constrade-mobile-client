@@ -46,8 +46,11 @@ export default function AddProductSearchItems({ route }) {
     setModalVisible(false);
     const info = {
       title: param.itemName,
-      value: shopInfo.value,
+      itemValue: shopInfo.value,
       sourceId: shopInfo.productPricesId,
+      genre: shopInfo.genre,
+      platform: shopInfo.platform,
+      isGenerated: true,
     };
     navigation.navigate("AddProductItemDetails1", { data: info });
   };
@@ -91,7 +94,7 @@ export default function AddProductSearchItems({ route }) {
               <View>
                 <Pressable
                   className="flex-row items-center  mb-2"
-                  onPress={() => Linking.openURL(`${shopInfo.originUrl}`)}
+                  onPress={() => Linking.openURL(`${shop.originUrl}`)}
                 >
                   <Ionicons name="link-outline" size={22} color="gray" />
                   <Text className="capitalize text-gray-400 text-base font-semibold ml-2">
@@ -153,7 +156,9 @@ export default function AddProductSearchItems({ route }) {
               </View>
               <View className="flex-row items-center">
                 <Ionicons name="link-outline" size={22} color="gray" />
-                <Pressable onPress={() => Linking.openURL(`${shop.originUrl}`)}>
+                <Pressable
+                  onPress={() => Linking.openURL(`${shopInfo.originUrl}`)}
+                >
                   <Text className="ml-2 text-blue-400 underline">Source</Text>
                 </Pressable>
               </View>

@@ -12,21 +12,21 @@ import CustomTextInput from "../../../components/CustomTextInput/CustomTextInput
 import { Modal, Portal, Provider } from "react-native-paper";
 import KeyboardHideView from "../../../components/CustomViews/KeyboardHideView";
 import { usePostProduct } from "../../../hooks/usePostProduct";
-import { useEffect } from "react";
-import DeliveryOptions from "../../../components/Products/AddProduct/DeliveryOptions";
+import Checkbox from "expo-checkbox";
 
 export default function AddProductDeliveryDetails({ route }) {
+  const { data, imageList } = route.params;
   const [location, setLocation] = useState("");
-  const [method, setMethod] = useState("");
+  const [isDelivery, setIsDelivery] = useState(false);
+  const [isMeetup, setIsMeetup] = useState(false);
   const [sending, setSending] = useState(false);
   const [onListItem] = usePostProduct();
 
-  const { productInfo, imageList } = route.params;
   const navigation = useNavigation();
 
   const onSubmit = async () => {
     setSending(true);
-    if (method.trim() === "") {
+    if (!isDelivery && !isMeetup) {
       alert("Please select a delivery method details");
       return;
     }
@@ -37,8 +37,9 @@ export default function AddProductDeliveryDetails({ route }) {
     }
 
     const productDetails = {
-      ...productInfo,
-      deliveryMethod: method,
+      ...data,
+      isDelivery,
+      isMeetup,
       location: location,
       dateCreated: new Date(),
     };
@@ -68,12 +69,21 @@ export default function AddProductDeliveryDetails({ route }) {
 
           <View className="my-2"></View>
 
-          <DeliveryOptions
-            setMethod={(value) => {
-              setMethod(value);
-            }}
-            method={method}
-          />
+          <View>
+            <View className="flex-row items-center justify-between">
+              <View>
+                <Text className="font-semibold mb-2">Meetup</Text>
+              </View>
+              <Checkbox value={isMeetup} onValueChange={setIsMeetup} />
+            </View>
+            <View className="my-2"></View>
+            <View className="flex-row items-center justify-between">
+              <View>
+                <Text className="font-semibold mb-2">Deliver</Text>
+              </View>
+              <Checkbox value={isDelivery} onValueChange={setIsDelivery} />
+            </View>
+          </View>
 
           <CustomTextInput
             valule={location}

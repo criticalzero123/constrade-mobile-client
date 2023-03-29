@@ -1,47 +1,33 @@
 import {
-  KeyboardAvoidingView,
-  Platform,
   Pressable,
   ScrollView,
-  StatusBar,
-  StyleSheet,
   Text,
   TextInput,
   ToastAndroid,
   View,
 } from "react-native";
-import React, { useState } from "react";
-import { Entypo } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
-import { Picker } from "@react-native-picker/picker";
-import NumberTextInput from "../../../components/CustomTextInput/NumberTextInput";
-import CustomTextInput from "../../../components/CustomTextInput/CustomTextInput";
-import TextAreaInput from "../../../components/CustomTextInput/TextAreaInput";
+import React from "react";
+import ContainerSafeView from "../../../components/CustomViews/ContainerSafeView";
+import HeaderArrow from "../../../components/HeaderArrow/HeaderArrow";
+import { useState } from "react";
 import { RadioButton } from "react-native-paper";
-import Checkbox from "expo-checkbox";
-import Header from "../../../components/Products/AddProduct/Header";
+import { Entypo } from "@expo/vector-icons";
 import ViewItemList from "../../../components/Products/AddProduct/ViewItemList";
-import ImagePickerProduct from "../../../components/Products/AddProduct/ImagePickerProduct";
-import KeyboardHideView from "../../../components/CustomViews/KeyboardHideView";
-import { useHideBottomTab } from "../../../hooks/useHideBottomTab";
+import Checkbox from "expo-checkbox";
+import { useNavigation } from "@react-navigation/native";
 import useGetCurrentUser from "../../../hooks/useGetCurrentUser";
 
-export default function AddProductItemDetails() {
-  useHideBottomTab();
+export default function AddProductItemDetails2({ route }) {
+  const { data, imageList } = route.params;
   const { user } = useGetCurrentUser();
-
-  const [imageList, setImageList] = useState([]);
-  const [price, setPrice] = useState(0);
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [category, setCategory] = useState("console");
-  const [condition, setCondition] = useState("new");
+  const [modelNumber, setModelNumber] = useState("");
+  const [serialNumber, setSerialNumber] = useState("");
+  const [itemList, setItemList] = useState([]);
+  const [itemInput, setItemInput] = useState("");
+  const [amount, setAmount] = useState(0);
   const [tradeMethod, setTradeMethod] = useState("");
   const [hasReceipts, setHasReceipts] = useState(false);
   const [hasWarranty, setHasWarranty] = useState(false);
-  const [cash, setCash] = useState(0);
-  const [itemList, setItemList] = useState([]);
-  const [itemInput, setItemInput] = useState("");
 
   const navigation = useNavigation();
 
@@ -57,33 +43,16 @@ export default function AddProductItemDetails() {
     setItemInput("");
   };
 
-  const onPressTrigger = () => {
-    if (imageList.length === 0) {
-      alert("please put an image.");
+  const handleOnNext = () => {
+    if (tradeMethod === "") {
+      alert("Please choose a trade method");
       return;
     }
-
-    if (title.trim() === "") {
-      alert("Please put an title");
-      return;
-    }
-
-    if (description.trim() === "") {
-      alert("Please put an description");
-      return;
-    }
-
-    if (tradeMethod.trim() === "") {
-      alert("Please select a Trade Method");
-      return;
-    }
-
-    if (tradeMethod === "cash" && cash == 0) {
-      alert("Please put an amount");
-      return;
-    }
-
-    if (tradeMethod === "trade-in" && (cash == 0 || itemList.length === 0)) {
+    if (
+      tradeMethod === "trade-in" &&
+      itemList.length < 2 &&
+      (amount == 0 || itemList.length === 0)
+    ) {
       alert("Please put an amount or items");
       return;
     }
@@ -92,95 +61,57 @@ export default function AddProductItemDetails() {
       alert("Please put an item");
       return;
     }
-
-    const productInfo = {
+    const _data = {
       posterUserId: user.userId,
-      title: title,
-      description: description,
-      gameGenre: "Action",
-      cash: cash,
-      condition: condition,
+      ...data,
       preferTrade: tradeMethod,
-      platform: category,
+      cash: amount === 0 ? parseInt(data.cash) : amount,
       item: itemList.toString(),
       productStatus: "unsold",
-      hasReceipts: hasReceipts,
-      hasWarranty: hasWarranty,
+      hasReceipts,
+      hasWarranty,
+      modelNumber,
+      serialNumber,
     };
 
     navigation.navigate("AddProductDeliveryDetails", {
-      productInfo,
+      data: _data,
       imageList,
     });
   };
 
   return (
-    <KeyboardHideView>
-      <Header onPress={() => navigation.goBack()} title="Item Details" />
-
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <ImagePickerProduct imageList={imageList} setImageList={setImageList} />
-
-        <Text className="text-base mt-5">Category</Text>
-        <View className="border border-gray-400 rounded-lg mt-2">
-          <Picker
-            selectedValue={category}
-            onValueChange={(item) => setCategory(item)}
-            style={{ color: "gray" }}
-          >
-            <Picker.Item label="Console" value="console" />
-            <Picker.Item label="XBOX" value="xbox" />
-            <Picker.Item label="XBOX 360" value="xbox360" />
-            <Picker.Item label="PS4" value="ps4" />
-          </Picker>
+    <ContainerSafeView>
+      <HeaderArrow headerName={"item details"} />
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+        <View>
+          <Text className="mb-2 font-semibold text-base">Model number</Text>
+          <TextInput
+            value={modelNumber}
+            onChangeText={setModelNumber}
+            placeholder="MODEL - 12391"
+            className="border py-2 px-3 border-gray-300"
+            style={{ borderRadius: 10 }}
+          />
         </View>
 
-        <View className="my-3" />
-        <NumberTextInput
-          placeholder={"0.00"}
-          value={price}
-          setValue={setPrice}
-          label="Price(generated from our system)"
-        />
-        <View className="my-3" />
-
-        <CustomTextInput
-          placeholder={"Give your listing a name"}
-          value={title}
-          setValue={setTitle}
-          label="Title"
-        />
-        <View className="my-3" />
-
-        <TextAreaInput
-          value={description}
-          setValue={setDescription}
-          placeholder="State item inclusions or defects, if any."
-          label="Description"
-        />
-        <View className="my-3" />
-
-        <Text className="text-base mb-2">Condition</Text>
-        <View className="border border-gray-300 rounded-lg">
-          <Picker
-            selectedValue={condition}
-            onValueChange={(item) => setCondition(item)}
-            style={{ color: "gray" }}
-          >
-            <Picker.Item label="Brand New" value="new" />
-            <Picker.Item label="Used - Fine" value="used-fine" />
-            <Picker.Item label="Used - Defects" value="used-defect" />
-          </Picker>
+        <View className="mt-4 ">
+          <Text className="mb-2 font-semibold text-base">Serial number</Text>
+          <TextInput
+            value={serialNumber}
+            onChangeText={setSerialNumber}
+            placeholder="MODEL - 12391"
+            className="border py-2 px-3 border-gray-300"
+            style={{ borderRadius: 10 }}
+          />
         </View>
-        <View className="my-3" />
 
-        <Text className="text-base font-semibold mb-3">Trade Method</Text>
         <RadioButton.Group
           onValueChange={(value) => {
             setTradeMethod(value);
             setItemInput("");
             setItemList([]);
-            setCash(0);
+            setAmount(0);
           }}
           value={tradeMethod}
         >
@@ -197,15 +128,6 @@ export default function AddProductItemDetails() {
               </View>
               <RadioButton value="cash" />
             </View>
-            {tradeMethod === "cash" && (
-              <TextInput
-                keyboardType="numeric"
-                placeholder="Cash"
-                className="py-2 px-4 border border-gray-300 rounded-lg mt-2 mb-4"
-                value={cash}
-                onChangeText={setCash}
-              />
-            )}
           </View>
           <View className="mb-4">
             <View className="flex-row items-center justify-between mb-2">
@@ -224,10 +146,10 @@ export default function AddProductItemDetails() {
               <View>
                 <TextInput
                   keyboardType="numeric"
-                  placeholder="Cash"
+                  placeholder={`max of ${data.cash}`}
                   className="p-2 border border-gray-400 rounded-lg"
-                  value={cash}
-                  onChangeText={setCash}
+                  value={amount}
+                  onChangeText={setAmount}
                 />
                 <View className="my-1" />
                 <TextInput
@@ -294,23 +216,16 @@ export default function AddProductItemDetails() {
             <Checkbox value={hasWarranty} onValueChange={setHasWarranty} />
           </View>
         </View>
-
-        <View className="my-10"></View>
-        <Pressable
-          className="w-full bg-[#CC481F] p-4 items-center rounded-lg mb-4"
-          onPress={onPressTrigger}
-        >
-          <Text className="text-white font-semibold">Delivery Method</Text>
-        </Pressable>
+        <View className="justify-end flex-1 mb-5">
+          <Pressable
+            className="py-4 bg-[#CC481F]"
+            style={{ borderRadius: 10 }}
+            onPress={handleOnNext}
+          >
+            <Text className="text-center text-white">Next</Text>
+          </Pressable>
+        </View>
       </ScrollView>
-    </KeyboardHideView>
+    </ContainerSafeView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
-    paddingHorizontal: 20,
-  },
-});
