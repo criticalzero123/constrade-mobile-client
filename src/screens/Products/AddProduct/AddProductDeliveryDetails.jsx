@@ -97,7 +97,9 @@ export default function AddProductDeliveryDetails({ route }) {
               sending ? "bg-[#e48568] " : "bg-[#CC481F] "
             }  py-4 rounded mb-4 flex-row items-center justify-center bottom-0 absolute`}
             onPress={onSubmit}
-            disabled={sending}
+            disabled={
+              sending || (!isDelivery && !isMeetup && location.trim() === "")
+            }
           >
             <Text className=" text-white font-semibold text-base">
               {sending && <ActivityIndicator />}List my item

@@ -35,56 +35,11 @@ export default function ProductChatInput({
     setValue("");
   };
 
-  const onPressCompleted = () => {
-    Alert.alert(
-      "ALERT",
-      "Do you want to mark as completed?",
-      [
-        {
-          text: "Yes",
-          onPress: () => {
-            Alert.alert("Info", "Transaction Process.");
-            const info = {
-              productId: details.product.productId,
-              buyerUserId: details.user.userId,
-              sellerUserId: currentUser.userId,
-            };
-            markAsSoldProduct(info);
-            return;
-          },
-          style: "default",
-        },
-        {
-          text: "Cancel",
-          onPress: () => {
-            Alert.alert("Cancel Pressed");
-            return;
-          },
-          style: "cancel",
-        },
-      ],
-      {
-        cancelable: true,
-        onDismiss: () => {
-          Alert.alert(
-            "This alert was dismissed by tapping outside of the alert dialog."
-          );
-          return;
-        },
-      }
-    );
-  };
-
   return (
     <View
       className=" flex-row items-center justify-center bg-white"
       style={{ width: width, height: height * 0.1 }}
     >
-      {details.product.posterUserId == currentUser.userId && (
-        <Pressable className="mr-2" onPress={onPressCompleted}>
-          <SimpleLineIcons name="options-vertical" size={18} color="black" />
-        </Pressable>
-      )}
       <TextInput
         value={value}
         onChangeText={setValue}

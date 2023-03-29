@@ -1,4 +1,5 @@
 import {
+  Alert,
   Image,
   Pressable,
   StyleSheet,
@@ -15,10 +16,19 @@ import { Entypo } from "@expo/vector-icons";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { MaterialIcons } from "@expo/vector-icons";
-
+import BottomModal from "../modal/BottomModal";
+import useGetCurrentUser from "../../hooks/useGetCurrentUser";
+import { FontAwesome5 } from "@expo/vector-icons";
+import { FontAwesome } from "@expo/vector-icons";
+import useSoldProduct from "../../hooks/transaction/useSoldProduct";
 export default function ChatHeader({ data, product }) {
   const [isTyping, setIsTyping] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
   const { height, width } = useWindowDimensions();
+
+  const { user } = useGetCurrentUser();
+  const { markAsSoldProduct } = useSoldProduct();
+
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
@@ -33,6 +43,46 @@ export default function ChatHeader({ data, product }) {
 
   const onBack = () => {
     navigation.reset({ routes: [{ name: "MessageHome" }] });
+  };
+
+  const onPressTransacted = () => {
+    Alert.alert(
+      "ALERT",
+      "Do you want to mark as completed?",
+      [
+        {
+          text: "Yes",
+          onPress: () => {
+            Alert.alert("Info", "Transaction Process.");
+            const info = {
+              productId: product.productId,
+              buyerUserId: data.userId,
+              sellerUserId: user.userId,
+            };
+            markAsSoldProduct(info);
+            return;
+          },
+          style: "default",
+        },
+        {
+          text: "Cancel",
+          onPress: () => {
+            Alert.alert("Cancel Pressed");
+            return;
+          },
+          style: "cancel",
+        },
+      ],
+      {
+        cancelable: true,
+        onDismiss: () => {
+          Alert.alert(
+            "This alert was dismissed by tapping outside of the alert dialog."
+          );
+          return;
+        },
+      }
+    );
   };
 
   return (
@@ -56,7 +106,9 @@ export default function ChatHeader({ data, product }) {
             </Text>
           </View>
         </View>
-        <Entypo name="dots-three-horizontal" size={20} color="black" />
+        <Pressable onPress={() => setModalVisible(!modalVisible)}>
+          <Entypo name="dots-three-horizontal" size={20} color="black" />
+        </Pressable>
       </View>
       {product && (
         <View
@@ -89,6 +141,37 @@ export default function ChatHeader({ data, product }) {
           </Pressable>
         </View>
       )}
+      <BottomModal setIsVisible={setModalVisible} isVisible={modalVisible}>
+        {product.posterUserId !== user.userId && (
+          <View className="flex-row items-center">
+            <FontAwesome5 name="flag" size={20} color="red" />
+            <Text className="text-red-500 ml-2">Report user</Text>
+          </View>
+        )}
+        <View className="my-4" />
+        {product.posterUserId === user.userId && (
+          <View>
+            <Pressable
+              className="flex-row items-center"
+              onPress={onPressTransacted}
+            >
+              <Ionicons
+                name="checkmark-circle-outline"
+                size={20}
+                color="green"
+              />
+              <Text className="text-green-500 ml-2">
+                Mark as transacted to this person
+              </Text>
+            </Pressable>
+            <View className="my-4" />
+          </View>
+        )}
+        <View className="flex-row items-center">
+          <FontAwesome name="user-circle-o" size={20} color="gray" />
+          <Text className="text-gray-500 ml-2">View profile</Text>
+        </View>
+      </BottomModal>
     </View>
   );
 }
