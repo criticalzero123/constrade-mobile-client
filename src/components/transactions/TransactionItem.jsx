@@ -7,7 +7,11 @@ import {
   View,
 } from "react-native";
 import React from "react";
-import { getDateFull } from "../../../service/dateService";
+import {
+  getDateFull,
+  getDateTime,
+  getTimeOnly,
+} from "../../../service/dateService";
 import { useNavigation } from "@react-navigation/native";
 
 export default function TransactionItem({ data, currentUserId }) {
@@ -52,7 +56,7 @@ export default function TransactionItem({ data, currentUserId }) {
       </View>
       <View className="items-end flex-1 h-full">
         <Text className="text-gray-500">
-          {getDateFull(data.transactionDate)}
+          {new Date(data.transactionDate).toLocaleDateString()}
         </Text>
       </View>
     </Pressable>

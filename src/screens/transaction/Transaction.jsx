@@ -1,10 +1,10 @@
-import { ScrollView, StyleSheet, Text } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import ContainerSafeView from "../../components/CustomViews/ContainerSafeView";
 import { useEffect } from "react";
 import { getProductTransaction } from "../../../redux/actions/transactionAction";
 import { useState } from "react";
-
+import HeaderArrow from "../../components/HeaderArrow/HeaderArrow";
 export default function Transaction({ route }) {
   const { id } = route.params;
   const [transaction, setTransaction] = useState();
@@ -25,33 +25,79 @@ export default function Transaction({ route }) {
     fetch();
   }, [id]);
 
+  if (transaction === undefined) return <Text>Fetching...</Text>;
+
+  const TextContainer = ({ leftText, rightText }) => {
+    return (
+      <View className="flex-row items-center justify-between my-1">
+        <Text>{leftText}</Text>
+        <Text className="capitalize">{rightText}</Text>
+      </View>
+    );
+  };
+
+  const transactedWith = () => {
+    if (transaction.product.item === "") return transaction.product.cash;
+    if (transaction.product.cash === 0) return transaction.product.item;
+
+    return transaction.product.item + " & " + transaction.product.cash;
+  };
+
   return (
     <ContainerSafeView>
-      {transaction === undefined ? (
-        <Text>Fetching...</Text>
-      ) : (
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <Text>Product Id: {transaction.transaction.productId}</Text>
-          <Text>Product Name: {transaction.product.title}</Text>
-          <Text>
-            Buyer: {transaction.buyer.person.firstName}{" "}
-            {transaction.buyer.person.lastName}
-          </Text>
-          <Text>
-            Seller: {transaction.seller.person.firstName}{" "}
-            {transaction.seller.person.lastName}
-          </Text>
-          <Text>
-            Time Transcated:{" "}
-            {new Date(
-              transaction.transaction.dateTransaction
-            ).toLocaleDateString()}{" "}
-            {new Date(
-              transaction.transaction.dateTransaction
-            ).toLocaleTimeString()}
-          </Text>
-        </ScrollView>
-      )}
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <HeaderArrow headerName={"Transaction Information"} />
+        <View className="items-center">
+          <Text className="text-2xl font-semibold">Transaction Success</Text>
+          <View className="w-full bg-gray-300 p-4" style={{ borderRadius: 10 }}>
+            <TextContainer
+              leftText={"Reference No.:"}
+              rightText={transaction.transaction.transactionId}
+            />
+            <TextContainer
+              leftText={"Product Name:"}
+              rightText={transaction.product.title}
+            />
+            <TextContainer
+              leftText={"Transaction Type:"}
+              rightText={transaction.product.preferTrade}
+            />
+            <TextContainer
+              leftText={"Traded with:"}
+              rightText={transactedWith()}
+            />
+            <TextContainer
+              leftText={"Buyer"}
+              rightText={
+                transaction.buyer.person.firstName +
+                " " +
+                transaction.buyer.person.lastName
+              }
+            />
+
+            <TextContainer
+              leftText={"Seller"}
+              rightText={
+                transaction.seller.person.firstName +
+                " " +
+                transaction.seller.person.lastName
+              }
+            />
+            <TextContainer
+              leftText={"Date transacted"}
+              rightText={new Date(
+                transaction.transaction.dateTransaction
+              ).toLocaleDateString()}
+            />
+            <TextContainer
+              leftText={"Time transacted"}
+              rightText={new Date(
+                transaction.transaction.dateTransaction
+              ).toLocaleTimeString()}
+            />
+          </View>
+        </View>
+      </ScrollView>
     </ContainerSafeView>
   );
 }

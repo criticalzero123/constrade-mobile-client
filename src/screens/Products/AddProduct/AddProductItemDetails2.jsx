@@ -65,7 +65,7 @@ export default function AddProductItemDetails2({ route }) {
       posterUserId: user.userId,
       ...data,
       preferTrade: tradeMethod,
-      cash: amount === 0 ? parseInt(data.cash) : amount,
+      cash: tradeMethod === "trade-in" ? amount : parseInt(data.cash),
       item: itemList.toString(),
       productStatus: "unsold",
       hasReceipts,

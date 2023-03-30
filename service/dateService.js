@@ -6,6 +6,14 @@ export const getTimeOnly = (date) => {
   });
 };
 
+export const getDateFull = (date) => {
+  return new Date(date).toLocaleString([], {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  });
+};
+
 export const getDateTime = (date) => {
   return new Date(date).toLocaleString([], {
     month: "short",
@@ -13,13 +21,5 @@ export const getDateTime = (date) => {
     minute: "numeric",
     hour12: true,
     year: "2-digit",
-  });
-};
-
-export const getDateFull = (date) => {
-  return new Date(date).toLocaleString([], {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
   });
 };
