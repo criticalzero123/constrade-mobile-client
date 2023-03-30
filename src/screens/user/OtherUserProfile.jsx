@@ -8,12 +8,21 @@ import useGetUserById from "../../hooks/useGetUserById";
 import useGetCurrentUser from "../../hooks/useGetCurrentUser";
 import ContainerSafeView from "../../components/CustomViews/ContainerSafeView";
 import { ActivityIndicator } from "react-native-paper";
+import { useNavigation } from "@react-navigation/native";
+import { useEffect } from "react";
 export default function OtherUserProfile({ route }) {
   // This is for the userId of other user
   const { userId } = route.params;
 
   const [data] = useGetUserById(userId);
   const { user } = useGetCurrentUser();
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    return () => {
+      navigation.reset({ routes: [{ name: "Menu" }] });
+    };
+  }, [userId]);
 
   const firstWordName = data && data.person.firstName.toString().split(" ")[0];
 
