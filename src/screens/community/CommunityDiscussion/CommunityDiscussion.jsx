@@ -57,7 +57,7 @@ export default function CommunityDiscussion() {
 
     const postId = await post(info);
     setPostValue("");
-    console.log(currentMember, postId, posts);
+
     if (Number.isInteger(postId)) {
       setPosts([
         {

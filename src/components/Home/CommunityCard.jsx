@@ -10,7 +10,12 @@ import React from "react";
 
 import { Entypo, Feather, MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-export default function CommunityCard({ data, index, currentUserId }) {
+export default function CommunityCard({
+  data,
+  index,
+  currentUserId,
+  fullWidth = false,
+}) {
   const { width, height } = useWindowDimensions();
   const navigation = useNavigation();
 
@@ -35,7 +40,10 @@ export default function CommunityCard({ data, index, currentUserId }) {
   return (
     <Pressable
       className={`mr-2 ${index === 0 && " ml-5"} bg-gray-100 rounded-lg`}
-      style={{ width: width * 0.7, height: height * 0.33 }}
+      style={{
+        width: fullWidth ? width * 0.85 : width * 0.7,
+        height: height * 0.33,
+      }}
       onPress={() =>
         navigation.navigate("CommunityDetail", {
           id: data.community.communityId,
