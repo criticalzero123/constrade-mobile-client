@@ -16,7 +16,6 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import * as Linking from "expo-linking";
 import { useHideBottomTab } from "../../../hooks/useHideBottomTab";
-import Modal from "react-native-modal";
 import BottomModal from "../../../components/modal/BottomModal";
 
 export default function AddProductSearchItems({ route }) {
@@ -126,14 +125,16 @@ export default function AddProductSearchItems({ route }) {
       <>
         {shops && (
           <View className="flex-1">
-            {shops.length === 0 && param && param.itemName !== undefined ? (
-              <View className="flex-1">
-                <Text>No price data exist in our database</Text>
+            {param &&
+              param.itemName !== undefined &&
+              (shops.length === 0 ? (
+                <View className="flex-1">
+                  <Text>No price data exist in our database</Text>
+                  <OwnPrice />
+                </View>
+              ) : (
                 <OwnPrice />
-              </View>
-            ) : (
-              <OwnPrice />
-            )}
+              ))}
           </View>
         )}
 

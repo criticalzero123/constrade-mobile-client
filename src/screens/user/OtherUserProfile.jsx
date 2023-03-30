@@ -16,7 +16,7 @@ export default function OtherUserProfile({ route }) {
   const { user } = useGetCurrentUser();
 
   const firstWordName = data && data.person.firstName.toString().split(" ")[0];
-  console.log(data, userId);
+
   if (data === undefined)
     return (
       <ContainerSafeView styleName="flex-row justify-center items-center">

@@ -20,6 +20,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import MessageItem from "../../components/messages/MessageItem";
 import OtherMessageItem from "../../components/messages/OtherMessageItem";
+import ContainerSafeView from "../../components/CustomViews/ContainerSafeView";
 
 export default function ProductMessage({ route }) {
   useHideBottomTab();
@@ -73,11 +74,7 @@ export default function ProductMessage({ route }) {
   };
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      enabled={true}
-      style={styles.container}
-    >
+    <ContainerSafeView horizontalSpace={false}>
       {currentUser !== undefined && (
         <>
           <View style={{ height: height * 0.9, paddingHorizontal: 20 }}>
@@ -142,7 +139,7 @@ export default function ProductMessage({ route }) {
           )}
         </>
       )}
-    </KeyboardAvoidingView>
+    </ContainerSafeView>
   );
 }
 

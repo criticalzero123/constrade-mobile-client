@@ -139,7 +139,7 @@ export default function ChatHeader({ data, product }) {
         </View>
       )}
       <BottomModal setIsVisible={setModalVisible} isVisible={modalVisible}>
-        {product.posterUserId !== user.userId && (
+        {product && product.posterUserId !== user.userId && (
           <View>
             <View className="flex-row items-center">
               <FontAwesome5 name="flag" size={20} color="red" />
@@ -149,7 +149,7 @@ export default function ChatHeader({ data, product }) {
           </View>
         )}
 
-        {product.posterUserId === user.userId && (
+        {product && product.posterUserId === user.userId && (
           <View>
             <Pressable
               className="flex-row items-center"

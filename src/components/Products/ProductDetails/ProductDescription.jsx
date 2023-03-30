@@ -20,25 +20,31 @@ import { ReportEnum } from "../../../../service/enums";
 import { addFavorite } from "../../../../redux/actions/productActions";
 import { useState } from "react";
 import useGetProductId from "../../../hooks/Product/useGetProductId";
-export default function ProductDescription({ route }) {
-  const { details } = route.params;
-
+import ProductImageDisplayList from "./ProductImageDisplayList";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
+import { itemConditionList } from "../../../../service/addProductService";
+import { Feather } from "@expo/vector-icons";
+export default function ProductDescription() {
   const [deleteProductById] = useDeleteProduct();
   const { productReport } = useProductReport();
-  const { isFavorite, setIsFavorite } = useGetProductId();
+  const { data, isFavorite, setIsFavorite } = useGetProductId();
   const { user } = useGetCurrentUser();
   const { width, height } = useWindowDimensions();
   const [addingToFav, setAddingToFav] = useState(false);
   const [addFlag, setAddFlag] = useState(false);
+  const [imageDisplay, setImageDisplay] = useState(
+    data && data.product.thumbnailUrl
+  );
   const navigation = useNavigation();
 
   const onPressFavorite = async () => {
-    if (user.userId !== details.product.posterUserId) {
+    if (user.userId !== data.product.posterUserId) {
       setAddingToFav(true);
       setAddFlag(!addFlag);
 
       const info = {
-        productId: details.product.productId,
+        productId: data.product.productId,
         UserId: user.userId,
         date: new Date(),
       };
@@ -58,7 +64,7 @@ export default function ProductDescription({ route }) {
   const onPressReport = () => {
     const info = {
       reportedBy: user.userId,
-      idReported: details.product.productId,
+      idReported: data.product.productId,
       reportType: ReportEnum.Product,
       description: "Something dummy coming from function",
       dateSubmitted: new Date(),
@@ -78,12 +84,23 @@ export default function ProductDescription({ route }) {
 
   return (
     <ScrollView className="mt-3" showsVerticalScrollIndicator={false}>
-      <Text className="font-semibold text-lg">{details.product.title}</Text>
+      <Image
+        style={{ height: height * 0.3 }}
+        className="w-full"
+        source={{
+          uri: imageDisplay ? imageDisplay : data.product.thumbnailUrl,
+        }}
+      />
+      <ProductImageDisplayList
+        images={data && data.images}
+        setImageDisplay={setImageDisplay}
+      />
+      <Text className="font-semibold text-lg mt-5">{data.product.title}</Text>
 
       <View className="flex-row justify-between items-center my-4">
         <View className="flex-row items-center">
           <Image
-            source={{ uri: details.user.imageUrl }}
+            source={{ uri: data.user.imageUrl }}
             style={{
               width: width * 0.07,
               height: height * 0.035,
@@ -94,15 +111,16 @@ export default function ProductDescription({ route }) {
 
           <View>
             <Text className="capitalize font-semibold">
-              {details.person.firstName} {details.person.lastName}
+              {data.person.firstName} {data.person.lastName}
             </Text>
-            <Text className="text-gray-500">{details.user.email}</Text>
+            <Text className="text-gray-500">{data.user.email}</Text>
           </View>
         </View>
+
         <View className="flex-row items-center">
           <View className="flex-row items-center">
             <Text className={`text-base mr-2 ${isFavorite && "text-red-500"}`}>
-              {favoriteCount(details.product.countFavorite)}
+              {favoriteCount(data.product.countFavorite)}
             </Text>
             {addingToFav ? (
               <ActivityIndicator />
@@ -120,95 +138,73 @@ export default function ProductDescription({ route }) {
           <Ionicons name="md-share-outline" size={24} color="black" />
         </View>
       </View>
-      {details.product.productStatus === "unsold" ? (
-        <Pressable
-          className="mb-6"
-          onPress={() =>
-            navigation.navigate("Menu", {
-              screen: "Message",
-              params: {
-                screen: "ProductMessage",
-                params: { details: details },
-              },
-            })
-          }
-        >
-          <Text>Make an Offer</Text>
-        </Pressable>
-      ) : (
-        <View className="mb-6">
-          <Text>Already sold</Text>
-          <Pressable>
-            <Text>Go to transaction</Text>
-          </Pressable>
-        </View>
-      )}
-
-      <View className="mb-6">
-        <Text className="text-gray-400 mb-2">Item description</Text>
-        <Text>{details.product.description}</Text>
-      </View>
-
-      <View className="mb-6">
-        <Text className="text-gray-400 mb-2">Condition</Text>
-        <Text>{details.product.condition}</Text>
-      </View>
-
-      <View className="mb-6">
-        <Text className="text-gray-400 mb-2">Serial Number</Text>
-        <Text>
-          {details.product.serialNumber
-            ? details.product.serialNumber
-            : "No Serial Provided"}
-        </Text>
-      </View>
-
-      <View className="mb-6">
-        <Text className="text-gray-400 mb-2">Model Number</Text>
-        <Text>
-          {details.product.modelNumber
-            ? details.product.modelNumber
-            : "No Serial Provided"}
-        </Text>
-      </View>
-
-      <View className="mb-6">
-        <Text className="text-gray-400 mb-2">Game Genre</Text>
-        <Text>{details.product.gameGenre}</Text>
-      </View>
-
-      <View className="mb-6">
-        <Text className="text-gray-400 mb-2 ">Platform Supported</Text>
-        <Text className="capitalize">{details.product.platform}</Text>
-      </View>
-
-      <View className="mb-6">
-        <Text className="text-gray-400 mb-2 ">Date Posted</Text>
-        <Text className="capitalize">
-          {new Date(details.product.dateCreated).toLocaleDateString()}
-        </Text>
-      </View>
-
-      {details.product.hasReceipts && (
-        <View className="flex-row items-center">
+      {data.product.hasReceipts && (
+        <View className="flex-row items-center my-3">
           <Entypo name="check" size={15} color="rgb(34,197,94)" />
           <Text className="ml-1 text-green-700">Includes receipts</Text>
         </View>
       )}
       <View className="my-1" />
-      {details.product.hasWarranty && (
+      {data.product.hasWarranty && (
         <View className="flex-row items-center">
           <Entypo name="check" size={15} color="rgb(34,197,94)" />
           <Text className="ml-1 text-green-700">Warranty available</Text>
         </View>
       )}
 
-      {user.userId === details.product.posterUserId ? (
-        details.product.productStatus === "unsold" ? (
+      <View className="flex-row items-center">
+        <MaterialCommunityIcons
+          name="ticket-confirmation-outline"
+          size={22}
+          color="gray"
+        />
+        <Text className="ml-2">
+          {data.product.modelNumber
+            ? data.product.modelNumber
+            : "No model number Provided"}
+        </Text>
+      </View>
+
+      <View className="flex-row items-center mt-1 mb-5">
+        <MaterialIcons name="bar-chart" size={24} color="gray" />
+        <Text className="ml-2">
+          {data.product.serialNumber
+            ? data.product.serialNumber
+            : "No serial number Provided"}
+        </Text>
+      </View>
+
+      <View className="mb-6">
+        <Text className="text-gray-400 mb-2">Item description</Text>
+        <Text>{data.product.description}</Text>
+      </View>
+
+      <View className="mb-6">
+        <Text className="text-gray-400 mb-2">Condition</Text>
+        <Text>
+          {
+            itemConditionList.find((c) => c.value === data.product.condition)
+              .title
+          }
+        </Text>
+      </View>
+
+      <View className="mb-6">
+        <Text className="text-gray-400 mb-2">Game Genre</Text>
+        <Text>{data.product.gameGenre}</Text>
+      </View>
+
+      <View className="mb-6">
+        <Text className="text-gray-400 mb-2 ">Platform Supported</Text>
+        <Text className="capitalize">{data.product.platform}</Text>
+      </View>
+
+      {user.userId === data.product.posterUserId ? (
+        data.product.productStatus === "unsold" ? (
           <>
             <Pressable
               className="w-full items-center p-4 bg-gray-500 my-4"
-              onPress={() => deleteProductById(details.product.productId)}
+              onPress={() => deleteProductById(data.product.productId)}
             >
               <Text className="text-white">DELETE</Text>
             </Pressable>
@@ -217,7 +213,7 @@ export default function ProductDescription({ route }) {
               className="w-full items-center p-4 bg-gray-500 my-4"
               onPress={() =>
                 navigation.navigate("BoostProduct", {
-                  id: details.product.productId,
+                  id: data.product.productId,
                 })
               }
             >
@@ -229,7 +225,7 @@ export default function ProductDescription({ route }) {
             className="w-full items-center p-4 bg-gray-500 my-4"
             onPress={() =>
               navigation.navigate("TransactionDetails", {
-                id: details.product.productId,
+                id: data.product.productId,
               })
             }
           >
@@ -237,12 +233,44 @@ export default function ProductDescription({ route }) {
           </Pressable>
         )
       ) : (
-        <Pressable
-          className="w-full items-center p-4 bg-gray-500 my-4"
-          onPress={onPressReport}
-        >
-          <Text>REPORT</Text>
-        </Pressable>
+        <>
+          {data.product.posterUserId !== user.userId &&
+            (data.product.productStatus === "unsold" ? (
+              <Pressable
+                className="py-4 bg-[#CC481F]"
+                style={{ borderRadius: 5 }}
+                onPress={() =>
+                  navigation.navigate("Menu", {
+                    screen: "Message",
+                    params: {
+                      screen: "ProductMessage",
+                      params: { data: data },
+                    },
+                  })
+                }
+              >
+                <Text className="text-center text-white font-semibold">
+                  Contact Seller
+                </Text>
+              </Pressable>
+            ) : (
+              <View className="mb-6">
+                <Text>Already sold</Text>
+                <Pressable>
+                  <Text>Go to transaction</Text>
+                </Pressable>
+              </View>
+            ))}
+          <Pressable
+            className="w-full items-center p-4  my-2 flex-row justify-center"
+            onPress={onPressReport}
+          >
+            <Feather name="flag" size={22} color="#CC481F" />
+            <Text className="text-[#CC481F] font-semibold ml-2">
+              Report this item
+            </Text>
+          </Pressable>
+        </>
       )}
     </ScrollView>
   );

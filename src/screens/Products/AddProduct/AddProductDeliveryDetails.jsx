@@ -38,7 +38,7 @@ export default function AddProductDeliveryDetails({ route }) {
 
     const productDetails = {
       ...data,
-      isDelivery,
+      isDeliver: isDelivery,
       isMeetup,
       location: location,
       dateCreated: new Date(),

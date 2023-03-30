@@ -57,7 +57,7 @@ export default function AddProductItemDetails2({ route }) {
       return;
     }
 
-    if (tradeMethod === "trade" && itemList.length === 0) {
+    if (tradeMethod === "swap" && itemList.length === 0) {
       alert("Please put an item");
       return;
     }

@@ -22,7 +22,7 @@ export default function useGetProductId(productId, userId) {
     return () => {
       dispatch({ type: "GET_PRODUCT_BY_ID_LEAVE" });
     };
-  }, []);
+  }, [productId]);
 
   return { data, isFavorite, setIsFavorite };
 }

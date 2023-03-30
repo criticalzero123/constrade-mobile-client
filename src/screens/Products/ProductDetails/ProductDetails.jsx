@@ -6,8 +6,6 @@ import useGetProductId from "../../../hooks/Product/useGetProductId";
 import ProductDescription from "../../../components/Products/ProductDetails/ProductDescription";
 import ProductTrade from "../../../components/Products/ProductDetails/ProductTrade";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import ProductImageDisplayList from "../../../components/Products/ProductDetails/ProductImageDisplayList";
-import { useState } from "react";
 import useGetCurrentUser from "../../../hooks/useGetCurrentUser";
 
 const Tab = createMaterialTopTabNavigator();
@@ -16,27 +14,12 @@ export default function ProductDetails({ route }) {
   const { productId } = route.params;
   const { user } = useGetCurrentUser();
 
-  const { height } = useWindowDimensions();
   const { data } = useGetProductId(productId, user.userId);
-  const [imageDisplay, setImageDisplay] = useState(
-    data && data.product.thumbnailUrl
-  );
 
   if (data) {
     return (
       <ContainerSafeView>
         <HeaderArrow headerName="Item details" />
-        <Image
-          style={{ height: height * 0.3 }}
-          className="w-full"
-          source={{
-            uri: imageDisplay ? imageDisplay : data.product.thumbnailUrl,
-          }}
-        />
-        <ProductImageDisplayList
-          images={data && data.images}
-          setImageDisplay={setImageDisplay}
-        />
 
         <Tab.Navigator
           screenOptions={{
@@ -57,7 +40,6 @@ export default function ProductDetails({ route }) {
           <Tab.Screen
             name="ProductDescription"
             component={ProductDescription}
-            initialParams={{ details: data }}
             options={{
               tabBarLabel: "Description",
               tabBarLabelStyle: {
@@ -68,7 +50,6 @@ export default function ProductDetails({ route }) {
           <Tab.Screen
             name="ProductTrade"
             component={ProductTrade}
-            initialParams={{ details: data }}
             options={{
               tabBarLabel: "Trade Details",
               tabBarLabelStyle: { textTransform: "capitalize" },

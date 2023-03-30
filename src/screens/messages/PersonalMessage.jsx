@@ -21,6 +21,7 @@ import OtherMessageItem from "../../components/messages/OtherMessageItem";
 import MessageItem from "../../components/messages/MessageItem";
 import { useRef } from "react";
 import { useHideBottomTab } from "../../hooks/useHideBottomTab";
+import ContainerSafeView from "../../components/CustomViews/ContainerSafeView";
 
 export default function PersonalMessage({ route }) {
   useHideBottomTab();
@@ -74,11 +75,7 @@ export default function PersonalMessage({ route }) {
   };
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      enabled={true}
-      style={styles.container}
-    >
+    <ContainerSafeView horizontalSpace={false}>
       {user !== undefined && (
         <>
           <View style={{ height: height * 0.9, paddingHorizontal: 20 }}>
@@ -122,7 +119,7 @@ export default function PersonalMessage({ route }) {
           />
         </>
       )}
-    </KeyboardAvoidingView>
+    </ContainerSafeView>
   );
 }
 

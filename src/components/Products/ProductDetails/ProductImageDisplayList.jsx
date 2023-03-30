@@ -27,7 +27,7 @@ export default function ProductImageDisplayList({ images, setImageDisplay }) {
     );
   };
   return (
-    <View className="p-2">
+    <View className="p-2 bg-gray-200 mt-3" style={{ borderRadius: 10 }}>
       <FlatList
         horizontal
         showsHorizontalScrollIndicator={false}

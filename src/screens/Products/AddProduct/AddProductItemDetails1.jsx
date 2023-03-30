@@ -25,7 +25,7 @@ export default function AddProductItemDetails1({ route }) {
   const [platformModalVisible, setPlatformModalVisible] = useState(false);
 
   const [item, setItem] = useState("");
-  const [tempItemList, setTempItemList] = useState([]);
+  const [tempItemList, setTempItemList] = useState(platform ? [platform] : []);
   const [itemList, setItemList] = useState(platform ? [platform] : []);
   const [imageList, setImageList] = useState([]);
 
@@ -67,6 +67,7 @@ export default function AddProductItemDetails1({ route }) {
       alert("Please describe your item");
       return;
     }
+
     const data = {
       value: itemValue,
       gameGenre: genre,

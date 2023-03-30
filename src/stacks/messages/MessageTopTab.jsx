@@ -4,17 +4,17 @@ import MessagesListPersonal from "../../screens/messages/MessagesListPersonal";
 import MessagesListProduct from "../../screens/messages/MessagesListProduct";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import ContainerSafeView from "../../components/CustomViews/ContainerSafeView";
 
 const Tab = createMaterialTopTabNavigator();
 
 export default function MessageTopTab() {
   const navigation = useNavigation();
   return (
-    <>
+    <ContainerSafeView horizontalSpace={false}>
       <View
         style={{
           paddingHorizontal: 20,
-          paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
         }}
         className="mb-6"
       >
@@ -64,6 +64,6 @@ export default function MessageTopTab() {
           }}
         />
       </Tab.Navigator>
-    </>
+    </ContainerSafeView>
   );
 }
