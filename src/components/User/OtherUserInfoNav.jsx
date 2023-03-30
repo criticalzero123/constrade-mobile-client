@@ -52,17 +52,6 @@ export default function OtherUserInfoNav({ data }) {
             })
           }
         />
-        <NavItem
-          title={"Communities"}
-          iconNav={
-            <FontAwesome5
-              name="users"
-              size={18}
-              color="white"
-              style={{ opacity: 0.75 }}
-            />
-          }
-        />
 
         <NavItem
           title={"Reviews & Feedbacks"}

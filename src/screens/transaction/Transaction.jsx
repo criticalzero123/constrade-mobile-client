@@ -25,8 +25,6 @@ export default function Transaction({ route }) {
     fetch();
   }, [id]);
 
-  console.log(transaction);
-
   return (
     <ContainerSafeView>
       {transaction === undefined ? (

@@ -21,6 +21,7 @@ import { useEffect } from "react";
 import MessageItem from "../../components/messages/MessageItem";
 import OtherMessageItem from "../../components/messages/OtherMessageItem";
 import ContainerSafeView from "../../components/CustomViews/ContainerSafeView";
+import { useNavigation } from "@react-navigation/native";
 
 export default function ProductMessage({ route }) {
   useHideBottomTab();
@@ -29,7 +30,7 @@ export default function ProductMessage({ route }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [messageList, setMessageList] = useState([]);
   const [firstFetch, setFirstFetch] = useState(true);
-
+  const navigation = useNavigation();
   const { height, width } = useWindowDimensions();
   const { user: currentUser } = useGetCurrentUser();
   const [messageData, getMoreMessage, deleteMessage] = useProductMessages(
@@ -72,7 +73,6 @@ export default function ProductMessage({ route }) {
       return prevIndex + 1;
     });
   };
-
   return (
     <ContainerSafeView horizontalSpace={false}>
       {currentUser !== undefined && (
@@ -123,6 +123,11 @@ export default function ProductMessage({ route }) {
                 <Pressable
                   className="p-2 bg-[#CC481F]"
                   style={{ borderRadius: 5 }}
+                  onPress={() =>
+                    navigation.navigate("TransactionDetails", {
+                      id: details.product.productId,
+                    })
+                  }
                 >
                   <Text className="text-center text-white">
                     Go to Transaction

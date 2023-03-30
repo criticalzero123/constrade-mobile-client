@@ -49,14 +49,19 @@ export default function ChatHeader({ data, product }) {
       [
         {
           text: "Yes",
-          onPress: () => {
-            Alert.alert("Info", "Transaction Process.");
+          onPress: async () => {
             const info = {
               productId: product.productId,
               buyerUserId: data.userId,
               sellerUserId: user.userId,
             };
-            markAsSoldProduct(info);
+            const flag = await markAsSoldProduct(info);
+
+            if (flag != -1) {
+              navigation.navigate("TransactionDetails", {
+                id: product.productId,
+              });
+            }
             return;
           },
           style: "default",
@@ -64,7 +69,7 @@ export default function ChatHeader({ data, product }) {
         {
           text: "Cancel",
           onPress: () => {
-            Alert.alert("Cancel Pressed");
+            setModalVisible(!modalVisible);
             return;
           },
           style: "cancel",
@@ -171,14 +176,15 @@ export default function ChatHeader({ data, product }) {
           )}
         <Pressable
           className="flex-row items-center"
-          onPress={() =>
+          onPress={() => {
+            setModalVisible(!modalVisible);
             navigation.navigate("User", {
               screen: "OtherUserProfile",
               params: {
                 userId: data.userId,
               },
-            })
-          }
+            });
+          }}
         >
           <FontAwesome name="user-circle-o" size={20} color="gray" />
           <Text className="text-gray-500 ml-2">View profile</Text>

@@ -24,10 +24,16 @@ export default function AddProductItemDetails1({ route }) {
   const { itemValue, genre, title, isGenerated, platform } = data;
   const [conditionModalVisible, setConditionModalVisible] = useState(false);
   const [platformModalVisible, setPlatformModalVisible] = useState(false);
+  const [genreModalVisible, setGenreModalVisible] = useState(false);
 
   const [item, setItem] = useState("");
   const [tempItemList, setTempItemList] = useState(platform ? [platform] : []);
   const [itemList, setItemList] = useState(platform ? [platform] : []);
+
+  const [genreValue, setGenreValue] = useState("");
+  const [tempGenreList, setTempGenreList] = useState(genre ? [genre] : []);
+  const [genreList, setGenreList] = useState(genre ? [genre] : []);
+
   const [imageList, setImageList] = useState([]);
 
   const [cash, setCash] = useState(0);
@@ -44,6 +50,10 @@ export default function AddProductItemDetails1({ route }) {
     setItem("");
     setTempItemList([...tempItemList, item]);
   };
+  const handleSubmitGenre = () => {
+    setGenreValue("");
+    setTempGenreList([...tempGenreList, genreValue]);
+  };
 
   const onRemove = (text) => {
     const filtered = tempItemList.filter((_p) => _p !== text);
@@ -51,9 +61,20 @@ export default function AddProductItemDetails1({ route }) {
     setTempItemList(filtered);
   };
 
+  const onRemoveGenre = (text) => {
+    const filtered = tempGenreList.filter((_p) => _p !== text);
+
+    setTempGenreList(filtered);
+  };
+
   const handleDonePlatform = () => {
     setPlatformModalVisible(!platformModalVisible);
     setItemList(tempItemList);
+  };
+
+  const handleDoneGenre = () => {
+    setGenreModalVisible(!genreModalVisible);
+    setGenreList(tempGenreList);
   };
 
   const handleNext = () => {
@@ -77,7 +98,7 @@ export default function AddProductItemDetails1({ route }) {
 
     const data = {
       value: itemValue ? itemValue : value,
-      gameGenre: genre,
+      gameGenre: genre ? genre : genreList.toString(),
       title,
       condition: conditionInfo.value,
       cash: itemValue ? cash : value,
@@ -177,6 +198,48 @@ export default function AddProductItemDetails1({ route }) {
             )}
           </View>
         </View>
+
+        {!isGenerated && (
+          <View className="my-2">
+            <Text className="mb-2 font-semibold text-base">Genre</Text>
+            <Pressable
+              className="flex-row items-center mb-2"
+              onPress={() => setGenreModalVisible(!genreModalVisible)}
+            >
+              <MaterialIcons name="add" size={24} color="#CC481F" />
+              <Text className="text-[#CC481F] ml-1 font-semibold">
+                {itemList.length === 0 ? "Add" : "Edit"} genre
+              </Text>
+            </Pressable>
+            <View className="flex-row">
+              {genreList.map(
+                (item, index) =>
+                  index < 3 && (
+                    <View
+                      key={index}
+                      className="px-4 py-2 bg-gray-200 mr-2 "
+                      style={{ borderRadius: 1000 }}
+                    >
+                      <Text className="text-gray-500 font-semibold">
+                        {item}
+                      </Text>
+                    </View>
+                  )
+              )}
+              {itemList.length - 3 > 0 && (
+                <Pressable
+                  onPress={() => setGenreModalVisible(!genreModalVisible)}
+                  className="px-4 py-2 bg-[#CC481F] mr-2 "
+                  style={{ borderRadius: 1000 }}
+                >
+                  <Text className="text-white">
+                    +{genreList.length - 3} more
+                  </Text>
+                </Pressable>
+              )}
+            </View>
+          </View>
+        )}
         <View className="my-4">
           <Text className="mb-2 font-semibold text-base">Description</Text>
           <TextInput
@@ -267,6 +330,47 @@ export default function AddProductItemDetails1({ route }) {
             style={{ borderRadius: 5 }}
             onPress={handleDonePlatform}
             disabled={tempItemList.length === 0}
+          >
+            <Text className="text-center text-white">Done</Text>
+          </Pressable>
+        </View>
+      </BottomModal>
+
+      <BottomModal
+        isVisible={genreModalVisible}
+        setIsVisible={setGenreModalVisible}
+        hasBackdrop={false}
+      >
+        <Text>Enter genre</Text>
+        <TextInput
+          value={genreValue}
+          onChangeText={setGenreValue}
+          placeholder="Enter platform here..."
+          className="p-3  border w-full my-2 border-gray-300"
+          style={{ borderRadius: 5 }}
+          onSubmitEditing={handleSubmitGenre}
+        />
+        <ScrollView
+          style={{ height: height * 0.2 }}
+          showsVerticalScrollIndicator={false}
+        >
+          {tempGenreList.map((item, index) => (
+            <View key={index} className="flex-row items-center">
+              <Pressable onPress={() => onRemoveGenre(item)}>
+                <Entypo name="minus" size={24} color="#CC481F" />
+              </Pressable>
+              <Text>{item}</Text>
+            </View>
+          ))}
+        </ScrollView>
+        <View className="justify-end">
+          <Pressable
+            className={`${
+              tempGenreList.length === 0 ? "bg-[#cc471f3f]" : "bg-[#CC481F]"
+            } py-4`}
+            style={{ borderRadius: 5 }}
+            onPress={handleDoneGenre}
+            disabled={tempGenreList.length === 0}
           >
             <Text className="text-center text-white">Done</Text>
           </Pressable>

@@ -1,9 +1,6 @@
-import { useDispatch } from "react-redux";
 import { soldProduct } from "../../../redux/actions/transactionAction";
 
 export default function useSoldProduct() {
-  const dispatch = useDispatch();
-
   const markAsSoldProduct = (info) => {
     const newInfo = {
       ...info,
@@ -12,7 +9,7 @@ export default function useSoldProduct() {
       isReviewed: false,
       dateTransaction: new Date(),
     };
-    dispatch(soldProduct(newInfo));
+    return soldProduct(newInfo);
   };
 
   return { markAsSoldProduct };

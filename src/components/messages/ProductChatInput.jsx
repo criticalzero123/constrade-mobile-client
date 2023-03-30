@@ -21,8 +21,6 @@ export default function ProductChatInput({
   const { height, width } = useWindowDimensions();
   const [value, setValue] = useState();
 
-  const { markAsSoldProduct } = useSoldProduct();
-
   const onPress = () => {
     if (value.trim() === "") return;
     sendMessage(
@@ -53,5 +51,3 @@ export default function ProductChatInput({
     </View>
   );
 }
-
-const styles = StyleSheet.create({});

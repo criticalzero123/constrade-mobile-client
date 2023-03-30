@@ -23,7 +23,7 @@ export default function TransactionItem({ data, currentUserId }) {
       className="px-4 py-2 flex-row items-center bg-gray-200 shadow-2xl"
       style={{ borderRadius: 10 }}
       onPress={() =>
-        navigation.navigate("TransactionDetails", { id: data.transactionId })
+        navigation.navigate("TransactionDetails", { id: data.productId })
       }
     >
       <View className="mr-2">

@@ -244,7 +244,7 @@ export default function ProductDescription() {
                     screen: "Message",
                     params: {
                       screen: "ProductMessage",
-                      params: { data: data },
+                      params: { details: data },
                     },
                   })
                 }
