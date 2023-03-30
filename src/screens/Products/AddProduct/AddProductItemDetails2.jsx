@@ -146,7 +146,7 @@ export default function AddProductItemDetails2({ route }) {
               <View>
                 <TextInput
                   keyboardType="numeric"
-                  placeholder={`max of ${data.cash}`}
+                  placeholder={`Enter amount...`}
                   className="p-2 border border-gray-400 rounded-lg"
                   value={amount}
                   onChangeText={setAmount}

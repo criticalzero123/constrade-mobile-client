@@ -54,16 +54,28 @@ export default function AddProductSearchItems({ route }) {
     navigation.navigate("AddProductItemDetails1", { data: info });
   };
 
+  const onHandleWithoutPrice = () => {
+    setModalVisible(false);
+    const info = {
+      title: param.itemName,
+      isGenerated: false,
+    };
+    navigation.navigate("AddProductItemDetails1", { data: info });
+  };
+
   const OwnPrice = () => {
     return (
-      <View className="flex-1 flex-row items-end mb-2">
+      <Pressable
+        className="flex-1 flex-row items-end mb-2"
+        onPress={onHandleWithoutPrice}
+      >
         <Text
           className="py-4 bg-[#CC481F] flex-1 text-center text-white font-semibold"
           style={{ borderRadius: 5 }}
         >
           I will provide my own price
         </Text>
-      </View>
+      </Pressable>
     );
   };
   return (

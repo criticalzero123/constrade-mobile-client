@@ -20,7 +20,8 @@ import { useNavigation } from "@react-navigation/native";
 import ImagePickerProduct from "../../../components/Products/AddProduct/ImagePickerProduct";
 export default function AddProductItemDetails1({ route }) {
   //
-  const { itemValue, genre, title, isGenerated, platform } = route.params.data;
+  const { data } = route.params;
+  const { itemValue, genre, title, isGenerated, platform } = data;
   const [conditionModalVisible, setConditionModalVisible] = useState(false);
   const [platformModalVisible, setPlatformModalVisible] = useState(false);
 
@@ -31,6 +32,7 @@ export default function AddProductItemDetails1({ route }) {
 
   const [cash, setCash] = useState(0);
   const [description, setDescription] = useState("");
+  const [value, setValue] = useState(0);
 
   const [condition, setCondition] = useState();
   const [conditionInfo, setConditionInfo] = useState();
@@ -68,12 +70,17 @@ export default function AddProductItemDetails1({ route }) {
       return;
     }
 
+    if (itemValue === undefined && value == 0) {
+      alert("Enter value of the item");
+      return;
+    }
+
     const data = {
-      value: itemValue,
+      value: itemValue ? itemValue : value,
       gameGenre: genre,
       title,
       condition: conditionInfo.value,
-      cash,
+      cash: itemValue ? cash : value,
       description,
       isGenerated,
       platform: itemList.toString(),
@@ -81,6 +88,7 @@ export default function AddProductItemDetails1({ route }) {
 
     navigation.navigate("AddProductItemDetails2", { data, imageList });
   };
+
   return (
     <ContainerSafeView>
       <HeaderArrow headerName={"item details"} />
@@ -88,23 +96,36 @@ export default function AddProductItemDetails1({ route }) {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ flexGrow: 1 }}
       >
-        <View className="mb-2">
-          <View className="flex-row items-center mb-2">
-            <Text className="text-md font-semibold">PHP</Text>
-            <Text className="text-[#087096] ml-2 font-semibold text-2xl">
-              {conditionInfo ? cash : itemValue}
-            </Text>
-          </View>
-          {conditionInfo && (
-            <View className="flex-row">
-              <Text className="mr-1 text-red-500 font-semibold">
-                (-{conditionInfo.deduction * 100}%)
+        {itemValue && (
+          <View className="mb-2">
+            <View className="flex-row items-center mb-2">
+              <Text className="text-md font-semibold">PHP</Text>
+              <Text className="text-[#087096] ml-2 font-semibold text-2xl">
+                {conditionInfo ? cash : itemValue}
               </Text>
-              <Text className="text-gray-500">{conditionInfo.title}</Text>
             </View>
-          )}
-        </View>
+            {conditionInfo && (
+              <View className="flex-row">
+                <Text className="mr-1 text-red-500 font-semibold">
+                  (-{conditionInfo.deduction * 100}%)
+                </Text>
+                <Text className="text-gray-500">{conditionInfo.title}</Text>
+              </View>
+            )}
+          </View>
+        )}
         <ImagePickerProduct imageList={imageList} setImageList={setImageList} />
+        {!isGenerated && (
+          <View>
+            <Text>Price</Text>
+            <TextInput
+              value={value}
+              onChangeText={setValue}
+              placeholder="Enter item value..."
+              keyboardType="numeric"
+            />
+          </View>
+        )}
         <View className="my-2">
           <Text className="mb-2 font-semibold text-base">Condition</Text>
 

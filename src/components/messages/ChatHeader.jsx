@@ -149,24 +149,26 @@ export default function ChatHeader({ data, product }) {
           </View>
         )}
 
-        {product && product.posterUserId === user.userId && (
-          <View>
-            <Pressable
-              className="flex-row items-center"
-              onPress={onPressTransacted}
-            >
-              <Ionicons
-                name="checkmark-circle-outline"
-                size={20}
-                color="green"
-              />
-              <Text className="text-green-500 ml-2">
-                Mark as transacted to this person
-              </Text>
-            </Pressable>
-            <View className="my-4" />
-          </View>
-        )}
+        {product &&
+          product.productStatus !== "sold" &&
+          product.posterUserId === user.userId && (
+            <View>
+              <Pressable
+                className="flex-row items-center"
+                onPress={onPressTransacted}
+              >
+                <Ionicons
+                  name="checkmark-circle-outline"
+                  size={20}
+                  color="green"
+                />
+                <Text className="text-green-500 ml-2">
+                  Mark as transacted to this person
+                </Text>
+              </Pressable>
+              <View className="my-4" />
+            </View>
+          )}
         <Pressable
           className="flex-row items-center"
           onPress={() =>
