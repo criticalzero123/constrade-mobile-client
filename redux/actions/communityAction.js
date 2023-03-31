@@ -343,3 +343,15 @@ export const rejectMemberRequest = async (id, reqId) => {
 export const communityDataInfo = (id, memberInfo) => async (dispatch) => {
   dispatch({ type: "COMMUNITY_DATA", payload: { id, memberInfo } });
 };
+
+export const searchCommunity = async (text, userId) => {
+  try {
+    const res = await api
+      .setAuthHeaders()
+      .get(`/api/community/search?text=${text}&userId=${userId}`);
+
+    return res.data.responseData;
+  } catch (error) {
+    console.error(error);
+  }
+};

@@ -41,7 +41,7 @@ export default function Community() {
             placeholder="Find community"
             onSubmitEditing={() => {
               setSearch("");
-              navigation.navigate("SearchResult", { query: search });
+              navigation.navigate("SearchResultCommunity", { query: search });
             }}
           />
         </View>
