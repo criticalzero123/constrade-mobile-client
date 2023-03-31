@@ -14,7 +14,6 @@ import FlatListCategories from "../../components/Home/FlatListCategories";
 import JustForYou from "../../components/Home/JustForYou";
 import FeaturesList from "../../components/Home/FeaturesList";
 import Advertisement from "../../components/Home/Advertisement";
-import PeopleFollowedPost from "../../components/Home/PeopleFollowedPost";
 import SuggestedCommunities from "../../components/Home/SuggestedCommunities";
 import MightLikeThese from "../../components/Home/MightLikeThese";
 import EndMessage from "../../components/EndMessage/EndMessage";
@@ -76,11 +75,8 @@ export default function Discover() {
             <View className="my-4" />
             <Advertisement />
 
-            <View className="my-3" />
-            <PeopleFollowedPost />
-
-            {/* <View className="my-2" />
-            <SuggestedCommunities /> */}
+            <View className="my-2" />
+            <SuggestedCommunities />
 
             <EndMessage
               text={

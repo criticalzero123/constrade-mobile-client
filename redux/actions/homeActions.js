@@ -21,3 +21,37 @@ export const getSearchCategory = async (tradeMethod) => {
     console.error(error);
   }
 };
+
+export const getBoostedProducts = async () => {
+  try {
+    const res = await api.setAuthHeaders().get(`/api/home/boosted`);
+
+    return res.data.responseData;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const getPopularProduct = async (count) => {
+  try {
+    const res = await api
+      .setAuthHeaders()
+      .get(`/api/home/popular?count=${count}`);
+
+    return res.data.responseData;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const getCommunityPopular = async (userId) => {
+  try {
+    const res = await api
+      .setAuthHeaders()
+      .get(`/api/home/community?userId=${userId}`);
+
+    return res.data.responseData;
+  } catch (error) {
+    console.error(error);
+  }
+};

@@ -11,7 +11,7 @@ import ItemCard from "../../components/Products/ItemCard";
 export default function SearchResultCategory({ route }) {
   const { category } = route.params;
   const [result, setResult] = useState();
-  console.log(category);
+
   useEffect(() => {
     if (category === undefined) return;
 
