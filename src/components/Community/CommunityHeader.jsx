@@ -39,7 +39,7 @@ export default function CommunityHeader() {
       >
         <View className="flex-row justify-between items-center px-5 py-3">
           <Text className="font-bold text-lg text-black">Communities</Text>
-          <Ionicons name="notifications-outline" size={24} color="black" />
+          {/* <Ionicons name="notifications-outline" size={24} color="black" /> */}
         </View>
         <Text className="text-black text-center text-2xl font-bold absolute bottom-0 mb-10 w-full">
           Find the perfect place just for you.

@@ -3,6 +3,7 @@ import React from "react";
 
 const Stack = createNativeStackNavigator();
 import Discover from "../../screens/home/Discover";
+import SearchResult from "../../screens/home/SearchResult";
 export default function HomeStack() {
   return (
     <Stack.Navigator
@@ -10,6 +11,7 @@ export default function HomeStack() {
       screenOptions={{ headerShown: false }}
     >
       <Stack.Screen component={Discover} name="Discover" />
+      <Stack.Screen component={SearchResult} name="SearchResult" />
     </Stack.Navigator>
   );
 }

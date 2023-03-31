@@ -4,15 +4,21 @@ import consoleCategories from "../assets/Discover/consoles.jpg";
 export const categoriesData = [
   {
     id: 1,
-    title: "PlayStation 4",
+    title: "Trade - in",
     description: "14 all items",
     image: consoleCategories,
   },
   {
     id: 2,
-    title: "PlayStation 3",
+    title: "Swap",
     description: "10 all items",
     image: gamesCategories,
+  },
+  {
+    id: 3,
+    title: "Cash",
+    description: "10 all items",
+    image: consoleCategories,
   },
 ];
 

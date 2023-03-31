@@ -1,12 +1,12 @@
 import {
-  Pressable,
   SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
+  TextInput,
   View,
 } from "react-native";
-import React, { useEffect } from "react";
+import React from "react";
 
 import { StatusBar } from "expo-status-bar";
 import DiscoverHeader from "../../components/Home/DiscoverHeader";
@@ -15,19 +15,26 @@ import JustForYou from "../../components/Home/JustForYou";
 import FeaturesList from "../../components/Home/FeaturesList";
 import Advertisement from "../../components/Home/Advertisement";
 import PeopleFollowedPost from "../../components/Home/PeopleFollowedPost";
-import DealsNearYou from "../../components/Home/DealsNearYou";
 import SuggestedCommunities from "../../components/Home/SuggestedCommunities";
 import MightLikeThese from "../../components/Home/MightLikeThese";
-import RecentlyViewed from "../../components/Home/RecentlyViewed";
 import EndMessage from "../../components/EndMessage/EndMessage";
-
-import { useNavigation } from "@react-navigation/native";
+import { Ionicons } from "@expo/vector-icons";
 import useGetCurrentUser from "../../hooks/useGetCurrentUser";
-import useGetAllUsers from "../../hooks/user/useGetAllUsers";
+import { ActivityIndicator } from "react-native-paper";
+import { useState } from "react";
+import { useNavigation } from "@react-navigation/native";
+
 export default function Discover() {
   const { user } = useGetCurrentUser();
-  const [data] = useGetAllUsers();
+  const [search, setSearch] = useState("");
   const navigation = useNavigation();
+
+  if (user === undefined)
+    return (
+      <View className="flex-row justify-center items-center flex-1">
+        <ActivityIndicator />
+      </View>
+    );
 
   if (user) {
     return (
@@ -35,32 +42,30 @@ export default function Discover() {
         <StatusBar style="light" />
         <ScrollView showsVerticalScrollIndicator={false}>
           <DiscoverHeader />
-          {data &&
-            data.map((user) => (
-              <Pressable
-                onPress={() =>
-                  navigation.navigate("Menu", {
-                    screen: "User",
-                    params: {
-                      screen: "OtherUserProfile",
-                      params: { userId: user.userId },
-                    },
-                  })
-                }
-              >
-                <Text>{user.email}</Text>
-              </Pressable>
-            ))}
+
           <View>
-            {/* For search make an another component for this */}
             <View
-              className="py-4 px-2 rounded-lg bg-gray-300 mt-4 mb-3"
+              className="py-4 px-4 rounded-lg bg-gray-200 mt-4 mb-3 flex-row items-center"
               style={{ marginHorizontal: 20 }}
             >
-              <Text>Search</Text>
+              {search.trim() === "" && (
+                <Ionicons name="search-sharp" size={24} color="#CC481F" />
+              )}
+              <TextInput
+                value={search}
+                onChangeText={setSearch}
+                className={`${search.trim() === "" && "ml-2 "} text-base `}
+                placeholder="Find console games"
+                onSubmitEditing={() => {
+                  setSearch("");
+                  navigation.navigate("SearchResult", { query: search });
+                }}
+              />
             </View>
 
             <FeaturesList />
+            <View className="my-3" />
+            <MightLikeThese />
 
             <View className="my-2" />
             <FlatListCategories />
@@ -74,17 +79,8 @@ export default function Discover() {
             <View className="my-3" />
             <PeopleFollowedPost />
 
-            <View className="my-2" />
-            <DealsNearYou />
-
             {/* <View className="my-2" />
             <SuggestedCommunities /> */}
-
-            <View className="my-3" />
-            <MightLikeThese />
-
-            <View className="my-2" />
-            <RecentlyViewed />
 
             <EndMessage
               text={

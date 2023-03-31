@@ -16,10 +16,11 @@ import useGetCurrentUser from "../../hooks/useGetCurrentUser";
 import useCommunityJoined from "../../hooks/community/useCommunityJoined";
 import CommunityCard from "../../components/Home/CommunityCard";
 import usePopularCommunity from "../../hooks/community/usePopularCommunity";
+import { Ionicons } from "@expo/vector-icons";
 
 export default function Community() {
   const navigation = useNavigation();
-  const [searchQ, setSearchQ] = useState("");
+  const [search, setSearch] = useState("");
 
   const { user } = useGetCurrentUser();
   const [joined] = useCommunityJoined(user && user.userId);
@@ -29,12 +30,21 @@ export default function Community() {
       <CommunityHeader />
 
       <View style={{ paddingHorizontal: 20 }}>
-        <TextInput
-          className="bg-gray-100 py-3 px-4 rounded mb-5"
-          value={searchQ}
-          onChangeText={setSearchQ}
-          placeholder="Find Communities"
-        />
+        <View className="py-4 px-4 rounded-lg bg-gray-100 mb-3 flex-row items-center">
+          {search.trim() === "" && (
+            <Ionicons name="search-sharp" size={24} color="#CC481F" />
+          )}
+          <TextInput
+            value={search}
+            onChangeText={setSearch}
+            className={`${search.trim() === "" && "ml-2 "} text-base `}
+            placeholder="Find community"
+            onSubmitEditing={() => {
+              setSearch("");
+              navigation.navigate("SearchResult", { query: search });
+            }}
+          />
+        </View>
 
         <CommunityFeatureItem />
       </View>

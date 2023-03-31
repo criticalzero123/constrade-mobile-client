@@ -22,7 +22,7 @@ export default function DiscoverHeader() {
 
       <View className="absolute bottom-0 w-full flex-row justify-between items-center px-5 py-3">
         <Text className="font-bold text-lg text-white">Discover</Text>
-        <Ionicons name="notifications-outline" size={24} color="white" />
+        {/* <Ionicons name="notifications-outline" size={24} color="white" /> */}
       </View>
     </View>
   );
