@@ -4,6 +4,7 @@ import React from "react";
 const Stack = createNativeStackNavigator();
 import Discover from "../../screens/home/Discover";
 import SearchResult from "../../screens/home/SearchResult";
+import SearchResultCategory from "../../screens/home/SearchResultCategory";
 export default function HomeStack() {
   return (
     <Stack.Navigator
@@ -12,6 +13,10 @@ export default function HomeStack() {
     >
       <Stack.Screen component={Discover} name="Discover" />
       <Stack.Screen component={SearchResult} name="SearchResult" />
+      <Stack.Screen
+        component={SearchResultCategory}
+        name="SearchResultCategory"
+      />
     </Stack.Navigator>
   );
 }

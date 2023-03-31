@@ -17,8 +17,8 @@ export default function FeaturesList() {
     },
     {
       id: 3,
-      title: "Introducing the shit",
-      description: "Automatically give you load of shits",
+      title: "Introducing the new",
+      description: "Automatically give you load of new",
     },
   ];
 

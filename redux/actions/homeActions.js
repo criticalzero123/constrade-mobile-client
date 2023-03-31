@@ -9,3 +9,15 @@ export const getSearchResult = async (search) => {
     console.error(error);
   }
 };
+
+export const getSearchCategory = async (tradeMethod) => {
+  try {
+    const res = await api
+      .setAuthHeaders()
+      .get(`/api/home/method?method=${tradeMethod}`);
+
+    return res.data.responseData;
+  } catch (error) {
+    console.error(error);
+  }
+};

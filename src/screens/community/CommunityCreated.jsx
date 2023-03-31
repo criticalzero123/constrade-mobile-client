@@ -26,9 +26,9 @@ export default function CommunityCreated() {
         (communityList.length === 0 ? (
           <CommunityEmpty from="created" />
         ) : (
-          communityList.map((community) => (
+          communityList.map((community, index) => (
             <Pressable
-              key={community.communityId}
+              key={index}
               onPress={() =>
                 navigation.navigate("CommunityDetail", {
                   id: community.communityId,
