@@ -16,13 +16,6 @@ export default function OtherUserProfile({ route }) {
 
   const [data] = useGetUserById(userId);
   const { user } = useGetCurrentUser();
-  const navigation = useNavigation();
-
-  useEffect(() => {
-    return () => {
-      navigation.reset({ routes: [{ name: "Menu" }] });
-    };
-  }, [userId]);
 
   const firstWordName = data && data.person.firstName.toString().split(" ")[0];
 

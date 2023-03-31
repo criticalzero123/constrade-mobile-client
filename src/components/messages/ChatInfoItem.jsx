@@ -38,17 +38,17 @@ export default function ChatInfoItem({ info, product }) {
         />
         <View className="flex-row ">
           <View style={{ width: width * 0.6 }}>
-            <Text className="capitalize text-gray-500">
+            <Text className="capitalize text-gray-600">
               {info.otherUserName}
+            </Text>
+            <Text className="text-gray-400" numberOfLines={1}>
+              {info.user.email}
             </Text>
             {product && (
               <Text className="font-semibold capitalize mb-1">
                 {product.title}
               </Text>
             )}
-            <Text className="" numberOfLines={1}>
-              {info.lastMessage}
-            </Text>
           </View>
           <View style={{ width: width * 0.2 }} className="items-center">
             <Text className="text-gray-500 text-center ">

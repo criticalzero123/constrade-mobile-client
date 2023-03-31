@@ -53,31 +53,3 @@ export const getChatByUserIdReducer = (state = {}, action) => {
       return { ...state };
   }
 };
-
-export const deleteMessageByIdReducer = (state = {}, action) => {
-  switch (action.type) {
-    case "DELETE_MESSAGE_BY_ID_REQUEST":
-      return {
-        ...state,
-        loading: true,
-      };
-
-    case "DELETE_MESSAGE_BY_ID_SUCCESS":
-      return {
-        loading: false,
-        data: action.payload,
-      };
-
-    case "DELETE_MESSAGE_BY_ID_FAILED":
-      return {
-        loading: false,
-        error: action.error,
-      };
-
-    case "DELETE_MESSAGE_BY_ID_LEAVE":
-      return {};
-
-    default:
-      return { ...state };
-  }
-};

@@ -7,11 +7,6 @@ import {
   View,
 } from "react-native";
 import React from "react";
-import {
-  getDateFull,
-  getDateTime,
-  getTimeOnly,
-} from "../../../service/dateService";
 import { useNavigation } from "@react-navigation/native";
 
 export default function TransactionItem({ data, currentUserId }) {
@@ -24,7 +19,7 @@ export default function TransactionItem({ data, currentUserId }) {
 
   return (
     <Pressable
-      className="px-4 py-2 flex-row items-center bg-gray-200 shadow-2xl"
+      className="px-4 py-2 flex-row items-center bg-gray-200 shadow-2xl mb-3"
       style={{ borderRadius: 10 }}
       onPress={() =>
         navigation.navigate("TransactionDetails", { id: data.productId })

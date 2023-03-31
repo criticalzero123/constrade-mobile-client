@@ -34,19 +34,14 @@ export const getChatByUserId = (userId) => async (dispatch) => {
   }
 };
 
-export const deleteMessageById = (id) => async (dispatch) => {
-  dispatch({ type: "DELETE_MESSAGE_BY_ID_REQUEST" });
-
+export const deleteMessageById = async (id) => {
   try {
     const res = await api
       .setAuthHeaders()
       .delete(`/api/userchat/messages/message/${id}`);
 
-    dispatch({
-      type: "DELETE_MESSAGE_BY_ID_SUCCESS",
-      payload: res.data.responseData,
-    });
+    return res.data.responseData;
   } catch (error) {
-    dispatch({ type: "DELETE_MESSAGE_BY_ID_FAILED", error: error });
+    console.error(error);
   }
 };

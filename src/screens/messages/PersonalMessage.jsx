@@ -30,7 +30,7 @@ export default function PersonalMessage({ route }) {
   const [index, setIndex] = useState(0);
   const [messageList, setMessageList] = useState([]);
   const [firstFetch, setFirstFetch] = useState(true);
-
+  const [onDelete, setOnDelete] = useState(false);
   const { height } = useWindowDimensions();
   const { user } = useGetCurrentUser();
   const { sendMessage, message } = useMessageHubConnection();
@@ -50,6 +50,11 @@ export default function PersonalMessage({ route }) {
   useEffect(() => {
     if (messageData === undefined) return;
     const reverseArray = [...messageData].reverse();
+    if (onDelete) {
+      setMessageList([...reverseArray]);
+      setOnDelete(false);
+      return;
+    }
 
     if (firstFetch) {
       setMessageList([...messageList, ...reverseArray]);
@@ -100,7 +105,10 @@ export default function PersonalMessage({ route }) {
                     <MessageItem
                       key={message.userMessageId}
                       message={message.message}
-                      onDelete={deleteMessage}
+                      onDelete={() => {
+                        deleteMessage(message.userMessageId);
+                        setOnDelete(true);
+                      }}
                     />
                   ) : (
                     <OtherMessageItem

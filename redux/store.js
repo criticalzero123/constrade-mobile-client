@@ -50,7 +50,6 @@ import {
 import {
   getMessagesByUserIdsReducer,
   getChatByUserIdReducer,
-  deleteMessageByIdReducer,
 } from "./reducers/userMessageReducer";
 
 import { soldProductReducer } from "./reducers/transactionReducer";
@@ -105,7 +104,7 @@ const finalReducer = combineReducers({
   getFavoriteByUserIdReducer,
   subscribeUserReducer,
   getSubscriptionHistoryReducer,
-  deleteMessageByIdReducer,
+
   getNotificationUserReducer,
   getMyCommunityReducer,
   getCommunityByIdReducer,

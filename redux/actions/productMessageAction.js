@@ -41,11 +41,7 @@ export const deleteProductMessage = async (id) => {
       .setAuthHeaders()
       .delete(`/api/productchat/messages/message/${id}`);
 
-    if (res.data.responseData) {
-      alert("deleted");
-    } else {
-      alert("not successfully deleted");
-    }
+    return res.data.responseData;
   } catch (error) {
     alert("Something Went Wrong");
   }

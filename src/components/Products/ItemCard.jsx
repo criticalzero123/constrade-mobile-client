@@ -12,8 +12,6 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
 
 export default function ItemCard({ data, index, showLike = true }) {
-  const imageConsole =
-    "https://images.saymedia-content.com/.image/t_share/MTc0MzY1MzUwMzM3NDU1NzUw/most-annoying-monsters-breath-of-the-wild.png";
   const { height, width } = useWindowDimensions();
   const navigation = useNavigation();
 
@@ -30,10 +28,7 @@ export default function ItemCard({ data, index, showLike = true }) {
       <View className="h-3/4 relative overflow-hidden rounded-t-lg">
         <Image
           source={{
-            uri:
-              data.thumbnailUrl !== undefined
-                ? data.thumbnailUrl
-                : imageConsole,
+            uri: data.thumbnailUrl,
           }}
           style={{
             flex: 1,

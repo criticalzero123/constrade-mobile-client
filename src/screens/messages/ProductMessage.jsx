@@ -30,6 +30,7 @@ export default function ProductMessage({ route }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [messageList, setMessageList] = useState([]);
   const [firstFetch, setFirstFetch] = useState(true);
+  const [onDelete, setOnDelete] = useState(false);
   const navigation = useNavigation();
   const { height, width } = useWindowDimensions();
   const { user: currentUser } = useGetCurrentUser();
@@ -52,11 +53,17 @@ export default function ProductMessage({ route }) {
     if (messageData === undefined) return;
     const reverseArray = [...messageData].reverse();
 
+    if (onDelete) {
+      setMessageList(reverseArray);
+      setOnDelete(false);
+      return;
+    }
+
     if (firstFetch) {
       setMessageList([...messageList, ...reverseArray]);
       setFirstFetch(false);
     } else {
-      setMessageList([...messageData, ...messageList]);
+      setMessageList([...reverseArray, ...messageList]);
     }
   }, [messageData]);
 
@@ -97,8 +104,10 @@ export default function ProductMessage({ route }) {
                     <MessageItem
                       key={index}
                       message={message.message}
-                      onDelete={deleteMessage}
-                      isProduct={true}
+                      onDelete={() => {
+                        deleteMessage(message.productMessageId);
+                        setOnDelete(true);
+                      }}
                     />
                   ) : (
                     <OtherMessageItem

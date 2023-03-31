@@ -7,8 +7,8 @@ import {
 } from "react-native";
 import React from "react";
 
-export default function MessageItem({ message, onDelete, isProduct = false }) {
-  const { width, height } = useWindowDimensions();
+export default function MessageItem({ message, onDelete }) {
+  const { width } = useWindowDimensions();
 
   const onPressDelete = () => {
     Alert.alert(
@@ -18,9 +18,7 @@ export default function MessageItem({ message, onDelete, isProduct = false }) {
         {
           text: "Yes",
           onPress: () => {
-            Alert.alert("Info", "Deleted.");
-            if (!isProduct) onDelete(message.userMessageId);
-            else onDelete(message.productMessageId);
+            onDelete();
             return;
           },
           style: "default",

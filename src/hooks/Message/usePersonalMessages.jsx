@@ -4,23 +4,42 @@ import {
   deleteMessageById,
   getMessagesByUserIds,
 } from "../../../redux/actions/userMessageAction";
+import { useState } from "react";
 
 export default function usePersonalMessages(userId1, userId2, index) {
   const dispatch = useDispatch();
-
+  const [messageList, setMessageList] = useState([]);
   const { data } = useSelector((state) => state.getMessagesByUserIdsReducer);
 
   useEffect(() => {
     dispatch(getMessagesByUserIds(userId1, userId2, index));
-  }, []);
+
+    return () => {
+      dispatch({ type: "GET_MESSAGES_BY_USER_IDS_LEAVE" });
+    };
+  }, [userId1, userId2]);
+
+  useEffect(() => {
+    if (data === undefined) return;
+    setMessageList(data);
+  }, [data]);
 
   const getMoreMessage = (indexNumber) => {
     dispatch(getMessagesByUserIds(userId1, userId2, indexNumber));
   };
 
-  const deleteMessage = (id) => {
-    dispatch(deleteMessageById(id));
+  const deleteMessage = async (id) => {
+    const res = await deleteMessageById(id);
+
+    if (res) {
+      alert("Successfully deleted.");
+      const newMessageList = messageList.filter((c) => c.userMessageId !== id);
+
+      setMessageList(newMessageList);
+    } else {
+      alert("Unable to delete");
+    }
   };
 
-  return [data, getMoreMessage, deleteMessage];
+  return [messageList, getMoreMessage, deleteMessage];
 }
