@@ -6,6 +6,7 @@ import { getCommunityPopular } from "../../../redux/actions/homeActions";
 import { useEffect } from "react";
 import { useState } from "react";
 import useGetCurrentUser from "../../hooks/useGetCurrentUser";
+import { ActivityIndicator } from "react-native-paper";
 
 export default function SuggestedCommunities() {
   const { user } = useGetCurrentUser();
@@ -20,6 +21,14 @@ export default function SuggestedCommunities() {
 
     fetch();
   }, []);
+
+  if (community === undefined)
+    return (
+      <View>
+        <ActivityIndicator />
+      </View>
+    );
+
   if (community)
     return (
       <View className="w-full">

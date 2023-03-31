@@ -4,6 +4,7 @@ import ItemCard from "../Products/ItemCard";
 import { useState } from "react";
 import { useEffect } from "react";
 import { getBoostedProducts } from "../../../redux/actions/homeActions";
+import { ActivityIndicator } from "react-native-paper";
 
 export default function MightLikeThese() {
   const [boosted, setBoosted] = useState();
@@ -17,6 +18,8 @@ export default function MightLikeThese() {
 
     fetch();
   }, []);
+
+  if (boosted === undefined) return <ActivityIndicator />;
 
   if (boosted && boosted.length > 0)
     return (

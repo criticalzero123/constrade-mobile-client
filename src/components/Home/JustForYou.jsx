@@ -5,6 +5,7 @@ import { tempDataItem } from "../../../service/discoverService";
 import { getPopularProduct } from "../../../redux/actions/homeActions";
 import { useState } from "react";
 import { useEffect } from "react";
+import { ActivityIndicator } from "react-native-paper";
 
 export default function JustForYou() {
   const [products, setProducts] = useState();
@@ -18,6 +19,13 @@ export default function JustForYou() {
 
     fetch();
   }, []);
+
+  if (products)
+    return (
+      <View>
+        <ActivityIndicator />
+      </View>
+    );
 
   if (products)
     return (
