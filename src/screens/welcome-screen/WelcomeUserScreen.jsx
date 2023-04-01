@@ -37,8 +37,8 @@ export default function WelcomeUserScreen({ route }) {
     setTimeout(() => {
       dispatch(getUserInfo(user));
       dispatch(cleanAllAuth());
-    }, 5000);
-  }, [dispatch, user]);
+    }, 1000);
+  }, [user]);
 
   return (
     <SafeAreaView style={styles.container}>

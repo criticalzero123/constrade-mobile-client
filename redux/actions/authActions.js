@@ -19,54 +19,33 @@ export const emailAndPasswordRegister = (userInfo) => (dispatch) => {
     });
 };
 
-export const googleAuthRegister = (userInfo) => (dispatch) => {
-  dispatch({ type: "REGISTER_GOOGLE_REQUEST" });
+export const googleAuthRegister = async (userInfo) => {
+  try {
+    const res = await api.post(`/api/auth`, userInfo);
 
-  api
-    .post(`/api/auth`, userInfo)
-    .then((res) => {
-      dispatch({
-        type: "REGISTER_GOOGLE_SUCCESS",
-        payload: res.data.responseData,
-      });
-    })
-    .catch((err) => {
-      dispatch({ type: "REGISTER_GOOGLE_FAILED", error: err });
-    });
+    return res.data.responseData;
+  } catch (error) {
+    console.error(error);
+  }
 };
 
-export const checkEmail = (email) => (dispatch) => {
-  dispatch({ type: "CHECK_EMAIL_REQUEST" });
-  api
-    .get(`/api/auth/check/email/${email}`)
-    .then((res) => {
-      dispatch({
-        type: "CHECK_EMAIL_SUCCESS",
-        payload: res.data.responseData,
-      });
-    })
-    .catch((err) => {
-      dispatch({
-        type: "CHECK_EMAIL_FAILED",
-        error: err,
-      });
-    });
+export const checkEmail = async (email) => {
+  try {
+    const res = await api.get(`/api/auth/check/email/${email}`);
+
+    return res.data.responseData;
+  } catch (error) {
+    console.error(error);
+  }
 };
+export const googleAuthLogin = async (email) => {
+  try {
+    const res = await api.put(`/api/auth/login/google`, { email });
 
-export const googleAuthLogin = (email) => (dispatch) => {
-  dispatch({ type: "LOGIN_GOOGLE_REQUEST" });
-
-  api
-    .put(`/api/auth/login/google`, { email })
-    .then((res) => {
-      dispatch({
-        type: "LOGIN_GOOGLE_SUCCESS",
-        payload: res.data.responseData,
-      });
-    })
-    .catch((err) => {
-      dispatch({ type: "LOGIN_GOOGLE_FAILED", error: err });
-    });
+    return res.data.responseData;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const emailAndPasswordAuthLogin = (userInfo) => (dispatch) => {

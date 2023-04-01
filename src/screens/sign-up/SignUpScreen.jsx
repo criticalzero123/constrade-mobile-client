@@ -1,21 +1,11 @@
-import {
-  Platform,
-  StatusBar,
-  StyleSheet,
-  Text,
-  View,
-  KeyboardAvoidingView,
-  Pressable,
-  ScrollView,
-} from "react-native";
-import React, { useEffect, useState } from "react";
+import { StyleSheet, Text, View, Pressable, ScrollView } from "react-native";
+import React, { useState } from "react";
 import Header from "../../components/sign-in/SignInHeader";
 import LineTextCenter from "../../components/line-text-center/LineTextCenter";
 import GoogleButton from "../../components/buttons/GoogleButton";
 import { StackActions, useNavigation } from "@react-navigation/native";
 
 import TermsAndCondition from "../../components/TermsAndCondition/TermsAndCondition";
-import { useSelector } from "react-redux";
 import { Portal, Dialog, Provider, Button } from "react-native-paper";
 import EmailOrPhone from "../../components/sign-in/EmailOrPhone";
 import KeyboardHideView from "../../components/CustomViews/KeyboardHideView";
@@ -24,16 +14,6 @@ export default function SignUpScreen() {
   const navigation = useNavigation();
 
   const [modalVisible, setModalVisible] = useState(false);
-
-  const getChecker = useSelector((state) => state.checkEmailReducer);
-  const { loading, success, exist } = getChecker;
-
-  useEffect(() => {
-    if (loading) return;
-    if (success && exist) {
-      setModalVisible(true);
-    }
-  }, [getChecker]);
 
   return (
     <KeyboardHideView>

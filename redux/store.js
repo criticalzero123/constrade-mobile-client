@@ -4,9 +4,6 @@ import thunk from "redux-thunk";
 
 import {
   emailAndPasswordRegisterReducer,
-  checkEmailReducer,
-  googleAuthLoginReducer,
-  googleAuthRegisterReducer,
   emailAndPasswordAuthLoginReducer,
   requestOtpEmailReducer,
   verifyOtpReducer,
@@ -52,8 +49,6 @@ import {
   getChatByUserIdReducer,
 } from "./reducers/userMessageReducer";
 
-import { soldProductReducer } from "./reducers/transactionReducer";
-
 import {
   subscribeUserReducer,
   getSubscriptionHistoryReducer,
@@ -77,9 +72,6 @@ import {
 
 const finalReducer = combineReducers({
   emailAndPasswordRegisterReducer,
-  checkEmailReducer,
-  googleAuthLoginReducer,
-  googleAuthRegisterReducer,
   userInfoReducer,
   emailAndPasswordAuthLoginReducer,
   requestOtpEmailReducer,
@@ -98,13 +90,12 @@ const finalReducer = combineReducers({
   getProductByIdReducer,
   getProductMessagesReducer,
   getProductChatByUserIdReducer,
-  soldProductReducer,
+
   changePasswordEmailReducer,
   deleteProductByIdReducer,
   getFavoriteByUserIdReducer,
   subscribeUserReducer,
   getSubscriptionHistoryReducer,
-
   getNotificationUserReducer,
   getMyCommunityReducer,
   getCommunityByIdReducer,

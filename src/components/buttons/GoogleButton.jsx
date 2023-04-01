@@ -4,17 +4,15 @@ import { AntDesign } from "@expo/vector-icons";
 
 import { useNavigation } from "@react-navigation/native";
 import { useGoogleAuth } from "../../hooks/useGoogleAuth";
-import { useGetGoogleUserInfo } from "../../hooks/useGetGoogleUserInfo";
 import { useGoogleAuthAction } from "../../hooks/useGoogleAuthAction";
 
 export default function GoogleButton({ text, type }) {
   const navigation = useNavigation();
-  const [request, response, promptAsync] = useGoogleAuth();
-  const { userInfo } = useGetGoogleUserInfo(response);
-  const { user, token, apiKey, from } = useGoogleAuthAction(userInfo, type);
+  const [request, promptAsync, userInfo] = useGoogleAuth();
+  const { user, token, apiKey } = useGoogleAuthAction(userInfo, type);
 
   useEffect(() => {
-    if (user !== undefined && user !== null) {
+    if (user !== undefined) {
       navigation.navigate("WelcomeUser", {
         from: type,
         user: user,

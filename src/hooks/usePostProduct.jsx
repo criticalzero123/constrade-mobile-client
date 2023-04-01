@@ -1,4 +1,3 @@
-import { useDispatch, useSelector } from "react-redux";
 import { addProduct } from "../../redux/actions/productActions";
 import { saveImagesProduct } from "../../firebase/firebaseStorageBucket";
 
