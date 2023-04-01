@@ -1,7 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import ItemCard from "../Products/ItemCard";
-import { tempDataItem } from "../../../service/discoverService";
 import { getPopularProduct } from "../../../redux/actions/homeActions";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -20,7 +19,7 @@ export default function JustForYou() {
     fetch();
   }, []);
 
-  if (products)
+  if (products === undefined)
     return (
       <View>
         <ActivityIndicator />
@@ -36,7 +35,7 @@ export default function JustForYou() {
         </View>
         <View className="w-full flex-row flex-wrap justify-evenly ml-2">
           {products.map((data, index) => (
-            <ItemCard data={data} key={index} />
+            <ItemCard data={data} key={index} showLike={false} />
           ))}
         </View>
         <Text className="text-[#CC481F] font-semibold text-base text-center">

@@ -39,7 +39,7 @@ export default function MightLikeThese() {
         <FlatList
           data={boosted}
           renderItem={({ item, index }) => (
-            <ItemCard data={item} index={index} key={index} />
+            <ItemCard data={item} index={index} key={index} showLike={false} />
           )}
           ItemSeparatorComponent={() => <View className="mx-1" />}
           horizontal

@@ -15,6 +15,7 @@ export default function CommunityCard({
   index,
   currentUserId,
   fullWidth = false,
+  home = false,
 }) {
   const { width, height } = useWindowDimensions();
   const navigation = useNavigation();
@@ -37,18 +38,31 @@ export default function CommunityCard({
     );
   };
 
+  const handlePress = () => {
+    if (home) {
+      navigation.navigate("Community", {
+        screen: "CommunityDetail",
+        params: {
+          id: data.community.communityId,
+        },
+      });
+    } else {
+      navigation.navigate("CommunityDetail", {
+        id: data.community.communityId,
+      });
+    }
+  };
+
   return (
     <Pressable
-      className={`mr-2 ${index === 0 && " ml-5"} bg-gray-100 rounded-lg`}
+      className={`mr-2 ${index === 0 && " ml-5"} ${
+        home ? "bg-white" : "bg-gray-100"
+      } rounded-lg shadow-2xl`}
       style={{
         width: fullWidth ? width * 0.85 : width * 0.7,
         height: height * 0.33,
       }}
-      onPress={() =>
-        navigation.navigate("CommunityDetail", {
-          id: data.community.communityId,
-        })
-      }
+      onPress={handlePress}
     >
       <View style={{ height: height * 0.11 }} className="relative">
         <Image

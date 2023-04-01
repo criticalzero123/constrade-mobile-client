@@ -17,7 +17,7 @@ export default function usePostCommunity(id, userId) {
 
   useEffect(() => {
     if (data === undefined) return;
-    console.log(data);
+
     setPosts(data);
   }, [data]);
 

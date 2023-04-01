@@ -46,7 +46,7 @@ export default function SuggestedCommunities() {
         <FlatList
           data={community}
           renderItem={({ item, index }) => (
-            <CommunityCard data={item} index={index} key={index} />
+            <CommunityCard data={item} index={index} key={index} home={true} />
           )}
           horizontal
           showsHorizontalScrollIndicator={false}
