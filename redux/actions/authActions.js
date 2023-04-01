@@ -1,22 +1,13 @@
 import api from "../../service/api";
 
-export const emailAndPasswordRegister = (userInfo) => (dispatch) => {
-  dispatch({ type: "EMAIL_PASSWORD_REGISTER_AUTH_REQUEST" });
+export const emailAndPasswordRegister = async (userInfo) => {
+  try {
+    const res = await api.post(`/api/auth`, userInfo);
 
-  api
-    .post(`/api/auth`, userInfo)
-    .then((res) => {
-      dispatch({
-        type: "EMAIL_PASSWORD_REGISTER_AUTH_SUCCESS",
-        payload: res.data.responseData,
-      });
-    })
-    .catch((err) => {
-      dispatch({
-        type: "EMAIL_PASSWORD_REGISTER_AUTH_FAILED",
-        error: err,
-      });
-    });
+    return res.data.responseData;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const googleAuthRegister = async (userInfo) => {
@@ -38,6 +29,7 @@ export const checkEmail = async (email) => {
     console.error(error);
   }
 };
+
 export const googleAuthLogin = async (email) => {
   try {
     const res = await api.put(`/api/auth/login/google`, { email });
@@ -48,51 +40,36 @@ export const googleAuthLogin = async (email) => {
   }
 };
 
-export const emailAndPasswordAuthLogin = (userInfo) => (dispatch) => {
-  dispatch({ type: "LOGIN_EMAIL_AND_PASSWORD_REQUEST" });
-  api
-    .put(`/api/auth/login`, userInfo)
-    .then((res) => {
-      dispatch({
-        type: "LOGIN_EMAIL_AND_PASSWORD_SUCCESS",
-        payload: res.data.responseData,
-      });
-    })
-    .catch((err) => {
-      dispatch({ type: "LOGIN_EMAIL_AND_PASSWORD_FAILED", error: err });
-    });
+export const emailAndPasswordAuthLogin = async (userInfo) => {
+  try {
+    const res = await api.put(`/api/auth/login`, userInfo);
+
+    return res.data.responseData;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
-export const requestOtpEmail = (email) => (dispatch) => {
-  dispatch({ type: "REQUEST_OTP_EMAIL_REQUEST" });
+export const requestOtpEmail = async (email) => {
+  try {
+    const res = await api.post(`/api/auth/otp/email`, { sendto: email });
 
-  api
-    .post(`/api/auth/otp/email`, { sendto: email })
-    .then((res) => {
-      dispatch({
-        type: "REQUEST_OTP_EMAIL_SUCCESS",
-        payload: res.data.responseData,
-      });
-    })
-    .catch((err) => {
-      dispatch({ type: "REQUEST_OTP_EMAIL_FAILED", error: err });
-    });
+    return res.data.responseData;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
-export const verifyOtp = (user, code) => (dispatch) => {
-  dispatch({ type: "VERIFY_OTP_REQUEST" });
+export const verifyOtp = async (user, code) => {
+  try {
+    const result = await api.get(
+      `/api/auth/otp/verify?user=${user}&code=${code}`
+    );
 
-  api
-    .get(`/api/auth/otp/verify?user=${user}&code=${code}`)
-    .then((res) => {
-      dispatch({
-        type: "VERIFY_OTP_SUCCESS",
-        payload: res.data.responseData,
-      });
-    })
-    .catch((err) => {
-      dispatch({ type: "VERIFY_OTP_FAILED", error: err });
-    });
+    return result.data.responseData;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const changePasswordEmail = (info) => (dispatch) => {

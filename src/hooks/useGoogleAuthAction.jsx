@@ -48,9 +48,7 @@ export const useGoogleAuthAction = (userInfo, type) => {
           apiKey: result.apiKey,
           success: true,
         });
-      }
-
-      if (result === undefined) {
+      } else {
         if (type === "signin") {
           alert("User doesn't exist");
         }

@@ -20,19 +20,13 @@ export default function SignUpPassword({ route }) {
   const [onLoading, setOnLoading] = useState(false);
   const [password, setPassword] = useState("");
   const navigation = useNavigation();
-  const dispatch = useDispatch();
   const { value } = route.params;
   const image =
     "https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80";
 
-  const { loading, success, user, token, apiKey } = useSelector(
-    (state) => state.emailAndPasswordRegisterReducer
-  );
+  const [result, setResult] = useState();
 
-  {
-    /* TODO: like +639999999999 or 09999999999 t o => 639999999999 when saving in the database */
-  }
-  const onSubmit = () => {
+  const onSubmit = async () => {
     setOnLoading(true);
     const user = {
       userType: "semi-verified",
@@ -46,31 +40,29 @@ export default function SignUpPassword({ route }) {
       firstname: value.firstName,
       lastname: value.lastName,
     };
-    createWithEmailAndPassword(user, person)
-      .then((user) => {
-        dispatch(emailAndPasswordRegister(user));
-      })
-      .catch((code, message) => {
-        console.log(code, message);
-      });
+    try {
+      const gResult = await createWithEmailAndPassword(user, person);
+      const res = await emailAndPasswordRegister(gResult);
+
+      setResult(res);
+    } catch (error) {
+      console.log(error.code, error.message);
+    }
   };
 
   useEffect(() => {
-    if (loading || loading === undefined || success === undefined) return;
+    if (result === undefined) return;
     setOnLoading(false);
-    if (success) {
-      navigation.dispatch(
-        StackActions.replace("WelcomeUser", {
-          from: "signup",
-          user: user,
-          apiKey: apiKey,
-          token: token,
-        })
-      );
-    } else {
-      navigation.dispatch(StackActions.replace("SignUp"));
-    }
-  }, [success, loading]);
+
+    navigation.dispatch(
+      StackActions.replace("WelcomeUser", {
+        from: "signup",
+        user: result.user,
+        apiKey: result.apiKey,
+        token: result.token,
+      })
+    );
+  }, [result]);
 
   return (
     <SafeAreaView style={styles.container}>

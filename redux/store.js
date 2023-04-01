@@ -2,18 +2,11 @@ import { applyMiddleware, combineReducers, createStore } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
 
-import {
-  emailAndPasswordRegisterReducer,
-  emailAndPasswordAuthLoginReducer,
-  requestOtpEmailReducer,
-  verifyOtpReducer,
-  changePasswordEmailReducer,
-} from "./reducers/authReducer";
+import { changePasswordEmailReducer } from "./reducers/authReducer";
 
 import {
   updatePersonInfoReducer,
   userInfoReducer,
-  getAllUsersReducer,
   getUserByIdReducer,
 } from "./reducers/userReducer";
 
@@ -71,14 +64,9 @@ import {
 } from "./reducers/communityReducer";
 
 const finalReducer = combineReducers({
-  emailAndPasswordRegisterReducer,
   userInfoReducer,
-  emailAndPasswordAuthLoginReducer,
-  requestOtpEmailReducer,
-  verifyOtpReducer,
   getOtherReviewsUserReducer,
   updatePersonInfoReducer,
-  getAllUsersReducer,
   getUserByIdReducer,
   getMessagesByUserIdsReducer,
   getChatByUserIdReducer,
@@ -90,7 +78,6 @@ const finalReducer = combineReducers({
   getProductByIdReducer,
   getProductMessagesReducer,
   getProductChatByUserIdReducer,
-
   changePasswordEmailReducer,
   deleteProductByIdReducer,
   getFavoriteByUserIdReducer,

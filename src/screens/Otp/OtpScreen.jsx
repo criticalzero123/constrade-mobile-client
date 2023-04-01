@@ -20,7 +20,7 @@ export default function OtpScreen({ route }) {
   const dispatch = useDispatch();
 
   const { value, type } = route.params;
-  const { loading, message } = useSelector((state) => state.verifyOtpReducer);
+  const [message, setMessage] = useState();
 
   const [otp, setOtp] = useState("");
   const [counter, setCounter] = useState(60);
@@ -40,7 +40,7 @@ export default function OtpScreen({ route }) {
   }, [counter]);
 
   useEffect(() => {
-    if (loading) return;
+    if (message === undefined) return;
 
     switch (message) {
       case "WrongCode":
@@ -63,13 +63,14 @@ export default function OtpScreen({ route }) {
         }
         break;
     }
-  }, [loading, message]);
+  }, [message]);
 
-  const otpValidation = (newText) => {
+  const otpValidation = async (newText) => {
     setError(false);
     if (newText.length === 6) {
       setValidating(!validating);
-      dispatch(verifyOtp(value, newText));
+      const res = await verifyOtp(value, newText);
+      setMessage(res);
     }
 
     setOtp(newText);

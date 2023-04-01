@@ -1,18 +1,9 @@
-import {
-  StyleSheet,
-  Text,
-  SafeAreaView,
-  View,
-  Platform,
-  StatusBar,
-  Pressable,
-} from "react-native";
+import { StyleSheet, Text, View, Pressable } from "react-native";
 import React, { useState } from "react";
 import Header from "../../components/sign-in/SignInHeader";
 
 import EmailTextInput from "../../components/CustomTextInput/EmailTextInput";
 import PasswordTextInput from "../../components/CustomTextInput/PasswordTextInput";
-import TermsAndCondition from "../../components/TermsAndCondition/TermsAndCondition";
 import SignInAndSignUpButton from "../../components/buttons/SignInAndSignUpButton";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
@@ -22,37 +13,11 @@ export default function EmailSignInScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { loading, user, token, apiKey, error } = useSelector(
-    (state) => state.emailAndPasswordAuthLoginReducer
-  );
-
-  const navigation = useNavigation();
-
   const onValidate = () => {
     return email.trim() !== "" && password.trim() !== ""
       ? { email, password }
       : null;
   };
-
-  useEffect(() => {
-    if (user === undefined) return;
-    if (user === null) {
-      alert("User Not Found!");
-      return;
-    }
-    if (error) {
-      console.log(error);
-      return;
-    }
-    navigation.dispatch(
-      StackActions.replace("WelcomeUser", {
-        token: token,
-        user: user,
-        apiKey: apiKey,
-        from: "signin",
-      })
-    );
-  }, [user]);
 
   return (
     <KeyboardHideView>
@@ -73,9 +38,7 @@ export default function EmailSignInScreen() {
         type="signin"
         loginType="email"
         value={onValidate()}
-        loading={loading}
       />
-      {/* <TermsAndCondition /> */}
     </KeyboardHideView>
   );
 }

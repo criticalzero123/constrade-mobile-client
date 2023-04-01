@@ -13,7 +13,6 @@ import React from "react";
 import GoogleButton from "../../components/buttons/GoogleButton";
 import LineTextCenter from "../../components/line-text-center/LineTextCenter";
 import LoginMethodButton from "../../components/buttons/LoginMethodButton";
-import TermsAndCondition from "../../components/TermsAndCondition/TermsAndCondition";
 import SignInHeader from "../../components/sign-in/SignInHeader";
 
 import { Feather } from "@expo/vector-icons";
@@ -65,7 +64,6 @@ export default function SignInScreen() {
           <Text className="text-[#CC481F]">I don't have an account</Text>
         </Pressable>
       </ScrollView>
-      {/* <TermsAndCondition /> */}
     </SafeAreaView>
   );
 }

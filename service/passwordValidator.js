@@ -14,7 +14,6 @@ schema
   .has()
   .digits(); // Must have digits
 
-// TODO: this is not a optimize solution please optimize this.
 // This check if the words is available in the list.
 // return 4 => strong password
 // return 3 => medium password
