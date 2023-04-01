@@ -15,13 +15,7 @@ export default function ForgetPasswordScreen({ route }) {
   const [password, setPassword] = useState("");
   const [onLoading, setOnLoading] = useState(false);
 
-  const dispatch = useDispatch();
-
-  const { success, loading } = useSelector(
-    (state) => state.changePasswordEmailReducer
-  );
-
-  const onSubmit = () => {
+  const onSubmit = async () => {
     setOnLoading(true);
 
     const info = {
@@ -29,19 +23,16 @@ export default function ForgetPasswordScreen({ route }) {
       newPassword: password,
     };
 
-    dispatch(changePasswordEmail(info));
-  };
+    const res = await changePasswordEmail(info);
 
-  useEffect(() => {
-    if (loading || loading === undefined) return;
-
-    if (success) {
+    if (res) {
       alert("Change password is successful");
       navigation.navigate("SignInEmail");
     } else {
-      alert("Something went wrong");
+      alert("Cannot change password because it is google auth");
+      setOnLoading(false);
     }
-  }, [loading, success]);
+  };
 
   return (
     <ContainerSafeView>

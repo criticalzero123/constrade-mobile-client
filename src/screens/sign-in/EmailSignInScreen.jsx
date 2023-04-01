@@ -12,6 +12,7 @@ import KeyboardHideView from "../../components/CustomViews/KeyboardHideView";
 export default function EmailSignInScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigation = useNavigation();
 
   const onValidate = () => {
     return email.trim() !== "" && password.trim() !== ""

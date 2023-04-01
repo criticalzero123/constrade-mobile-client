@@ -58,7 +58,7 @@ export default function SignInScreen() {
         </View>
 
         <Pressable
-          className="mt-7"
+          className="mt-7 items-center"
           onPress={() => navigation.dispatch(StackActions.replace("SignUp"))}
         >
           <Text className="text-[#CC481F]">I don't have an account</Text>

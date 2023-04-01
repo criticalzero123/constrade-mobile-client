@@ -3,18 +3,11 @@ import React from "react";
 import ContainerSafeView from "../../components/CustomViews/ContainerSafeView";
 import { useState } from "react";
 import useOtp from "../../hooks/Otp/useOtp";
-import { useEffect } from "react";
-import { useNavigation } from "@react-navigation/native";
+import { ActivityIndicator } from "react-native";
 
 export default function ForgetEmailScreen() {
-  const navigation = useNavigation();
   const [value, setValue] = useState("");
-  const [otpRequest, success, loading] = useOtp();
-
-  useEffect(() => {
-    if (loading || loading === undefined) return;
-    if (success) navigation.navigate("Otp", { value, type: "forgetpassword" });
-  }, [success, loading]);
+  const [otpRequest, loading] = useOtp();
 
   return (
     <ContainerSafeView>
@@ -28,8 +21,9 @@ export default function ForgetEmailScreen() {
       <Pressable
         className="items-center border p-4"
         onPress={() => otpRequest(value)}
+        disabled={loading}
       >
-        <Text>send</Text>
+        {loading ? <ActivityIndicator /> : <Text>send</Text>}
       </Pressable>
     </ContainerSafeView>
   );

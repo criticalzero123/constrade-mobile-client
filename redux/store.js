@@ -2,8 +2,6 @@ import { applyMiddleware, combineReducers, createStore } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
 
-import { changePasswordEmailReducer } from "./reducers/authReducer";
-
 import {
   updatePersonInfoReducer,
   userInfoReducer,
@@ -78,7 +76,6 @@ const finalReducer = combineReducers({
   getProductByIdReducer,
   getProductMessagesReducer,
   getProductChatByUserIdReducer,
-  changePasswordEmailReducer,
   deleteProductByIdReducer,
   getFavoriteByUserIdReducer,
   subscribeUserReducer,

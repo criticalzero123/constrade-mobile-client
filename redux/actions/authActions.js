@@ -72,20 +72,14 @@ export const verifyOtp = async (user, code) => {
   }
 };
 
-export const changePasswordEmail = (info) => (dispatch) => {
-  dispatch({ type: "CHANGE_PASSWORD_EMAIL_REQUEST" });
+export const changePasswordEmail = async (info) => {
+  try {
+    const res = await api.put(`/api/auth/change/password`, info);
 
-  api
-    .put(`/api/auth/change/password`, info)
-    .then((res) => {
-      dispatch({
-        type: "CHANGE_PASSWORD_EMAIL_SUCCESS",
-        payload: res.data.responseData,
-      });
-    })
-    .catch((err) => {
-      dispatch({ type: "CHANGE_PASSWORD_EMAIL_FAILED", error: err });
-    });
+    return res.data.responseData;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const signOutUser = () => (dispatch) => {
