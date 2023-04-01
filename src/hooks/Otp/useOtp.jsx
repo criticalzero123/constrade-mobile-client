@@ -15,7 +15,7 @@ export default function useOtp() {
     if (result) {
       navigation.navigate("Otp", { value, type: "forgetpassword" });
     } else {
-      alert("Unable to send otp");
+      alert("Unable to send otp. Please try again.");
     }
 
     setLoading(false);
