@@ -13,10 +13,19 @@ import { useDispatch } from "react-redux";
 import { getUserInfo } from "../../../redux/actions/userActions";
 import { storeApiKeyAndToken } from "../../../service/savingStorageService";
 import { cleanAllAuth } from "../../../redux/actions/authActions";
+import { BarCodeScanner } from "expo-barcode-scanner";
 
 export default function WelcomeUserScreen({ route }) {
   const dispatch = useDispatch();
   const { from, user, token, apiKey } = route.params;
+
+  useEffect(() => {
+    const getBarCodeScannerPermissions = async () => {
+      await BarCodeScanner.requestPermissionsAsync();
+    };
+
+    getBarCodeScannerPermissions();
+  }, []);
 
   useEffect(() => {
     // TODO:Temporary timer for logging in

@@ -1,10 +1,12 @@
 import {
+  Pressable,
   SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
   TextInput,
   View,
+  useWindowDimensions,
 } from "react-native";
 import React from "react";
 
@@ -22,11 +24,35 @@ import useGetCurrentUser from "../../hooks/useGetCurrentUser";
 import { ActivityIndicator } from "react-native-paper";
 import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { BarCodeScanner } from "expo-barcode-scanner";
+import BottomModal from "../../components/modal/BottomModal";
 
 export default function Discover() {
   const { user } = useGetCurrentUser();
   const [search, setSearch] = useState("");
+  const { height, width } = useWindowDimensions();
+  const [visibleQr, setVisibleQr] = useState(false);
+  const [scanned, setScanned] = useState(false);
   const navigation = useNavigation();
+
+  const handleBarCodeScanned = async ({ data }) => {
+    setVisibleQr(!visibleQr);
+    setScanned(true);
+    const { status } = await BarCodeScanner.requestPermissionsAsync();
+    if (status === "granted") {
+      navigation.navigate("ProductDetails", { productId: parseInt(data) });
+    }
+
+    if (status === null) {
+      alert(`Requesting for camera permission`);
+      return;
+    }
+    if (status !== "granted") {
+      alert(`No access to camera`);
+      return;
+    }
+  };
 
   if (user === undefined)
     return (
@@ -44,7 +70,7 @@ export default function Discover() {
 
           <View>
             <View
-              className="py-4 px-4 rounded-lg bg-gray-200 mt-4 mb-3 flex-row items-center"
+              className="py-4 px-4 rounded-lg bg-gray-200 mt-4 mb-3 flex-row items-center justify-between "
               style={{ marginHorizontal: 20 }}
             >
               {search.trim() === "" && (
@@ -53,13 +79,22 @@ export default function Discover() {
               <TextInput
                 value={search}
                 onChangeText={setSearch}
-                className={`${search.trim() === "" && "ml-2 "} text-base `}
+                className={`${search.trim() === "" && "ml-2 "} text-base w-3/4`}
                 placeholder="Find console games"
                 onSubmitEditing={() => {
                   setSearch("");
                   navigation.navigate("SearchResult", { query: search });
                 }}
               />
+              {search.trim() === "" && (
+                <Pressable onPress={() => setVisibleQr(!visibleQr)}>
+                  <MaterialCommunityIcons
+                    name="qrcode-scan"
+                    size={24}
+                    color="gray"
+                  />
+                </Pressable>
+              )}
             </View>
 
             <FeaturesList />
@@ -85,6 +120,27 @@ export default function Discover() {
             />
           </View>
         </ScrollView>
+        <BottomModal setIsVisible={setVisibleQr} isVisible={visibleQr}>
+          <View className="w-full items-center">
+            {!scanned && (
+              <BarCodeScanner
+                onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+                style={{ height: height * 0.3, width: width * 0.5 }}
+              />
+            )}
+            {scanned && (
+              <Pressable
+                onPress={() => setScanned(false)}
+                className="p-4 bg-[#CC481F]"
+                style={{ borderRadius: 10 }}
+              >
+                <Text className="text-center text-white">
+                  Tap to scan again
+                </Text>
+              </Pressable>
+            )}
+          </View>
+        </BottomModal>
       </SafeAreaView>
     );
   }

@@ -44,7 +44,7 @@ export default function SearchResultCategory({ route }) {
       <HeaderArrow headerName={"Search results"} />
       <ScrollView showsVerticalScrollIndicator={false}>
         {result.length !== 0 && (
-          <View className="flex-row flex-wrap justify-evenly">
+          <View className="flex-row flex-wrap justify-between">
             {result.map((_data, index) => (
               <ItemCard data={_data} key={index} showLike={false} />
             ))}

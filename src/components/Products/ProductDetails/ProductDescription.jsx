@@ -135,7 +135,16 @@ export default function ProductDescription() {
             )}
           </View>
           <View className="mx-2" />
-          <Ionicons name="md-share-outline" size={24} color="black" />
+          <Pressable
+            onPress={() =>
+              navigation.navigate("ProductQR", {
+                id: data.product.productId,
+                title: data.product.title,
+              })
+            }
+          >
+            <Ionicons name="md-share-outline" size={24} color="black" />
+          </Pressable>
         </View>
       </View>
       {data.product.hasReceipts && (
