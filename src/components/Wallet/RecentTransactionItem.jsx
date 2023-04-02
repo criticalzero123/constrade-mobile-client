@@ -7,7 +7,7 @@ export default function RecentTransactionItem({ data, currentUserWalletId }) {
     return (
       <View className="justify-between flex-row items-center">
         <View>
-          <Text className="text-base mb-1">Send Payment</Text>
+          <Text className="text-base mb-1">Send Money</Text>
           <Text className="text-md opacity-50">
             {getDateTime(data.dateSend)}
           </Text>
@@ -23,7 +23,7 @@ export default function RecentTransactionItem({ data, currentUserWalletId }) {
     return (
       <View className="justify-between flex-row items-center my-2">
         <View>
-          <Text className="text-base mb-1">Received Payment</Text>
+          <Text className="text-base mb-1">Received Money</Text>
           <Text className="text-md opacity-50">
             {getDateTime(data.dateSend)}
           </Text>

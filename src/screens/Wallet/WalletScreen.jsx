@@ -63,9 +63,10 @@ export default function WalletScreen() {
           ) : (
             <>
               {transacs &&
-                transacs.map((_data) => (
+                transacs.map((_data, index) => (
                   <RecentTransactionItem
                     data={_data}
+                    key={index}
                     currentUserWalletId={data.walletId}
                   />
                 ))}

@@ -125,26 +125,21 @@ export const reportProduct = (info) => async (dispatch) => {
   }
 };
 
-export const getProductBoost = (id) => async (dispatch) => {
-  dispatch({ type: "GET_PRODUCT_BOOST_REQUEST" });
-
+export const getProductBoost = async (id) => {
   try {
     const result = await api.setAuthHeaders().get(`api/products/boost/${id}`);
 
-    dispatch({
-      type: "GET_PRODUCT_BOOST_SUCCESS",
-      payload: result.data.responseData,
-    });
+    return result.data.responseData;
   } catch (err) {
-    dispatch({ type: "GET_PRODUCT_BOOST_FAILED", error: err });
+    console.log(err);
   }
 };
 
-export const addProductBoost = async (id, days) => {
+export const addProductBoost = async (id, days, userId) => {
   try {
     const result = await api
       .setAuthHeaders()
-      .post(`api/products/boost/${id}?days=${days}`);
+      .post(`api/products/boost/${id}?days=${days}&userId=${userId}`);
 
     if (result.data.responseData) {
       alert("Boosted");

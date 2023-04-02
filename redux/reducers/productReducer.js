@@ -150,32 +150,3 @@ export const reportProductReducer = (state = {}, action) => {
       return state;
   }
 };
-
-export const getProductBoostReducer = (state = {}, action) => {
-  switch (action.type) {
-    case "GET_PRODUCT_BOOST_REQUEST":
-      return {
-        ...state,
-        loading: true,
-      };
-
-    case "GET_PRODUCT_BOOST_SUCCESS":
-      return {
-        success: true,
-        data: action.payload,
-        loading: false,
-      };
-
-    case "GET_PRODUCT_BOOST_FAILED":
-      return {
-        error: action.error,
-        loading: false,
-      };
-
-    case "GET_PRODUCT_BOOST_LEAVE":
-      return {};
-
-    default:
-      return state;
-  }
-};

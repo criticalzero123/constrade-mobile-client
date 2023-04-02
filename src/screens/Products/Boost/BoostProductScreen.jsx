@@ -4,11 +4,12 @@ import ContainerSafeView from "../../../components/CustomViews/ContainerSafeView
 import useBoostProduct from "../../../hooks/boost/useBoostProduct";
 import { TextInput } from "react-native-paper";
 import { useState } from "react";
-
+import useGetCurrentUser from "../../../hooks/useGetCurrentUser";
 export default function BoostProductScreen({ route }) {
   const { id } = route.params;
   const [data, submit, cancel] = useBoostProduct(id);
   const [days, setDays] = useState(0);
+  const { user } = useGetCurrentUser();
 
   return (
     <ContainerSafeView>
@@ -20,7 +21,10 @@ export default function BoostProductScreen({ route }) {
               onChangeText={setDays}
               keyboardType="numeric"
             />
-            <Pressable className="p-4 border" onPress={() => submit(id, days)}>
+            <Pressable
+              className="p-4 border"
+              onPress={() => submit(days, user.userId)}
+            >
               <Text className="text-center">Submit</Text>
             </Pressable>
           </>

@@ -33,7 +33,6 @@ import {
   getProductByIdReducer,
   deleteProductByIdReducer,
   getFavoriteByUserIdReducer,
-  getProductBoostReducer,
 } from "./reducers/productReducer";
 import {
   getMessagesByUserIdsReducer,
@@ -93,7 +92,6 @@ const finalReducer = combineReducers({
   getMyReviewsUserReducer,
   followCountReducer,
   getAllMyCommunityJoinedReducer,
-  getProductBoostReducer,
   getPopularCommunityReducer,
   communityData,
 });

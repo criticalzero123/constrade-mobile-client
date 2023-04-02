@@ -228,7 +228,6 @@ export default function ProductDescription() {
         <Text className="text-gray-400 mb-2 ">Platform Supported</Text>
         <Text className="capitalize">{data.product.platform}</Text>
       </View>
-
       {user.userId === data.product.posterUserId ? (
         data.product.productStatus === "unsold" ? (
           <>
@@ -242,7 +241,6 @@ export default function ProductDescription() {
                 })
               }
               style={{ borderRadius: 5 }}
-              disabled={data.isBoosted}
             >
               <Text
                 className={`${

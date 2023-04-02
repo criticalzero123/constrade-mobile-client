@@ -1,22 +1,27 @@
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import {
   addProductBoost,
   cancelProductBoost,
   getProductBoost,
 } from "../../../redux/actions/productActions";
+import { useState } from "react";
 
 export default function useBoostProduct(id) {
-  const dispatch = useDispatch();
-  const { data } = useSelector((state) => state.getProductBoostReducer);
+  const [data, setData] = useState();
+
   useEffect(() => {
     if (id === undefined) return;
 
-    dispatch(getProductBoost(id));
+    const fetch = async () => {
+      const res = await getProductBoost(id);
+
+      setData(res);
+    };
+    fetch();
   }, [id]);
 
-  const addBoost = (id, days) => {
-    addProductBoost(id, days);
+  const addBoost = (days, userId) => {
+    addProductBoost(id, days, userId);
   };
 
   const cancelBoost = (id) => {
