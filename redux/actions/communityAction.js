@@ -132,23 +132,17 @@ export const updatePost = async (communityId, info) => {
   }
 };
 
-export const getPostByCommunityId =
-  (communityId, userId) => async (dispatch) => {
-    dispatch({ type: "GET_POST_BY_COMMUNITY_ID_REQUEST" });
+export const getPostByCommunityId = async (communityId, userId) => {
+  try {
+    const res = await api
+      .setAuthHeaders()
+      .get(`/api/community/${communityId}/post?userId=${userId}`);
 
-    try {
-      const res = await api
-        .setAuthHeaders()
-        .get(`/api/community/${communityId}/post?userId=${userId}`);
-
-      dispatch({
-        type: "GET_POST_BY_COMMUNITY_ID_SUCCESS",
-        payload: res.data.responseData,
-      });
-    } catch (error) {
-      dispatch({ type: "GET_POST_BY_COMMUNITY_ID_FAILED", error: error });
-    }
-  };
+    return res.data.responseData;
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 export const likePost = async (communityId, postId, userId) => {
   try {

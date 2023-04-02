@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import {
   deletePostInCommunity,
   getPostByCommunityId,
@@ -10,19 +9,19 @@ import {
 } from "../../../redux/actions/communityAction";
 
 export default function usePostCommunity(id, userId) {
-  const dispatch = useDispatch();
   const [posts, setPosts] = useState();
-  const { data } = useSelector((state) => state.getPostByCommunityIdReducer);
-
-  useEffect(() => {
-    if (data === undefined) return;
-
-    setPosts(data);
-  }, [data]);
 
   useEffect(() => {
     if (id === undefined) return;
-    dispatch(getPostByCommunityId(id, userId));
+    const fetch = async () => {
+      const res = await getPostByCommunityId(id, userId);
+
+      if (res) {
+        setPosts(res);
+      }
+    };
+
+    fetch();
   }, [id]);
 
   const post = (info) => {
@@ -41,7 +40,7 @@ export default function usePostCommunity(id, userId) {
     const res = await likePost(id, postId, userId);
 
     if (res) {
-      const updatedData = data.map((c) => {
+      const updatedData = posts.map((c) => {
         const likeCount = c.communityPost.like;
         const likeFlag = c.isLiked;
 
@@ -57,10 +56,7 @@ export default function usePostCommunity(id, userId) {
         return c;
       });
 
-      dispatch({
-        type: "GET_POST_BY_COMMUNITY_ID_SUCCESS",
-        payload: updatedData,
-      });
+      setPosts(updatedData);
     } else {
       alert("Something went wrong.");
     }
