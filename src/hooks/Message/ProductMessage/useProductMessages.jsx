@@ -33,7 +33,6 @@ export default function useProductMessages(userId, userId2, productId, index) {
 
     if (res) {
       alert("Successfully Deleted");
-      console.log(messageList);
       const newMessageList = messageList.filter(
         (c) => c.productMessageId !== id
       );

@@ -1,17 +1,7 @@
-import {
-  StyleSheet,
-  Text,
-  useWindowDimensions,
-  View,
-  TextInput,
-  Pressable,
-  Alert,
-} from "react-native";
+import { useWindowDimensions, View, TextInput, Pressable } from "react-native";
 import React from "react";
 import { Feather } from "@expo/vector-icons";
 import { useState } from "react";
-import { SimpleLineIcons } from "@expo/vector-icons";
-import useSoldProduct from "../../hooks/transaction/useSoldProduct";
 
 export default function ProductChatInput({
   details,

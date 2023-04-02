@@ -12,7 +12,6 @@ import {
 export default function usePostCommunity(id, userId) {
   const dispatch = useDispatch();
   const [posts, setPosts] = useState();
-  const [isLike, setIsLike] = useState(false);
   const { data } = useSelector((state) => state.getPostByCommunityIdReducer);
 
   useEffect(() => {
@@ -38,8 +37,33 @@ export default function usePostCommunity(id, userId) {
     return deletePostInCommunity(id, postId);
   };
 
-  const like = (postId, userId) => {
-    return likePost(id, postId, userId);
+  const like = async (postId, userId) => {
+    const res = await likePost(id, postId, userId);
+
+    if (res) {
+      const updatedData = data.map((c) => {
+        const likeCount = c.communityPost.like;
+        const likeFlag = c.isLiked;
+
+        const communityPost = {
+          ...c.communityPost,
+          like: likeFlag ? likeCount - 1 : likeCount + 1,
+        };
+
+        if (c.communityPost.communityPostId === postId) {
+          return { ...c, communityPost: communityPost, isLiked: !c.isLiked };
+        }
+
+        return c;
+      });
+
+      dispatch({
+        type: "GET_POST_BY_COMMUNITY_ID_SUCCESS",
+        payload: updatedData,
+      });
+    } else {
+      alert("Something went wrong.");
+    }
   };
 
   return { posts, setPosts, post, deletePost, like, edit };

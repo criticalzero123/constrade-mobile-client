@@ -13,6 +13,7 @@ import ContainerSafeView from "../../components/CustomViews/ContainerSafeView";
 import HeaderArrow from "../../components/HeaderArrow/HeaderArrow";
 import ItemCard from "../../components/Products/ItemCard";
 import { useHideBottomTab } from "../../hooks/useHideBottomTab";
+import EndMessage from "../../components/EndMessage/EndMessage";
 
 export default function PopularScreen() {
   const [products, setProducts] = useState();
@@ -44,6 +45,7 @@ export default function PopularScreen() {
             ))}
           </View>
         )}
+        <EndMessage text={"Thats all for the popular products."} />
       </ScrollView>
     </ContainerSafeView>
   );

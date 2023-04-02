@@ -1,6 +1,5 @@
 import {
   Platform,
-  SafeAreaView,
   StatusBar,
   StyleSheet,
   Text,
@@ -30,7 +29,7 @@ import CommunityMember from "../CommunityMember/CommunityMember";
 import { useHideBottomTab } from "../../../hooks/useHideBottomTab";
 import { useNavigation } from "@react-navigation/native";
 import ContainerSafeView from "../../../components/CustomViews/ContainerSafeView";
-
+import { ActivityIndicator } from "react-native-paper";
 const Tab = createMaterialTopTabNavigator();
 
 export default function CommunityDetail({ route }) {
@@ -77,13 +76,23 @@ export default function CommunityDetail({ route }) {
     const resLower = res.toString().toLowerCase();
 
     if (resLower === "pending") {
-      alert("pending");
+      alert("Pending now.");
     } else if (resLower === "approved") {
       refresh(user.userId);
     } else {
       alert("Rejected");
     }
   };
+
+  if (data === undefined)
+    return (
+      <ContainerSafeView>
+        <HeaderArrow headerName={"Community details"} />
+        <View className="items-center justify-center flex-1">
+          <ActivityIndicator />
+        </View>
+      </ContainerSafeView>
+    );
 
   if (data) {
     return (

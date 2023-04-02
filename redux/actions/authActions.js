@@ -86,10 +86,3 @@ export const signOutUser = () => (dispatch) => {
   dispatch({ type: "USER_SIGN_OUT" });
   dispatch({ type: "USER_INFO_CLEAR" });
 };
-
-export const cleanAllAuth = () => (dispatch) => {
-  dispatch({ type: "REGISTER_GOOGLE_LEAVE" });
-  dispatch({ type: "LOGIN_EMAIL_AND_PASSWORD_LEAVE" });
-  dispatch({ type: "LOGIN_GOOGLE_LEAVE" });
-  dispatch({ type: "EMAIL_PASSWORD_REGISTER_AUTH_LEAVE" });
-};

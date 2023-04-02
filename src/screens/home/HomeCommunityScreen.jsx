@@ -14,6 +14,7 @@ import ContainerSafeView from "../../components/CustomViews/ContainerSafeView";
 import HeaderArrow from "../../components/HeaderArrow/HeaderArrow";
 import CommunityCard from "../../components/Home/CommunityCard";
 import { useHideBottomTab } from "../../hooks/useHideBottomTab";
+import EndMessage from "../../components/EndMessage/EndMessage";
 
 export default function HomeCommunityScreen({ route }) {
   useHideBottomTab();
@@ -50,6 +51,7 @@ export default function HomeCommunityScreen({ route }) {
             />
           </Pressable>
         ))}
+        <EndMessage text={"Thats all for the recommended community for you."} />
       </ScrollView>
     </ContainerSafeView>
   );

@@ -12,7 +12,6 @@ import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getUserInfo } from "../../../redux/actions/userActions";
 import { storeApiKeyAndToken } from "../../../service/savingStorageService";
-import { cleanAllAuth } from "../../../redux/actions/authActions";
 import { BarCodeScanner } from "expo-barcode-scanner";
 
 export default function WelcomeUserScreen({ route }) {
@@ -36,7 +35,6 @@ export default function WelcomeUserScreen({ route }) {
 
     setTimeout(() => {
       dispatch(getUserInfo(user));
-      dispatch(cleanAllAuth());
     }, 1000);
   }, [user]);
 

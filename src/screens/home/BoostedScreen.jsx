@@ -4,7 +4,7 @@ import ContainerSafeView from "../../components/CustomViews/ContainerSafeView";
 import HeaderArrow from "../../components/HeaderArrow/HeaderArrow";
 import ItemCard from "../../components/Products/ItemCard";
 import { useHideBottomTab } from "../../hooks/useHideBottomTab";
-
+import EndMessage from "../../components/EndMessage/EndMessage";
 export default function BoostedScreen({ route }) {
   const { data } = route.params;
   useHideBottomTab();
@@ -19,6 +19,7 @@ export default function BoostedScreen({ route }) {
             ))}
           </View>
         )}
+        <EndMessage text={"Thats what we have for now for you."} />
       </ScrollView>
     </ContainerSafeView>
   );

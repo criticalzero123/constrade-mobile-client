@@ -45,9 +45,11 @@ export default function JustForYou() {
             <ItemCard data={data} key={index} showLike={false} />
           ))}
         </View>
-        <Text className="text-[#CC481F] font-semibold text-base text-center">
-          Show more
-        </Text>
+        <Pressable onPress={() => navigation.navigate("PopularScreen")}>
+          <Text className="text-[#CC481F] font-semibold text-base text-center">
+            Show more
+          </Text>
+        </Pressable>
       </View>
     );
 }

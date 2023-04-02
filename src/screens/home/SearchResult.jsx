@@ -5,6 +5,7 @@ import HeaderArrow from "../../components/HeaderArrow/HeaderArrow";
 import useSearchHome from "../../hooks/home/useSearchHome";
 import { ActivityIndicator } from "react-native-paper";
 import ItemCard from "../../components/Products/ItemCard";
+import EndMessage from "../../components/EndMessage/EndMessage";
 export default function SearchResult({ route }) {
   const { query } = route.params;
 
@@ -36,6 +37,7 @@ export default function SearchResult({ route }) {
             ))}
           </View>
         )}
+        <EndMessage text={"Thats all for the result."} />
       </ScrollView>
     </ContainerSafeView>
   );
