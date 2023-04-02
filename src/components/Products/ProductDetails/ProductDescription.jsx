@@ -233,21 +233,32 @@ export default function ProductDescription() {
         data.product.productStatus === "unsold" ? (
           <>
             <Pressable
-              className="w-full items-center p-4 bg-gray-500 my-4"
-              onPress={() => deleteProductById(data.product.productId)}
-            >
-              <Text className="text-white">DELETE</Text>
-            </Pressable>
-
-            <Pressable
-              className="w-full items-center p-4 bg-gray-500 my-4"
+              className={`${
+                data.isBoosted ? "border border-[#CC481F] " : "bg-[#CC481F]"
+              } w-full items-center p-4 my-4`}
               onPress={() =>
                 navigation.navigate("BoostProduct", {
                   id: data.product.productId,
                 })
               }
+              style={{ borderRadius: 5 }}
+              disabled={data.isBoosted}
             >
-              <Text className="text-white">BOOST ITEM</Text>
+              <Text
+                className={`${
+                  data.isBoosted ? "text-[#CC481F]" : "text-white"
+                } font-semibold`}
+              >
+                {data.isBoosted ? "Boosted" : "Boost Item"}
+              </Text>
+            </Pressable>
+
+            <Pressable
+              className="w-full items-center p-4 bg-[#CC481F] mb-4"
+              onPress={() => deleteProductById(data.product.productId)}
+              style={{ borderRadius: 5 }}
+            >
+              <Text className="text-white">DELETE</Text>
             </Pressable>
           </>
         ) : (
