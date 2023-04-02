@@ -5,17 +5,15 @@ import useGetCurrentUser from "../../hooks/useGetCurrentUser";
 import HeaderArrow from "../../components/HeaderArrow/HeaderArrow";
 import { itemWallet } from "../../../service/walletService";
 import WalletItemAction from "../../components/Wallet/WalletItemAction";
-import useGetWalletUser from "../../hooks/wallet/useGetWalletUser";
-import useGetAllTransactionsWallet from "../../hooks/wallet/useGetAllTransactionsWallet";
+import useWalletUser from "../../hooks/wallet/useWalletUser";
 import MessageEmpty from "../../components/messages/MessageEmpty";
 import { useNavigation } from "@react-navigation/native";
 import RecentTransactionItem from "../../components/Wallet/RecentTransactionItem";
 
 export default function WalletScreen() {
   const { user } = useGetCurrentUser();
-  const { data } = useGetWalletUser(user.userId);
-  const { transacs } = useGetAllTransactionsWallet(data && data.walletId);
-  const { width, height } = useWindowDimensions();
+  const { wallet, transactions } = useWalletUser(user.userId);
+  const { height } = useWindowDimensions();
 
   const navigation = useNavigation();
 
@@ -28,22 +26,22 @@ export default function WalletScreen() {
           style={{ height: height * 0.2 }}
         >
           <Text className="text-white font-semibold text-4xl">
-            ₱ {data && data.balance}
+            ₱ {wallet && wallet.balance}
           </Text>
           <Text className="text-white font-semibold text-base opacity-80">
             Available balance
           </Text>
         </View>
         <View className="flex-row justify-between mt-2">
-          {data &&
+          {wallet &&
             itemWallet.map((item, index) => (
               <WalletItemAction
                 key={index}
                 data={item}
                 onPress={() =>
                   navigation.navigate(item.to, {
-                    currentWalletId: data.walletId,
-                    balance: data.balance,
+                    currentWalletId: wallet.walletId,
+                    balance: wallet.balance,
                   })
                 }
               />
@@ -54,7 +52,7 @@ export default function WalletScreen() {
             Recent transactions
           </Text>
 
-          {transacs && transacs.length === 0 ? (
+          {transactions && transactions.length === 0 ? (
             <MessageEmpty
               title="You got no transaction"
               description="Go transac to get a wallet transaction"
@@ -62,12 +60,12 @@ export default function WalletScreen() {
             />
           ) : (
             <>
-              {transacs &&
-                transacs.map((_data, index) => (
+              {transactions &&
+                transactions.map((_data, index) => (
                   <RecentTransactionItem
                     data={_data}
                     key={index}
-                    currentUserWalletId={data.walletId}
+                    currentUserWalletId={wallet.walletId}
                   />
                 ))}
             </>

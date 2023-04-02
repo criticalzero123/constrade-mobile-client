@@ -144,7 +144,7 @@ export const addProductBoost = async (id, days, userId) => {
     if (result.data.responseData) {
       alert("Boosted");
     } else {
-      alert("Something Went wrong in boosting");
+      alert("Not enough amount to boost.");
     }
   } catch (err) {
     console.error(err);

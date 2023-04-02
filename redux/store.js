@@ -10,11 +10,7 @@ import {
 
 import { followCountReducer } from "./reducers/followReducer";
 
-import {
-  getWalletUserReducer,
-  getAllTransactionsWalletUserReducer,
-  getAllWalletUserReducer,
-} from "./reducers/walletReducer";
+import { getAllWalletUserReducer } from "./reducers/walletReducer";
 
 import {
   getProductMessagesReducer,
@@ -68,8 +64,6 @@ const finalReducer = combineReducers({
   getMessagesByUserIdsReducer,
   getChatByUserIdReducer,
   getProductByUserReducer,
-  getWalletUserReducer,
-  getAllTransactionsWalletUserReducer,
   getAllWalletUserReducer,
   getAllProductsReducer,
   getProductByIdReducer,

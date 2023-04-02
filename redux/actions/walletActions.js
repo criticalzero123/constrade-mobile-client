@@ -1,33 +1,23 @@
 import api from "../../service/api";
 
-export const getWalletUser = (userId) => async (dispatch) => {
-  dispatch({ type: "GET_WALLET_USER_REQUEST" });
-
+export const getWalletUser = async (userId) => {
   try {
     const res = await api.setAuthHeaders().get(`/api/wallet/${userId}`);
 
-    dispatch({
-      type: "GET_WALLET_USER_SUCCESS",
-      payload: res.data.responseData,
-    });
+    return res.data.responseData;
   } catch (error) {
-    dispatch({ type: "GET_WALLET_USER_FAILED", error: error });
+    console.log(error);
   }
 };
 
-export const getAllTransactionWalletUser = (walletId) => async (dispatch) => {
-  dispatch({ type: "GET_ALL_TRANSACTION_WALLET_USER_REQUEST" });
-
+export const getAllTransactionWalletUser = async (walletId) => {
   try {
     const res = await api
       .setAuthHeaders()
       .get(`/api/wallet/transactions/all/${walletId}`);
-    dispatch({
-      type: "GET_ALL_TRANSACTION_WALLET_USER_SUCCESS",
-      payload: res.data.responseData,
-    });
+    return res.data.responseData;
   } catch (error) {
-    dispatch({ type: "GET_ALL_TRANSACTION_WALLET_USER_FAILED", error: error });
+    console.log(error);
   }
 };
 
