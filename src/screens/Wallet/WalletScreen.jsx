@@ -12,7 +12,7 @@ import RecentTransactionItem from "../../components/Wallet/RecentTransactionItem
 
 export default function WalletScreen() {
   const { user } = useGetCurrentUser();
-  const { wallet, transactions } = useWalletUser(user.userId);
+  const { wallet, transactions, transactionsAll } = useWalletUser(user.userId);
   const { height } = useWindowDimensions();
 
   const navigation = useNavigation();
@@ -42,6 +42,7 @@ export default function WalletScreen() {
                   navigation.navigate(item.to, {
                     currentWalletId: wallet.walletId,
                     balance: wallet.balance,
+                    transactionsAll,
                   })
                 }
               />

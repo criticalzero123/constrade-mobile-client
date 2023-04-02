@@ -35,7 +35,7 @@ export default function RecentTransactionItem({ data, currentUserWalletId }) {
   const getType = () => {
     switch (data.transactionType) {
       case OtherTransactionType.Boost:
-        return "Boost";
+        return "Product Boost";
       case OtherTransactionType.Subscribe:
         return "Subscribe";
       case OtherTransactionType.Topup:

@@ -8,6 +8,7 @@ import { useState } from "react";
 export default function useWalletUser(userId) {
   const [wallet, setWallet] = useState();
   const [transactions, setTransactions] = useState();
+  const [transactionsAll, setTransactionsAll] = useState();
 
   useEffect(() => {
     if (userId === undefined) return;
@@ -31,12 +32,12 @@ export default function useWalletUser(userId) {
           return new Date(a.date).getTime() - new Date(b.date).getTime();
         })
         .reverse();
-
+      setTransactionsAll(tempList);
       setTransactions(tempList.slice(0, 10));
     };
 
     fetch();
   }, [wallet]);
 
-  return { wallet, transactions };
+  return { wallet, transactions, transactionsAll };
 }
