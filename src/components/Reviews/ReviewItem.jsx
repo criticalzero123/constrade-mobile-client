@@ -1,21 +1,25 @@
 import {
   Image,
+  Pressable,
   StyleSheet,
   Text,
   useWindowDimensions,
   View,
 } from "react-native";
 import React from "react";
-import { getDateFull } from "../../../service/dateService";
 import { getStar } from "../../../service/reviewService";
+import { useNavigation } from "@react-navigation/native";
 
 export default function ReviewItem({ review }) {
   const { width, height } = useWindowDimensions();
-
+  const navigation = useNavigation();
   return (
-    <View
+    <Pressable
       className="flex-row my-4 bg-gray-200 p-4 "
       style={{ borderRadius: 10 }}
+      onPress={() =>
+        navigation.navigate("TransactionDetails", { id: review.productId })
+      }
     >
       <View className="mr-3">
         <Image
@@ -34,9 +38,11 @@ export default function ReviewItem({ review }) {
           <Text className="text-black font-semibold">{review.userName}</Text>
         </Text>
         <Text className="mb-2 text-gray-500">{review.description}</Text>
-        <Text className="text-gray-500">{getDateFull(review.date)}</Text>
+        <Text className="text-gray-500">
+          {new Date(review.date).toLocaleDateString()}
+        </Text>
       </View>
-    </View>
+    </Pressable>
   );
 }
 

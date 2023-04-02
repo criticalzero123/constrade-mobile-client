@@ -17,7 +17,7 @@ export default function ReviewsByYou({ route }) {
       {notReviewed && notReviewed.length !== 0 && (
         <View>
           <Text className="my-3 font-semibold ">
-            You have a transaction that not yet reviewed.
+            You have a transaction that not yet review.
           </Text>
           {notReviewed.map((_review, index) => (
             <View key={index}>
@@ -29,6 +29,7 @@ export default function ReviewsByYou({ route }) {
                     user: otherUser,
                   })
                 }
+                className="mb-2"
               >
                 <Text
                   className="p-4 border border-red-300 text-red-500"

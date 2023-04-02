@@ -14,7 +14,6 @@ export default function OtherUserProfile({ route }) {
 
   const [data] = useGetUserById(userId);
   const { user } = useGetCurrentUser();
-
   const firstWordName = data && data.person.firstName.toString().split(" ")[0];
 
   if (data === undefined)
