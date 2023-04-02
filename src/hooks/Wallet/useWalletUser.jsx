@@ -26,8 +26,13 @@ export default function useWalletUser(userId) {
 
     const fetch = async () => {
       const res = await getAllTransactionWalletUser(wallet.walletId);
+      const tempList = [...res.money, ...res.other]
+        .sort((a, b) => {
+          return new Date(a.date).getTime() - new Date(b.date).getTime();
+        })
+        .reverse();
 
-      setTransactions(res);
+      setTransactions(tempList.slice(0, 10));
     };
 
     fetch();

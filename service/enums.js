@@ -29,3 +29,9 @@ export const ReportStatus = {
 };
 
 export const ValidIdType = ["Passport", "NBI", "Police Clearance"];
+
+export const OtherTransactionType = {
+  Topup: 0,
+  Boost: 1,
+  Subscribe: 2,
+};
