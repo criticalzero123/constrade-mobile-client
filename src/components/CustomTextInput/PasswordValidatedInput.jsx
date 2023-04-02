@@ -20,6 +20,7 @@ export default function PasswordValidatedInput({
   setPassword,
   onSubmit,
   loading,
+  forgotPassword = false,
 }) {
   const valid = passwordValidator.validate(password) ? true : false;
   const [visible, setVisible] = useState(false);
@@ -30,7 +31,9 @@ export default function PasswordValidatedInput({
 
   return (
     <View>
-      <Text className="mb-1 text-base">Create Password</Text>
+      <Text className="mb-1 text-base">
+        {forgotPassword ? "Enter Password" : "Create password"}
+      </Text>
       <TextInput
         secureTextEntry={!visible}
         value={password}
@@ -77,7 +80,7 @@ export default function PasswordValidatedInput({
       >
         {loading && <ActivityIndicator size="small" />}
         <Text className="text-center font-semibold text-white text-base ml-2">
-          Create account
+          {forgotPassword ? "Done" : "Create account"}
         </Text>
       </Pressable>
     </View>

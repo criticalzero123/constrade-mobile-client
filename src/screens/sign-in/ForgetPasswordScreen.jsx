@@ -41,6 +41,7 @@ export default function ForgetPasswordScreen({ route }) {
         loading={onLoading}
         setPassword={setPassword}
         onSubmit={onSubmit}
+        forgotPassword={true}
       />
     </ContainerSafeView>
   );

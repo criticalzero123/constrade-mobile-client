@@ -82,6 +82,25 @@ export default function ProductDescription() {
     return favCount;
   };
 
+  const handleGoToProfile = () => {
+    if (data.user.userId === user.userId) {
+      navigation.navigate("Menu", {
+        screen: "User",
+        params: {
+          screen: "UserProfile",
+        },
+      });
+    } else {
+      navigation.navigate("Menu", {
+        screen: "User",
+        params: {
+          screen: "OtherUserProfile",
+          params: { userId: data.user.userId },
+        },
+      });
+    }
+  };
+
   return (
     <ScrollView className="mt-3" showsVerticalScrollIndicator={false}>
       <Image
@@ -110,9 +129,11 @@ export default function ProductDescription() {
           />
 
           <View>
-            <Text className="capitalize font-semibold">
-              {data.person.firstName} {data.person.lastName}
-            </Text>
+            <Pressable onPress={handleGoToProfile}>
+              <Text className="capitalize font-semibold">
+                {data.person.firstName} {data.person.lastName}
+              </Text>
+            </Pressable>
             <Text className="text-gray-500">{data.user.email}</Text>
           </View>
         </View>
@@ -263,22 +284,35 @@ export default function ProductDescription() {
                 </Text>
               </Pressable>
             ) : (
-              <View className="mb-6">
-                <Text>Already sold</Text>
-                <Pressable>
-                  <Text>Go to transaction</Text>
+              <View className="mb-6 items-center">
+                <Text className="text-[#CC481F] font-semibold">
+                  Already sold
+                </Text>
+                <Pressable
+                  className="py-4 w-full mt-2 bg-[#CC481F]"
+                  onPress={() =>
+                    navigation.navigate("TransactionDetails", {
+                      id: data.product.productId,
+                    })
+                  }
+                >
+                  <Text className="text-center text-white">
+                    Go to transaction
+                  </Text>
                 </Pressable>
               </View>
             ))}
-          <Pressable
-            className="w-full items-center p-4  my-2 flex-row justify-center"
-            onPress={onPressReport}
-          >
-            <Feather name="flag" size={22} color="#CC481F" />
-            <Text className="text-[#CC481F] font-semibold ml-2">
-              Report this item
-            </Text>
-          </Pressable>
+          {data.product.productStatus !== "sold" && (
+            <Pressable
+              className="w-full items-center p-4  my-2 flex-row justify-center"
+              onPress={onPressReport}
+            >
+              <Feather name="flag" size={22} color="#CC481F" />
+              <Text className="text-[#CC481F] font-semibold ml-2">
+                Report this item
+              </Text>
+            </Pressable>
+          )}
         </>
       )}
     </ScrollView>

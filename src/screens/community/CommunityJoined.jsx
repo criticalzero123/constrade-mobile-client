@@ -28,7 +28,7 @@ export default function CommunityJoined() {
           ) : (
             communities.map((community, index) => (
               <Pressable
-                key={community.communityId}
+                key={index}
                 onPress={() =>
                   navigation.navigate("CommunityDetail", {
                     id: community.communityId,
@@ -39,7 +39,6 @@ export default function CommunityJoined() {
                 <CommunityCard
                   data={community}
                   currentUserId={user.userId}
-                  key={index}
                   fullWidth
                 />
               </Pressable>

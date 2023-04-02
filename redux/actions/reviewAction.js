@@ -65,12 +65,8 @@ export const addReview = async (reviewerId, info) => {
       .setAuthHeaders()
       .post(`/api/review?reviewerId=${reviewerId}`, info);
 
-    if (res.data.responseData) {
-      alert("Successfully added");
-    } else {
-      alert("Not succesfully added");
-    }
+    return res.data.responseData;
   } catch (err) {
-    alert("Something Went Wrong.");
+    console.log("Something Went Wrong.");
   }
 };

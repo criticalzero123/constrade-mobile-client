@@ -5,8 +5,11 @@ import { useNavigation } from "@react-navigation/native";
 import ReviewItem from "./ReviewItem";
 
 export default function ReviewsByYou({ route }) {
-  const { otherUserId, user } = route.params;
-  const [notReviewed, myRate] = useMyReview(otherUserId, user.userId);
+  const { otherUser, user } = route.params;
+  const [notReviewed, myRate] = useMyReview(
+    otherUser && otherUser.userId,
+    user.userId
+  );
 
   const navigation = useNavigation();
   return (
@@ -16,13 +19,14 @@ export default function ReviewsByYou({ route }) {
           <Text className="my-3 font-semibold ">
             You have a transaction that not yet reviewed.
           </Text>
-          {notReviewed.map((_review) => (
-            <View>
+          {notReviewed.map((_review, index) => (
+            <View key={index}>
               <Pressable
                 onPress={() =>
                   navigation.navigate("AddReview", {
                     reviewerId: user.userId,
                     transactionRefId: _review.transactionId,
+                    user: otherUser,
                   })
                 }
               >
