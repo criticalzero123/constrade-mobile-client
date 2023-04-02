@@ -1,4 +1,4 @@
-import { Image, StyleSheet, useWindowDimensions } from "react-native";
+import { Image, StyleSheet, Text } from "react-native";
 import React from "react";
 import ContainerSafeView from "../../../components/CustomViews/ContainerSafeView";
 import HeaderArrow from "../../../components/HeaderArrow/HeaderArrow";
@@ -15,6 +15,14 @@ export default function ProductDetails({ route }) {
   const { user } = useGetCurrentUser();
 
   const { data } = useGetProductId(productId, user.userId);
+
+  if (data === undefined)
+    return (
+      <ContainerSafeView>
+        <HeaderArrow headerName={"Item details"} />
+        <Text>Product Not found</Text>
+      </ContainerSafeView>
+    );
 
   if (data) {
     return (

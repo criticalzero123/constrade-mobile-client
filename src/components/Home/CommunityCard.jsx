@@ -57,7 +57,7 @@ export default function CommunityCard({
     <Pressable
       className={`mr-2 ${index === 0 && " ml-5"} ${
         home ? "bg-white" : "bg-gray-100"
-      } rounded-lg shadow-2xl`}
+      } rounded-lg shadow-2xl ${home && "mb-5"}`}
       style={{
         width: fullWidth ? width * 0.85 : width * 0.7,
         height: height * 0.33,

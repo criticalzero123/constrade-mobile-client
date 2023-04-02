@@ -2,7 +2,6 @@ import { ScrollView, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import ContainerSafeView from "../../components/CustomViews/ContainerSafeView";
 import HeaderArrow from "../../components/HeaderArrow/HeaderArrow";
-import useGetCurrentUser from "../../hooks/useGetCurrentUser";
 import useSearchHome from "../../hooks/home/useSearchHome";
 import { ActivityIndicator } from "react-native-paper";
 import ItemCard from "../../components/Products/ItemCard";

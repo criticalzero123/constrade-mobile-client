@@ -55,3 +55,15 @@ export const getCommunityPopular = async (userId) => {
     console.error(error);
   }
 };
+
+export const getCommunity = async (userId) => {
+  try {
+    const res = await api
+      .setAuthHeaders()
+      .get(`/api/community?userId=${userId}`);
+
+    return res.data.responseData;
+  } catch (error) {
+    console.error(error);
+  }
+};
