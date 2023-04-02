@@ -1,4 +1,10 @@
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import {
+  ActivityIndicator,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import React from "react";
 import ContainerSafeView from "../../../components/CustomViews/ContainerSafeView";
 import useBoostProduct from "../../../hooks/boost/useBoostProduct";
@@ -7,7 +13,7 @@ import { useState } from "react";
 import useGetCurrentUser from "../../../hooks/useGetCurrentUser";
 export default function BoostProductScreen({ route }) {
   const { id } = route.params;
-  const [data, submit, cancel] = useBoostProduct(id);
+  const [data, submit, cancel, loading] = useBoostProduct(id);
   const [days, setDays] = useState(0);
   const { user } = useGetCurrentUser();
 
@@ -24,8 +30,13 @@ export default function BoostProductScreen({ route }) {
             <Pressable
               className="p-4 border"
               onPress={() => submit(days, user.userId)}
+              disabled={loading}
             >
-              <Text className="text-center">Submit</Text>
+              {loading ? (
+                <ActivityIndicator />
+              ) : (
+                <Text className="text-center">Submit</Text>
+              )}
             </Pressable>
           </>
         ) : (

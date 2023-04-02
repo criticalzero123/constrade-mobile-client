@@ -7,9 +7,11 @@ import { getSearchCategory } from "../../../redux/actions/homeActions";
 import HeaderArrow from "../../components/HeaderArrow/HeaderArrow";
 import { ActivityIndicator } from "react-native-paper";
 import ItemCard from "../../components/Products/ItemCard";
+import { useHideBottomTab } from "../../hooks/useHideBottomTab";
 
 export default function SearchResultCategory({ route }) {
   const { category } = route.params;
+  useHideBottomTab();
   const [result, setResult] = useState();
 
   useEffect(() => {

@@ -9,7 +9,7 @@ import useGetCurrentUser from "../../hooks/useGetCurrentUser";
 export default function TransactionAll({ route }) {
   const { user } = route.params;
   const { user: currentUser } = useGetCurrentUser();
-  const [transactions, setTransactions] = useTransaction(user.userId);
+  const [transactions] = useTransaction(user.userId);
 
   return (
     <ContainerSafeView>

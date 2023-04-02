@@ -27,8 +27,10 @@ import { useNavigation } from "@react-navigation/native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import BottomModal from "../../components/modal/BottomModal";
+import { useHideBottomTab } from "../../hooks/useHideBottomTab";
 
 export default function Discover() {
+  useHideBottomTab(false);
   const { user } = useGetCurrentUser();
   const [search, setSearch] = useState("");
   const { height, width } = useWindowDimensions();

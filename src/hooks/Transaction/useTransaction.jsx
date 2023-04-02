@@ -25,5 +25,5 @@ export default function useTransaction(id) {
     fetch();
   }, [id]);
 
-  return [transactions, setTransactions];
+  return [transactions];
 }

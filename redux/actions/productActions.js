@@ -141,11 +141,7 @@ export const addProductBoost = async (id, days, userId) => {
       .setAuthHeaders()
       .post(`api/products/boost/${id}?days=${days}&userId=${userId}`);
 
-    if (result.data.responseData) {
-      alert("Boosted");
-    } else {
-      alert("Not enough amount to boost.");
-    }
+    return result.data.responseData;
   } catch (err) {
     console.error(err);
   }
@@ -157,11 +153,7 @@ export const cancelProductBoost = async (id) => {
       .setAuthHeaders()
       .put(`api/products/boost/${id}/cancel`);
 
-    if (result.data.responseData) {
-      alert("cancel");
-    } else {
-      alert("Something Went wrong in cancelling the boost");
-    }
+    return result.data.responseData;
   } catch (err) {
     console.error(err);
   }

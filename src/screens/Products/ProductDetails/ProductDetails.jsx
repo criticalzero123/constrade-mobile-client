@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Text } from "react-native";
+import { Image, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import ContainerSafeView from "../../../components/CustomViews/ContainerSafeView";
 import HeaderArrow from "../../../components/HeaderArrow/HeaderArrow";
@@ -7,6 +7,7 @@ import ProductDescription from "../../../components/Products/ProductDetails/Prod
 import ProductTrade from "../../../components/Products/ProductDetails/ProductTrade";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import useGetCurrentUser from "../../../hooks/useGetCurrentUser";
+import { ActivityIndicator } from "react-native-paper";
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -20,7 +21,9 @@ export default function ProductDetails({ route }) {
     return (
       <ContainerSafeView>
         <HeaderArrow headerName={"Item details"} />
-        <Text>Product Not found</Text>
+        <View className="justify-center items-center flex-1">
+          <ActivityIndicator />
+        </View>
       </ContainerSafeView>
     );
 
