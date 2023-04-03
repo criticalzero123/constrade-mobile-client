@@ -29,7 +29,7 @@ export default function JustForYou() {
       </View>
     );
 
-  if (products)
+  if (products && products.length > 0)
     return (
       <View className="">
         <View className="flex-row justify-between mb-5 px-5">

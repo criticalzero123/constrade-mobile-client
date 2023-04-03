@@ -30,7 +30,7 @@ export default function SuggestedCommunities() {
       </View>
     );
 
-  if (community)
+  if (community && community.length > 0)
     return (
       <View className="w-full">
         <View className="px-5">
