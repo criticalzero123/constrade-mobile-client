@@ -1,7 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import { useEffect } from "react";
 
-export const useHideBottomTab = (flag = false) => {
+export const useHideBottomTab = (flag = true) => {
   const navigation = useNavigation();
 
   useEffect(() => {

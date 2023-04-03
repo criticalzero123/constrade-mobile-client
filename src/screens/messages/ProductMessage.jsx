@@ -8,6 +8,7 @@ import {
   useWindowDimensions,
   ScrollView,
   Pressable,
+  Alert,
 } from "react-native";
 import React, { useRef } from "react";
 import ChatHeader from "../../components/messages/ChatHeader";
@@ -26,7 +27,6 @@ import { useNavigation } from "@react-navigation/native";
 export default function ProductMessage({ route }) {
   useHideBottomTab();
   const { details } = route.params;
-
   const [currentIndex, setCurrentIndex] = useState(0);
   const [messageList, setMessageList] = useState([]);
   const [firstFetch, setFirstFetch] = useState(true);
@@ -41,9 +41,7 @@ export default function ProductMessage({ route }) {
     currentIndex
   );
   const { sendMessage, message } = useProductMessageHub();
-
   const scrollDown = useRef(null);
-
   const onClickScrollDown = () => {
     scrollDown.current.scrollToEnd({ animated: true });
   };
@@ -73,6 +71,32 @@ export default function ProductMessage({ route }) {
 
     setMessageList([...messageList, message]);
   }, [message]);
+
+  // This is for the warning
+  useEffect(() => {
+    console.log(details);
+    if (
+      details.product.productStatus === "unsold" &&
+      details.user.userType === "semi-verified"
+    ) {
+      Alert.alert(
+        "Warning!",
+        "This user is not verified. Please be careful who you transac with.",
+        [
+          {
+            text: "Proceed",
+            onPress: () => console.log("proceed with chat."),
+          },
+          {
+            text: "Cancel",
+            onPress: () => {
+              navigation.goBack();
+            },
+          },
+        ]
+      );
+    }
+  }, []);
 
   const onPress = () => {
     setCurrentIndex((prevIndex) => {
