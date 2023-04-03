@@ -35,11 +35,6 @@ import {
   getChatByUserIdReducer,
 } from "./reducers/userMessageReducer";
 
-import {
-  subscribeUserReducer,
-  getSubscriptionHistoryReducer,
-} from "./reducers/subscriptionReducer";
-
 import { getNotificationUserReducer } from "./reducers/notificationReducer";
 
 import {
@@ -70,8 +65,6 @@ const finalReducer = combineReducers({
   getProductChatByUserIdReducer,
   deleteProductByIdReducer,
   getFavoriteByUserIdReducer,
-  subscribeUserReducer,
-  getSubscriptionHistoryReducer,
   getNotificationUserReducer,
   getMyCommunityReducer,
   getCommunityByIdReducer,
