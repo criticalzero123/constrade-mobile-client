@@ -1,5 +1,6 @@
 import {
   ActivityIndicator,
+  Alert,
   Image,
   Pressable,
   ScrollView,
@@ -38,6 +39,7 @@ export default function SendWalletScreen({ route }) {
     if (selectedUserEmail.trim() === "") return;
 
     setLoading(true);
+    console.log(data);
     const _walletUser = data.find(
       (_w) =>
         _w.user.email.toLowerCase().trim() ===
@@ -58,10 +60,33 @@ export default function SendWalletScreen({ route }) {
       return;
     }
 
-    setUserWalletId(_walletUser.walletId);
-    setSelectedUser(_walletUser);
+    if (
+      _walletUser.user.userType === "premium" ||
+      _walletUser.user.userType === "verified"
+    ) {
+      setUserWalletId(_walletUser.walletId);
+      setSelectedUser(_walletUser);
 
-    setLoading(false);
+      setLoading(false);
+    } else {
+      Alert.alert("Warning!", "This user is not verified", [
+        {
+          text: "Proceed",
+          onPress: () => {
+            setUserWalletId(_walletUser.walletId);
+            setSelectedUser(_walletUser);
+
+            setLoading(false);
+          },
+        },
+        {
+          text: "Cancel",
+          onPress: () => {
+            setLoading(false);
+          },
+        },
+      ]);
+    }
   };
 
   const onClear = () => {
