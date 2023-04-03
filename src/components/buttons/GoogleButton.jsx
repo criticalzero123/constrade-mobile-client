@@ -9,11 +9,12 @@ import { useState } from "react";
 
 export default function GoogleButton({ text, type }) {
   const navigation = useNavigation();
-  const [loading, setLoading] = useState(false);
   const [request, promptAsync, userInfo] = useGoogleAuth();
-  const { user, token, apiKey } = useGoogleAuthAction(userInfo, type);
+  const { result, loading } = useGoogleAuthAction(userInfo, type);
+  const { user, token, apiKey } = result;
 
   useEffect(() => {
+    if (user === undefined) return;
     if (user !== undefined) {
       navigation.navigate("WelcomeUser", {
         from: type,
@@ -25,7 +26,6 @@ export default function GoogleButton({ text, type }) {
   }, [user]);
 
   const handleOnPress = () => {
-    setLoading(true);
     promptAsync();
   };
 

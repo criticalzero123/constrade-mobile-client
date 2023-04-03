@@ -14,9 +14,11 @@ export const useGoogleAuthAction = (userInfo, type) => {
     apiKey: undefined,
     success: false,
   });
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (userInfo === undefined) return;
+    setLoading(true);
 
     const fetch = async () => {
       let result;
@@ -56,10 +58,11 @@ export const useGoogleAuthAction = (userInfo, type) => {
           alert("User exist");
         }
       }
+      setLoading(false);
     };
 
     fetch();
   }, [type, userInfo]);
 
-  return result;
+  return { result, loading };
 };
