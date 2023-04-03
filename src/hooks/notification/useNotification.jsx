@@ -1,20 +1,25 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 import { getNotificationUser } from "../../../redux/actions/notificationAction";
 
 export default function useNotification(userId) {
-  const dispatch = useDispatch();
-
-  const { data, loading } = useSelector(
-    (state) => state.getNotificationUserReducer
-  );
-
+  const [data, setData] = useState();
   useEffect(() => {
-    dispatch(getNotificationUser(userId));
+    if (userId === undefined) return;
 
-    return () => {
-      dispatch({ type: "GET_NOTIFICATION_BY_USER_LEAVE" });
+    const fetch = async () => {
+      const res = await getNotificationUser(userId);
+      const tempList = res
+        .sort((a, b) => {
+          return (
+            new Date(a.notificationDate).getTime() -
+            new Date(b.notificationDate).getTime()
+          );
+        })
+        .reverse();
+
+      setData(tempList);
     };
+    fetch();
   }, []);
 
   return [data];

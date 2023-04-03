@@ -27,7 +27,9 @@ export default function Notification() {
           (notifications.length === 0 ? (
             <MessageEmpty title="No notifications" ads={false} />
           ) : (
-            notifications.map((item) => <NotificationItem item={item} />)
+            notifications.map((item, index) => (
+              <NotificationItem item={item} key={index} />
+            ))
           ))}
       </ScrollView>
     </ContainerSafeView>

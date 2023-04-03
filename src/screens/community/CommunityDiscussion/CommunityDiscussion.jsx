@@ -22,17 +22,20 @@ import CommunityComments from "../../../components/Community/CommunityComments";
 import { Button, Dialog, Portal, Provider } from "react-native-paper";
 import PrivateMessageComponent from "../../../components/Community/PrivateMessageComponent";
 import useGetCommunity from "../../../hooks/community/useGetCommunity";
+import BottomModal from "../../../components/modal/BottomModal";
+import { useNavigation } from "@react-navigation/native";
 
 export default function CommunityDiscussion() {
   const { width, height } = useWindowDimensions();
-  const { user, person } = useGetCurrentUser();
+  const currentUserInfo = useGetCurrentUser();
+  const { user, person } = currentUserInfo;
   const [_, getComments] = useCommentPost(id);
   const { visibility, currentMember, id } = useGetCommunity();
   const { post, deletePost, like, posts, setPosts, edit } = usePostCommunity(
     id,
     user.userId
   );
-
+  const navigation = useNavigation();
   const { reportById } = useReport();
 
   const [postEditValue, setPostEditValue] = useState();
@@ -40,7 +43,7 @@ export default function CommunityDiscussion() {
   const [postValue, setPostValue] = useState("");
   const [showComment, setShowComment] = useState(-1);
   const [editVal, setEditVal] = useState("");
-
+  const [postVisible, setPostVisible] = useState(false);
   const [editVisible, setEditVisible] = useState(false);
   const [postLoading, setPostLoading] = useState(false);
 
@@ -72,6 +75,7 @@ export default function CommunityDiscussion() {
       alert("Post Doesn't added successfully");
     }
     setPostLoading(false);
+    setPostVisible(!postVisible);
   };
 
   const onPostEdit = async () => {
@@ -84,7 +88,6 @@ export default function CommunityDiscussion() {
 
     if (flag) {
       setPosts((prevState) => {
-        console.log(prevState);
         let newState = prevState;
         let data = newState.find(
           (_p) => _p.communityPost.communityPostId === info.communityPostId
@@ -206,21 +209,13 @@ export default function CommunityDiscussion() {
       <ScrollView>
         <View className="mt-5">
           {currentMember && (
-            <View className="flex-row items-center">
-              <TextInput
-                value={postValue}
-                onChangeText={setPostValue}
-                placeholder="Post here..."
-                className="border p-2 w-52 mr-2"
-              />
-              {postLoading ? (
-                <ActivityIndicator />
-              ) : (
-                <Pressable onPress={onPost}>
-                  <Text>Post</Text>
-                </Pressable>
-              )}
-            </View>
+            <Pressable
+              className="items-center py-4 bg-[#CC481F] mx-4 mb-5"
+              style={{ borderRadius: 10 }}
+              onPress={() => setPostVisible(!postVisible)}
+            >
+              <Text className="text-white">Post Something</Text>
+            </Pressable>
           )}
           <View>
             {posts &&
@@ -232,19 +227,34 @@ export default function CommunityDiscussion() {
                     <View className="p-5 bg-gray-200">
                       <View className="flex-row justify-between mb-6">
                         <View className="flex-row gap-2">
-                          <Image
-                            source={{ uri: user.imageUrl }}
-                            style={{
-                              width: width * 0.08,
-                              height: height * 0.04,
-                              borderRadius: 100,
+                          <Pressable
+                            onPress={() => {
+                              if (currentUserInfo.user.userId !== user.userId) {
+                                navigation.navigate("User", {
+                                  screen: "OtherUserProfile",
+                                  params: { userId: user.userId },
+                                });
+                              }
                             }}
-                          />
+                          >
+                            <Image
+                              source={{ uri: user.imageUrl }}
+                              style={{
+                                width: width * 0.08,
+                                height: height * 0.04,
+                                borderRadius: 100,
+                              }}
+                            />
+                          </Pressable>
                           <View>
                             <Text className="capitalize font-semibold">
                               {person.firstName} {person.lastName}
                             </Text>
-                            <Text>Date</Text>
+                            <Text className="text-gray-400">
+                              {new Date(
+                                post.communityPost.createdDate
+                              ).toLocaleDateString()}
+                            </Text>
                           </View>
                         </View>
                         <View className="flex-row gap-2">
@@ -378,6 +388,26 @@ export default function CommunityDiscussion() {
           </Dialog>
         </Portal>
       </ScrollView>
+      <BottomModal setIsVisible={setPostVisible} isVisible={postVisible}>
+        <TextInput
+          value={postValue}
+          onChangeText={setPostValue}
+          placeholder="Something here..."
+          className="border p-2 w-full border-gray-300 mb-5"
+          style={{ borderRadius: 5 }}
+        />
+        {postLoading ? (
+          <ActivityIndicator />
+        ) : (
+          <Pressable
+            onPress={onPost}
+            className="items-center bg-[#CC481F] py-4"
+            style={{ borderRadius: 5 }}
+          >
+            <Text className="text-white">Post</Text>
+          </Pressable>
+        )}
+      </BottomModal>
     </Provider>
   );
 }

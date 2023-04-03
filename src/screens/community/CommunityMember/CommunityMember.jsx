@@ -12,11 +12,13 @@ import { CommunityRole, communityRoleString } from "../../../../service/enums";
 import useGetCommunity from "../../../hooks/community/useGetCommunity";
 import { useNavigation } from "@react-navigation/native";
 import PrivateMessageComponent from "../../../components/Community/PrivateMessageComponent";
+import useGetCurrentUser from "../../../hooks/useGetCurrentUser";
 
 export default function CommunityMember() {
   const { height, width } = useWindowDimensions();
   const { visibility, currentMember, id } = useGetCommunity();
   const [members, remove] = useCommunityMembers(id);
+  const { user } = useGetCurrentUser();
   const navigation = useNavigation();
 
   if (currentMember === undefined && visibility === "private")
@@ -74,14 +76,25 @@ export default function CommunityMember() {
             key={member.member.userId}
           >
             <View className="flex-row items-center">
-              <Image
-                style={{
-                  height: height * 0.04,
-                  width: width * 0.08,
-                  borderRadius: 1000,
+              <Pressable
+                onPress={() => {
+                  if (user.userId !== member.member.userId) {
+                    navigation.navigate("User", {
+                      screen: "OtherUserProfile",
+                      params: { userId: member.member.userId },
+                    });
+                  }
                 }}
-                source={{ uri: member.userImageUrl }}
-              />
+              >
+                <Image
+                  style={{
+                    height: height * 0.04,
+                    width: width * 0.08,
+                    borderRadius: 1000,
+                  }}
+                  source={{ uri: member.userImageUrl }}
+                />
+              </Pressable>
               <View>
                 <Text className="ml-2">{member.userName}</Text>
                 <Text className="ml-2 text-gray-400">
