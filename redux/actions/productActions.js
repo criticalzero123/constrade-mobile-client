@@ -28,20 +28,6 @@ export const getProductByUser = (userId) => async (dispatch) => {
   }
 };
 
-export const getAllProducts = () => async (dispatch) => {
-  dispatch({ type: "GET_ALL_PRODUCTS_REQUEST" });
-  try {
-    const res = await api.setAuthHeaders().get(`/api/products/`);
-
-    dispatch({
-      type: "GET_ALL_PRODUCTS_SUCCESS",
-      payload: res.data.responseData,
-    });
-  } catch (error) {
-    dispatch({ type: "GET_ALL_PRODUCTS_FAILED", error: error });
-  }
-};
-
 export const getProductById = (productId, userId) => async (dispatch) => {
   dispatch({ type: "GET_PRODUCT_BY_ID_REQUEST" });
   try {

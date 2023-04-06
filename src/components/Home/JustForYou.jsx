@@ -11,6 +11,7 @@ import { useHideBottomTab } from "../../hooks/useHideBottomTab";
 export default function JustForYou() {
   const navigation = useNavigation();
   const [products, setProducts] = useState();
+
   useHideBottomTab();
   useEffect(() => {
     const fetch = async () => {

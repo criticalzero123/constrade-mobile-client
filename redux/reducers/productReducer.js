@@ -21,29 +21,6 @@ export const getProductByUserReducer = (state = {}, action) => {
   }
 };
 
-export const getAllProductsReducer = (state = {}, action) => {
-  switch (action.type) {
-    case "GET_ALL_PRODUCTS_REQUEST":
-      return {
-        ...state,
-        loading: true,
-      };
-    case "GET_ALL_PRODUCTS_SUCCESS":
-      return {
-        loading: false,
-        data: action.payload,
-      };
-    case "GET_ALL_PRODUCTS_FAILED":
-      return {
-        loading: false,
-        error: action.error,
-      };
-
-    default:
-      return { ...state };
-  }
-};
-
 export const getProductByIdReducer = (state = {}, action) => {
   switch (action.type) {
     case "GET_PRODUCT_BY_ID_REQUEST":
