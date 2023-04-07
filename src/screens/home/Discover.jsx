@@ -42,6 +42,7 @@ export default function Discover() {
     setVisibleQr(!visibleQr);
     setScanned(true);
     const { status } = await BarCodeScanner.requestPermissionsAsync();
+
     if (status === "granted") {
       navigation.navigate("ProductDetails", { productId: parseInt(data) });
     }

@@ -51,8 +51,8 @@ export default function PopularScreen() {
             selectedValue={platform}
             onValueChange={(itemValue) => setPlatform(itemValue)}
           >
-            {platformList.map((item) => (
-              <Picker.Item label={item} value={item} />
+            {platformList.map((item, index) => (
+              <Picker.Item label={item} value={item} key={index} />
             ))}
           </Picker>
         </View>

@@ -14,6 +14,18 @@ export const addProduct = async (productDetails, imageList) => {
   }
 };
 
+export const editProduct = async (productId, productInfo) => {
+  try {
+    const res = await api
+      .setAuthHeaders()
+      .put(`/api/products/${productId}`, productInfo);
+
+    return res.data.responseData;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export const getProductByUser = (userId) => async (dispatch) => {
   dispatch({ type: "GET_PRODUCT_BY_USER_REQUEST" });
   try {

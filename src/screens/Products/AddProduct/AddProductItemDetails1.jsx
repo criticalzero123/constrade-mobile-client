@@ -208,7 +208,7 @@ export default function AddProductItemDetails1({ route }) {
             >
               <MaterialIcons name="add" size={24} color="#CC481F" />
               <Text className="text-[#CC481F] ml-1 font-semibold">
-                {itemList.length === 0 ? "Add" : "Edit"} genre
+                {genreList.length === 0 ? "Add" : "Edit"} genre
               </Text>
             </Pressable>
             <View className="flex-row">
@@ -226,7 +226,7 @@ export default function AddProductItemDetails1({ route }) {
                     </View>
                   )
               )}
-              {itemList.length - 3 > 0 && (
+              {genreList.length - 3 > 0 && (
                 <Pressable
                   onPress={() => setGenreModalVisible(!genreModalVisible)}
                   className="px-4 py-2 bg-[#CC481F] mr-2 "

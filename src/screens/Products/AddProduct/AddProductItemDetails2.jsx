@@ -100,7 +100,7 @@ export default function AddProductItemDetails2({ route }) {
           <TextInput
             value={serialNumber}
             onChangeText={setSerialNumber}
-            placeholder="MODEL - 12391"
+            placeholder="SERIAL - 12391"
             className="border py-2 px-3 border-gray-300"
             style={{ borderRadius: 10 }}
           />

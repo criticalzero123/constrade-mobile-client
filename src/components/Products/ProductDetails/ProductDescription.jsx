@@ -252,11 +252,21 @@ export default function ProductDescription() {
             </Pressable>
 
             <Pressable
-              className="w-full items-center p-4 bg-[#CC481F] mb-4"
+              className="w-full items-center p-4 bg-[#CC481F] mb-4 font-semibold"
+              onPress={() =>
+                navigation.navigate("UpdateProduct", { product: data.product })
+              }
+              style={{ borderRadius: 5 }}
+            >
+              <Text className="text-white">Edit</Text>
+            </Pressable>
+
+            <Pressable
+              className="w-full items-center p-4 bg-[#CC481F] mb-4 font-semibold"
               onPress={() => deleteProductById(data.product.productId)}
               style={{ borderRadius: 5 }}
             >
-              <Text className="text-white">DELETE</Text>
+              <Text className="text-white">Delete</Text>
             </Pressable>
           </>
         ) : (

@@ -86,7 +86,7 @@ export default function AddProductDeliveryDetails({ route }) {
           </View>
 
           <CustomTextInput
-            valule={location}
+            value={location}
             setValue={setLocation}
             placeholder="Please input the location"
             label="Location"

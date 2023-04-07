@@ -5,7 +5,6 @@ import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { useGoogleAuth } from "../../hooks/useGoogleAuth";
 import { useGoogleAuthAction } from "../../hooks/useGoogleAuthAction";
-import { useState } from "react";
 
 export default function GoogleButton({ text, type }) {
   const navigation = useNavigation();

@@ -79,6 +79,10 @@ export const pickProductImage = async (setImageList, imageList) => {
   }
 };
 
+export const stringToArrayList = (value) => {
+  return value.split(",");
+};
+
 export const itemConditionList = [
   {
     id: 1,
