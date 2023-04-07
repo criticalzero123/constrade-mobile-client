@@ -57,12 +57,18 @@ export const submitIdRequest = async (info) => {
       .setAuthHeaders()
       .post("api/verification/submit", info);
 
-    if (res.data.responseData) {
-      alert("Successfully submitted!");
-    } else {
-      alert("Not successful submitted!");
-    }
+    return res.data.responseData;
   } catch (error) {
     console.error(error);
+  }
+};
+
+export const getHasRequest = async (userId) => {
+  try {
+    const res = await api.setAuthHeaders().get(`api/verification/${userId}`);
+
+    return res.data.responseData;
+  } catch (error) {
+    console.log(error);
   }
 };
