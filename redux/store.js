@@ -29,10 +29,7 @@ import {
   deleteProductByIdReducer,
   getFavoriteByUserIdReducer,
 } from "./reducers/productReducer";
-import {
-  getMessagesByUserIdsReducer,
-  getChatByUserIdReducer,
-} from "./reducers/userMessageReducer";
+import { getMessagesByUserIdsReducer } from "./reducers/userMessageReducer";
 
 import {
   getMyCommunityReducer,
@@ -53,7 +50,6 @@ const finalReducer = combineReducers({
   updatePersonInfoReducer,
   getUserByIdReducer,
   getMessagesByUserIdsReducer,
-  getChatByUserIdReducer,
   getProductByUserReducer,
   getAllWalletUserReducer,
   getProductByIdReducer,

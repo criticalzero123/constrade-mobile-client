@@ -10,7 +10,7 @@ import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { getTimeOnly } from "../../../service/dateService";
 
-export default function ChatInfoItem({ info, product }) {
+export default function ChatInfoItem({ info, product, search = false }) {
   const { width, height } = useWindowDimensions();
   const navigation = useNavigation();
 
@@ -52,7 +52,7 @@ export default function ChatInfoItem({ info, product }) {
           </View>
           <View style={{ width: width * 0.2 }} className="items-center">
             <Text className="text-gray-500 text-center ">
-              {getTimeOnly(info.lastMessageDate)}
+              {!search && getTimeOnly(info.lastMessageDate)}
             </Text>
             {product && (
               <View className="items-center p-2">

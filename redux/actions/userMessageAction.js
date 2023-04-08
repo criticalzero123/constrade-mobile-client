@@ -20,17 +20,25 @@ export const getMessagesByUserIds =
     }
   };
 
-export const getChatByUserId = (userId) => async (dispatch) => {
-  dispatch({ type: "GET_CHAT_BY_USER_ID_REQUEST" });
-
+export const getChatByUserId = async (userId) => {
   try {
     const res = await api.setAuthHeaders().get(`/api/userchat/${userId}`);
-    dispatch({
-      type: "GET_CHAT_BY_USER_ID_SUCCESS",
-      payload: res.data.responseData,
-    });
+
+    return res.data.responseData;
   } catch (error) {
-    dispatch({ type: "GET_CHAT_BY_USER_ID_FAILED", error: error });
+    console.log(error);
+  }
+};
+
+export const getUserByName = async (userName) => {
+  try {
+    const res = await api
+      .setAuthHeaders()
+      .get(`/api/userchat/user?username=${userName}`);
+
+    return res.data.responseData;
+  } catch (error) {
+    console.log(error);
   }
 };
 
