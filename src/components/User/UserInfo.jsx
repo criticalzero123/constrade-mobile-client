@@ -6,6 +6,7 @@ import {
   Platform,
   StatusBar,
   ActivityIndicator,
+  useWindowDimensions,
 } from "react-native";
 import React from "react";
 
@@ -18,18 +19,67 @@ import backImage from "../../../assets/Discover/orange-scenery.jpg";
 import { useNavigation } from "@react-navigation/native";
 import useUserFollowAndFollowers from "../../hooks/useUserFollowAndFollowers";
 import useUserReview from "../../hooks/useUserReview";
+import BottomModal from "../../components/modal/BottomModal";
+import { useState } from "react";
+import { pickBackgroundPhotoImage } from "../../../service/editProfileService";
+import { saveBackgroundImageProfile } from "../../../firebase/firebaseStorageBucket";
+import { useDispatch } from "react-redux";
+import {
+  getUserInfo,
+  updatePersonInfo,
+} from "../../../redux/actions/userActions";
 
 export default function UserInfo({ headerName, myProfile = true, data }) {
   const navigation = useNavigation();
   const [follow] = useUserFollowAndFollowers(data && data.user.userId);
   const [review] = useUserReview(data && data.user.userId);
+  const { height, width } = useWindowDimensions();
+
+  const [backgroundVisible, setBackgroundVisible] = useState(false);
+  const [backgroundImage, setBackgroundImage] = useState(
+    data && data.user.backgroundImageUrl
+  );
+  const [saveVisible, setSaveVisible] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+
   if (data === undefined) return;
+
+  const onSaveBackgroundImage = async () => {
+    setLoading(true);
+    const imageUrlPhoto = await saveBackgroundImageProfile(
+      backgroundImage,
+      data.user.userId
+    );
+    const user = {
+      ...data.user,
+      backgroundImageUrl: imageUrlPhoto,
+    };
+    const person = {
+      ...data.person,
+    };
+
+    const res = await updatePersonInfo({ user, person });
+
+    if (res) {
+      dispatch(getUserInfo(res));
+      alert("Update successfully.");
+    } else {
+      alert("Something went wrong in updating.");
+    }
+
+    setSaveVisible(!saveVisible);
+    setLoading(false);
+  };
+
   return (
     <View>
       <Image
-        source={backImage}
+        source={
+          backgroundImage.trim() === "" ? backImage : { uri: backgroundImage }
+        }
         className="absolute w-full h-4/6"
-        style={{ resizeMode: "cover" }}
+        style={{ resizeMode: "stretch" }}
       />
       <LinearGradient
         colors={["rgba(0, 0, 0, 0.35)", "rgba(36, 33, 32, 1)"]}
@@ -55,16 +105,44 @@ export default function UserInfo({ headerName, myProfile = true, data }) {
               {headerName}
             </Text>
           </View>
-          {myProfile && <AntDesign name="sharealt" size={21} color="white" />}
+          {myProfile && data.user.userType === "premium" && !saveVisible && (
+            <Pressable onPress={() => setBackgroundVisible(!backgroundVisible)}>
+              <AntDesign name="edit" size={21} color="white" />
+            </Pressable>
+          )}
+          {saveVisible && !loading && (
+            <View className="flex-row items-center">
+              <Pressable
+                onPress={() => {
+                  setSaveVisible(!saveVisible);
+                  setBackgroundImage(data.user.backgroundImageUrl);
+                }}
+              >
+                <AntDesign name="closecircle" size={24} color="red" />
+              </Pressable>
+
+              <Pressable onPress={onSaveBackgroundImage} className="ml-4">
+                <AntDesign name="checkcircleo" size={24} color="white" />
+              </Pressable>
+            </View>
+          )}
+          {loading && <ActivityIndicator />}
         </View>
         <View className="items-center">
           <View className=" items-center">
-            <View className="p-1 border-2 border-[#FF6838] rounded-full items-center ">
+            <View
+              className="border-2 border-[#FF6838] rounded-full items-center "
+              style={{ overflow: "hidden", borderRadius: 1000 }}
+            >
               <Image
                 source={{
                   uri: data.user.imageUrl,
                 }}
-                className="w-24 h-24 rounded-full"
+                style={{
+                  height: height * 0.15,
+                  width: width * 0.3,
+                  resizeMode: "cover",
+                }}
               />
             </View>
             <Text className="text-white font-semibold px-4 py-1 rounded-2xl bg-[#FF6838] absolute bottom-0 uppercase">
@@ -75,9 +153,7 @@ export default function UserInfo({ headerName, myProfile = true, data }) {
           <Text className="text-white font-semibold text-lg mt-4 capitalize">
             {data.person.firstName} {data.person.lastName}
           </Text>
-          <Text className="text-gray-300 mt-1 mb-8">
-            Somewhere in the middle, Cebu
-          </Text>
+          <Text className="text-gray-300 mt-1 mb-8">{data.user.email}</Text>
 
           <View className="w-full flex-row justify-between p-5 rounded-md bg-[#508CC7]">
             <View className="items-center">
@@ -118,6 +194,27 @@ export default function UserInfo({ headerName, myProfile = true, data }) {
           </View>
         </View>
       </View>
+      <BottomModal
+        isVisible={backgroundVisible}
+        setIsVisible={setBackgroundVisible}
+      >
+        <Pressable
+          className="items-center py-4 border border-[#CC481F] w-full"
+          style={{ borderRadius: 10 }}
+          onPress={() =>
+            pickBackgroundPhotoImage(
+              setBackgroundImage,
+              data.user.userType === "premium",
+              setSaveVisible,
+              setBackgroundVisible
+            )
+          }
+        >
+          <Text className="text-[#CC481F] font-semibold">
+            Choose Background Image
+          </Text>
+        </Pressable>
+      </BottomModal>
     </View>
   );
 }

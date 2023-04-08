@@ -27,9 +27,6 @@ import { saveImageProfile } from "../../../firebase/firebaseStorageBucket";
 import { StackActions, useNavigation } from "@react-navigation/native";
 
 export default function UserProfileEdit({ route }) {
-  const image =
-    "https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80";
-
   const { data } = route.params;
 
   const [firstName, setFirstName] = useState("");
@@ -39,28 +36,11 @@ export default function UserProfileEdit({ route }) {
   );
   const [gender, setGender] = useState(data.person.gender);
   const [disable, setDisable] = useState(false);
-  const [imagePhoto, setImagePhoto] = useState(
-    data.user.imageUrl === "" ? image : data.user.imageUrl
-  );
+  const [imagePhoto, setImagePhoto] = useState(data.user.imageUrl);
 
   const { height, width } = useWindowDimensions();
   const dispatch = useDispatch();
-
-  const updated = useSelector((state) => state.updatePersonInfoReducer);
-  const { success, loading } = updated;
-
   const navigation = useNavigation();
-
-  useEffect(() => {
-    if (loading) return;
-
-    if (success && updated.data) {
-      dispatch(getUserInfo(updated.data));
-      dispatch({ type: "UPDATE_USER_INFO_LEAVE" });
-      setDisable(false);
-      navigation.dispatch(StackActions.replace("UserProfile"));
-    }
-  }, [success, loading, updated.data]);
 
   const onPressAction = async () => {
     setDisable(true);
@@ -80,7 +60,16 @@ export default function UserProfileEdit({ route }) {
       gender: gender,
     };
 
-    dispatch(updatePersonInfo({ user, person }));
+    const res = await updatePersonInfo({ user, person });
+
+    if (res) {
+      dispatch(getUserInfo(res));
+
+      navigation.dispatch(StackActions.replace("UserProfile"));
+    } else {
+      alert("Something went wrong in updating.");
+      setDisable(false);
+    }
   };
 
   return (
@@ -90,18 +79,33 @@ export default function UserProfileEdit({ route }) {
         <View className="justify-between" style={{ height: height * 0.94 }}>
           <View>
             <View className="items-center mt-2 mb-4">
-              <Image
-                source={{ uri: imagePhoto }}
-                className="rounded-full"
+              <View
                 style={{
-                  resizeMode: "contain",
                   width: width * 0.25,
                   height: height * 0.123,
+                  resizeMode: "contain",
+                  borderRadius: 1000,
+                  overflow: "hidden",
                 }}
-              />
+              >
+                <Image
+                  source={{ uri: imagePhoto }}
+                  className="rounded-full"
+                  style={{
+                    width: width * 0.25,
+                    height: height * 0.123,
+                  }}
+                />
+              </View>
+
               <Pressable
                 className="flex-row items-center mt-4"
-                onPress={() => pickPhotoImage(setImagePhoto)}
+                onPress={() =>
+                  pickPhotoImage(
+                    setImagePhoto,
+                    data.user.userType === "premium"
+                  )
+                }
               >
                 <AntDesign name="edit" size={24} color="#CC481F" />
                 <Text className="text-[#CC481F] font-semibold ml-2">
@@ -128,7 +132,7 @@ export default function UserProfileEdit({ route }) {
             <EditGender value={gender} setValue={setGender} />
           </View>
           <CustomButton disabled={disable} onPress={onPressAction}>
-            {loading && <ActivityIndicator size="small" />} Save Changes
+            {disable && <ActivityIndicator size="small" />} Save Changes
           </CustomButton>
         </View>
       </ScrollView>

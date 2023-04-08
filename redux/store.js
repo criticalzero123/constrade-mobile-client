@@ -2,11 +2,7 @@ import { applyMiddleware, combineReducers, createStore } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
 
-import {
-  updatePersonInfoReducer,
-  userInfoReducer,
-  getUserByIdReducer,
-} from "./reducers/userReducer";
+import { userInfoReducer, getUserByIdReducer } from "./reducers/userReducer";
 
 import { followCountReducer } from "./reducers/followReducer";
 
@@ -47,7 +43,6 @@ import {
 const finalReducer = combineReducers({
   userInfoReducer,
   getOtherReviewsUserReducer,
-  updatePersonInfoReducer,
   getUserByIdReducer,
   getMessagesByUserIdsReducer,
   getProductByUserReducer,

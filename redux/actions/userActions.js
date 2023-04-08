@@ -15,20 +15,15 @@ export const getUserById = (userId) => async (dispatch) => {
   }
 };
 
-export const updatePersonInfo = (personInfo) => async (dispatch) => {
-  dispatch({ type: "UPDATE_USER_INFO_REQUEST" });
-
+export const updatePersonInfo = async (personInfo) => {
   try {
     const result = await api
       .setAuthHeaders()
       .put(`api/users/person`, personInfo);
 
-    dispatch({
-      type: "UPDATE_USER_INFO_SUCCESS",
-      payload: result.data.responseData,
-    });
+    return result.data.responseData;
   } catch (err) {
-    dispatch({ type: "UPDATE_USER_INFO_FAILED", error: err });
+    console.log(err);
   }
 };
 

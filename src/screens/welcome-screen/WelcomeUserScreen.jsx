@@ -7,6 +7,7 @@ import {
   Platform,
   ActivityIndicator,
   Image,
+  useWindowDimensions,
 } from "react-native";
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
@@ -17,7 +18,7 @@ import { BarCodeScanner } from "expo-barcode-scanner";
 export default function WelcomeUserScreen({ route }) {
   const dispatch = useDispatch();
   const { from, user, token, apiKey } = route.params;
-
+  const { height, width } = useWindowDimensions();
   useEffect(() => {
     const getBarCodeScannerPermissions = async () => {
       await BarCodeScanner.requestPermissionsAsync();
@@ -41,10 +42,24 @@ export default function WelcomeUserScreen({ route }) {
   return (
     <SafeAreaView style={styles.container}>
       {user.user.imageUrl ? (
-        <Image
-          source={{ uri: user.user.imageUrl }}
-          className="w-24 h-24 rounded-full"
-        />
+        <View
+          style={{
+            width: width * 0.25,
+            height: height * 0.123,
+            resizeMode: "contain",
+            borderRadius: 1000,
+            overflow: "hidden",
+          }}
+        >
+          <Image
+            source={{ uri: user.user.imageUrl }}
+            className="rounded-full"
+            style={{
+              width: width * 0.25,
+              height: height * 0.123,
+            }}
+          />
+        </View>
       ) : (
         <View className="w-24 h-24 bg-gray-500 rounded-full"></View>
       )}

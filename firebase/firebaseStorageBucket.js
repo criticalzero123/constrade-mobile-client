@@ -38,3 +38,19 @@ export const saveImageProfile = async (image, userId) => {
 
   return imageUrl;
 };
+
+export const saveBackgroundImageProfile = async (image, userId) => {
+  const uri = image;
+  const imageRef = ref(
+    storage,
+    `background_user_images/${userId + "_" + v4()}`
+  );
+
+  const img = await fetch(uri);
+  const bytes = await img.blob();
+
+  const upload = await uploadBytes(imageRef, bytes);
+  const imageUrl = await getDownloadURL(upload.ref);
+
+  return imageUrl;
+};
