@@ -125,19 +125,19 @@ export default function SubscriptionScreen() {
               <View className="flex-row items-center mt-5">
                 <MaterialIcons name="double-arrow" size={24} color="#CC481F" />
                 <Text className="ml-2 text-base text-[#627282]">
-                  Benefits 2
+                  Discount boosting product
                 </Text>
               </View>
               <View className="flex-row items-center mt-5">
                 <MaterialIcons name="double-arrow" size={24} color="#CC481F" />
                 <Text className="ml-2 text-base text-[#627282]">
-                  Benefits 3
+                  Change to GIF profile picture
                 </Text>
               </View>
               <View className="flex-row items-center mt-5">
                 <MaterialIcons name="double-arrow" size={24} color="#CC481F" />
                 <Text className="ml-2 text-base text-[#627282]">
-                  Benefits 4
+                  Additional 10 post counts
                 </Text>
               </View>
               <View className="flex-row items-center mt-5">
