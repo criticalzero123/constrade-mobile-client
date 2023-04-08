@@ -6,10 +6,13 @@ import useSearchHome from "../../hooks/home/useSearchHome";
 import { ActivityIndicator } from "react-native-paper";
 import ItemCard from "../../components/Products/ItemCard";
 import EndMessage from "../../components/EndMessage/EndMessage";
+import { Picker } from "@react-native-picker/picker";
+import { useState } from "react";
 export default function SearchResult({ route }) {
   const { query } = route.params;
 
-  const [result] = useSearchHome(query);
+  const [result, platformList] = useSearchHome(query);
+  const [platform, setPlatform] = useState("");
 
   if (result === undefined)
     return (
@@ -28,13 +31,29 @@ export default function SearchResult({ route }) {
 
   return (
     <ContainerSafeView>
-      <HeaderArrow headerName={"Search results"} />
+      <HeaderArrow headerName={`${query} results`} />
       <ScrollView showsVerticalScrollIndicator={false}>
+        <View className="mb-5 border">
+          <Picker
+            selectedValue={platform}
+            onValueChange={(itemValue) => setPlatform(itemValue)}
+          >
+            {platformList.map((item, index) => (
+              <Picker.Item label={item} value={item} key={index} />
+            ))}
+          </Picker>
+        </View>
         {result.products.length !== 0 && (
           <View className="flex-row flex-wrap justify-between">
-            {result.products.map((_data, index) => (
-              <ItemCard data={_data} key={index} showLike={false} />
-            ))}
+            {platform === "all"
+              ? result.products.map((_data, index) => (
+                  <ItemCard data={_data} key={index} showLike={false} />
+                ))
+              : result.products
+                  .filter((p) => p.platform.toLowerCase().includes(platform))
+                  .map((_data, index) => (
+                    <ItemCard data={_data} key={index} showLike={false} />
+                  ))}
           </View>
         )}
         <EndMessage text={"Thats all for the result."} />
