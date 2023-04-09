@@ -60,7 +60,7 @@ export const deleteProductById = (productId) => async (dispatch) => {
   dispatch({ type: "DELETE_PRODUCT_BY_ID_REQUEST" });
 
   try {
-    const res = await api.delete(`/api/products/${productId}`);
+    const res = await api.setAuthHeaders().delete(`/api/products/${productId}`);
 
     dispatch({
       type: "DELETE_PRODUCT_BY_ID_SUCCESS",
@@ -73,7 +73,7 @@ export const deleteProductById = (productId) => async (dispatch) => {
 
 export const addFavorite = async (info) => {
   try {
-    const res = await api.post(`/api/products/favorite`, info);
+    const res = await api.setAuthHeaders().post(`/api/products/favorite`, info);
 
     return res.data.responseData;
   } catch (error) {
@@ -85,7 +85,9 @@ export const addFavorite = async (info) => {
 
 export const deleteFavorite = async (favoriteId) => {
   try {
-    const res = await api.delete(`/api/products/favorite/${favoriteId}`);
+    const res = await api
+      .setAuthHeaders()
+      .delete(`/api/products/favorite/${favoriteId}`);
 
     return res.data.responseData;
   } catch (error) {
@@ -97,7 +99,9 @@ export const getFavoriteByUserId = (userId) => async (dispatch) => {
   dispatch({ type: "GET_FAVORITE_REQUEST" });
 
   try {
-    const res = await api.get(`/api/products/favorite/${userId}`);
+    const res = await api
+      .setAuthHeaders()
+      .get(`/api/products/favorite/${userId}`);
 
     dispatch({
       type: "GET_FAVORITE_SUCCESS",
