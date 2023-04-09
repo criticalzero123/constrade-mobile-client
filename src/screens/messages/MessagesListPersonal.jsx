@@ -38,6 +38,17 @@ export default function MessagesListPersonal() {
   if (data.length === 0)
     return (
       <View className="mt-4" style={{ paddingHorizontal: 20 }}>
+        <TextInput
+          value={search}
+          onChangeText={setSearch}
+          placeholder="Search user..."
+          className="py-2 px-3 border mt-2 mb-6 border-gray-400"
+          style={{ borderRadius: 5 }}
+          onSubmitEditing={onSearch}
+        />
+        {searchData.map((chat, index) => (
+          <ChatInfoItem info={chat} key={index} search={true} />
+        ))}
         <MessageEmpty
           title="Its quiet here"
           description="Negotiations goes here and messages from someone who wants to buy from you."

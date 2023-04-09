@@ -16,7 +16,7 @@ export const googleAuthRegister = async (userInfo) => {
 
     return res.data.responseData;
   } catch (error) {
-    console.error(error);
+    console.log(error);
   }
 };
 
@@ -26,7 +26,7 @@ export const checkEmail = async (email) => {
 
     return res.data.responseData;
   } catch (error) {
-    console.error(error);
+    console.log(error);
   }
 };
 
