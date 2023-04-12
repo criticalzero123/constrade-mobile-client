@@ -1,4 +1,11 @@
-import { Pressable, StyleSheet, Text, View, TextInput } from "react-native";
+import {
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  ActivityIndicator,
+} from "react-native";
 import React from "react";
 import { CardField, useConfirmPayment } from "@stripe/stripe-react-native";
 import useGetCurrentUser from "../../hooks/useGetCurrentUser";
@@ -13,10 +20,12 @@ export default function StripeComponent({ currentWalletId }) {
   const { user } = useGetCurrentUser();
   const navigation = useNavigation();
   const [cardDetails, setCardDetails] = useState();
+  const [loadingPayment, setLoadingPayment] = useState(false);
   const [amount, setAmount] = useState(0);
   const { confirmPayment, loading } = useConfirmPayment();
 
   const handlePayPress = async () => {
+    setLoadingPayment(true);
     if (!cardDetails?.complete) {
       alert("Please enter card details");
       return;
@@ -30,6 +39,8 @@ export default function StripeComponent({ currentWalletId }) {
 
     if (res === undefined) {
       alert("Unable to process payment");
+      setLoadingPayment(false);
+
       return;
     }
 
@@ -43,6 +54,8 @@ export default function StripeComponent({ currentWalletId }) {
 
       if (error) {
         alert("Payment in stripe confirmation Error");
+        setLoadingPayment(false);
+
         return;
       }
 
@@ -50,25 +63,26 @@ export default function StripeComponent({ currentWalletId }) {
 
       if (result) {
         alert("Topup Successful");
-        navigation.dispatch(
-          StackActions.replace("WalletReload", { currentWalletId })
-        );
+        navigation.dispatch(StackActions.replace("Wallet"));
       } else {
         alert("Something Went wrong in adding balance.");
       }
+      setLoadingPayment(false);
     } catch (error) {
       console.log(error);
+      setLoadingPayment(false);
     }
   };
 
   return (
     <View>
-      <Text>StripeComponent</Text>
       <TextInput
         value={amount}
         onChangeText={setAmount}
         keyboardType="number-pad"
         placeholder="Enter amount..."
+        className="border py-2 px-4 border-gray-400"
+        style={{ borderRadius: 5 }}
       />
       <CardField
         postalCodeEnabled
@@ -79,8 +93,19 @@ export default function StripeComponent({ currentWalletId }) {
           setCardDetails(cardDetails);
         }}
       />
-      <Pressable onPress={handlePayPress} disabled={loading}>
-        <Text>Top Up</Text>
+      <Pressable
+        onPress={handlePayPress}
+        disabled={loadingPayment || loading}
+        className={`py-4 ${
+          loadingPayment ? " bg-[#cc471f6b]" : " bg-[#CC481F]"
+        }`}
+        style={{ borderRadius: 5 }}
+      >
+        {loadingPayment ? (
+          <ActivityIndicator />
+        ) : (
+          <Text className="text-white text-center">Confirm</Text>
+        )}
       </Pressable>
     </View>
   );

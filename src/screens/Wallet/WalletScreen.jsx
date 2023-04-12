@@ -26,7 +26,7 @@ export default function WalletScreen() {
           style={{ height: height * 0.2 }}
         >
           <Text className="text-white font-semibold text-4xl">
-            ₱ {wallet && wallet.balance}
+            ₱ {wallet && wallet.balance.toFixed(2)}
           </Text>
           <Text className="text-white font-semibold text-base opacity-80">
             Available balance
