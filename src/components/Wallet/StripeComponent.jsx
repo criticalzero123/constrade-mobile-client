@@ -3,10 +3,15 @@ import React from "react";
 import { CardField, useConfirmPayment } from "@stripe/stripe-react-native";
 import useGetCurrentUser from "../../hooks/useGetCurrentUser";
 import { useState } from "react";
-import { stripePaymentIntent } from "../../../redux/actions/walletActions";
+import {
+  stripePaymentIntent,
+  topUp,
+} from "../../../redux/actions/walletActions";
+import { StackActions, useNavigation } from "@react-navigation/native";
 
-export default function StripeComponent() {
+export default function StripeComponent({ currentWalletId }) {
   const { user } = useGetCurrentUser();
+  const navigation = useNavigation();
   const [cardDetails, setCardDetails] = useState();
   const [amount, setAmount] = useState(0);
   const { confirmPayment, loading } = useConfirmPayment();
@@ -37,9 +42,19 @@ export default function StripeComponent() {
       });
 
       if (error) {
-        alert("Topup Confirmation Error");
-      } else if (paymentIntent) {
+        alert("Payment in stripe confirmation Error");
+        return;
+      }
+
+      const result = await topUp(currentWalletId, amount);
+
+      if (result) {
         alert("Topup Successful");
+        navigation.dispatch(
+          StackActions.replace("WalletReload", { currentWalletId })
+        );
+      } else {
+        alert("Something Went wrong in adding balance.");
       }
     } catch (error) {
       console.log(error);

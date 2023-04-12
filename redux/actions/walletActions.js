@@ -45,6 +45,18 @@ export const sendMoney = async (info) => {
   }
 };
 
+export const topUp = async (walletId, amount) => {
+  try {
+    const res = await api
+      .setAuthHeaders()
+      .post(`/api/wallet/topup`, { walletId, amount });
+
+    return res.data.responseData;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const stripePaymentIntent = async (amount) => {
   try {
     const res = await api
