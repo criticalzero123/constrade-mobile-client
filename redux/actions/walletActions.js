@@ -44,3 +44,15 @@ export const sendMoney = async (info) => {
     console.log(error);
   }
 };
+
+export const stripePaymentIntent = async (amount) => {
+  try {
+    const res = await api
+      .setAuthHeaders()
+      .post(`/api/payment/stripe/create-payment-intent?amount=${amount}`);
+
+    return res.data.responseData;
+  } catch (error) {
+    console.log(error);
+  }
+};
