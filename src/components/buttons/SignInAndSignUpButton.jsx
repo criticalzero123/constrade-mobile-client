@@ -9,7 +9,13 @@ import {
 } from "../../../redux/actions/authActions";
 import { useState } from "react";
 
-export default function SignInAndSignUpButton({ to, type, value, loginType }) {
+export default function SignInAndSignUpButton({
+  to,
+  type,
+  value,
+  loginType,
+  triggerCount,
+}) {
   const navigation = useNavigation();
   const [loading, setLoading] = useState(false);
 
@@ -44,7 +50,10 @@ export default function SignInAndSignUpButton({ to, type, value, loginType }) {
           })
         );
         return;
-      } else alert("User Does not exist.");
+      } else {
+        alert("User Does not exist.");
+        triggerCount();
+      }
     } else {
       setLoading(false);
       navigation.navigate(to, { value, type });

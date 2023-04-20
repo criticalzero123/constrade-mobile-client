@@ -1,20 +1,38 @@
-import { StyleSheet, Text, View, Pressable } from "react-native";
+import { Text, View, Pressable, Alert } from "react-native";
 import React, { useState } from "react";
 import Header from "../../components/sign-in/SignInHeader";
 
 import EmailTextInput from "../../components/CustomTextInput/EmailTextInput";
 import PasswordTextInput from "../../components/CustomTextInput/PasswordTextInput";
 import SignInAndSignUpButton from "../../components/buttons/SignInAndSignUpButton";
-import { useSelector } from "react-redux";
-import { useEffect } from "react";
-import { StackActions, useNavigation } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import KeyboardHideView from "../../components/CustomViews/KeyboardHideView";
 export default function EmailSignInScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [tries, setTries] = useState(0);
   const navigation = useNavigation();
 
   const onValidate = () => {
+    if (tries === 3) {
+      Alert.alert(
+        "Information",
+        "You have been wrong 3 times. Would you like to recover it using change password?",
+        [
+          {
+            text: "Cancel",
+            onPress: () => setTries(0),
+            style: "cancel",
+          },
+          {
+            text: "Change Password",
+            onPress: () => navigation.navigate("ForgetPasswordEmail"),
+          },
+        ]
+      );
+
+      return;
+    }
     return email.trim() !== "" && password.trim() !== ""
       ? { email, password }
       : null;
@@ -39,9 +57,8 @@ export default function EmailSignInScreen() {
         type="signin"
         loginType="email"
         value={onValidate()}
+        triggerCount={() => setTries(tries + 1)}
       />
     </KeyboardHideView>
   );
 }
-
-const styles = StyleSheet.create({});
