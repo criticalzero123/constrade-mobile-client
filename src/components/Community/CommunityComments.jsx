@@ -12,7 +12,7 @@ import CommunityCommentItem from "./CommunityCommentItem";
 import useGetCurrentUser from "../../hooks/useGetCurrentUser";
 
 export default function CommunityComments(props) {
-  const { communityId, showComment, post, memberInfo } = props;
+  const { communityId, showComment, post, currentMember } = props;
   const { width, height } = useWindowDimensions();
   const [
     commentPost,
@@ -60,7 +60,7 @@ export default function CommunityComments(props) {
     } else {
       const info = {
         communityPostId: postId,
-        commentedByUser: memberInfo.userId,
+        commentedByUser: currentMember.userId,
         comment: comment.trim(),
         dateCommented: new Date(),
       };
@@ -140,7 +140,7 @@ export default function CommunityComments(props) {
                   key={index}
                   commentInfo={_c.comment}
                   userInfo={_c.userInfo}
-                  memberInfo={memberInfo}
+                  memberInfo={currentMember}
                   onPressEdit={onPressEdit}
                   deleteComment={() => onDeleteComment(postId, commentId)}
                 />

@@ -40,6 +40,8 @@ export default function RecentTransactionItem({ data, currentUserWalletId }) {
         return "Subscribe";
       case OtherTransactionType.Topup:
         return "Topup";
+      case OtherTransactionType.Refund:
+        return "Refund";
     }
   };
 
@@ -50,6 +52,8 @@ export default function RecentTransactionItem({ data, currentUserWalletId }) {
       case OtherTransactionType.Subscribe:
         return false;
       case OtherTransactionType.Topup:
+        return true;
+      case OtherTransactionType.Refund:
         return true;
     }
   };

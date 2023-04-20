@@ -24,7 +24,6 @@ export default function ForgetPasswordScreen({ route }) {
     };
 
     const res = await changePasswordEmail(info);
-
     if (res) {
       alert("Change password is successful");
       navigation.navigate("SignInEmail");

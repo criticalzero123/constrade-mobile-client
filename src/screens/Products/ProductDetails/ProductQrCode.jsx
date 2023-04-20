@@ -22,7 +22,7 @@ export default function ProductQrCode({ route }) {
   const { id, title } = route.params;
   const viewRef = useRef();
   const { height } = useWindowDimensions();
-
+  const [permissionResponse, requestPermission] = MediaLibrary.usePermissions();
   const handleScreenshot = async () => {
     try {
       // ask for permission to use the camera
@@ -33,6 +33,7 @@ export default function ProductQrCode({ route }) {
           format: "png",
           quality: 1,
         });
+        await requestPermission();
         // save the screenshot to the device's photo library
         await MediaLibrary.saveToLibraryAsync(uri);
         alert("Screenshot saved to photo library!");

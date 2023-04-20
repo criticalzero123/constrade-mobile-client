@@ -37,6 +37,8 @@ export const userReport = (info) => async (dispatch) => {
       type: "REPORT_USER_SUCCESS",
       payload: result.data.responseData,
     });
+
+    if (result.data.responseData) alert("Reported");
   } catch (err) {
     dispatch({ type: "REPORT_USER_FAILED", error: err });
   }

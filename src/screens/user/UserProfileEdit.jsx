@@ -132,7 +132,7 @@ export default function UserProfileEdit({ route }) {
             <EditGender value={gender} setValue={setGender} />
           </View>
           <CustomButton disabled={disable} onPress={onPressAction}>
-            {disable && <ActivityIndicator size="small" />} Save Changes
+            {disable ? <ActivityIndicator size="small" /> : "Save Changes"}
           </CustomButton>
         </View>
       </ScrollView>

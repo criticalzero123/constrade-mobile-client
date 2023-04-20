@@ -43,7 +43,8 @@ export default function useBoostProduct(id) {
     if (res) {
       alert("Cancelled");
       navigation.dispatch(
-        StackActions.replace("ProductDetails", { productId: id })
+        // StackActions.replace("ProductDetails", { productId: id })
+        StackActions.replace("Menu", { productId: id })
       );
     } else {
       alert("Not enough balance for boosting.");

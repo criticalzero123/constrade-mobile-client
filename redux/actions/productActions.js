@@ -10,7 +10,7 @@ export const addProduct = async (productDetails, imageList) => {
 
     return res.data.responseData;
   } catch (error) {
-    console.error(error);
+    console.log(error);
   }
 };
 
@@ -22,7 +22,7 @@ export const editProduct = async (productId, productInfo) => {
 
     return res.data.responseData;
   } catch (error) {
-    console.error(error);
+    console.log(error);
   }
 };
 
@@ -77,7 +77,7 @@ export const addFavorite = async (info) => {
 
     return res.data.responseData;
   } catch (error) {
-    console.error(error);
+    console.log(error);
     alert("Something Went Wrong");
     return;
   }
@@ -122,6 +122,8 @@ export const reportProduct = (info) => async (dispatch) => {
       type: "REPORT_PRODUCT_SUCCESS",
       payload: result.data.responseData,
     });
+
+    if (result.data.responseData) alert("Product reported");
   } catch (err) {
     dispatch({ type: "REPORT_PRODUCT_FAILED", error: err });
   }
@@ -145,7 +147,19 @@ export const addProductBoost = async (id, days, userId) => {
 
     return result.data.responseData;
   } catch (err) {
-    console.error(err);
+    console.log(err);
+  }
+};
+
+export const editProductBoost = async (id, days) => {
+  try {
+    const result = await api
+      .setAuthHeaders()
+      .put(`api/products/boost/${id}?days=${days}`);
+
+    return result.data.responseData;
+  } catch (err) {
+    console.log(err);
   }
 };
 
@@ -157,6 +171,6 @@ export const cancelProductBoost = async (id) => {
 
     return result.data.responseData;
   } catch (err) {
-    console.error(err);
+    console.log(err);
   }
 };

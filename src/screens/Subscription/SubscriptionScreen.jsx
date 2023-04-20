@@ -211,7 +211,7 @@ export default function SubscriptionScreen() {
                   color="green"
                 />
                 <Text className="ml-2 text-base text-[#627282]">
-                  Benefits 2
+                  Discount boosting product
                 </Text>
               </View>
               <View className="flex-row items-center mt-5">
@@ -221,7 +221,7 @@ export default function SubscriptionScreen() {
                   color="green"
                 />
                 <Text className="ml-2 text-base text-[#627282]">
-                  Benefits 3
+                  Change user preferences
                 </Text>
               </View>
               <View className="flex-row items-center mt-5">
@@ -231,17 +231,7 @@ export default function SubscriptionScreen() {
                   color="green"
                 />
                 <Text className="ml-2 text-base text-[#627282]">
-                  Benefits 4
-                </Text>
-              </View>
-              <View className="flex-row items-center mt-5">
-                <MaterialCommunityIcons
-                  name="check-decagram"
-                  size={24}
-                  color="green"
-                />
-                <Text className="ml-2 text-base text-[#627282]">
-                  Benefits 5
+                  Additional 10 post counts
                 </Text>
               </View>
             </View>

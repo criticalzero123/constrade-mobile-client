@@ -34,4 +34,5 @@ export const OtherTransactionType = {
   Topup: 0,
   Boost: 1,
   Subscribe: 2,
+  Refund: 3,
 };

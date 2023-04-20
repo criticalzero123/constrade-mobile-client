@@ -25,6 +25,7 @@ export default function Transaction({ route }) {
   const { height, width } = useWindowDimensions();
   const navigation = useNavigation();
   const viewRef = useRef();
+  const [permissionResponse, requestPermission] = MediaLibrary.usePermissions();
 
   useEffect(() => {
     if (id === undefined) return;
@@ -70,6 +71,8 @@ export default function Transaction({ route }) {
           format: "png",
           quality: 1,
         });
+
+        await requestPermission();
         // save the screenshot to the device's photo library
         await MediaLibrary.saveToLibraryAsync(uri);
         alert("Screenshot saved to photo library!");

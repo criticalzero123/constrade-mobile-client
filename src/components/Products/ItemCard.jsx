@@ -61,11 +61,12 @@ export default function ItemCard({ data, index, showLike = true }) {
           {showLike && <AntDesign name="hearto" size={18} color="gray" />}
         </View>
         <View className="flex-row items-center mt-2 w-full ">
-          <Image
-            source={{ uri: data.userImage }}
-            className="w-5 h-5 rounded-full"
-          />
-
+          <View className="overflow-hidden" style={{ borderRadius: 1000 }}>
+            <Image
+              source={{ uri: data.userImage }}
+              className="w-5 h-5 rounded-full"
+            />
+          </View>
           <View className="mx-1" />
 
           <Text className="text-gray-400">by</Text>

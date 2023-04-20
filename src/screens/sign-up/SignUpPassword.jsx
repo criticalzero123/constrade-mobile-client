@@ -44,25 +44,30 @@ export default function SignUpPassword({ route }) {
       const gResult = await createWithEmailAndPassword(user, person);
       const res = await emailAndPasswordRegister(gResult);
 
-      setResult(res);
+      if (res) {
+        setOnLoading(false);
+
+        navigation.dispatch(
+          StackActions.replace("WelcomeUser", {
+            from: "signup",
+            user: res.user,
+            apiKey: res.apiKey,
+            token: res.token,
+          })
+        );
+      } else {
+        alert("something went wrong");
+      }
     } catch (error) {
       console.log(error.code, error.message);
     }
   };
 
-  useEffect(() => {
-    if (result === undefined) return;
-    setOnLoading(false);
+  // useEffect(() => {
+  //   if (result === undefined) return;
+  //   console.log(result);
 
-    navigation.dispatch(
-      StackActions.replace("WelcomeUser", {
-        from: "signup",
-        user: result.user,
-        apiKey: result.apiKey,
-        token: result.token,
-      })
-    );
-  }, [result]);
+  // }, [result]);
 
   return (
     <SafeAreaView style={styles.container}>

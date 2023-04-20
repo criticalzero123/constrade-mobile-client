@@ -118,16 +118,23 @@ export default function ProductDescription() {
 
       <View className="flex-row justify-between items-center my-4">
         <View className="flex-row items-center">
-          <Image
-            source={{ uri: data.user.imageUrl }}
+          <View
+            className="overflow-hidden mr-2"
             style={{
+              borderRadius: 1000,
               width: width * 0.07,
               height: height * 0.035,
-              resizeMode: "contain",
             }}
-            className="rounded-full mr-2"
-          />
-
+          >
+            <Image
+              source={{ uri: data.user.imageUrl }}
+              style={{
+                width: width * 0.07,
+                height: height * 0.035,
+                resizeMode: "cover",
+              }}
+            />
+          </View>
           <View>
             <Pressable onPress={handleGoToProfile}>
               <Text className="capitalize font-semibold">
