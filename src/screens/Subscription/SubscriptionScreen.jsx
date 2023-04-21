@@ -46,7 +46,7 @@ export default function SubscriptionScreen() {
         },
         {
           text: "Cancel",
-          onPress: () => alert("Cancelled"),
+          onPress: () => console.log("Cancelled"),
         },
       ]
     );

@@ -6,6 +6,7 @@ import {
 } from "../../../redux/actions/productActions";
 import { useState } from "react";
 import { StackActions, useNavigation } from "@react-navigation/native";
+import { Alert } from "react-native";
 
 export default function useBoostProduct(id) {
   const [data, setData] = useState();
@@ -39,17 +40,33 @@ export default function useBoostProduct(id) {
 
   const cancelBoost = async (id) => {
     setLoading(true);
-    const res = await cancelProductBoost(id);
-    if (res) {
-      alert("Cancelled");
-      navigation.dispatch(
-        // StackActions.replace("ProductDetails", { productId: id })
-        StackActions.replace("Menu", { productId: id })
-      );
-    } else {
-      alert("Not enough balance for boosting.");
-      setLoading(false);
-    }
+    Alert.alert(
+      "Info",
+      "Do you want to really cancel your boosting? This is not refundable as for moment.",
+      [
+        {
+          text: "Yes",
+          onPress: async () => {
+            const res = await cancelProductBoost(id);
+            if (res) {
+              alert("Cancelled");
+              navigation.dispatch(
+                // StackActions.replace("ProductDetails", { productId: id })
+                StackActions.replace("Menu", { productId: id })
+              );
+            } else {
+              alert("Not enough balance for boosting.");
+              setLoading(false);
+            }
+          },
+        },
+        {
+          text: "Cancel",
+          onPress: () => setLoading(false),
+          style: "cancel",
+        },
+      ]
+    );
   };
 
   return [data, addBoost, cancelBoost, loading];
