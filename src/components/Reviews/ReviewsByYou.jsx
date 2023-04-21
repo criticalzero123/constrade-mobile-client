@@ -35,7 +35,7 @@ export default function ReviewsByYou({ route }) {
           </Text>
           {notReviewed.map((_review, index) => (
             <View key={index}>
-              <Pressable onPress={() => handleReview} className="mb-2">
+              <Pressable onPress={handleReview} className="mb-2">
                 <Text
                   className="p-4 border border-red-300 text-red-500"
                   style={{ borderRadius: 5 }}
