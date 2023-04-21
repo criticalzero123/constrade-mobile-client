@@ -12,6 +12,20 @@ export default function ReviewsByYou({ route }) {
   );
 
   const navigation = useNavigation();
+
+  const handleReview = () => {
+    if (user.userType === "semi-verified") {
+      alert("You can't review. You must be verified or premium user!");
+      return;
+    }
+
+    navigation.navigate("AddReview", {
+      reviewerId: user.userId,
+      transactionRefId: _review.transactionId,
+      user: otherUser,
+    });
+  };
+
   return (
     <View>
       {notReviewed && notReviewed.length !== 0 && (
@@ -21,16 +35,7 @@ export default function ReviewsByYou({ route }) {
           </Text>
           {notReviewed.map((_review, index) => (
             <View key={index}>
-              <Pressable
-                onPress={() =>
-                  navigation.navigate("AddReview", {
-                    reviewerId: user.userId,
-                    transactionRefId: _review.transactionId,
-                    user: otherUser,
-                  })
-                }
-                className="mb-2"
-              >
+              <Pressable onPress={() => handleReview} className="mb-2">
                 <Text
                   className="p-4 border border-red-300 text-red-500"
                   style={{ borderRadius: 5 }}
