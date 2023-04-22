@@ -100,12 +100,13 @@ export default function ChatHeader({ data, product }) {
             style={{ resizeMode: "contain" }}
           />
           <View className="ml-2">
-            <Text className="font-semibold">{data.email}</Text>
-            <Text
+            <Text className="font-semibold capitalize">{data.email}</Text>
+            <Text className="text-sm text-gray-400">{data.email}</Text>
+            {/* <Text
               className={`${isTyping ? "text-gray-500" : "text-[#CC481F]"}`}
             >
               {isTyping ? "typing..." : "active now"}
-            </Text>
+            </Text> */}
           </View>
         </View>
         <Pressable onPress={() => setModalVisible(!modalVisible)}>

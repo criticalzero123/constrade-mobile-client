@@ -1,10 +1,6 @@
 import { useState } from "react";
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  getProductTransaction,
-  getUserTransactions,
-} from "../../../redux/actions/transactionAction";
+import { getUserTransactions } from "../../../redux/actions/transactionAction";
 
 export default function useTransaction(id) {
   const [transactions, setTransactions] = useState();

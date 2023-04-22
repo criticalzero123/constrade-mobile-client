@@ -60,6 +60,7 @@ export default function ProductMessage({ route }) {
     if (firstFetch) {
       setMessageList([...messageList, ...reverseArray]);
       setFirstFetch(false);
+      onClickScrollDown();
     } else {
       setMessageList([...reverseArray, ...messageList]);
     }
@@ -70,11 +71,11 @@ export default function ProductMessage({ route }) {
     if (message === undefined) return;
 
     setMessageList([...messageList, message]);
+    onClickScrollDown();
   }, [message]);
 
   // This is for the warning
   useEffect(() => {
-    console.log(details);
     if (
       details.product.productStatus === "unsold" &&
       details.user.userType === "semi-verified"
@@ -114,7 +115,7 @@ export default function ProductMessage({ route }) {
               showsVerticalScrollIndicator={false}
               className="mb-4"
               ref={scrollDown}
-              onContentSizeChange={firstFetch ? onClickScrollDown : null}
+              onContentSizeChange={onClickScrollDown}
             >
               {messageData && messageData.length === 20 && (
                 <Pressable className="w-full" onPress={onPress}>
