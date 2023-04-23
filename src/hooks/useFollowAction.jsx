@@ -34,12 +34,12 @@ export default function useFollowAction(otherUserId, currentUserId) {
       return;
     }
     setIsFollow(!isFollow);
-    const followedCount =
-      !isFollow === true ? data.followedCount + 1 : data.followedCount - 1;
+    const followCount =
+      !isFollow === true ? data.followCount + 1 : data.followCount - 1;
 
     const info = {
       ...data,
-      followedCount: followedCount,
+      followCount: followCount,
     };
 
     dispatch({ type: "GET_FOLLOW_COUNT", payload: info });

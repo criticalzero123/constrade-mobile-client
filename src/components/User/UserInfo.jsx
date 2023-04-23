@@ -164,7 +164,7 @@ export default function UserInfo({ headerName, myProfile = true, data }) {
                   follow && follow.followedCount
                 )}
               </Text>
-              <Text className="mt-3 opacity-75 text-white">Followers</Text>
+              <Text className="mt-3 opacity-75 text-white">Following</Text>
             </View>
             <View className="border-l border-[#F7FAFC26]"></View>
             <View className="items-center">
@@ -189,7 +189,7 @@ export default function UserInfo({ headerName, myProfile = true, data }) {
                   follow && follow.followCount
                 )}
               </Text>
-              <Text className="mt-3 opacity-75 text-white">Following</Text>
+              <Text className="mt-3 opacity-75 text-white">Followers</Text>
             </View>
           </View>
         </View>
