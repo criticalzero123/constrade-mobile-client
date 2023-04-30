@@ -43,14 +43,11 @@ export default function ItemCard({ data, index, showLike = true }) {
           start={{ x: 0, y: 0 }}
           end={{ x: 0, y: 1 }}
         ></LinearGradient>
-        <View className="w-1/2 h-1/5 absolute bg-[#CC481F] -left-1 top-3 rounded justify-center">
-          <Text className="uppercase  font-semibold text-white ml-3">
+        <View className="absolute bg-[#CC481F] left-2 top-2 rounded justify-center tracking-widest">
+          <Text className="uppercase  font-semibold text-white  py-2 px-3">
             {data.preferTrade}
           </Text>
         </View>
-        <Text className="absolute  bottom-0 py-2 px-1 text-white ml-2">
-          1 day ago
-        </Text>
       </View>
       <View className="bg-white p-2 rounded-b-lg shadow-2xl w-full">
         <View className="flex-row justify-between ">

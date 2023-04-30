@@ -8,7 +8,9 @@ import ItemCard from "../../components/Products/ItemCard";
 import EndMessage from "../../components/EndMessage/EndMessage";
 import { Picker } from "@react-native-picker/picker";
 import { useState } from "react";
+import { useHideBottomTab } from "../../hooks/useHideBottomTab";
 export default function SearchResult({ route }) {
+  useHideBottomTab();
   const { query } = route.params;
 
   const [result, platformList] = useSearchHome(query);

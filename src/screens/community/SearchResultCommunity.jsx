@@ -35,7 +35,7 @@ export default function SearchResultCommunity({ route }) {
       <ScrollView showsVerticalScrollIndicator={false}>
         {result.map((community, index) => (
           <Pressable
-            key={community.communityId}
+            key={index}
             onPress={() =>
               navigation.navigate("CommunityDetail", {
                 id: community.communityId,
