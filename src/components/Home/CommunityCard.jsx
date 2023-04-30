@@ -39,18 +39,9 @@ export default function CommunityCard({
   };
 
   const handlePress = () => {
-    if (home) {
-      navigation.navigate("Community", {
-        screen: "CommunityDetail",
-        params: {
-          id: data.community.communityId,
-        },
-      });
-    } else {
-      navigation.navigate("CommunityDetail", {
-        id: data.community.communityId,
-      });
-    }
+    navigation.navigate("CommunityDetail", {
+      id: data.community.communityId,
+    });
   };
 
   return (

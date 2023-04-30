@@ -8,6 +8,7 @@ import Transaction from "../../screens/transaction/Transaction";
 import TransactionAll from "../../screens/transaction/TransactionAll";
 import ProductQrCode from "../../screens/Products/ProductDetails/ProductQrCode";
 import UpdateProduct from "../../screens/Products/update-product/UpdateProduct";
+import CommunityDetail from "../../screens/community/CommunityDetail/CommunityDetail";
 
 const Stack = createNativeStackNavigator();
 
@@ -21,6 +22,7 @@ export default function AppStack() {
     >
       <Stack.Screen name="Notification" component={Notification} />
       <Stack.Screen name="ProductDetails" component={ProductDetails} />
+      <Stack.Screen name="CommunityDetail" component={CommunityDetail} />
       <Stack.Screen name="UpdateProduct" component={UpdateProduct} />
       <Stack.Screen name="ProductQR" component={ProductQrCode} />
       <Stack.Screen name="TransactionDetails" component={Transaction} />

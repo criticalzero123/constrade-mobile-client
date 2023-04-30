@@ -61,7 +61,7 @@ export default function AddCommunity() {
         selectedValue={visibility}
       >
         <Picker.Item value="public" label="Public" />
-        <Picker.Item value="private" label="Private" />
+        {/* <Picker.Item value="private" label="Private" /> */}
       </Picker>
 
       <Pressable

@@ -27,7 +27,6 @@ export default function CommunityStack() {
       <Stack.Screen component={MyCommunity} name="MyCommunity" />
       <Stack.Screen component={AddCommunity} name="AddCommunity" />
       <Stack.Screen component={CommunityEdit} name="CommunityEdit" />
-      <Stack.Screen component={CommunityDetail} name="CommunityDetail" />
       <Stack.Screen component={SeeMemberRequest} name="SeeMemberRequest" />
     </Stack.Navigator>
   );
