@@ -231,40 +231,29 @@ export const deleteCommentPost = async (communityId, postId, commentId) => {
   }
 };
 
-export const getCommunityMembers = (communityId) => async (dispatch) => {
-  dispatch({ type: "GET_COMMUNITY_MEMBERS_REQUEST" });
-
+export const getCommunityMembers = async (communityId) => {
   try {
     const res = await api
       .setAuthHeaders()
       .get(`/api/community/${communityId}/members`);
 
-    dispatch({
-      type: "GET_COMMUNITY_MEMBERS_SUCCESS",
-      payload: res.data.responseData,
-    });
+    return res.data.responseData;
   } catch (error) {
-    dispatch({ type: "GET_COMMUNITY_MEMBERS_FAILED", error: error });
+    console.log(error);
   }
 };
 
-export const removeCommunityMemberById =
-  (communityId, memberId) => async (dispatch) => {
-    dispatch({ type: "DELETE_COMMUNITY_MEMBER_BY_ID_REQUEST" });
+export const removeCommunityMemberById = async (communityId, memberId) => {
+  try {
+    const res = await api
+      .setAuthHeaders()
+      .delete(`/api/community/${communityId}/members/${memberId}`);
 
-    try {
-      const res = await api
-        .setAuthHeaders()
-        .delete(`/api/community/${communityId}/members/${memberId}`);
-
-      dispatch({
-        type: "DELETE_COMMUNITY_MEMBER_BY_ID_SUCCESS",
-        payload: res.data.responseData,
-      });
-    } catch (error) {
-      dispatch({ type: "DELETE_COMMUNITY_MEMBER_BY_ID_FAILED", error: error });
-    }
-  };
+    return res.data.responseData;
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 export const getAllMyCommunityJoined = (userId) => async (dispatch) => {
   dispatch({ type: "GET_COMMUNITY_JOINED_REQUEST" });

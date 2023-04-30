@@ -138,62 +138,6 @@ export const getCommentPostReducer = (state = {}, action) => {
   }
 };
 
-export const getCommunityMembersReducer = (state = {}, action) => {
-  switch (action.type) {
-    case "GET_COMMUNITY_MEMBERS_REQUEST":
-      return {
-        ...state,
-        loading: true,
-      };
-
-    case "GET_COMMUNITY_MEMBERS_SUCCESS":
-      return {
-        loading: false,
-        data: action.payload,
-      };
-
-    case "GET_COMMUNITY_MEMBERS_FAILED":
-      return {
-        loading: false,
-        error: action.error,
-      };
-
-    case "GET_COMMUNITY_MEMBERS_LEAVE":
-      return {};
-
-    default:
-      return { ...state };
-  }
-};
-
-export const deleteCommunityMemberByIdReducer = (state = {}, action) => {
-  switch (action.type) {
-    case "DELETE_COMMUNITY_MEMBER_BY_ID_REQUEST":
-      return {
-        ...state,
-        loading: true,
-      };
-
-    case "DELETE_COMMUNITY_MEMBER_BY_ID_SUCCESS":
-      return {
-        loading: false,
-        data: action.payload,
-      };
-
-    case "DELETE_COMMUNITY_MEMBER_BY_ID_FAILED":
-      return {
-        loading: false,
-        error: action.error,
-      };
-
-    case "DELETE_COMMUNITY_MEMBER_BY_ID_LEAVE":
-      return {};
-
-    default:
-      return { ...state };
-  }
-};
-
 export const getAllMyCommunityJoinedReducer = (state = {}, action) => {
   switch (action.type) {
     case "GET_COMMUNITY_JOINED_REQUEST":

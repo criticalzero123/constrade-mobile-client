@@ -4,19 +4,35 @@ import {
   getCommunityMembers,
   removeCommunityMemberById,
 } from "../../../redux/actions/communityAction";
+import { useState } from "react";
 
 export default function useCommunityMembers(communityId) {
-  const dispatch = useDispatch();
-  const { data } = useSelector((state) => state.getCommunityMembersReducer);
+  const [data, setData] = useState();
 
   useEffect(() => {
     if (communityId === undefined) return;
 
-    dispatch(getCommunityMembers(communityId));
+    const fetch = async () => {
+      const res = await getCommunityMembers(communityId);
+
+      if (res) {
+        setData(res);
+      }
+    };
+
+    fetch();
   }, [communityId]);
 
-  const removeMember = (memberId) => {
-    dispatch(removeCommunityMemberById(communityId, memberId));
+  const removeMember = async (memberId) => {
+    const res = await removeCommunityMemberById(communityId, memberId);
+
+    if (res) {
+      const newMembers = data.filter(
+        (m) => m.member.communityMemberId !== memberId
+      );
+      setData(newMembers);
+      alert("Member Removed Successfully!");
+    }
   };
 
   return [data, removeMember];
