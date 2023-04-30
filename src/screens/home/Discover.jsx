@@ -44,7 +44,9 @@ export default function Discover() {
     const { status } = await BarCodeScanner.requestPermissionsAsync();
 
     if (status === "granted") {
-      navigation.navigate("ProductDetails", { productId: parseInt(data) });
+      let newData = data.split("/");
+      let id = newData[newData.length - 1];
+      navigation.navigate("ProductDetails", { productId: parseInt(id) });
     }
 
     if (status === null) {
