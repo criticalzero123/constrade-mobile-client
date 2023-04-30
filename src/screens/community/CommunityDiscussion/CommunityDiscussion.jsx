@@ -248,8 +248,15 @@ export default function CommunityDiscussion() {
                           </Pressable>
                           <View>
                             <Text className="capitalize font-semibold">
-                              {person.firstName} {person.lastName}
+                              {person.firstName} {person.lastName}{" "}
+                              {!post.isMember && (
+                                <Text className="text-gray-400">
+                                  {" "}
+                                  (Removed)
+                                </Text>
+                              )}
                             </Text>
+
                             <Text className="text-gray-400">
                               {new Date(
                                 post.communityPost.createdDate
