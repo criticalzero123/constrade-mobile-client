@@ -42,6 +42,8 @@ export default function RecentTransactionItem({ data, currentUserWalletId }) {
         return "Topup";
       case OtherTransactionType.Refund:
         return "Refund";
+      case OtherTransactionType.AddCount:
+        return "Add Post Count";
     }
   };
 
@@ -55,6 +57,8 @@ export default function RecentTransactionItem({ data, currentUserWalletId }) {
         return true;
       case OtherTransactionType.Refund:
         return true;
+      case OtherTransactionType.AddCount:
+        return false;
     }
   };
 
