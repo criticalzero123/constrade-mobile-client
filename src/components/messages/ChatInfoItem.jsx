@@ -17,9 +17,18 @@ export default function ChatInfoItem({ info, product, search = false }) {
   const routeTo = product
     ? {
         name: "ProductMessage",
-        params: { details: { user: info.user, product: info.product } },
+        params: {
+          details: {
+            user: info.user,
+            product: info.product,
+            name: info.otherUserName,
+          },
+        },
       }
-    : { name: "PersonalMessage", params: { user: info.user } };
+    : {
+        name: "PersonalMessage",
+        params: { user: info.user, name: info.otherUserName },
+      };
 
   return (
     <Pressable

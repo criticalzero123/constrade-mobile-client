@@ -1,8 +1,4 @@
 import {
-  KeyboardAvoidingView,
-  Platform,
-  StatusBar,
-  StyleSheet,
   Text,
   View,
   useWindowDimensions,
@@ -110,7 +106,11 @@ export default function ProductMessage({ route }) {
       {currentUser !== undefined && (
         <>
           <View style={{ height: height * 0.9, paddingHorizontal: 20 }}>
-            <ChatHeader data={details.user} product={details.product} />
+            <ChatHeader
+              data={details.user}
+              product={details.product}
+              name={details.name}
+            />
             <ScrollView
               showsVerticalScrollIndicator={false}
               className="mb-4"

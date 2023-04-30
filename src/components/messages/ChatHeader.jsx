@@ -21,8 +21,7 @@ import useGetCurrentUser from "../../hooks/useGetCurrentUser";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import useSoldProduct from "../../hooks/transaction/useSoldProduct";
-export default function ChatHeader({ data, product }) {
-  const [isTyping, setIsTyping] = useState(false);
+export default function ChatHeader({ data, product, name }) {
   const [modalVisible, setModalVisible] = useState(false);
   const { height, width } = useWindowDimensions();
 
@@ -100,7 +99,7 @@ export default function ChatHeader({ data, product }) {
             style={{ resizeMode: "contain" }}
           />
           <View className="ml-2">
-            <Text className="font-semibold capitalize">{data.email}</Text>
+            <Text className="font-semibold capitalize">{name}</Text>
             <Text className="text-sm text-gray-400">{data.email}</Text>
             {/* <Text
               className={`${isTyping ? "text-gray-500" : "text-[#CC481F]"}`}

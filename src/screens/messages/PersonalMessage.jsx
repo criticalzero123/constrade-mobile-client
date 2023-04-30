@@ -1,5 +1,4 @@
 import {
-  KeyboardAvoidingView,
   Platform,
   Pressable,
   ScrollView,
@@ -26,6 +25,7 @@ import ContainerSafeView from "../../components/CustomViews/ContainerSafeView";
 export default function PersonalMessage({ route }) {
   useHideBottomTab();
   const otherUser = route.params.user;
+  const otherUserName = route.params.name;
 
   const [index, setIndex] = useState(0);
   const [messageList, setMessageList] = useState([]);
@@ -85,7 +85,7 @@ export default function PersonalMessage({ route }) {
         <>
           <View style={{ height: height * 0.9, paddingHorizontal: 20 }}>
             <View />
-            <ChatHeader data={otherUser} />
+            <ChatHeader data={otherUser} name={otherUserName} />
 
             <ScrollView
               showsVerticalScrollIndicator={false}
