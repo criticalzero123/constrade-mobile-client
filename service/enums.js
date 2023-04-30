@@ -35,4 +35,5 @@ export const OtherTransactionType = {
   Boost: 1,
   Subscribe: 2,
   Refund: 3,
+  AddCount: 4,
 };

@@ -16,6 +16,7 @@ import WalletScreen from "../../screens/wallet/WalletScreen";
 import HelpCenterStack from "../help-center/HelpCenterStack";
 import WalletHistory from "../../screens/wallet/WalletHistory";
 import WalletReload from "../../screens/wallet/WalletReload";
+import AddCountPost from "../../screens/user/AddCountPost";
 
 const Stack = createNativeStackNavigator();
 
@@ -42,6 +43,7 @@ export default function UserStack() {
       <Stack.Screen component={HelpCenterStack} name="HelpCenter" />
       <Stack.Screen component={AddReview} name="AddReview" />
       <Stack.Screen component={VerificationScreen} name="Verification" />
+      <Stack.Screen component={AddCountPost} name="AddCountPost" />
     </Stack.Navigator>
   );
 }

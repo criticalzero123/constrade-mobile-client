@@ -79,7 +79,6 @@ export default function UserProfileEdit({ route }) {
         <View className="justify-between" style={{ height: height * 0.94 }}>
           <View>
             <View className="items-center mt-2 mb-4">
-              ''
               <View
                 style={{
                   width: width * 0.25,

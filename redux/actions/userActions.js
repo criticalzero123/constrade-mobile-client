@@ -69,3 +69,15 @@ export const getHasRequest = async (userId) => {
     console.log(error);
   }
 };
+
+export const addCountPost = async (userId, counts) => {
+  try {
+    const res = await api
+      .setAuthHeaders()
+      .put(`api/users/count/add/${userId}?counts=${counts}`);
+
+    return res.data.responseData;
+  } catch (error) {
+    console.log(error);
+  }
+};

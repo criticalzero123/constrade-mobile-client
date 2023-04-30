@@ -30,7 +30,7 @@ export default function AccountBar({ data }) {
       <NavItem
         iconNav={
           <Feather
-            name="user"
+            name="user-check"
             size={24}
             color="white"
             style={{ opacity: 0.75 }}
@@ -39,7 +39,19 @@ export default function AccountBar({ data }) {
         title="Verify Account"
         onPress={() => navigation.navigate("Verification", { data: data })}
       />
-
+      <NavItem
+        style={{ opacity: 0.75 }}
+        iconNav={
+          <MaterialIcons
+            name="post-add"
+            size={24}
+            color="white"
+            style={{ opacity: 0.75 }}
+          />
+        }
+        title="Add Count Post"
+        onPress={() => navigation.navigate("AddCountPost", { data: data })}
+      />
       <NavItem
         style={{ opacity: 0.75 }}
         iconNav={
