@@ -12,7 +12,7 @@ import ContainerSafeView from "../../components/CustomViews/ContainerSafeView";
 import { useEffect, useRef } from "react";
 import { getProductTransaction } from "../../../redux/actions/transactionAction";
 import { useState } from "react";
-import { useNavigation } from "@react-navigation/native";
+import { StackActions, useNavigation } from "@react-navigation/native";
 
 import { captureRef } from "react-native-view-shot";
 import { Camera } from "expo-camera";
@@ -45,11 +45,21 @@ export default function Transaction({ route }) {
 
   if (transaction === undefined) return <Text>Fetching...</Text>;
 
-  const TextContainer = ({ leftText, rightText }) => {
+  const TextContainer = ({
+    leftText,
+    rightText,
+    onPressTitle,
+    isTitle = false,
+  }) => {
     return (
       <View className="flex-row items-center justify-between my-2">
         <Text className="text-gray-500">{leftText}</Text>
-        <Text className="capitalize font-semibold">{rightText}</Text>
+        <Text
+          className={`capitalize font-semibold ${isTitle && "text-[#CC481F]"}`}
+          onPress={isTitle && onPressTitle}
+        >
+          {rightText}
+        </Text>
       </View>
     );
   };
@@ -125,6 +135,14 @@ export default function Transaction({ route }) {
               <TextContainer
                 leftText={"Product Name:"}
                 rightText={transaction.product.title}
+                isTitle
+                onPressTitle={() =>
+                  navigation.dispatch(
+                    StackActions.replace("ProductDetails", {
+                      productId: transaction.product.productId,
+                    })
+                  )
+                }
               />
               <TextContainer
                 leftText={"Transaction Type:"}
@@ -167,18 +185,20 @@ export default function Transaction({ route }) {
           </View>
           <View className="justify-end" style={{ height: height * 0.25 }}>
             <Pressable
-              className="border border-gray-300 py-4"
+              className="border border-[#CC481F] py-4"
               style={{ borderRadius: 5 }}
               onPress={handleScreenshot}
             >
-              <Text className="text-center">Download receipt</Text>
+              <Text className="text-center text-[#CC481F] font-semibold">
+                Download receipt
+              </Text>
             </Pressable>
             <Pressable
-              className="bg-gray-300 py-4 my-2  mb-5"
+              className="bg-[#CC481F] py-4 my-2  mb-5"
               style={{ borderRadius: 5 }}
               onPress={() => navigation.goBack()}
             >
-              <Text className="text-center">Back</Text>
+              <Text className="text-center text-white">Back</Text>
             </Pressable>
           </View>
         </View>

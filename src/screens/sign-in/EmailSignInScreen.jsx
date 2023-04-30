@@ -17,7 +17,7 @@ export default function EmailSignInScreen() {
     if (tries === 3) {
       Alert.alert(
         "Information",
-        "You have been wrong 3 times. Would you like to recover it using change password?",
+        "You have been wrong 3 times. Would you like to recover it using email?",
         [
           {
             text: "Cancel",
