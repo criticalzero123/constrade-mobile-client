@@ -25,7 +25,10 @@ export default function SearchResultCommunity({ route }) {
     return (
       <ContainerSafeView>
         <HeaderArrow headerName={"Search results"} />
-        <Text>No keyword is found at community</Text>
+        <Text>
+          No <Text className="font-semibold">{query}</Text> is found at
+          community
+        </Text>
       </ContainerSafeView>
     );
 

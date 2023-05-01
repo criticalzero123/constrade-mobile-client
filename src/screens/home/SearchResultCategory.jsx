@@ -15,9 +15,7 @@ export default function SearchResultCategory({ route }) {
   const { category } = route.params;
   useHideBottomTab();
   const [result, setResult] = useState();
-
   const [platformList, setPlatformList] = useState([]);
-
   const [platform, setPlatform] = useState("");
 
   useEffect(() => {

@@ -27,7 +27,9 @@ export default function SearchResult({ route }) {
     return (
       <ContainerSafeView>
         <HeaderArrow headerName={"Search results"} />
-        <Text>No keyword is found at products</Text>
+        <Text>
+          No <Text className="font-semibold">{query}</Text> is found at products
+        </Text>
       </ContainerSafeView>
     );
 
