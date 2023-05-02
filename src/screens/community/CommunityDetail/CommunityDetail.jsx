@@ -78,7 +78,7 @@ export default function CommunityDetail({ route }) {
     if (resLower === "pending") {
       alert("Pending now.");
     } else if (resLower === "approved") {
-      refresh(user.userId);
+      refresh();
     } else {
       alert("Rejected");
     }

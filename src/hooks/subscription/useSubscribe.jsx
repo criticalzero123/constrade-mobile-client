@@ -70,7 +70,7 @@ export default function useSubscribe(userId) {
 
       return true;
     } else {
-      alert("Something went wrong in subscribing");
+      alert("Something went wrong in cancelling the subscription");
     }
     setLoading(false);
     return false;

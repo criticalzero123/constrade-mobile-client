@@ -14,6 +14,7 @@ import useGetCurrentUser from "../../../hooks/useGetCurrentUser";
 import useCommunity from "../../../hooks/community/useCommunity";
 import { useHideBottomTab } from "../../../hooks/useHideBottomTab";
 import { StackActions, useNavigation } from "@react-navigation/native";
+import HeaderArrow from "../../../components/HeaderArrow/HeaderArrow";
 
 export default function AddCommunity() {
   useHideBottomTab();
@@ -50,6 +51,7 @@ export default function AddCommunity() {
 
   return (
     <ContainerSafeView>
+      <HeaderArrow headerName={"Add Community"} />
       <TextInput value={name} onChangeText={setName} placeholder="Name" />
       <TextInput
         value={description}

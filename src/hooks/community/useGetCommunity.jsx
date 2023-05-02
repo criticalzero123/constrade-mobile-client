@@ -30,10 +30,8 @@ export default function useGetCommunity(id) {
     dispatch(communityDataInfo(data.community.communityId, currentMember));
   }, [data]);
 
-  const refresh = (userId) => {
+  const refresh = () => {
     dispatch(getCommunityById(id));
-    dispatch(getCommunityMembers(id));
-    dispatch(getPostByCommunityId(id, userId));
   };
 
   return {
