@@ -36,7 +36,7 @@ export default function SearchProductPlatform({ route }) {
     <ContainerSafeView>
       <HeaderArrow headerName={`${name} results`} />
       <ScrollView showsVerticalScrollIndicator={false}>
-        <View className="mb-5 border">
+        <View className="mb-5 border rounded border-gray-400 ">
           <Picker
             selectedValue={genre}
             onValueChange={(itemValue) => setGenre(itemValue)}

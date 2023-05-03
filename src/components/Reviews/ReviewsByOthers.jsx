@@ -1,4 +1,4 @@
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Text } from "react-native";
 import React from "react";
 import useOtherReview from "../../hooks/review/useOtherReview";
 import ReviewItem from "./ReviewItem";
@@ -9,11 +9,15 @@ export default function ReviewsByOthers({ route }) {
 
   return (
     <View>
-      {otherReview && otherReview.length !== 0 && (
+      {otherReview && otherReview.length !== 0 ? (
         <View>
           {otherReview.map((_review) => (
             <ReviewItem review={_review} key={_review.reviewId} />
           ))}
+        </View>
+      ) : (
+        <View>
+          <Text>No other reviews.</Text>
         </View>
       )}
     </View>

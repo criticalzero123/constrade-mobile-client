@@ -4,14 +4,44 @@ import {
   View,
   Image,
   useWindowDimensions,
+  Pressable,
 } from "react-native";
 import React from "react";
+import { useNavigation } from "@react-navigation/native";
 
 export default function NotificationItem({ item }) {
   const { width, height } = useWindowDimensions();
+  const navigation = useNavigation();
+  const handlePress = () => {
+    switch (item.notificationType) {
+      case "follow":
+        navigation.navigate("Menu", {
+          screen: "User",
+          params: { screen: "OtherUserProfile", params: { userId: item.toId } },
+        });
+        break;
+
+      case "transaction":
+        navigation.navigate("TransactionDetails", {
+          id: parseInt(item.toId),
+        });
+
+        break;
+
+      case "post":
+        navigation.navigate("ProductDetails", {
+          productId: parseInt(item.toId),
+        });
+        break;
+
+      default:
+        console.log(item.notificationType);
+        break;
+    }
+  };
 
   return (
-    <View className="flex-row items-center mb-4">
+    <Pressable className="flex-row items-center mb-4" onPress={handlePress}>
       {item.imageUrl.toString().trim() !== "" && (
         <Image
           source={{ uri: item.imageUrl }}
@@ -32,7 +62,7 @@ export default function NotificationItem({ item }) {
           {new Date(item.notificationDate).toLocaleTimeString()}
         </Text>
       </View>
-    </View>
+    </Pressable>
   );
 }
 

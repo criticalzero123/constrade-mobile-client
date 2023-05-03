@@ -15,7 +15,7 @@ export default function ProductDetails({ route }) {
   const { productId } = route.params;
   const { user } = useGetCurrentUser();
   const { data } = useGetProductId(productId, user.userId);
-
+  console.log(productId);
   if (data === undefined || user === undefined)
     return (
       <ContainerSafeView>
