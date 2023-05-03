@@ -9,6 +9,8 @@ import TransactionAll from "../../screens/transaction/TransactionAll";
 import ProductQrCode from "../../screens/Products/ProductDetails/ProductQrCode";
 import UpdateProduct from "../../screens/Products/update-product/UpdateProduct";
 import CommunityDetail from "../../screens/community/CommunityDetail/CommunityDetail";
+import SearchProductPlatform from "../../screens/home/SearchProductPlatform";
+import SearchProductGenre from "../../screens/home/SearchProductGenre";
 
 const Stack = createNativeStackNavigator();
 
@@ -29,6 +31,11 @@ export default function AppStack() {
       <Stack.Screen name="TransactionAll" component={TransactionAll} />
       <Stack.Screen name="BoostProduct" component={BoostProductScreen} />
       <Stack.Screen name="Menu" component={MenuStack} />
+      <Stack.Screen component={SearchProductGenre} name="SearchResultGenre" />
+      <Stack.Screen
+        component={SearchProductPlatform}
+        name="SearchResultPlatform"
+      />
     </Stack.Navigator>
   );
 }

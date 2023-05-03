@@ -23,7 +23,10 @@ import useGetProductId from "../../../hooks/Product/useGetProductId";
 import ProductImageDisplayList from "./ProductImageDisplayList";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
-import { itemConditionList } from "../../../../service/addProductService";
+import {
+  itemConditionList,
+  stringToArrayList,
+} from "../../../../service/addProductService";
 import { Feather } from "@expo/vector-icons";
 export default function ProductDescription() {
   const [deleteProductById] = useDeleteProduct();
@@ -101,6 +104,33 @@ export default function ProductDescription() {
     }
   };
 
+  const navigateTo = (tag, type) => {
+    if (type === "genre") {
+      navigation.navigate("SearchResultGenre", { name: tag });
+    } else {
+      navigation.navigate("SearchResultPlatform", {
+        name: tag,
+      });
+    }
+  };
+
+  const TagsDisplay = ({ tags, type }) => {
+    const tagArray = stringToArrayList(tags);
+    return (
+      <View className="flex-row gap-x-4 flex-wrap w-full ">
+        {tagArray.map((tag, index) => (
+          <Pressable
+            key={index}
+            className="py-2 px-4 rounded bg-[#CC481F]"
+            onPress={() => navigateTo(tag, type)}
+          >
+            <Text className="text-white">{tag}</Text>
+          </Pressable>
+        ))}
+      </View>
+    );
+  };
+
   return (
     <ScrollView className="mt-3" showsVerticalScrollIndicator={false}>
       <Image
@@ -148,7 +178,7 @@ export default function ProductDescription() {
         <View className="flex-row items-center">
           <View className="flex-row items-center">
             <Text className={`text-base mr-2 ${isFavorite && "text-red-500"}`}>
-              {favoriteCount(data.product.countFavorite)}
+              {!addingToFav && favoriteCount(data.product.countFavorite)}
             </Text>
             {addingToFav ? (
               <ActivityIndicator />
@@ -228,12 +258,12 @@ export default function ProductDescription() {
 
       <View className="mb-6">
         <Text className="text-gray-400 mb-2">Game Genre</Text>
-        <Text>{data.product.gameGenre}</Text>
+        <TagsDisplay tags={data.product.gameGenre} type={"genre"} />
       </View>
 
       <View className="mb-6">
         <Text className="text-gray-400 mb-2 ">Platform Supported</Text>
-        <Text className="capitalize">{data.product.platform}</Text>
+        <TagsDisplay tags={data.product.platform} type={"platform"} />
       </View>
       {user.userId === data.product.posterUserId ? (
         data.product.productStatus === "unsold" ? (
@@ -293,7 +323,7 @@ export default function ProductDescription() {
           {data.product.posterUserId !== user.userId &&
             (data.product.productStatus === "unsold" ? (
               <Pressable
-                className="py-4 bg-[#CC481F]"
+                className="py-4 border border-[#CC481F] mt-5"
                 style={{ borderRadius: 5 }}
                 onPress={() =>
                   navigation.navigate("Menu", {
@@ -305,7 +335,7 @@ export default function ProductDescription() {
                   })
                 }
               >
-                <Text className="text-center text-white font-semibold">
+                <Text className="text-center text-[#CC481F] font-semibold">
                   Contact Seller
                 </Text>
               </Pressable>

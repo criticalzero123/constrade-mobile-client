@@ -22,6 +22,7 @@ export default function HomeStack() {
         component={HomeCommunityScreen}
         name="HomeCommunityScreen"
       />
+      {/* This is for the trade method */}
       <Stack.Screen
         component={SearchResultCategory}
         name="SearchResultCategory"

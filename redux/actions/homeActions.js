@@ -22,6 +22,30 @@ export const getSearchCategory = async (tradeMethod) => {
   }
 };
 
+export const getSearchResultGenre = async (search) => {
+  try {
+    const res = await api
+      .setAuthHeaders()
+      .get(`/api/home/genre?genre=${search}`);
+
+    return res.data.responseData;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const getSearchResultPlatform = async (search) => {
+  try {
+    const res = await api
+      .setAuthHeaders()
+      .get(`/api/home/platform?platform=${search}`);
+
+    return res.data.responseData;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export const getBoostedProducts = async () => {
   try {
     const res = await api.setAuthHeaders().get(`/api/home/boosted`);
