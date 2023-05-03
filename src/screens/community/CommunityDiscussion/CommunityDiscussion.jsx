@@ -67,6 +67,7 @@ export default function CommunityDiscussion() {
           communityPost: { ...info, communityPostId: postId, like: 0 },
           user: { user: { ...currentMember, ...user }, person: { ...person } },
           isLiked: false,
+          isMember: true,
           commentsLength: 0,
         },
         ...posts,
