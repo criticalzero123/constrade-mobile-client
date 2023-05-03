@@ -9,6 +9,10 @@ import useUserAuthenticated from "./src/hooks/useUserAuthenticated";
 import AppStack from "./src/stacks/auth/AppStack";
 import AuthStack from "./src/stacks/auth/AuthStack";
 
+import { LogBox } from "react-native";
+LogBox.ignoreLogs(["new NativeEventEmitter"]); // Ignore log notification by message
+LogBox.ignoreAllLogs(); //Ignore all log notifications
+
 const Stack = createNativeStackNavigator();
 
 export default function App() {

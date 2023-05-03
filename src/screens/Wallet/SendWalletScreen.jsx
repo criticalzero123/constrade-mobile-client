@@ -39,7 +39,7 @@ export default function SendWalletScreen({ route }) {
     if (selectedUserEmail.trim() === "") return;
 
     setLoading(true);
-    console.log(data);
+
     const _walletUser = data.find(
       (_w) =>
         _w.user.email.toLowerCase().trim() ===
