@@ -101,6 +101,7 @@ export default function ProductMessage({ route }) {
       return prevIndex + 1;
     });
   };
+  console.log(details.name);
   return (
     <ContainerSafeView horizontalSpace={false}>
       {currentUser !== undefined && (
@@ -109,7 +110,10 @@ export default function ProductMessage({ route }) {
             <ChatHeader
               data={details.user}
               product={details.product}
-              name={details.name}
+              name={
+                details.name ??
+                `${details.person.firstName} ${details.person.lastName}`
+              }
             />
             <ScrollView
               showsVerticalScrollIndicator={false}
