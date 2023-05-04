@@ -102,7 +102,7 @@ export default function BoostProductScreen({ route }) {
           </View>
         ) : (
           data.status === "active" && (
-            <View>
+            <View className="flex-1">
               <Text>Days Boosted: {data.daysBoosted}</Text>
               <Text>Status: {data.status}</Text>
               <Text>
@@ -113,18 +113,25 @@ export default function BoostProductScreen({ route }) {
                 Date Boosted: {new Date(data.dateBoosted).toLocaleDateString()}
               </Text>
 
-              <Pressable
-                className="p-4 border"
-                onPress={() => setIsVisible(!isVisible)}
-              >
-                <Text className="text-center">Edit</Text>
-              </Pressable>
-              <Pressable
-                className="p-4 border"
-                onPress={() => cancel(data.boostProductId)}
-              >
-                <Text className="text-center">Cancel</Text>
-              </Pressable>
+              <View className="flex-1 justify-end mb-5">
+                <Pressable
+                  className="p-4 bg-[#CC481F] mb-2 rounded"
+                  onPress={() => setIsVisible(!isVisible)}
+                >
+                  <Text className="text-center font-semibold text-white">
+                    Edit
+                  </Text>
+                </Pressable>
+                <Pressable
+                  className="p-4 border border-[#CC481F] rounded "
+                  onPress={() => cancel(data.boostProductId)}
+                >
+                  <Text className="text-center text-[#CC481F] font-semibold">
+                    Cancel
+                  </Text>
+                </Pressable>
+              </View>
+
               <BottomModal isVisible={isVisible} setIsVisible={setIsVisible}>
                 <View className="w-full">
                   <Text>

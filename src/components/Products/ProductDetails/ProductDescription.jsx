@@ -53,11 +53,11 @@ export default function ProductDescription() {
       };
 
       const flag = await addFavorite(info);
-      if (flag) {
-        alert("Added to Favorite!");
-      } else {
-        alert("Remove from favorite");
-      }
+      // if (flag) {
+      //   alert("Added to Favorite!");
+      // } else {
+      //   alert("Remove from favorite");
+      // }
 
       setIsFavorite(!isFavorite);
       setAddingToFav(false);

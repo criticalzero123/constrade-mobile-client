@@ -35,22 +35,24 @@ export default function GoogleButton({ text, type }) {
           type === "signin" ? "bg-[#CC481F] " : "border border-[#CC481F]"
         }`}
       >
-        <AntDesign
-          name="google"
-          size={24}
-          color={`${type === "signin" ? "white" : "#CC481F"}`}
-        />
-        <View className="mx-1"></View>
         {loading ? (
           <ActivityIndicator />
         ) : (
-          <Text
-            className={`${
-              type === "signin" ? "text-white" : "text-[#CC481F]"
-            } text-base font-semibold`}
-          >
-            {text}
-          </Text>
+          <>
+            <AntDesign
+              name="google"
+              size={24}
+              color={`${type === "signin" ? "white" : "#CC481F"}`}
+            />
+            <View className="mx-1"></View>
+            <Text
+              className={`${
+                type === "signin" ? "text-white" : "text-[#CC481F]"
+              } text-base font-semibold`}
+            >
+              {text}
+            </Text>
+          </>
         )}
       </View>
     </Pressable>
