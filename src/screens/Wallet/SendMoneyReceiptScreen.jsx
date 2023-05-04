@@ -12,11 +12,18 @@ import useGetCurrentUser from "../../hooks/useGetCurrentUser";
 import Advertisement from "../../components/Home/Advertisement";
 import { StackActions, useNavigation } from "@react-navigation/native";
 import { getDateFull } from "../../../service/dateService";
+import { captureRef } from "react-native-view-shot";
+import { Camera } from "expo-camera";
+import * as MediaLibrary from "expo-media-library";
+import { useRef } from "react";
+
 export default function SendMoneyReceiptScreen({ route }) {
   const { data } = route.params;
   const { person } = useGetCurrentUser();
   const { width, height } = useWindowDimensions();
   const navigation = useNavigation();
+  const viewRef = useRef();
+  const [permissionResponse, requestPermission] = MediaLibrary.usePermissions();
 
   const TextContainer = ({ textL, textR }) => {
     return (
@@ -28,6 +35,29 @@ export default function SendMoneyReceiptScreen({ route }) {
       </View>
     );
   };
+  console.log(data);
+  const handleScreenshot = async () => {
+    try {
+      // ask for permission to use the camera
+      const { status } = await Camera.requestCameraPermissionsAsync();
+      if (status === "granted") {
+        // capture the screenshot
+        const uri = await captureRef(viewRef.current, {
+          format: "png",
+          quality: 1,
+        });
+
+        await requestPermission();
+        // save the screenshot to the device's photo library
+        await MediaLibrary.saveToLibraryAsync(uri);
+        alert("Screenshot saved to photo library!");
+      } else {
+        alert("Permission to use camera denied!");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <ContainerSafeView>
@@ -35,6 +65,7 @@ export default function SendMoneyReceiptScreen({ route }) {
       <View
         className="bg-gray-800 relative mb-5"
         style={{ height: height * 0.6, borderRadius: 20 }}
+        ref={viewRef}
       >
         <View
           className="absolute -top-16 px-7 py-8 flex-row justify-center items-center"
@@ -79,18 +110,28 @@ export default function SendMoneyReceiptScreen({ route }) {
         </View>
         <Advertisement />
       </View>
-      <Pressable
-        onPress={() => navigation.dispatch(StackActions.replace("Wallet"))}
-        style={{ height: height * 0.25 }}
-        className="flex-row items-end"
-      >
-        <Text
-          className="w-full p-4 bg-[#CC481F] text-white text-center font-semibold text-base"
-          style={{ borderRadius: 10 }}
+
+      <View style={{ height: height * 0.26 }} className="justify-end">
+        <Pressable
+          className="border border-[#CC481F] py-4 mb-3"
+          style={{ borderRadius: 5 }}
+          onPress={handleScreenshot}
         >
-          Done
-        </Text>
-      </Pressable>
+          <Text className="text-center text-[#CC481F] font-semibold">
+            Download receipt
+          </Text>
+        </Pressable>
+        <Pressable
+          onPress={() => navigation.dispatch(StackActions.replace("Wallet"))}
+        >
+          <Text
+            className="w-full p-4 bg-[#CC481F] text-white text-center font-semibold text-base"
+            style={{ borderRadius: 10 }}
+          >
+            Done
+          </Text>
+        </Pressable>
+      </View>
     </ContainerSafeView>
   );
 }
