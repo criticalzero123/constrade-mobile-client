@@ -1,12 +1,21 @@
-import { StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { getDateTime } from "../../../service/dateService";
 import { OtherTransactionType } from "../../../service/enums";
+import BottomModal from "../modal/BottomModal";
+import { useState } from "react";
 
 export default function RecentTransactionItem({ data, currentUserWalletId }) {
+  const [showOtherTransac, setShowOtherTransac] = useState(false);
+  const [showSendMoney, setShowSendMoney] = useState(false);
+  const [showReceiveMoney, setShowReceiveMoney] = useState(false);
+
   const Sender = () => {
     return (
-      <View className="justify-between flex-row items-center my-2">
+      <Pressable
+        className="justify-between flex-row items-center my-2"
+        onPress={() => setShowSendMoney(true)}
+      >
         <View>
           <Text className="text-base mb-1">Send Money</Text>
           <Text className="text-md opacity-50">{getDateTime(data.date)}</Text>
@@ -14,13 +23,16 @@ export default function RecentTransactionItem({ data, currentUserWalletId }) {
         <Text className="text-red-500 font-semibold">
           - ₱ {data.amount.toFixed(2)}
         </Text>
-      </View>
+      </Pressable>
     );
   };
 
   const Receiver = () => {
     return (
-      <View className="justify-between flex-row items-center my-2">
+      <Pressable
+        className="justify-between flex-row items-center my-2"
+        onPress={() => setShowReceiveMoney(true)}
+      >
         <View>
           <Text className="text-base mb-1">Received Money</Text>
           <Text className="text-md opacity-50">{getDateTime(data.date)}</Text>
@@ -28,7 +40,7 @@ export default function RecentTransactionItem({ data, currentUserWalletId }) {
         <Text className="text-green-500 font-semibold">
           + ₱ {data.amount.toFixed(2)}
         </Text>
-      </View>
+      </Pressable>
     );
   };
 
@@ -64,7 +76,10 @@ export default function RecentTransactionItem({ data, currentUserWalletId }) {
 
   const Other = () => {
     return (
-      <View className="justify-between flex-row items-center my-2">
+      <Pressable
+        className="justify-between flex-row items-center my-2"
+        onPress={() => setShowOtherTransac(true)}
+      >
         <View>
           <Text className="text-base mb-1">{getType()}</Text>
           <Text className="text-md opacity-50">{getDateTime(data.date)}</Text>
@@ -76,7 +91,7 @@ export default function RecentTransactionItem({ data, currentUserWalletId }) {
         >
           {getTypeSign() ? "+" : "-"} ₱ {data.amount.toFixed(2)}
         </Text>
-      </View>
+      </Pressable>
     );
   };
 
@@ -89,6 +104,76 @@ export default function RecentTransactionItem({ data, currentUserWalletId }) {
       ) : (
         <Receiver />
       )}
+
+      <BottomModal
+        isVisible={showReceiveMoney}
+        setIsVisible={setShowReceiveMoney}
+      >
+        <Text className="text-2xl font-semibold mb-5">Transaction Details</Text>
+        <Text className="text-lg">
+          Reference No.: {data.sendMoneyTransactionId}
+        </Text>
+        <View>
+          <View>
+            <Text className="text-base mb-1">
+              Received Money from wallet id: {data.senderWalletId}
+            </Text>
+            <Text className="text-md opacity-50">{getDateTime(data.date)}</Text>
+          </View>
+          <Text
+            className={`${
+              getTypeSign() ? "text-green-500  " : "text-red-500 "
+            } font-semibold`}
+          >
+            {getTypeSign() ? "+" : "-"} ₱ {data.amount.toFixed(2)}
+          </Text>
+        </View>
+      </BottomModal>
+
+      <BottomModal isVisible={showSendMoney} setIsVisible={setShowSendMoney}>
+        <Text className="text-2xl font-semibold mb-5">Transaction Details</Text>
+        <Text className="text-lg">
+          Reference No.: {data.sendMoneyTransactionId}
+        </Text>
+        <View>
+          <View>
+            <Text className="text-base mb-1">
+              Send Money to wallet id: {data.receiverWalletId}
+            </Text>
+            <Text className="text-md opacity-50">{getDateTime(data.date)}</Text>
+          </View>
+          <Text
+            className={`${
+              getTypeSign() ? "text-green-500  " : "text-red-500 "
+            } font-semibold`}
+          >
+            {getTypeSign() ? "+" : "-"} ₱ {data.amount.toFixed(2)}
+          </Text>
+        </View>
+      </BottomModal>
+
+      <BottomModal
+        isVisible={showOtherTransac}
+        setIsVisible={setShowOtherTransac}
+      >
+        <Text className="text-2xl font-semibold mb-5">Transaction Details</Text>
+        <Text className="text-lg">
+          Reference No.: {data.otherTransactionId}
+        </Text>
+        <View>
+          <View>
+            <Text className="text-base mb-1">{getType()}</Text>
+            <Text className="text-md opacity-50">{getDateTime(data.date)}</Text>
+          </View>
+          <Text
+            className={`${
+              getTypeSign() ? "text-green-500  " : "text-red-500 "
+            } font-semibold`}
+          >
+            {getTypeSign() ? "+" : "-"} ₱ {data.amount.toFixed(2)}
+          </Text>
+        </View>
+      </BottomModal>
     </View>
   );
 }
