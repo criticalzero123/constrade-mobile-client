@@ -29,7 +29,6 @@ import { getMessagesByUserIdsReducer } from "./reducers/userMessageReducer";
 import {
   getMyCommunityReducer,
   getCommunityByIdReducer,
-  deleteCommunityReducer,
   getAllCommunityReducer,
   getCommentPostReducer,
   getAllMyCommunityJoinedReducer,
@@ -50,7 +49,6 @@ const finalReducer = combineReducers({
   getFavoriteByUserIdReducer,
   getMyCommunityReducer,
   getCommunityByIdReducer,
-  deleteCommunityReducer,
   getAllCommunityReducer,
   getCommentPostReducer,
   getNotRatedReducer,

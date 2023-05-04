@@ -50,20 +50,14 @@ export const editCommunity = async (info) => {
   }
 };
 
-export const deleteCommunity = (id, userId) => async (dispatch) => {
-  dispatch({ type: "DELETE_COMMUNITY_REQUEST" });
-
+export const deleteCommunity = async (id, userId) => {
   try {
     const res = await api
       .setAuthHeaders()
       .delete(`/api/community/${id}?userId=${userId}`);
-    dispatch({
-      type: "DELETE_COMMUNITY_SUCCESS",
-      payload: res.data.responseData,
-    });
-    alert("deleted");
+    return res.data.responseData;
   } catch (error) {
-    dispatch({ type: "DELETE_COMMUNITY_FAILED", error: error });
+    console.log(error);
   }
 };
 

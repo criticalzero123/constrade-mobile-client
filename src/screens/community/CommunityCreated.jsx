@@ -13,7 +13,7 @@ export default function CommunityCreated() {
   const navigation = useNavigation();
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
-      <View className="flex-row my-5">
+      <View className="flex-row mt-5">
         <Text className=" font-semibold text-lg">CREATED COMMUNITIES </Text>
         {communityList && communityList.length !== 0 && (
           <Text className="ml-1 py-1 px-2 rounded-full bg-red-500 text-white">

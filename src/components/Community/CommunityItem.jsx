@@ -40,7 +40,7 @@ export default function CommunityItem({ details }) {
 
   return (
     <View
-      className="w-full bg-white rounded-xl shadow-2xl"
+      className="w-full bg-white rounded-xl shadow-2xl mt-5"
       style={{ height: height * 0.3 }}
     >
       <Image

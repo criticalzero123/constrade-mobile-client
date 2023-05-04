@@ -26,9 +26,7 @@ export default function CommunityEdit({ route }) {
     const res = await edit(info);
 
     if (res) {
-      navigation.dispatch(
-        StackActions.replace("CommunityDetail", { data: data.communityId })
-      );
+      navigation.dispatch(StackActions.replace("MyCommunity"));
     } else {
       alert("Something went wrong in updating the community.");
     }

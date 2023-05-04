@@ -8,10 +8,11 @@ import {
   joinCommunityById,
   reportCommunity,
 } from "../../../redux/actions/communityAction";
+import { StackActions, useNavigation } from "@react-navigation/native";
 
 export default function useCommunity(userId) {
   const dispatch = useDispatch();
-
+  const navigation = useNavigation();
   const { data: communityList } = useSelector(
     (state) => state.getMyCommunityReducer
   );
@@ -22,8 +23,16 @@ export default function useCommunity(userId) {
     dispatch(getMyCommunity(userId));
   }, []);
 
-  const deleteCommunityById = (id, userId) => {
-    dispatch(deleteCommunity(id, userId));
+  const deleteCommunityById = async (id, userId) => {
+    const res = await deleteCommunity(id, userId);
+    if (res) {
+      alert("Successfully deleted!");
+      navigation.dispatch(
+        StackActions.replace("Menu", { screen: "Community" })
+      );
+    } else {
+      alert("Something went wrong in deleting community!");
+    }
   };
 
   const reportCommunityUser = (info) => {
