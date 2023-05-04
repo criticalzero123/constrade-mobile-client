@@ -22,7 +22,6 @@ import {
 import {
   getProductByUserReducer,
   getProductByIdReducer,
-  deleteProductByIdReducer,
   getFavoriteByUserIdReducer,
 } from "./reducers/productReducer";
 import { getMessagesByUserIdsReducer } from "./reducers/userMessageReducer";
@@ -48,7 +47,6 @@ const finalReducer = combineReducers({
   getProductByIdReducer,
   getProductMessagesReducer,
   getProductChatByUserIdReducer,
-  deleteProductByIdReducer,
   getFavoriteByUserIdReducer,
   getMyCommunityReducer,
   getCommunityByIdReducer,

@@ -7,11 +7,10 @@ import {
   Text,
   Pressable,
 } from "react-native";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Header from "../../components/sign-in/SignInHeader";
 import PasswordValidatedInput from "../../components/CustomTextInput/PasswordValidatedInput";
 import { emailAndPasswordRegister } from "../../../redux/actions/authActions";
-import { useDispatch, useSelector } from "react-redux";
 import { StackActions, useNavigation } from "@react-navigation/native";
 
 import { createWithEmailAndPassword } from "../../../firebase/firebaseAuth";
@@ -23,8 +22,6 @@ export default function SignUpPassword({ route }) {
   const { value } = route.params;
   const image =
     "https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80";
-
-  const [result, setResult] = useState();
 
   const onSubmit = async () => {
     setOnLoading(true);
@@ -62,12 +59,6 @@ export default function SignUpPassword({ route }) {
       console.log(error.code, error.message);
     }
   };
-
-  // useEffect(() => {
-  //   if (result === undefined) return;
-  //   console.log(result);
-
-  // }, [result]);
 
   return (
     <SafeAreaView style={styles.container}>

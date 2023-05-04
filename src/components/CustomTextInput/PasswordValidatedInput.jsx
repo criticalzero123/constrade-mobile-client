@@ -22,8 +22,8 @@ export default function PasswordValidatedInput({
   loading,
   forgotPassword = false,
 }) {
-  const valid = passwordValidator.validate(password) ? true : false;
   const [visible, setVisible] = useState(false);
+  const valid = passwordValidator.validate(password) ? true : false;
 
   const meterValue = passwordMeterChecker(password);
   const meterColor = passwordMeterColor(meterValue);

@@ -56,18 +56,13 @@ export const getProductById = (productId, userId) => async (dispatch) => {
   }
 };
 
-export const deleteProductById = (productId) => async (dispatch) => {
-  dispatch({ type: "DELETE_PRODUCT_BY_ID_REQUEST" });
-
+export const deleteProductById = async (productId) => {
   try {
     const res = await api.setAuthHeaders().delete(`/api/products/${productId}`);
 
-    dispatch({
-      type: "DELETE_PRODUCT_BY_ID_SUCCESS",
-      payload: res.data.responseData,
-    });
+    return res.data.responseData;
   } catch (error) {
-    dispatch({ type: "DELETE_PRODUCT_BY_ID_FAILED", error: error });
+    console.log(error);
   }
 };
 

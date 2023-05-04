@@ -26,7 +26,7 @@ export default function ProductDetails({ route }) {
       </ContainerSafeView>
     );
 
-  if (data) {
+  if (data && user) {
     return (
       <ContainerSafeView>
         <HeaderArrow headerName="Item details" />

@@ -73,32 +73,6 @@ export const getFavoriteByUserIdReducer = (state = {}, action) => {
   }
 };
 
-export const deleteProductByIdReducer = (state = {}, action) => {
-  switch (action.type) {
-    case "DELETE_PRODUCT_BY_ID_REQUEST":
-      return {
-        ...state,
-        loading: true,
-      };
-    case "DELETE_PRODUCT_BY_ID_SUCCESS":
-      return {
-        loading: false,
-        data: action.payload,
-      };
-    case "DELETE_PRODUCT_BY_ID_FAILED":
-      return {
-        loading: false,
-        error: action.error,
-      };
-
-    case "DELETE_PRODUCT_BY_ID_LEAVE":
-      return {};
-
-    default:
-      return { ...state };
-  }
-};
-
 export const reportProductReducer = (state = {}, action) => {
   switch (action.type) {
     case "REPORT_PRODUCT_REQUEST":

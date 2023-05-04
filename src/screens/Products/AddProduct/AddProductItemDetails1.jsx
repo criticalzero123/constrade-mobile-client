@@ -288,7 +288,11 @@ export default function AddProductItemDetails1({ route }) {
             >
               <View>
                 <Text>{condition.title}</Text>
-                <Text className="text-gray-400">{condition.description}</Text>
+                <Text className="text-gray-400">
+                  {isGenerated
+                    ? condition.descriptionGenerated
+                    : condition.description}
+                </Text>
               </View>
               <RadioButton value={condition.id} />
             </View>

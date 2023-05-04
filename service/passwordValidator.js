@@ -1,5 +1,3 @@
-import { MD3Colors } from "react-native-paper";
-
 var passwordValidator = require("password-validator");
 var schema = new passwordValidator();
 schema
