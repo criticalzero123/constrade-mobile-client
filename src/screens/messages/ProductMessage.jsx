@@ -101,7 +101,7 @@ export default function ProductMessage({ route }) {
       return prevIndex + 1;
     });
   };
-  console.log(details.name);
+
   return (
     <ContainerSafeView horizontalSpace={false}>
       {currentUser !== undefined && (
