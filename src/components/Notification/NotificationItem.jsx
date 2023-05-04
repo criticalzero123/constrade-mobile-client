@@ -15,6 +15,7 @@ export default function NotificationItem({ item }) {
   const handlePress = () => {
     switch (item.notificationType) {
       case "follow":
+      case "review":
         navigation.navigate("Menu", {
           screen: "User",
           params: { screen: "OtherUserProfile", params: { userId: item.toId } },

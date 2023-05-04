@@ -56,7 +56,7 @@ export default function UserProfileEdit({ route }) {
       ...data.person,
       firstName: firstName === "" ? data.person.firstName : firstName,
       lastName: lastName === "" ? data.person.lastName : lastName,
-      birthdate: birthdate !== null ? Date(birthdate) : null,
+      birthdate: birthdate !== null ? new Date(birthdate) : null,
       gender: gender,
     };
 
