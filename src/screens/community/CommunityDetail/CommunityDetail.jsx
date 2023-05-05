@@ -46,7 +46,18 @@ export default function CommunityDetail({ route }) {
     Alert.alert("", "Please Choose your Action", [
       {
         text: "Delete",
-        onPress: () => deleteCommunityById(id, user.userId),
+        onPress: () => {
+          Alert.alert("Are you sure?", "This is not reversible!", [
+            {
+              text: "Yes",
+              onPress: () => deleteCommunityById(id, user.userId),
+            },
+            {
+              text: "Cancel",
+              style: "cancel",
+            },
+          ]);
+        },
       },
       {
         text: "Update",

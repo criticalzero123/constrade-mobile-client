@@ -1,5 +1,6 @@
 import {
   ActivityIndicator,
+  Alert,
   Image,
   TextInput,
   useWindowDimensions,
@@ -89,14 +90,25 @@ export default function CommunityComments(props) {
   };
 
   const onDeleteComment = async (postId, commentId) => {
-    const flag = await deleteComment(postId, commentId);
-    if (flag) {
-      const newData = commentList.filter(
-        (_cm) => _cm.comment.communityPostCommentId !== commentId
-      );
+    Alert.alert("Are you sure?", "This is not reversible!", [
+      {
+        text: "Yes",
+        onPress: async () => {
+          const flag = await deleteComment(postId, commentId);
+          if (flag) {
+            const newData = commentList.filter(
+              (_cm) => _cm.comment.communityPostCommentId !== commentId
+            );
 
-      setCommentList(newData);
-    } else alert("Something went wrong in deleting the comment");
+            setCommentList(newData);
+          } else alert("Something went wrong in deleting the comment");
+        },
+      },
+      {
+        text: "Cancel",
+        style: "cancel",
+      },
+    ]);
   };
 
   return (

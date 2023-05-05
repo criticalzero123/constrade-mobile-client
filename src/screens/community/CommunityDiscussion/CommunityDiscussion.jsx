@@ -1,5 +1,6 @@
 import {
   ActivityIndicator,
+  Alert,
   Image,
   Pressable,
   ScrollView,
@@ -279,9 +280,25 @@ export default function CommunityDiscussion() {
                           {(user.userId === currentMember.userId ||
                             currentMember.role === CommunityRole.Owner) && (
                             <Pressable
-                              onPress={() =>
-                                onDeletePost(post.communityPost.communityPostId)
-                              }
+                              onPress={() => {
+                                Alert.alert(
+                                  "Are you sure?",
+                                  "This is not reversible!",
+                                  [
+                                    {
+                                      text: "Yes",
+                                      onPress: () =>
+                                        onDeletePost(
+                                          post.communityPost.communityPostId
+                                        ),
+                                    },
+                                    {
+                                      text: "Cancel",
+                                      style: "cancel",
+                                    },
+                                  ]
+                                );
+                              }}
                             >
                               <Text className="text-red-500">Delete</Text>
                             </Pressable>
