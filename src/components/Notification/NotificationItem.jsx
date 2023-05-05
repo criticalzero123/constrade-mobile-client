@@ -8,11 +8,17 @@ import {
 } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
+import { markAsRead } from "../../../redux/actions/notificationAction";
 
 export default function NotificationItem({ item }) {
   const { width, height } = useWindowDimensions();
   const navigation = useNavigation();
-  const handlePress = () => {
+
+  const handlePress = async () => {
+    if (item.status === "unread") {
+      await markAsRead(item.userNotificationId);
+    }
+
     switch (item.notificationType) {
       case "follow":
       case "review":
@@ -55,12 +61,17 @@ export default function NotificationItem({ item }) {
         />
       )}
       <View className="ml-4">
-        <Text className="text-[#011B33] font-semibold text-base">
+        <Text
+          className={`text-[#011B33]  text-base ${
+            item.status === "unread" && "font-semibold"
+          }`}
+        >
           {item.notificationMessage}
         </Text>
         <Text className="text-[#627282] mt-1">
           {new Date(item.notificationDate).toLocaleDateString()}{" "}
-          {new Date(item.notificationDate).toLocaleTimeString()}
+          {new Date(item.notificationDate).toLocaleTimeString()} •
+          <Text className="text-gray-400"> {item.status}</Text>
         </Text>
       </View>
     </Pressable>

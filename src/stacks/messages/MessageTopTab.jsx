@@ -1,15 +1,39 @@
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import { Platform, Text, StatusBar, View, Pressable } from "react-native";
+import {
+  Platform,
+  Text,
+  StatusBar,
+  View,
+  Pressable,
+  ActivityIndicator,
+} from "react-native";
 import MessagesListPersonal from "../../screens/messages/MessagesListPersonal";
 import MessagesListProduct from "../../screens/messages/MessagesListProduct";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import ContainerSafeView from "../../components/CustomViews/ContainerSafeView";
+import { useState } from "react";
+import { useEffect } from "react";
+import useGetCurrentUser from "../../hooks/useGetCurrentUser";
+import { getNotificationCount } from "../../../redux/actions/notificationAction";
 
 const Tab = createMaterialTopTabNavigator();
 
 export default function MessageTopTab() {
   const navigation = useNavigation();
+  const [countNotif, setCountNotif] = useState();
+  const { user } = useGetCurrentUser();
+
+  useEffect(() => {
+    const fetch = async () => {
+      const res = await getNotificationCount(user.userId);
+
+      setCountNotif(res);
+    };
+
+    fetch();
+  }, []);
+
   return (
     <ContainerSafeView horizontalSpace={false}>
       <View
@@ -20,9 +44,21 @@ export default function MessageTopTab() {
       >
         <View className="flex-row justify-between items-center mt-2">
           <Text className="text-lg font-bold">Messages</Text>
-          <Pressable onPress={() => navigation.navigate("Notification")}>
-            <Ionicons name="notifications-outline" size={22} color="black" />
-          </Pressable>
+          {countNotif === undefined ? (
+            <ActivityIndicator />
+          ) : (
+            <Pressable
+              onPress={() => navigation.navigate("Notification")}
+              className="relative"
+            >
+              <Ionicons name="notifications-outline" size={24} color="black" />
+              {countNotif !== 0 && (
+                <Text className="absolute right-0 top-0 px-1 rounded-full  text-xs text-white bg-[#CC481F] font-semibold">
+                  {countNotif}
+                </Text>
+              )}
+            </Pressable>
+          )}
         </View>
       </View>
 
