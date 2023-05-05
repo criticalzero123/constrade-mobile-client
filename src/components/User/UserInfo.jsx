@@ -164,13 +164,23 @@ export default function UserInfo({
 
           <View className="w-full flex-row justify-between p-5 rounded-md bg-[#508CC7]">
             <View className="items-center">
-              <Text className="font-bold text-xl text-white">
-                {follow === undefined ? (
-                  <ActivityIndicator size="small" />
-                ) : (
-                  follow && follow.followedCount
-                )}
-              </Text>
+              <Pressable
+                onPress={() => {
+                  if (follow && follow.followedCount !== 0) {
+                    navigation.navigate("ShowFollowingUsers", {
+                      userId: data.user.userId,
+                    });
+                  }
+                }}
+              >
+                <Text className="font-bold text-xl text-white">
+                  {follow === undefined ? (
+                    <ActivityIndicator size="small" />
+                  ) : (
+                    follow && follow.followedCount
+                  )}
+                </Text>
+              </Pressable>
               <Text className="mt-3 opacity-75 text-white">Following</Text>
             </View>
             <View className="border-l border-[#F7FAFC26]"></View>
@@ -189,13 +199,23 @@ export default function UserInfo({
             </View>
             <View className="border-l border-[#F7FAFC26]"></View>
             <View className="items-center">
-              <Text className="font-bold text-xl text-white">
-                {follow === undefined ? (
-                  <ActivityIndicator size="small" />
-                ) : (
-                  follow && follow.followCount
-                )}
-              </Text>
+              <Pressable
+                onPress={() => {
+                  if (follow && follow.followCount !== 0) {
+                    navigation.navigate("ShowFollowerUsers", {
+                      userId: data.user.userId,
+                    });
+                  }
+                }}
+              >
+                <Text className="font-bold text-xl text-white">
+                  {follow === undefined ? (
+                    <ActivityIndicator size="small" />
+                  ) : (
+                    follow && follow.followCount
+                  )}
+                </Text>
+              </Pressable>
               <Text className="mt-3 opacity-75 text-white">Followers</Text>
             </View>
           </View>

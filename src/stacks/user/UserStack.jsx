@@ -17,6 +17,8 @@ import HelpCenterStack from "../help-center/HelpCenterStack";
 import WalletHistory from "../../screens/wallet/WalletHistory";
 import WalletReload from "../../screens/wallet/WalletReload";
 import AddCountPost from "../../screens/user/AddCountPost";
+import ShowFollowerUsers from "../../screens/user/ShowFollowerUsers";
+import ShowFollowingUsers from "../../screens/user/ShowFollowingUsers";
 
 const Stack = createNativeStackNavigator();
 
@@ -32,6 +34,8 @@ export default function UserStack() {
       <Stack.Screen component={ListingScreen} name="MyListing" />
       <Stack.Screen component={WishList} name="WishList" />
       <Stack.Screen component={ReviewsAndFeedbacks} name="Reviews" />
+      <Stack.Screen component={ShowFollowerUsers} name="ShowFollowerUsers" />
+      <Stack.Screen component={ShowFollowingUsers} name="ShowFollowingUsers" />
       <Stack.Screen component={UserProfileEdit} name="UserProfileEdit" />
       <Stack.Screen component={WalletScreen} name="Wallet" />
       <Stack.Screen component={WalletHistory} name="WalletHistory" />
