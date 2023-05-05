@@ -37,7 +37,7 @@ export default function UserInfo({
 }) {
   const navigation = useNavigation();
 
-  if (data.user === undefined) return;
+  if (data === undefined || data.user === undefined) return;
 
   const [follow] = useUserFollowAndFollowers(data && data.user.userId);
   const [review] = useUserReview(data && data.user.userId);

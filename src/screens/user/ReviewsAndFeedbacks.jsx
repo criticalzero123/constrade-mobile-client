@@ -6,6 +6,7 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 import ReviewsByYou from "../../components/Reviews/ReviewsByYou";
 import ReviewsByOthers from "../../components/Reviews/ReviewsByOthers";
 import useGetCurrentUser from "../../hooks/useGetCurrentUser";
+import ReviewsByYouMade from "../../components/Reviews/ReviewsByYouMade";
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -29,12 +30,12 @@ export default function ReviewsAndFeedbacks({ route }) {
           tabBarIndicatorStyle: {
             backgroundColor: "rgba(204,72,31,0.65)",
             height: "4%",
-            width: user.userId === otherUser.userId ? "100%" : "40%",
+            width: "40%",
             marginLeft: 20,
           },
         }}
       >
-        {user.userId !== otherUser.userId && (
+        {user.userId !== otherUser.userId ? (
           <Tab.Screen
             name="ReviewsByYou"
             component={ReviewsByYou}
@@ -45,6 +46,17 @@ export default function ReviewsAndFeedbacks({ route }) {
               },
             }}
             initialParams={{ otherUser: otherUser, user: user }}
+          />
+        ) : (
+          <Tab.Screen
+            name="ReviewsByYouMade"
+            component={ReviewsByYouMade}
+            options={{
+              tabBarLabel: "Reviews you made",
+              tabBarLabelStyle: {
+                textTransform: "capitalize",
+              },
+            }}
           />
         )}
         <Tab.Screen

@@ -43,6 +43,17 @@ export const getMyReviewsUser = (otherUserId, userId) => async (dispatch) => {
   }
 };
 
+export const getMyReviewsMadeUser = async (userId) => {
+  try {
+    const res = await api
+      .setAuthHeaders()
+      .get(`/api/review/my?userId=${userId}`);
+    return res.data.responseData;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 export const getNotRated = (userId, visitorId) => async (dispatch) => {
   dispatch({ type: "GET_NOT_RATED_REQUEST" });
 

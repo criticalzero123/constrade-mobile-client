@@ -10,7 +10,7 @@ import React from "react";
 import { getStar } from "../../../service/reviewService";
 import { useNavigation } from "@react-navigation/native";
 
-export default function ReviewItem({ review }) {
+export default function ReviewItem({ review, to = false }) {
   const { width, height } = useWindowDimensions();
   const navigation = useNavigation();
   return (
@@ -33,10 +33,17 @@ export default function ReviewItem({ review }) {
       </View>
       <View>
         <Text className="mb-4">{getStar(review.rate)}</Text>
-        <Text className="text-gray-500 mb-2">
-          from{" "}
-          <Text className="text-black font-semibold">{review.userName}</Text>
-        </Text>
+        {to ? (
+          <Text className="text-gray-500 mb-2">
+            to{" "}
+            <Text className="text-black font-semibold">{review.userName}</Text>
+          </Text>
+        ) : (
+          <Text className="text-gray-500 mb-2">
+            from{" "}
+            <Text className="text-black font-semibold">{review.userName}</Text>
+          </Text>
+        )}
         <Text className="mb-2 text-gray-500">{review.description}</Text>
         <Text className="text-gray-500">
           {new Date(review.date).toLocaleDateString()}
