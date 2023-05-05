@@ -17,12 +17,14 @@ import { AntDesign } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { ActivityIndicator } from "react-native-paper";
 import { MaterialIcons } from "@expo/vector-icons";
+import { useDispatch } from "react-redux";
+import { getUserInfo } from "../../../redux/actions/userActions";
 export default function SubscriptionScreen() {
-  const { user } = useGetCurrentUser();
+  const { user, person } = useGetCurrentUser();
   const { subscribe, historyData, cancel, loading } = useSubscribe(user.userId);
   const navigation = useNavigation();
   const { height } = useWindowDimensions();
-
+  const dispatch = useDispatch();
   const onPressCancel = () => {
     Alert.alert(
       "Info",
@@ -56,6 +58,11 @@ export default function SubscriptionScreen() {
     const res = await subscribe(user.userId);
 
     if (res) {
+      const newUserInfo = {
+        user: { ...user, countPost: user.countPost + 10 },
+        person: { ...person },
+      };
+      dispatch(getUserInfo(newUserInfo));
       Alert.alert("", "Subscribe successfully!", [
         {
           text: "OK",
