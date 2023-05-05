@@ -13,9 +13,16 @@ import { Modal, Portal, Provider } from "react-native-paper";
 import KeyboardHideView from "../../../components/CustomViews/KeyboardHideView";
 import { usePostProduct } from "../../../hooks/usePostProduct";
 import Checkbox from "expo-checkbox";
+import useGetCurrentUser from "../../../hooks/useGetCurrentUser";
+import { useDispatch } from "react-redux";
+import { getUserInfo } from "../../../../redux/actions/userActions";
 
 export default function AddProductDeliveryDetails({ route }) {
   const { data, imageList } = route.params;
+
+  const { user, person } = useGetCurrentUser();
+  const dispatch = useDispatch();
+
   const [location, setLocation] = useState("");
   const [isDelivery, setIsDelivery] = useState(false);
   const [isMeetup, setIsMeetup] = useState(false);
@@ -47,6 +54,12 @@ export default function AddProductDeliveryDetails({ route }) {
     const _result = await onListItem(imageList, productDetails);
 
     if (Number.isInteger(_result)) {
+      const newUserInfo = {
+        user: { ...user, countPost: user.countPost - 1 },
+        person: { ...person },
+      };
+      dispatch(getUserInfo(newUserInfo));
+
       navigation.dispatch(
         StackActions.replace("ProductDetails", {
           productId: parseInt(_result),
