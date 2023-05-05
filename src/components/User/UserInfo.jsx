@@ -29,8 +29,16 @@ import {
   updatePersonInfo,
 } from "../../../redux/actions/userActions";
 
-export default function UserInfo({ headerName, myProfile = true, data }) {
+export default function UserInfo({
+  headerName,
+  myProfile = true,
+  data,
+  userType = "",
+}) {
   const navigation = useNavigation();
+
+  if (data.user === undefined) return;
+
   const [follow] = useUserFollowAndFollowers(data && data.user.userId);
   const [review] = useUserReview(data && data.user.userId);
   const { height, width } = useWindowDimensions();
@@ -42,8 +50,6 @@ export default function UserInfo({ headerName, myProfile = true, data }) {
   const [saveVisible, setSaveVisible] = useState(false);
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
-
-  if (data === undefined) return;
 
   const onSaveBackgroundImage = async () => {
     setLoading(true);
@@ -146,7 +152,8 @@ export default function UserInfo({ headerName, myProfile = true, data }) {
               />
             </View>
             <Text className="text-white font-semibold px-4 py-1 rounded-2xl bg-[#FF6838] absolute bottom-0 uppercase">
-              {data.user.userType}
+              {userType === "" && myProfile ? <ActivityIndicator /> : userType}
+              {!myProfile && data.user.userType}
             </Text>
           </View>
 
