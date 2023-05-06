@@ -26,9 +26,9 @@ import useGetCurrentUser from "../../hooks/useGetCurrentUser";
 
 export default function UserProfile() {
   const [onSignOut] = useSignOutUser();
-  const [userType, setUserType] = useState();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.userInfoReducer);
+  const [userType, setUserType] = useState();
 
   useEffect(() => {
     if (user === undefined) return;

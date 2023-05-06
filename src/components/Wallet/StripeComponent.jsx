@@ -31,6 +31,11 @@ export default function StripeComponent({ currentWalletId }) {
       return;
     }
 
+    if (amount < 100) {
+      alert("Please enter more than 100");
+      return;
+    }
+
     const billingDetails = {
       email: user.email,
     };

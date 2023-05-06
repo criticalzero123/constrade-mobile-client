@@ -6,7 +6,7 @@ export const getFollowAndFollowersUser = (userId) => async (dispatch) => {
 
     dispatch({ type: "GET_FOLLOW_COUNT", payload: res.data.responseData });
   } catch (err) {
-    console.error(err);
+    console.log(err);
   }
 };
 
@@ -19,7 +19,7 @@ export const followUser = async (otherUserId, currentUserId) => {
 
     return res.data.responseData;
   } catch (err) {
-    console.error(err);
+    console.log(err);
   }
 };
 
@@ -31,7 +31,7 @@ export const showFollowUser = async (currentUserId) => {
 
     return res.data.responseData;
   } catch (err) {
-    console.error(err);
+    console.log(err);
   }
 };
 
@@ -43,7 +43,7 @@ export const showFollowerUser = async (currentUserId) => {
 
     return res.data.responseData;
   } catch (err) {
-    console.error(err);
+    console.log(err);
   }
 };
 
@@ -57,6 +57,6 @@ export const isFollowUser = async (otherUserId, currentUserId) => {
 
     return res.data.responseData;
   } catch (err) {
-    console.error(err);
+    console.log(err);
   }
 };

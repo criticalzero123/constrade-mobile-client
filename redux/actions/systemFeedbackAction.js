@@ -6,7 +6,9 @@ export const submitSystemFeedback = async (info) => {
       .setAuthHeaders()
       .post("/api/systemfeedback/submit", info);
 
-    alert(res.data.responseData);
+    if (res.data.responseData) {
+      alert("Submitted. Thank you for your submission.");
+    }
   } catch (error) {
     console.log(error);
   }

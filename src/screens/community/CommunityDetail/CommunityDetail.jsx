@@ -30,6 +30,7 @@ import { useHideBottomTab } from "../../../hooks/useHideBottomTab";
 import { useNavigation } from "@react-navigation/native";
 import ContainerSafeView from "../../../components/CustomViews/ContainerSafeView";
 import { ActivityIndicator } from "react-native-paper";
+import { useState } from "react";
 const Tab = createMaterialTopTabNavigator();
 
 export default function CommunityDetail({ route }) {
@@ -41,6 +42,7 @@ export default function CommunityDetail({ route }) {
   const { user } = useGetCurrentUser();
   const navigation = useNavigation();
   const { width, height } = useWindowDimensions();
+  const [loadingJoin, setLoadingJoin] = useState(false);
 
   const onShowAction = () => {
     Alert.alert("", "Please Choose your Action", [
@@ -83,6 +85,7 @@ export default function CommunityDetail({ route }) {
   };
 
   const handleJoin = async () => {
+    setLoadingJoin(true);
     const res = await join(id, user.userId);
     const resLower = res.toString().toLowerCase();
 
@@ -93,6 +96,8 @@ export default function CommunityDetail({ route }) {
     } else {
       alert("Rejected");
     }
+
+    setLoadingJoin(false);
   };
 
   if (data === undefined)
@@ -202,7 +207,9 @@ export default function CommunityDetail({ route }) {
                   className="w-full items-center p-4 bg-[#D14519] rounded-lg"
                   onPress={handleJoin}
                 >
-                  <Text className="text-white font-semibold">Join group</Text>
+                  <Text className="text-white font-semibold">
+                    {loadingJoin ? <ActivityIndicator /> : "Join group"}
+                  </Text>
                 </Pressable>
                 <View className="border-b border-gray-300 mt-8 mb-4" />
                 <View>
