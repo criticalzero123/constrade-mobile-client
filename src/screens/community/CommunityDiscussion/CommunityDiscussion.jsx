@@ -147,10 +147,20 @@ export default function CommunityDiscussion() {
                           }}
                         />
                         <View>
-                          <Text className="capitalize font-semibold">
+                          <Text className="font-semibold">
                             {person.firstName} {person.lastName}
+                            {!post.isMember && (
+                              <Text className="text-gray-400">
+                                (not-member)
+                              </Text>
+                            )}
                           </Text>
-                          <Text>Date</Text>
+
+                          <Text className="text-gray-400">
+                            {new Date(
+                              post.communityPost.createdDate
+                            ).toLocaleDateString()}
+                          </Text>
                         </View>
                       </View>
                     </View>
@@ -249,12 +259,11 @@ export default function CommunityDiscussion() {
                             />
                           </Pressable>
                           <View>
-                            <Text className="capitalize font-semibold">
-                              {person.firstName} {person.lastName}{" "}
+                            <Text className="font-semibold">
+                              {person.firstName} {person.lastName}
                               {!post.isMember && (
                                 <Text className="text-gray-400">
-                                  {" "}
-                                  (Removed)
+                                  (not-member)
                                 </Text>
                               )}
                             </Text>

@@ -21,7 +21,7 @@ export default function useCommunityMembers(communityId) {
     };
 
     fetch();
-  }, [communityId]);
+  }, []);
 
   const removeMember = async (memberId) => {
     const res = await removeCommunityMemberById(communityId, memberId);

@@ -12,7 +12,6 @@ import {
 } from "react-native";
 import React from "react";
 import { Entypo } from "@expo/vector-icons";
-
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import useGetCommunity from "../../../hooks/community/useGetCommunity";
 import HeaderArrow from "../../../components/HeaderArrow/HeaderArrow";
@@ -27,10 +26,11 @@ import { ReportEnum } from "../../../../service/enums";
 import CommunityDiscussion from "../CommunityDiscussion/CommunityDiscussion";
 import CommunityMember from "../CommunityMember/CommunityMember";
 import { useHideBottomTab } from "../../../hooks/useHideBottomTab";
-import { useNavigation } from "@react-navigation/native";
+import { StackActions, useNavigation } from "@react-navigation/native";
 import ContainerSafeView from "../../../components/CustomViews/ContainerSafeView";
 import { ActivityIndicator } from "react-native-paper";
 import { useState } from "react";
+import useCommunityMembers from "../../../hooks/community/useCommunityMembers";
 const Tab = createMaterialTopTabNavigator();
 
 export default function CommunityDetail({ route }) {
@@ -43,6 +43,7 @@ export default function CommunityDetail({ route }) {
   const navigation = useNavigation();
   const { width, height } = useWindowDimensions();
   const [loadingJoin, setLoadingJoin] = useState(false);
+  const [, remove] = useCommunityMembers(id);
 
   const onShowAction = () => {
     Alert.alert("", "Please Choose your Action", [
@@ -82,6 +83,27 @@ export default function CommunityDetail({ route }) {
       dateSubmitted: new Date(),
     };
     reportCommunityUser(info);
+  };
+
+  const handleLeave = async () => {
+    if (data.owner.user.userId !== currentMember.userId) {
+      Alert.alert("Are you sure?", "You want to leave in community?", [
+        {
+          text: "Yes",
+          onPress: async () => {
+            const res = await remove(currentMember.communityMemberId);
+
+            navigation.dispatch(
+              StackActions.replace("Menu", { screen: "Community" })
+            );
+          },
+        },
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+      ]);
+    }
   };
 
   const handleJoin = async () => {
@@ -138,13 +160,22 @@ export default function CommunityDetail({ route }) {
           />
           {currentMember ? (
             <View style={{ paddingHorizontal: 20 }} className="mt-5">
-              <Text className="font-semibold text-lg">
-                {data.community.name}
-              </Text>
+              <View className="flex-row justify-between">
+                <Text className="font-semibold text-lg">
+                  {data.community.name}
+                </Text>
+                <Pressable
+                  className="flex-row items-center  gap-x-1"
+                  onPress={handleLeave}
+                >
+                  <MaterialIcons name="logout" size={22} color="red" />
+                  <Text className="text-red-600">Leave</Text>
+                </Pressable>
+              </View>
 
-              <View className="flex-row items-center mt-4">
+              <View className="flex-row items-center mt-4 gap-x-2">
                 <Octicons name="check" size={20} color="green" />
-                <Text className="font-bold ml-2 text-green-700">Joined</Text>
+                <Text>Joined</Text>
               </View>
               <View className="flex-row items-center mt-4">
                 <MaterialCommunityIcons
