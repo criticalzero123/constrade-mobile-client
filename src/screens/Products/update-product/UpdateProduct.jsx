@@ -62,7 +62,7 @@ export default function UpdateProduct({ route }) {
   const onRemove = (text) => {
     const filtered = tempPlatformList.filter((_p) => _p !== text);
 
-    setPlatformList(filtered);
+    setTempPlatformList(filtered);
   };
 
   const onRemoveGenre = (text) => {
@@ -85,16 +85,6 @@ export default function UpdateProduct({ route }) {
     setSending(true);
     if (description.trim() === "") {
       alert("Please input description");
-      return;
-    }
-
-    if (modelNumber.trim() === "") {
-      alert("Please input model number");
-      return;
-    }
-
-    if (serialNumber.trim() === "") {
-      alert("Please input serial number");
       return;
     }
 
@@ -340,6 +330,7 @@ export default function UpdateProduct({ route }) {
           className="p-3  border w-full my-2 border-gray-300"
           style={{ borderRadius: 5 }}
           onSubmitEditing={handleSubmit}
+          autoCapitalize="none"
         />
         <ScrollView
           style={{ height: height * 0.2 }}
@@ -381,6 +372,7 @@ export default function UpdateProduct({ route }) {
           className="p-3  border w-full my-2 border-gray-300"
           style={{ borderRadius: 5 }}
           onSubmitEditing={handleSubmitGenre}
+          autoCapitalize="none"
         />
         <ScrollView
           style={{ height: height * 0.2 }}

@@ -28,6 +28,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import BottomModal from "../../components/modal/BottomModal";
 import { useHideBottomTab } from "../../hooks/useHideBottomTab";
+import { getMatchProductSearch } from "../../../redux/actions/homeActions";
 
 export default function Discover() {
   useHideBottomTab(false);
@@ -86,9 +87,19 @@ export default function Discover() {
                 onChangeText={setSearch}
                 className={`${search.trim() === "" && "ml-2 "} text-base w-3/4`}
                 placeholder="Find console games"
-                onSubmitEditing={() => {
+                autoCapitalize="none"
+                onSubmitEditing={async () => {
+                  const res = await getMatchProductSearch(search);
                   setSearch("");
-                  navigation.navigate("SearchResult", { query: search });
+                  if (res === "platform") {
+                    navigation.navigate("SearchResultPlatform", {
+                      name: search,
+                    });
+                  } else if (res === "genre") {
+                    navigation.navigate("SearchResultGenre", { name: search });
+                  } else {
+                    navigation.navigate("SearchResult", { query: search });
+                  }
                 }}
               />
               {search.trim() === "" && (

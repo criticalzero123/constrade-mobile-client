@@ -91,3 +91,15 @@ export const getCommunity = async (userId) => {
     console.error(error);
   }
 };
+
+export const getMatchProductSearch = async (text) => {
+  try {
+    const res = await api
+      .setAuthHeaders()
+      .get(`/api/products/search/match?text=${text}`);
+
+    return res.data.responseData;
+  } catch (error) {
+    console.error(error);
+  }
+};
