@@ -28,6 +28,13 @@ export default function NotificationItem({ item }) {
         });
         break;
 
+      case "verification":
+        navigation.navigate("Menu", {
+          screen: "User",
+          params: { screen: "UserProfile" },
+        });
+        break;
+
       case "transaction":
         navigation.navigate("TransactionDetails", {
           id: parseInt(item.toId),

@@ -41,7 +41,6 @@ export default function PersonalMessage({ route }) {
   );
 
   const scrollDown = useRef(null);
-
   const onClickScrollDown = () => {
     scrollDown.current.scrollToEnd({ animated: true });
   };
