@@ -28,11 +28,13 @@ export default function StripeComponent({ currentWalletId }) {
     setLoadingPayment(true);
     if (!cardDetails?.complete) {
       alert("Please enter card details");
+      setLoadingPayment(false);
       return;
     }
 
     if (amount < 100) {
       alert("Please enter more than 100");
+      setLoadingPayment(false);
       return;
     }
 

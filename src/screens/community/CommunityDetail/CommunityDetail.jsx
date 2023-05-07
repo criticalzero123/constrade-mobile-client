@@ -107,18 +107,21 @@ export default function CommunityDetail({ route }) {
   };
 
   const handleJoin = async () => {
-    setLoadingJoin(true);
-    const res = await join(id, user.userId);
-    const resLower = res.toString().toLowerCase();
+    if (user.userType !== "semi-verified") {
+      setLoadingJoin(true);
+      const res = await join(id, user.userId);
+      const resLower = res.toString().toLowerCase();
 
-    if (resLower === "pending") {
-      alert("Pending now.");
-    } else if (resLower === "approved") {
-      refresh();
+      if (resLower === "pending") {
+        alert("Pending now.");
+      } else if (resLower === "approved") {
+        refresh();
+      } else {
+        alert("Rejected");
+      }
     } else {
-      alert("Rejected");
+      alert("Please verify your account first!");
     }
-
     setLoadingJoin(false);
   };
 
@@ -158,7 +161,7 @@ export default function CommunityDetail({ route }) {
             source={{ uri: data.community.imageUrl }}
             style={{ width: width, height: height * 0.15 }}
           />
-          {currentMember ? (
+          {currentMember && data.owner.user.userId !== currentMember.userId ? (
             <View style={{ paddingHorizontal: 20 }} className="mt-5">
               <View className="flex-row justify-between">
                 <Text className="font-semibold text-lg">
