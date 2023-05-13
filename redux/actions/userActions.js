@@ -70,6 +70,18 @@ export const getUserType = async (userId) => {
   }
 };
 
+export const getUserStatistic = async (userId) => {
+  try {
+    const res = await api
+      .setAuthHeaders()
+      .get(`api/users/${userId}/transaction/statistic`);
+
+    return res.data.responseData;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const getHasRequest = async (userId) => {
   try {
     const res = await api.setAuthHeaders().get(`api/verification/${userId}`);

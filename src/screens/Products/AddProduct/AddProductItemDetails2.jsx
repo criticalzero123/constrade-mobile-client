@@ -130,6 +130,20 @@ export default function AddProductItemDetails2({ route }) {
             </View>
           </View>
           <View className="mb-4">
+            <View className="flex-row items-center justify-between">
+              <View className="flex-row">
+                <Entypo name="list" size={23} color="gray" />
+                <View className="ml-2">
+                  <Text className="font-semibold mb-1">e-Wallet</Text>
+                  <Text className="text-gray-400">
+                    I want to sell this item for money using wallet.
+                  </Text>
+                </View>
+              </View>
+              <RadioButton value="wallet" />
+            </View>
+          </View>
+          <View className="mb-4">
             <View className="flex-row items-center justify-between mb-2">
               <View className="flex-row">
                 <Entypo name="list" size={23} color="gray" />

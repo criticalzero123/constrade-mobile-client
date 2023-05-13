@@ -57,6 +57,11 @@ export default function PasswordValidatedInput({
         textContentType="password"
       />
       <View className="my-2"></View>
+      <Text className="text-gray-400">
+        Please input atleast 8 characters with a uppercase, lowercase letter and
+        a numbeer.
+      </Text>
+      <View className="my-4"></View>
       {meterValue !== 0 && (
         <View>
           <Text className={`mb-2 text-base`} style={{ color: meterColor }}>

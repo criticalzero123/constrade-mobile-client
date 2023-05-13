@@ -10,7 +10,7 @@ export default function useGetProductId(productId, userId) {
   const [isFavorite, setIsFavorite] = useState(false);
 
   useEffect(() => {
-    if (data === undefined) return;
+    if (data === undefined || userId === undefined) return;
     setIsFavorite(data.isFavorite);
   }, [data]);
 

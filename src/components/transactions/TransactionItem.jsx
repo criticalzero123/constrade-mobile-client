@@ -3,6 +3,7 @@ import {
   Pressable,
   StyleSheet,
   Text,
+  ToastAndroid,
   useWindowDimensions,
   View,
 } from "react-native";
@@ -21,9 +22,13 @@ export default function TransactionItem({ data, currentUserId }) {
     <Pressable
       className="px-4 py-2 flex-row items-center bg-gray-200 shadow-2xl mb-3"
       style={{ borderRadius: 10 }}
-      onPress={() =>
-        navigation.navigate("TransactionDetails", { id: data.productId })
-      }
+      onPress={() => {
+        if (data.preferTrade === "cash") {
+          navigation.navigate("TransactionDetails", { id: data.productId });
+        } else {
+          ToastAndroid.show("Not a cash transaction.", ToastAndroid.SHORT);
+        }
+      }}
     >
       <View className="mr-2">
         <Image

@@ -8,7 +8,7 @@ import { useNavigation } from "@react-navigation/native";
 import CommunityCard from "../../components/Home/CommunityCard";
 export default function CommunityJoined() {
   const { user } = useGetCurrentUser();
-  const [communities] = useCommunityJoined(user.userId);
+  const [communities] = useCommunityJoined(user && user.userId);
   const navigation = useNavigation();
   return (
     <View>

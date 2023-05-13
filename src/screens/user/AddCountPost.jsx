@@ -18,6 +18,8 @@ export default function AddCountPost() {
   const dispatch = useDispatch();
   const { user, person } = useGetCurrentUser();
 
+  if (user === undefined || person === undefined) return;
+
   const handleSubmit = async () => {
     setLoading(true);
     const res = await addCountPost(user.userId, counts);

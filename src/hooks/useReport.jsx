@@ -7,7 +7,8 @@ export default function useReport() {
         reportedBy: userId,
         idReported: id,
         reportType: reportType,
-        description: "Something dummy coming from function",
+        description:
+          "This report indicates they are breaking the terms and condition",
         dateSubmitted: new Date(),
       };
 

@@ -19,6 +19,7 @@ import WalletReload from "../../screens/wallet/WalletReload";
 import AddCountPost from "../../screens/user/AddCountPost";
 import ShowFollowerUsers from "../../screens/user/ShowFollowerUsers";
 import ShowFollowingUsers from "../../screens/user/ShowFollowingUsers";
+import UserStatistics from "../../screens/user/UserStatistics";
 
 const Stack = createNativeStackNavigator();
 
@@ -48,6 +49,7 @@ export default function UserStack() {
       <Stack.Screen component={AddReview} name="AddReview" />
       <Stack.Screen component={VerificationScreen} name="Verification" />
       <Stack.Screen component={AddCountPost} name="AddCountPost" />
+      <Stack.Screen component={UserStatistics} name="UserStatistics" />
     </Stack.Navigator>
   );
 }

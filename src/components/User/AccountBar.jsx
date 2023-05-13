@@ -39,6 +39,20 @@ export default function AccountBar({ data }) {
         title="Verify Account"
         onPress={() => navigation.navigate("Verification", { data: data })}
       />
+
+      <NavItem
+        iconNav={
+          <Ionicons
+            name="stats-chart-sharp"
+            size={24}
+            color="white"
+            style={{ opacity: 0.75 }}
+          />
+        }
+        title="Trade Statistics"
+        onPress={() => navigation.navigate("UserStatistics")}
+      />
+
       <NavItem
         style={{ opacity: 0.75 }}
         iconNav={

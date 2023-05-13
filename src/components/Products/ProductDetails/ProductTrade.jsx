@@ -13,6 +13,9 @@ export default function ProductTrade() {
         <View className="ml-4">
           <Text className="capitalize font-semibold text-gray-500 text-base">
             Cash
+            {data.product.preferTrade === "wallet" && (
+              <Text className="text-sm text-gray-400"> (e-Wallet)</Text>
+            )}
           </Text>
           <Text className="capitalize font-semibold text-base my-1">
             ₱ {data.product.cash}
@@ -56,7 +59,8 @@ export default function ProductTrade() {
 
   return (
     <View className="mt-3">
-      {data.product.preferTrade === "cash" && <CashComponent />}
+      {data.product.preferTrade === "cash" ||
+        (data.product.preferTrade === "wallet" && <CashComponent />)}
       {data.product.preferTrade === "swap" && <SwapComponent />}
       {data.product.preferTrade === "trade-in" && <TradeInComponent />}
       <View className="mt-5">

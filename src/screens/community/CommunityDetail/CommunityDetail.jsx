@@ -79,7 +79,7 @@ export default function CommunityDetail({ route }) {
       reportedBy: user.userId,
       idReported: id,
       reportType: ReportEnum.Community,
-      description: "Something description",
+      description: "This community is breaking the terms and condition",
       dateSubmitted: new Date(),
     };
     reportCommunityUser(info);
@@ -161,19 +161,21 @@ export default function CommunityDetail({ route }) {
             source={{ uri: data.community.imageUrl }}
             style={{ width: width, height: height * 0.15 }}
           />
-          {currentMember && data.owner.user.userId !== currentMember.userId ? (
+          {currentMember ? (
             <View style={{ paddingHorizontal: 20 }} className="mt-5">
               <View className="flex-row justify-between">
                 <Text className="font-semibold text-lg">
                   {data.community.name}
                 </Text>
-                <Pressable
-                  className="flex-row items-center  gap-x-1"
-                  onPress={handleLeave}
-                >
-                  <MaterialIcons name="logout" size={22} color="red" />
-                  <Text className="text-red-600">Leave</Text>
-                </Pressable>
+                {data.owner.user.userId !== currentMember.userId && (
+                  <Pressable
+                    className="flex-row items-center  gap-x-1"
+                    onPress={handleLeave}
+                  >
+                    <MaterialIcons name="logout" size={22} color="red" />
+                    <Text className="text-red-600">Leave</Text>
+                  </Pressable>
+                )}
               </View>
 
               <View className="flex-row items-center mt-4 gap-x-2">
