@@ -17,17 +17,13 @@ export default function TransactionItem({ data, currentUserId }) {
   const getName = (id, userName) => {
     return id === currentUserId ? "Me" : userName;
   };
-
+  console.log(data);
   return (
     <Pressable
       className="px-4 py-2 flex-row items-center bg-gray-200 shadow-2xl mb-3"
       style={{ borderRadius: 10 }}
       onPress={() => {
-        if (data.preferTrade === "cash") {
-          navigation.navigate("TransactionDetails", { id: data.productId });
-        } else {
-          ToastAndroid.show("Not a cash transaction.", ToastAndroid.SHORT);
-        }
+        navigation.navigate("TransactionDetails", { id: data.productId });
       }}
     >
       <View className="mr-2">

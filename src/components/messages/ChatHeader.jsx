@@ -57,7 +57,10 @@ export default function ChatHeader({ data, product, name }) {
             const flag = await markAsSoldProduct(info);
 
             if (flag == -1) return;
-
+            if (flag == -2) {
+              alert("Buyer has no money in wallet");
+              return;
+            }
             if (product.preferTrade === "cash") {
               navigation.navigate("TransactionDetails", {
                 id: product.productId,
